@@ -2,9 +2,22 @@
 
 # 中英核心术语词典
 
-85 个核心词条组，按英文排序。每条提供独立解释、易混点和正文入口；词条组可能包含多个相邻术语。全部细讲标题见[覆盖索引](../cs_ai_v2_index.md)。
+103 个核心词条组，按英文排序。每条提供独立解释、易混点和正文入口；词条组可能包含多个相邻术语。全部细讲标题见[覆盖索引](../cs_ai_v2_index.md)。
 
-[A](#letter-a) · [B](#letter-b) · [C](#letter-c) · [D](#letter-d) · [E](#letter-e) · [F](#letter-f) · [G](#letter-g) · [H](#letter-h) · [I](#letter-i) · [K](#letter-k) · [L](#letter-l) · [M](#letter-m) · [N](#letter-n) · [O](#letter-o) · [P](#letter-p) · [Q](#letter-q) · [R](#letter-r) · [S](#letter-s) · [T](#letter-t) · [V](#letter-v) · [W](#letter-w) · [Z](#letter-z)
+[0](#letter-0) · [A](#letter-a) · [B](#letter-b) · [C](#letter-c) · [D](#letter-d) · [E](#letter-e) · [F](#letter-f) · [G](#letter-g) · [H](#letter-h) · [I](#letter-i) · [K](#letter-k) · [L](#letter-l) · [M](#letter-m) · [N](#letter-n) · [O](#letter-o) · [P](#letter-p) · [Q](#letter-q) · [R](#letter-r) · [S](#letter-s) · [T](#letter-t) · [V](#letter-v) · [W](#letter-w) · [Z](#letter-z)
+
+<a id="letter-0"></a>
+
+## 0
+
+### 0/1 Knapsack / Unbounded Knapsack｜零一背包／完全背包
+
+前者每物品至多用一次，后者允许重复使用；一维压缩需要相应遍历顺序。
+
+**易混点：** 物品外层循环时，零一常倒序容量，完全常正序；还要区分计数与最优化。
+
+Hot 100 · [第 95 讲：Hot 100 · 动态规划：状态含义、转移与遍历顺序](../chapters/95.md#chapter-95-section-02)
+
 
 <a id="letter-a"></a>
 
@@ -62,6 +75,14 @@ LLM · [第 53 讲：Transformer 零件表：Token、BPE、位置编码、多头
 <a id="letter-b"></a>
 
 ## B
+
+### Backtracking / Pruning｜回溯／剪枝
+
+按选择树探索构造，返回时撤销路径状态，并排除不可能产生合法答案的分支。
+
+**易混点：** 剪枝依赖题目约束，枚举总成本还受输出数量限制。
+
+Hot 100 · [第 90 讲：Hot 100 · 回溯：选择、约束、撤销与枚举成本](../chapters/90.md#chapter-90-section-01)
 
 ### Batch Size｜批量大小
 
@@ -155,6 +176,14 @@ BM25 结合词项匹配统计；HNSW 在向量空间中通过层次图加速近�
 **易混点：** AUC 高不保证概率可信。
 
 评价 · [第 38 讲：评价的细节：阈值、AUC、校准、Macro 与 Micro](../chapters/38.md#chapter-38-section-04)
+
+### Canonical Key｜规范化键
+
+消除不重要的表示差异，为同一等价类生成相同索引键。
+
+**易混点：** 字符频次可以识别异位词，拼接键必须无歧义。
+
+Hot 100 · [第 81 讲：Hot 100 · 哈希：把反复查找变成状态查询](../chapters/81.md#chapter-81-section-02)
 
 ### Checkpoint / Resume / Seed｜检查点／恢复／随机种子
 
@@ -273,6 +302,14 @@ Dtype 指数值表示方式，Device 指数据与运算所在的 CPU 或 GPU 等
 
 模型输入 · [第 22 讲：训练词汇起点：样本、张量、标签、Logit 与概率](../chapters/22.md#chapter-22-section-03)
 
+### Dummy Node｜链表哨兵节点
+
+在真实头节点前放辅助节点，统一头部与普通位置的连接修改。
+
+**易混点：** 返回真实头节点；不要把哨兵值当成输入数据。
+
+Hot 100 · [第 87 讲：Hot 100 · 链表：连接关系、指针距离与组合数据结构](../chapters/87.md#chapter-87-section-01)
+
 ### Dynamic Programming｜动态规划
 
 保存可复用的子问题结果，按状态与转移关系求解。
@@ -314,6 +351,14 @@ EM 迭代估计含潜变量模型参数；Viterbi 在给定模型下寻找最可
 **易混点：** 比较多类别结果要交代 Macro、Micro 等平均方式。
 
 评价 · [第 38 讲：评价的细节：阈值、AUC、校准、Macro 与 Micro](../chapters/38.md#chapter-38-section-08)
+
+### Fast and Slow Pointers｜快慢指针
+
+利用不同移动速度寻找中点、检测环，并通过后续同速阶段定位入口。
+
+**易混点：** 首次相遇点通常不是环入口，空指针判断不可省。
+
+Hot 100 · [第 87 讲：Hot 100 · 链表：连接关系、指针距离与组合数据结构](../chapters/87.md#chapter-87-section-03)
 
 ### Focal Loss｜聚焦损失
 
@@ -378,6 +423,14 @@ EM 迭代估计含潜变量模型参数；Viterbi 在给定模型下寻找最可
 
 ## I
 
+### In-place Marking｜原地标记
+
+利用输入存储中的部分位置记录未来操作或访问状态，减少额外空间。
+
+**易混点：** 会修改输入；标记位置本身的信息必须先保存或按顺序处理。
+
+Hot 100 · [第 86 讲：Hot 100 · 矩阵：标记、边界与有序性](../chapters/86.md#chapter-86-section-01)
+
 ### Index｜数据库索引
 
 维护额外查找结构以减少查询需要扫描的数据。
@@ -406,6 +459,14 @@ Iteration 是一次循环，optimizer step 是一次实际更新，epoch 通常�
 <a id="letter-k"></a>
 
 ## K
+
+### Kadane｜最大连续子数组和的线性状态更新
+
+维护以当前位置结束的最大非空和，选择继续前段或从当前值重新开始。
+
+**易混点：** 全负数组仍需返回一个负数，不能用空区间零替代。
+
+Hot 100 · [第 85 讲：Hot 100 · 数组：局部最优、区间合并与原地编码](../chapters/85.md#chapter-85-section-01)
 
 ### KL Divergence｜KL 散度
 
@@ -452,6 +513,14 @@ LLM · [第 58 讲：推理加速算法：KV Cache、FlashAttention、量化、�
 
 模型输出 · [第 22 讲：训练词汇起点：样本、张量、标签、Logit 与概率](../chapters/22.md#chapter-22-section-05)
 
+### Loop Invariant｜循环不变式
+
+每轮循环开始与结束都保持成立的性质，用来解释状态与正确性。
+
+**易混点：** 不能只展示一组样例，要说明每次移动为何仍保留答案。
+
+Hot 100 · [第 82 讲：Hot 100 · 双指针：一次移动排除哪些候选](../chapters/82.md#chapter-82-section-01)
+
 ### Loss / Objective / Metric｜损失／目标函数／评价指标
 
 损失提供训练评分；目标可含其他约束；指标衡量实际任务表现。
@@ -459,6 +528,14 @@ LLM · [第 58 讲：推理加速算法：KV Cache、FlashAttention、量化、�
 **易混点：** 训练目标下降不保证业务指标改善。
 
 损失 · [第 41 讲：损失函数第一讲：BCE、交叉熵、MSE 为什么不同](../chapters/41.md#chapter-41-section-01)
+
+### Lower Bound / Upper Bound｜首次不小于／首次大于的边界
+
+在有序序列或单调谓词中定位真假分界，可组合得到相等值的完整范围。
+
+**易混点：** 区间开闭与更新规则必须一致，边界处还需确认目标存在。
+
+Hot 100 · [第 91 讲：Hot 100 · 二分：边界语义、有序半边与划分条件](../chapters/91.md#chapter-91-section-01)
 
 
 <a id="letter-m"></a>
@@ -489,6 +566,22 @@ Macro 先算各类再等权平均；Micro 汇总计数后计算。
 
 稳定性 · [第 47 讲：训练稳定性与显存词汇：NaN、梯度裁剪、混合精度、Checkpointing](../chapters/47.md#chapter-47-section-04)
 
+### Monotonic Deque｜单调双端队列
+
+两端维护仍可能成为窗口极值的下标候选，并从队首删除过期项。
+
+**易混点：** 区别于单调栈；普通数组头删可能让实际实现退化。
+
+Hot 100 · [第 84 讲：Hot 100 · 连续区间：前缀和、单调队列与最小覆盖](../chapters/84.md#chapter-84-section-02)
+
+### Monotonic Stack｜单调栈
+
+保存尚未解决的候选，新元素到来时弹出已能确定答案的旧候选。
+
+**易混点：** 总线性来自每项至多入栈出栈一次，重复值比较规则必须说明。
+
+Hot 100 · [第 92 讲：Hot 100 · 栈：嵌套结构与尚未解决的候选](../chapters/92.md#chapter-92-section-04)
+
 ### MSE / MAE / RMSE｜均方／绝对／均方根误差
 
 MSE 强调大误差；MAE 对极端值相对稳健；RMSE 与目标同单位。
@@ -496,6 +589,14 @@ MSE 强调大误差；MAE 对极端值相对稳健；RMSE 与目标同单位。
 **易混点：** 不能把不同单位和不同误差偏好直接混比。
 
 损失 · [第 41 讲：损失函数第一讲：BCE、交叉熵、MSE 为什么不同](../chapters/41.md#chapter-41-section-05)
+
+### Multi-source BFS｜多源广度优先搜索
+
+多个起点同时以零距离入队，按层计算等权图中的最早传播时间或距离。
+
+**易混点：** 边耗时不相同时，层数未必代表实际最短时间。
+
+Hot 100 · [第 89 讲：Hot 100 · 图与前缀树：访问状态、传播层次与依赖关系](../chapters/89.md#chapter-89-section-02)
 
 
 <a id="letter-n"></a>
@@ -552,6 +653,14 @@ PID 按误差及其变化反馈；MPC 在模型与约束下滚动规划。
 
 机器人 · [第 70 讲：机器人基础算法：SLAM、ICP、RRT、PID、MPC、CEM](../chapters/70.md#chapter-70-section-05)
 
+### Postorder DP｜树上的后序动态规划
+
+先获取子树摘要，再计算当前节点向父节点返回的状态或全局候选答案。
+
+**易混点：** 可传向父节点的单侧路径与当前连接双侧的答案不同。
+
+Hot 100 · [第 88 讲：Hot 100 · 二叉树：返回给父节点什么，在哪里更新答案](../chapters/88.md#chapter-88-section-02)
+
 ### PPO / SAC / TD3｜策略与价值学习方法
 
 PPO 控制策略目标更新，SAC 结合熵正则，TD3 改进连续动作价值学习。
@@ -568,6 +677,14 @@ PPO 控制策略目标更新，SAC 结合熵正则，TD3 改进连续动作价�
 
 评价 · [第 38 讲：评价的细节：阈值、AUC、校准、Macro 与 Micro](../chapters/38.md#chapter-38-section-08)
 
+### Prefix Sum｜前缀和
+
+记录从起点到各边界的累计量，用两个前缀之差表示区间和。
+
+**易混点：** 计数题常需前缀频次与初始零前缀；树路径还需回溯撤销。
+
+Hot 100 · [第 84 讲：Hot 100 · 连续区间：前缀和、单调队列与最小覆盖](../chapters/84.md#chapter-84-section-01)
+
 
 <a id="letter-q"></a>
 
@@ -580,6 +697,14 @@ Q-learning 用贪心目标动作形成更新；SARSA 使用实际下一动作。
 **易混点：** 二者对行为策略与目标策略的关系不同。
 
 强化学习 · [第 66 讲：强化学习之一：价值、TD、Q-learning、SARSA、DQN](../chapters/66.md#chapter-66-section-06)
+
+### Quickselect / Top K｜快速选择／前 K 项
+
+快速选择只进入目标排名所在分区；Top K 也可用有限大小的堆维护排名边界。
+
+**易混点：** 快速选择通常修改输入，随机版本期望线性、最坏可平方。
+
+Hot 100 · [第 93 讲：Hot 100 · 堆与选择：维护排名边界而非完整排序](../chapters/93.md#chapter-93-section-01)
 
 
 <a id="letter-r"></a>
@@ -679,6 +804,14 @@ SGD 使用抽样梯度；动量结合历史更新方向。
 
 模型输出 · [第 22 讲：训练词汇起点：样本、张量、标签、Logit 与概率](../chapters/22.md#chapter-22-section-05)
 
+### Sliding Window｜滑动窗口
+
+维护连续区间及其频次等状态，通过扩张与收缩寻找符合条件的答案。
+
+**易混点：** 含负数的区间和不随长度单调变化，不能照搬正数滑窗。
+
+Hot 100 · [第 83 讲：Hot 100 · 滑动窗口：维护一个可解释的连续区间](../chapters/83.md#chapter-83-section-01)
+
 ### Softmax｜类别概率归一化
 
 把一组分数转为总和为一的类别概率。
@@ -716,6 +849,14 @@ Token 是离散处理单位，Embedding 把单位映射到可学习的向量。
 
 LLM · [第 52 讲：LLM 入门：Token、Embedding、Transformer 与生成机制](../chapters/52.md)
 
+### Topological Sort｜拓扑排序
+
+在有向无环依赖图中产生满足先后约束的节点顺序。
+
+**易混点：** 入度法未处理完全部节点提示有环，普通访问过不等于有向环。
+
+Hot 100 · [第 89 讲：Hot 100 · 图与前缀树：访问状态、传播层次与依赖关系](../chapters/89.md#chapter-89-section-03)
+
 ### Train / Eval / No Grad｜训练模式／评估模式／关闭梯度记录
 
 Train 和 Eval 改变特定层行为；No grad 控制梯度记录。
@@ -731,6 +872,14 @@ Train 和 Eval 改变特定层行为；No grad 控制梯度记录。
 **易混点：** 隔离级别不同，并发时可观察的行为也不同。
 
 数据库 · [第 14 讲：数据库：存储、检索、事务与索引](../chapters/14.md)
+
+### Two Pointers｜双指针
+
+让两个访问位置分别承担边界或候选角色，通过安全移动减少重复枚举。
+
+**易混点：** 两个下标本身不是证明；移动规则需要排序、上界或其他排除依据。
+
+Hot 100 · [第 82 讲：Hot 100 · 双指针：一次移动排除哪些候选](../chapters/82.md#chapter-82-section-01)
 
 
 <a id="letter-v"></a>

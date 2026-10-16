@@ -4,7 +4,7 @@
 
 本页保留原稿全部参考资料，并补充本次训练说明所用文档。各讲结尾列出关联来源。资料来自官方文档、论文、课程或作者项目；列出来源不表示逐条内容均已重新审校。
 
-本次核对日期：2026-10-16；重点核对 BCEWithLogitsLoss、CrossEntropyLoss、梯度累积、混合精度与更新顺序。PyTorch 的 stable 链接会随版本变化，复现实验请固定环境版本。通识模型示例不代表当前性能排名。
+本次核对日期：2026-10-16；重点核对训练接口、更新顺序及官方 Hot 100 的完整题单与分组。Hot 100 的解法说明为原创整理，逐题链接见专项笔记。PyTorch 的 stable 链接会随版本变化，复现实验请固定环境版本。通识模型示例不代表当前性能排名。
 
 <a id="source-1"></a>
 
@@ -845,3 +845,28 @@
 
 - **S168** [TD-MPC2: Scalable, Robust World Models for Continuous Control](https://arxiv.org/abs/2310.16828)
   引用章节：[73](../chapters/73.md)
+
+<a id="source-169"></a>
+
+- **S169** [LeetCode — 热题 100 官方学习计划（2026-10-16 核对）](https://leetcode.cn/studyplan/top-100-liked/)
+  引用章节：[81](../chapters/81.md)、[82](../chapters/82.md)、[83](../chapters/83.md)、[84](../chapters/84.md)、[85](../chapters/85.md)、[86](../chapters/86.md)、[87](../chapters/87.md)、[88](../chapters/88.md)、[89](../chapters/89.md)、[90](../chapters/90.md)、[91](../chapters/91.md)、[92](../chapters/92.md)、[93](../chapters/93.md)、[94](../chapters/94.md)、[95](../chapters/95.md)、[96](../chapters/96.md)、[97](../chapters/97.md)
+
+<a id="source-170"></a>
+
+- **S170** [LeetCode 560 — 和为 K 的子数组](https://leetcode.com/problems/subarray-sum-equals-k/)
+  引用章节：[84](../chapters/84.md)
+
+<a id="source-171"></a>
+
+- **S171** [LeetCode 239 — 滑动窗口最大值](https://leetcode.com/problems/sliding-window-maximum/)
+  引用章节：[84](../chapters/84.md)
+
+<a id="source-172"></a>
+
+- **S172** [LeetCode 4 — 寻找两个正序数组的中位数](https://leetcode.com/problems/median-of-two-sorted-arrays/)
+  引用章节：[91](../chapters/91.md)
+
+<a id="source-173"></a>
+
+- **S173** [LeetCode 287 — 寻找重复数](https://leetcode.com/problems/find-the-duplicate-number/)
+  引用章节：[97](../chapters/97.md)

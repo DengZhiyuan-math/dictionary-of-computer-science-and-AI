@@ -1,0 +1,1108 @@
+{
+  "source": "https://leetcode.cn/studyplan/top-100-liked/",
+  "checkedAt": "2026-10-16",
+  "categories": [
+    {
+      "name": "哈希",
+      "chapter": 81,
+      "problems": [
+        {
+          "id": 1,
+          "title": "两数之和",
+          "slug": "two-sum",
+          "section": 1,
+          "idea": "边扫描边查询补数下标，查询后写入当前值。",
+          "time": "期望 O(n)",
+          "space": "O(n)",
+          "pitfall": "不能用同一位置两次；重复值仍可能构成答案。"
+        },
+        {
+          "id": 49,
+          "title": "字母异位词分组",
+          "slug": "group-anagrams",
+          "section": 2,
+          "idea": "以字符计数元组作规范化键，将同类单词放入一组。",
+          "time": "O(T+nσ)",
+          "space": "O(nσ)，另计输出",
+          "pitfall": "T 为总字符数，σ 为固定字母表大小；键要无歧义。"
+        },
+        {
+          "id": 128,
+          "title": "最长连续序列",
+          "slug": "longest-consecutive-sequence",
+          "section": 3,
+          "idea": "对去重集合，只从没有前驱的数开始扫描连续区间。",
+          "time": "期望 O(n)",
+          "space": "O(n)",
+          "pitfall": "外层也要去重，避免重复起点多次长扫描。"
+        }
+      ]
+    },
+    {
+      "name": "双指针",
+      "chapter": 82,
+      "problems": [
+        {
+          "id": 283,
+          "title": "移动零",
+          "slug": "move-zeroes",
+          "section": 1,
+          "idea": "读指针扫描，写指针维护非零前缀，最后补零。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "保持非零元素的相对顺序。"
+        },
+        {
+          "id": 11,
+          "title": "盛最多水的容器",
+          "slug": "container-with-most-water",
+          "section": 2,
+          "idea": "计算当前面积后移动较短端，排除不可能更优的组合。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "面积由短端与间距共同决定。"
+        },
+        {
+          "id": 15,
+          "title": "三数之和",
+          "slug": "3sum",
+          "section": 3,
+          "idea": "排序后固定首值，以对撞指针搜索其余两值并去重。",
+          "time": "O(n²)",
+          "space": "排序实现相关，另计输出",
+          "pitfall": "先固定值去重，命中后左右值也要去重。"
+        },
+        {
+          "id": 42,
+          "title": "接雨水",
+          "slug": "trapping-rain-water",
+          "section": 4,
+          "idea": "维护左右最大边界，从较低边界侧累计可确定的水量。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "不能只看全局最高柱或相邻柱。"
+        }
+      ]
+    },
+    {
+      "name": "滑动窗口",
+      "chapter": 83,
+      "problems": [
+        {
+          "id": 3,
+          "title": "无重复字符的最长子串",
+          "slug": "longest-substring-without-repeating-characters",
+          "section": 1,
+          "idea": "右端扩张，出现重复时收缩到合法，再更新最长长度。",
+          "time": "O(n)",
+          "space": "O(min(n,σ))",
+          "pitfall": "左端不能倒退；子串必须连续。"
+        },
+        {
+          "id": 438,
+          "title": "找到字符串中所有字母异位词",
+          "slug": "find-all-anagrams-in-a-string",
+          "section": 2,
+          "idea": "固定长度窗口维护字符频次，与模式串比较。",
+          "time": "O(n+m)，固定字母表",
+          "space": "O(σ)，另计输出",
+          "pitfall": "重复字符按次数比较；模式串更长时无答案。"
+        }
+      ]
+    },
+    {
+      "name": "子串",
+      "chapter": 84,
+      "problems": [
+        {
+          "id": 560,
+          "title": "和为 K 的子数组",
+          "slug": "subarray-sum-equals-k",
+          "section": 1,
+          "idea": "查询此前前缀和为 P-k 的次数，再写入当前前缀。",
+          "time": "期望 O(n)",
+          "space": "O(n)",
+          "pitfall": "初始化零前缀；有负数时不能直接用和大小滑窗。"
+        },
+        {
+          "id": 239,
+          "title": "滑动窗口最大值",
+          "slug": "sliding-window-maximum",
+          "section": 2,
+          "idea": "单调递减双端队列存下标，先处理过期与被支配候选。",
+          "time": "摊还 O(n)",
+          "space": "O(k)",
+          "pitfall": "队列必须支持高效头部删除，且能判断过期。"
+        },
+        {
+          "id": 76,
+          "title": "最小覆盖子串",
+          "slug": "minimum-window-substring",
+          "section": 3,
+          "idea": "维护需求频次，覆盖成立时收缩并记录最短窗口。",
+          "time": "O(n+m)",
+          "space": "O(σ)",
+          "pitfall": "需求含重复字符；满足数的语义必须固定。"
+        }
+      ]
+    },
+    {
+      "name": "普通数组",
+      "chapter": 85,
+      "problems": [
+        {
+          "id": 53,
+          "title": "最大子数组和",
+          "slug": "maximum-subarray",
+          "section": 1,
+          "idea": "维护以当前位置结尾的最大和，决定延长还是重开。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "非空子数组；全负数组不能返回零。"
+        },
+        {
+          "id": 56,
+          "title": "合并区间",
+          "slug": "merge-intervals",
+          "section": 2,
+          "idea": "按起点排序后扫描，合并与当前段相交的区间。",
+          "time": "O(n log n)",
+          "space": "排序实现相关，另计输出",
+          "pitfall": "先说明端点是否闭合，合并时取最大右端。"
+        },
+        {
+          "id": 189,
+          "title": "轮转数组",
+          "slug": "rotate-array",
+          "section": 3,
+          "idea": "k 对长度取模，再整体与局部分段翻转。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "右移方向与分段位置要一致。"
+        },
+        {
+          "id": 238,
+          "title": "除了自身以外数组的乘积",
+          "slug": "product-of-array-except-self",
+          "section": 4,
+          "idea": "答案存左乘积，反向扫描乘上右乘积。",
+          "time": "O(n)",
+          "space": "O(1)，不含输出",
+          "pitfall": "不能依赖除法；注意一个零与多个零。"
+        },
+        {
+          "id": 41,
+          "title": "缺失的第一个正数",
+          "slug": "first-missing-positive",
+          "section": 5,
+          "idea": "把有效值 v 放到 v-1 位置，再查首个缺位。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "交换前检查值域与重复，方法会修改数组。"
+        }
+      ]
+    },
+    {
+      "name": "矩阵",
+      "chapter": 86,
+      "problems": [
+        {
+          "id": 73,
+          "title": "矩阵置零",
+          "slug": "set-matrix-zeroes",
+          "section": 1,
+          "idea": "首行首列暂存标记，另存它们的原始置零需求。",
+          "time": "O(rc)",
+          "space": "O(1)",
+          "pitfall": "不要让新写入的零扩散为新标记。"
+        },
+        {
+          "id": 54,
+          "title": "螺旋矩阵",
+          "slug": "spiral-matrix",
+          "section": 2,
+          "idea": "四条边界限定未访问区域，走完一边就收缩。",
+          "time": "O(rc)",
+          "space": "O(1)，不含输出",
+          "pitfall": "剩单行或单列时避免重复访问。"
+        },
+        {
+          "id": 48,
+          "title": "旋转图像",
+          "slug": "rotate-image",
+          "section": 3,
+          "idea": "方阵先转置，再逐行反转，实现顺时针旋转。",
+          "time": "O(n²)",
+          "space": "O(1)",
+          "pitfall": "转置只交换一侧，且题目是方阵。"
+        },
+        {
+          "id": 240,
+          "title": "搜索二维矩阵 II",
+          "slug": "search-a-2d-matrix-ii",
+          "section": 4,
+          "idea": "从右上角出发，根据大小排除一行或一列。",
+          "time": "O(r+c)",
+          "space": "O(1)",
+          "pitfall": "行列分别有序不等于拉平后有序。"
+        }
+      ]
+    },
+    {
+      "name": "链表",
+      "chapter": 87,
+      "problems": [
+        {
+          "id": 160,
+          "title": "相交链表",
+          "slug": "intersection-of-two-linked-lists",
+          "section": 4,
+          "idea": "两个指针走完各自链表后换到另一条链表，抵消长度差。",
+          "time": "O(a+b)",
+          "space": "O(1)",
+          "pitfall": "比较节点身份，通常假定链表无环。"
+        },
+        {
+          "id": 206,
+          "title": "反转链表",
+          "slug": "reverse-linked-list",
+          "section": 2,
+          "idea": "保存后继、反转 next，再推进前驱与当前节点。",
+          "time": "O(n)",
+          "space": "O(1)，迭代",
+          "pitfall": "先保存 next，避免丢失剩余链。"
+        },
+        {
+          "id": 234,
+          "title": "回文链表",
+          "slug": "palindrome-linked-list",
+          "section": 3,
+          "idea": "快慢找中点，反转后半段后比较对应值。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "必要时恢复链表；处理奇偶长度。"
+        },
+        {
+          "id": 141,
+          "title": "环形链表",
+          "slug": "linked-list-cycle",
+          "section": 3,
+          "idea": "快慢指针在环中相遇，无环则快指针遇空。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "访问 fast.next 前先判断空。"
+        },
+        {
+          "id": 142,
+          "title": "环形链表 II",
+          "slug": "linked-list-cycle-ii",
+          "section": 3,
+          "idea": "相遇后一个回头，两指针同速寻找入口。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "相遇点通常不是入口。"
+        },
+        {
+          "id": 21,
+          "title": "合并两个有序链表",
+          "slug": "merge-two-sorted-lists",
+          "section": 6,
+          "idea": "哨兵加尾指针，每次连接较小的当前表头。",
+          "time": "O(a+b)",
+          "space": "O(1)，复用节点",
+          "pitfall": "最后连接未耗尽尾链，区分复用与新建。"
+        },
+        {
+          "id": 2,
+          "title": "两数相加",
+          "slug": "add-two-numbers",
+          "section": 6,
+          "idea": "逐位求和并维护 carry，直到两链和进位都耗尽。",
+          "time": "O(max(a,b))",
+          "space": "O(1)，不含输出",
+          "pitfall": "末尾可能还有一位进位。"
+        },
+        {
+          "id": 19,
+          "title": "删除链表的倒数第 N 个结点",
+          "slug": "remove-nth-node-from-end-of-list",
+          "section": 1,
+          "idea": "哨兵与固定间距快慢指针定位前驱后删除。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "删除头节点也必须正确。"
+        },
+        {
+          "id": 24,
+          "title": "两两交换链表中的节点",
+          "slug": "swap-nodes-in-pairs",
+          "section": 2,
+          "idea": "保存前组尾、本组两节点和后继，重连每一组。",
+          "time": "O(n)",
+          "space": "O(1)，迭代",
+          "pitfall": "交换节点连接，不只是交换节点值。"
+        },
+        {
+          "id": 25,
+          "title": "K 个一组翻转链表",
+          "slug": "reverse-nodes-in-k-group",
+          "section": 2,
+          "idea": "先确认完整一组，再反转并接回两侧。",
+          "time": "O(n)",
+          "space": "O(1)，迭代",
+          "pitfall": "不足 k 个的最后一组保持原状。"
+        },
+        {
+          "id": 138,
+          "title": "随机链表的复制",
+          "slug": "copy-list-with-random-pointer",
+          "section": 5,
+          "idea": "旧到新节点映射后复制 next 与 random 关系。",
+          "time": "期望 O(n)",
+          "space": "O(n)，不含输出",
+          "pitfall": "random 可能为空，不能指回旧节点。"
+        },
+        {
+          "id": 148,
+          "title": "排序链表",
+          "slug": "sort-list",
+          "section": 6,
+          "idea": "自底向上合并长度翻倍的有序链段。",
+          "time": "O(n log n)",
+          "space": "O(1)，自底向上",
+          "pitfall": "递归归并版本另有 O(log n) 栈空间。"
+        },
+        {
+          "id": 23,
+          "title": "合并 K 个升序链表",
+          "slug": "merge-k-sorted-lists",
+          "section": 6,
+          "idea": "小根堆维护各链当前表头，弹出后补入其后继。",
+          "time": "O(N log(k+1))",
+          "space": "O(k)，复用节点",
+          "pitfall": "N 是总节点数；堆需处理相同值的比较。"
+        },
+        {
+          "id": 146,
+          "title": "LRU 缓存",
+          "slug": "lru-cache",
+          "section": 7,
+          "idea": "哈希表定位节点，双向链表维护最近使用顺序。",
+          "time": "get/put 期望 O(1)",
+          "space": "O(capacity)",
+          "pitfall": "读取和更新都刷新顺序，淘汰时同步删映射。"
+        }
+      ]
+    },
+    {
+      "name": "二叉树",
+      "chapter": 88,
+      "problems": [
+        {
+          "id": 94,
+          "title": "二叉树的中序遍历",
+          "slug": "binary-tree-inorder-traversal",
+          "section": 1,
+          "idea": "栈模拟左链下降，弹出访问后转向右子树。",
+          "time": "O(n)",
+          "space": "O(h)，不含输出",
+          "pitfall": "h 是树高，退化树可达 n。"
+        },
+        {
+          "id": 104,
+          "title": "二叉树的最大深度",
+          "slug": "maximum-depth-of-binary-tree",
+          "section": 2,
+          "idea": "后序返回左右深度较大值加一，空树为零。",
+          "time": "O(n)",
+          "space": "O(h)",
+          "pitfall": "别混淆节点深度与边数。"
+        },
+        {
+          "id": 226,
+          "title": "翻转二叉树",
+          "slug": "invert-binary-tree",
+          "section": 4,
+          "idea": "递归交换各节点的左右孩子。",
+          "time": "O(n)",
+          "space": "O(h)",
+          "pitfall": "原地交换连接，不能丢失一侧引用。"
+        },
+        {
+          "id": 101,
+          "title": "对称二叉树",
+          "slug": "symmetric-tree",
+          "section": 4,
+          "idea": "成对比较左右子树的镜像节点与交叉子树。",
+          "time": "O(n)",
+          "space": "O(h)",
+          "pitfall": "空节点结构也属于对称条件。"
+        },
+        {
+          "id": 543,
+          "title": "二叉树的直径",
+          "slug": "diameter-of-binary-tree",
+          "section": 2,
+          "idea": "返回单侧深度，在节点处用左右深度和更新直径。",
+          "time": "O(n)",
+          "space": "O(h)",
+          "pitfall": "直径按边数计，未必经过整树根。"
+        },
+        {
+          "id": 102,
+          "title": "二叉树的层序遍历",
+          "slug": "binary-tree-level-order-traversal",
+          "section": 1,
+          "idea": "队列按当前层大小处理，再开始下一层。",
+          "time": "O(n)",
+          "space": "O(w)，不含输出",
+          "pitfall": "w 是最大层宽；队列操作应高效。"
+        },
+        {
+          "id": 108,
+          "title": "将有序数组转换为二叉搜索树",
+          "slug": "convert-sorted-array-to-binary-search-tree",
+          "section": 3,
+          "idea": "区间中点作根，递归构造左右平衡子树。",
+          "time": "O(n)",
+          "space": "O(log n)，不含输出",
+          "pitfall": "传下标避免递归切片复制。"
+        },
+        {
+          "id": 98,
+          "title": "验证二叉搜索树",
+          "slug": "validate-binary-search-tree",
+          "section": 3,
+          "idea": "递归传严格上下界，或验证中序严格递增。",
+          "time": "O(n)",
+          "space": "O(h)",
+          "pitfall": "必须检查祖先约束，不只比较直接父子。"
+        },
+        {
+          "id": 230,
+          "title": "二叉搜索树中第 K 小的元素",
+          "slug": "kth-smallest-element-in-a-bst",
+          "section": 3,
+          "idea": "中序遍历按升序计数，到第 k 个时返回。",
+          "time": "最坏 O(n)",
+          "space": "O(h)",
+          "pitfall": "没有子树大小索引时不能保证 O(log n)。"
+        },
+        {
+          "id": 199,
+          "title": "二叉树的右视图",
+          "slug": "binary-tree-right-side-view",
+          "section": 1,
+          "idea": "层序取每层最后节点，或右优先 DFS 首见深度。",
+          "time": "O(n)",
+          "space": "O(w)，层序版",
+          "pitfall": "答案不是只沿右孩子走。"
+        },
+        {
+          "id": 114,
+          "title": "二叉树展开为链表",
+          "slug": "flatten-binary-tree-to-linked-list",
+          "section": 5,
+          "idea": "反向前序递归，把当前节点接到已展开后继前。",
+          "time": "O(n)",
+          "space": "O(h)",
+          "pitfall": "left 要清空；递归前保存必要分支。"
+        },
+        {
+          "id": 105,
+          "title": "从前序与中序遍历序列构造二叉树",
+          "slug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+          "section": 5,
+          "idea": "前序找根，中序下标映射划分左右区间。",
+          "time": "期望 O(n)",
+          "space": "O(n)",
+          "pitfall": "依赖唯一值；反复切片会增加成本。"
+        },
+        {
+          "id": 437,
+          "title": "路径总和 III",
+          "slug": "path-sum-iii",
+          "section": 6,
+          "idea": "沿祖先链维护前缀和频次，进入增加、退出撤销。",
+          "time": "期望 O(n)",
+          "space": "O(h)，归零时删键",
+          "pitfall": "不要把兄弟分支的前缀留在表里。"
+        },
+        {
+          "id": 236,
+          "title": "二叉树的最近公共祖先",
+          "slug": "lowest-common-ancestor-of-a-binary-tree",
+          "section": 4,
+          "idea": "两侧都返回目标时取当前根，否则向上传递已找到结果。",
+          "time": "O(n)",
+          "space": "O(h)",
+          "pitfall": "标准题保证目标存在，移除前提要另做验证。"
+        },
+        {
+          "id": 124,
+          "title": "二叉树中的最大路径和",
+          "slug": "binary-tree-maximum-path-sum",
+          "section": 2,
+          "idea": "返回单侧正贡献，在节点处用两侧贡献更新全局值。",
+          "time": "O(n)",
+          "space": "O(h)",
+          "pitfall": "全负树仍需选一个节点，不能返回空路径零。"
+        }
+      ]
+    },
+    {
+      "name": "图论",
+      "chapter": 89,
+      "problems": [
+        {
+          "id": 200,
+          "title": "岛屿数量",
+          "slug": "number-of-islands",
+          "section": 1,
+          "idea": "扫描网格，每遇未访问陆地就遍历整个连通块。",
+          "time": "O(rc)",
+          "space": "最坏 O(rc)",
+          "pitfall": "四邻接；修改网格与额外 visited 是不同空间方案。"
+        },
+        {
+          "id": 994,
+          "title": "腐烂的橘子",
+          "slug": "rotting-oranges",
+          "section": 2,
+          "idea": "所有腐烂源同时入队，逐层传播并统计剩余新鲜数。",
+          "time": "O(rc)",
+          "space": "O(rc)",
+          "pitfall": "一开始没有新鲜橘子时为零；不可达时为负一。"
+        },
+        {
+          "id": 207,
+          "title": "课程表",
+          "slug": "course-schedule",
+          "section": 3,
+          "idea": "Kahn 入度队列处理依赖，看能否移除全部节点。",
+          "time": "O(V+E)",
+          "space": "O(V+E)",
+          "pitfall": "边方向与入度定义一致，独立课程也要计数。"
+        },
+        {
+          "id": 208,
+          "title": "实现 Trie (前缀树)",
+          "slug": "implement-trie-prefix-tree",
+          "section": 4,
+          "idea": "字符路径共享前缀，终止标记区分单词与前缀。",
+          "time": "单次 O(L)",
+          "space": "总 O(插入字符数)，固定字母表",
+          "pitfall": "search 与 startsWith 的结束条件不同。"
+        }
+      ]
+    },
+    {
+      "name": "回溯",
+      "chapter": 90,
+      "problems": [
+        {
+          "id": 46,
+          "title": "全排列",
+          "slug": "permutations",
+          "section": 1,
+          "idea": "路径加 used 枚举每个位置的可选元素。",
+          "time": "O(n·n!)，含输出",
+          "space": "O(n)，不含输出",
+          "pitfall": "保存答案要复制路径，返回时撤销 used。"
+        },
+        {
+          "id": 78,
+          "title": "子集",
+          "slug": "subsets",
+          "section": 1,
+          "idea": "递增起点选取后续元素，枚举每个子集。",
+          "time": "O(n·2^n)，含输出",
+          "space": "O(n)，不含输出",
+          "pitfall": "集合无顺序，不能用排列方式重复枚举。"
+        },
+        {
+          "id": 17,
+          "title": "电话号码的字母组合",
+          "slug": "letter-combinations-of-a-phone-number",
+          "section": 2,
+          "idea": "每层处理一位，枚举该位对应的字母。",
+          "time": "O(d·4^d)，上界含输出",
+          "space": "O(d)，不含输出",
+          "pitfall": "空输入返回约定与普通递归终点不同。"
+        },
+        {
+          "id": 39,
+          "title": "组合总和",
+          "slug": "combination-sum",
+          "section": 3,
+          "idea": "按非递减候选下标搜索，可重复选当前候选。",
+          "time": "输出敏感的指数级搜索",
+          "space": "O(t/min)，不含输出",
+          "pitfall": "候选为正且唯一；min 是最小候选，t 是目标。"
+        },
+        {
+          "id": 22,
+          "title": "括号生成",
+          "slug": "generate-parentheses",
+          "section": 4,
+          "idea": "左括号不超 n，右括号不超已用左括号。",
+          "time": "O(n·Cₙ)，含输出",
+          "space": "O(n)，不含输出",
+          "pitfall": "Cₙ 是第 n 个卡特兰数；过滤非法前缀。"
+        },
+        {
+          "id": 79,
+          "title": "单词搜索",
+          "slug": "word-search",
+          "section": 5,
+          "idea": "网格 DFS 匹配下一字符，当前路径占用后回溯恢复。",
+          "time": "O(rc·4^L)，宽松上界",
+          "space": "O(L)，路径栈",
+          "pitfall": "visited 不能跨搜索路径永久保留。"
+        },
+        {
+          "id": 131,
+          "title": "分割回文串",
+          "slug": "palindrome-partitioning",
+          "section": 6,
+          "idea": "预计算回文区间，再回溯枚举合法切分。",
+          "time": "O(n²+n·2^n)，上界",
+          "space": "O(n²)，不含输出",
+          "pitfall": "每段都要回文，不是整个串回文即可。"
+        },
+        {
+          "id": 51,
+          "title": "N 皇后",
+          "slug": "n-queens",
+          "section": 4,
+          "idea": "逐行选择未冲突的列，维护列与两类对角线集合。",
+          "time": "O(n·n!+A·n²)，宽松上界",
+          "space": "O(n)，不含输出",
+          "pitfall": "A 为答案数；输出棋盘本身有平方大小。"
+        }
+      ]
+    },
+    {
+      "name": "二分查找",
+      "chapter": 91,
+      "problems": [
+        {
+          "id": 35,
+          "title": "搜索插入位置",
+          "slug": "search-insert-position",
+          "section": 1,
+          "idea": "找第一个不小于 target 的位置。",
+          "time": "O(log(n+1))",
+          "space": "O(1)",
+          "pitfall": "允许答案落在数组末尾之后。"
+        },
+        {
+          "id": 74,
+          "title": "搜索二维矩阵",
+          "slug": "search-a-2d-matrix",
+          "section": 3,
+          "idea": "利用跨行有序性，将虚拟一维下标映射回行列后二分。",
+          "time": "O(log(rc+1))",
+          "space": "O(1)",
+          "pitfall": "不要与只有行列有序的第 240 题混淆。"
+        },
+        {
+          "id": 34,
+          "title": "在排序数组中查找元素的第一个和最后一个位置",
+          "slug": "find-first-and-last-position-of-element-in-sorted-array",
+          "section": 2,
+          "idea": "分别求 lower bound 与 upper bound，再确认存在。",
+          "time": "O(log(n+1))",
+          "space": "O(1)",
+          "pitfall": "找到任意目标后线性扩展会退化。"
+        },
+        {
+          "id": 33,
+          "title": "搜索旋转排序数组",
+          "slug": "search-in-rotated-sorted-array",
+          "section": 4,
+          "idea": "识别有序半边，按目标是否在值域内选择保留区间。",
+          "time": "O(log(n+1))",
+          "space": "O(1)",
+          "pitfall": "标准题不含重复值，端点条件要匹配区间模板。"
+        },
+        {
+          "id": 153,
+          "title": "寻找旋转排序数组中的最小值",
+          "slug": "find-minimum-in-rotated-sorted-array",
+          "section": 4,
+          "idea": "比较中点与右端，将最小值所在侧留下。",
+          "time": "O(log n)",
+          "space": "O(1)",
+          "pitfall": "保留中点与排除中点的规则不同。"
+        },
+        {
+          "id": 4,
+          "title": "寻找两个正序数组的中位数",
+          "slug": "median-of-two-sorted-arrays",
+          "section": 5,
+          "idea": "二分较短数组的切分点，使两侧边界有序。",
+          "time": "O(log(min(m,n)+1))",
+          "space": "O(1)",
+          "pitfall": "处理空数组一侧、奇偶总长与边界哨兵。"
+        }
+      ]
+    },
+    {
+      "name": "栈",
+      "chapter": 92,
+      "problems": [
+        {
+          "id": 20,
+          "title": "有效的括号",
+          "slug": "valid-parentheses",
+          "section": 1,
+          "idea": "左括号入栈，右括号必须匹配栈顶，最后检查空栈。",
+          "time": "O(n)",
+          "space": "O(n)",
+          "pitfall": "计数相等不代表嵌套正确。"
+        },
+        {
+          "id": 155,
+          "title": "最小栈",
+          "slug": "min-stack",
+          "section": 2,
+          "idea": "每层记录截至该层的最小值，随普通栈同步弹出。",
+          "time": "各操作 O(1)",
+          "space": "O(n)",
+          "pitfall": "重复最小值也要保留对应状态。"
+        },
+        {
+          "id": 394,
+          "title": "字符串解码",
+          "slug": "decode-string",
+          "section": 3,
+          "idea": "栈保存外层字符串与次数，结束内部段时展开拼接。",
+          "time": "O(n·Lout)，直接拼接上界",
+          "space": "O(n+Lout)",
+          "pitfall": "n 为编码长，Lout 为解码长；重复复制影响时间。"
+        },
+        {
+          "id": 739,
+          "title": "每日温度",
+          "slug": "daily-temperatures",
+          "section": 4,
+          "idea": "单调栈保存未解决下标，新高温结算等待距离。",
+          "time": "摊还 O(n)",
+          "space": "O(n)",
+          "pitfall": "相同温度不是更暖。"
+        },
+        {
+          "id": 84,
+          "title": "柱状图中最大的矩形",
+          "slug": "largest-rectangle-in-histogram",
+          "section": 5,
+          "idea": "遇到更低柱弹栈，以当前边界和新栈顶结算宽度。",
+          "time": "摊还 O(n)",
+          "space": "O(n)",
+          "pitfall": "宽度不含左右较矮边界，末尾要结清栈。"
+        }
+      ]
+    },
+    {
+      "name": "堆",
+      "chapter": 93,
+      "problems": [
+        {
+          "id": 215,
+          "title": "数组中的第K个最大元素",
+          "slug": "kth-largest-element-in-an-array",
+          "section": 1,
+          "idea": "大小 k 的小根堆维护前 k 大；也可随机快速选择。",
+          "time": "堆 O(n log(k+1))",
+          "space": "O(k)",
+          "pitfall": "重复元素按排名计；快速选择期望线性但最坏平方。"
+        },
+        {
+          "id": 347,
+          "title": "前 K 个高频元素",
+          "slug": "top-k-frequent-elements",
+          "section": 1,
+          "idea": "哈希计频，再用大小 k 的堆筛选频率最高的键。",
+          "time": "期望 O(n+u log(k+1))",
+          "space": "O(u+k)",
+          "pitfall": "u 为不同值数量，比较的是频次而不是数值。"
+        },
+        {
+          "id": 295,
+          "title": "数据流的中位数",
+          "slug": "find-median-from-data-stream",
+          "section": 3,
+          "idea": "左右两堆维护大小平衡与跨堆有序，堆顶给出中位数。",
+          "time": "插入 O(log n)，查询 O(1)",
+          "space": "O(n)",
+          "pitfall": "两堆次序与数量两个不变式缺一不可。"
+        }
+      ]
+    },
+    {
+      "name": "贪心算法",
+      "chapter": 94,
+      "problems": [
+        {
+          "id": 121,
+          "title": "买卖股票的最佳时机",
+          "slug": "best-time-to-buy-and-sell-stock",
+          "section": 1,
+          "idea": "维护历史最低价，计算以今天卖出的最佳收益。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "只能一次买卖，且买在卖前；不交易收益为零。"
+        },
+        {
+          "id": 55,
+          "title": "跳跃游戏",
+          "slug": "jump-game",
+          "section": 2,
+          "idea": "扫描可达区间并扩展最远右端，发现断点即失败。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "只有已可达位置才能用来扩展。"
+        },
+        {
+          "id": 45,
+          "title": "跳跃游戏 II",
+          "slug": "jump-game-ii",
+          "section": 3,
+          "idea": "把当前可达范围当一层，扫完后一次更新跳数和边界。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "题目保证可达，不要在最后一个位置多加一步。"
+        },
+        {
+          "id": 763,
+          "title": "划分字母区间",
+          "slug": "partition-labels",
+          "section": 4,
+          "idea": "用字符最后出现位置扩展段尾，到达段尾立即切分。",
+          "time": "O(n)",
+          "space": "O(σ)",
+          "pitfall": "段尾是本段所有已见字符最后位置的最大值。"
+        }
+      ]
+    },
+    {
+      "name": "动态规划",
+      "chapter": 95,
+      "problems": [
+        {
+          "id": 70,
+          "title": "爬楼梯",
+          "slug": "climbing-stairs",
+          "section": 1,
+          "idea": "到达本阶的方法数等于前两阶之和，用滚动变量保存。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "初始化与 n 从一开始的题意匹配。"
+        },
+        {
+          "id": 118,
+          "title": "杨辉三角",
+          "slug": "pascals-triangle",
+          "section": 1,
+          "idea": "内部格来自上一行相邻两格，行两端为一。",
+          "time": "O(n²)，含输出",
+          "space": "O(1)，直接写输出",
+          "pitfall": "不要把同一可变列表重复加入结果。"
+        },
+        {
+          "id": 198,
+          "title": "打家劫舍",
+          "slug": "house-robber",
+          "section": 1,
+          "idea": "在跳过本间与选择本间加前两间最优值之间取大。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "更新滚动状态时保留旧前两步。"
+        },
+        {
+          "id": 279,
+          "title": "完全平方数",
+          "slug": "perfect-squares",
+          "section": 2,
+          "idea": "以数值为容量，尝试各平方数作为最后一项。",
+          "time": "O(n√n)",
+          "space": "O(n)",
+          "pitfall": "零目标状态为零，其他先设不可达。"
+        },
+        {
+          "id": 322,
+          "title": "零钱兑换",
+          "slug": "coin-change",
+          "section": 2,
+          "idea": "每个金额从减去一个面额的状态转移最少数量。",
+          "time": "O(a·c)",
+          "space": "O(a)",
+          "pitfall": "a 为金额，c 为币种；不可达不能初始化为零。"
+        },
+        {
+          "id": 139,
+          "title": "单词拆分",
+          "slug": "word-break",
+          "section": 3,
+          "idea": "前缀 DP 枚举最后一个词的边界并查字典。",
+          "time": "常见切片版 O(n³) 上界",
+          "space": "O(n+D)，不含临时切片",
+          "pitfall": "D 为字典总存储；切片和字符串查找不是无条件 O(1)。"
+        },
+        {
+          "id": 300,
+          "title": "最长递增子序列",
+          "slug": "longest-increasing-subsequence",
+          "section": 4,
+          "idea": "维护每种长度的最小结尾，二分第一个不小于当前值的位置。",
+          "time": "O(n log n)",
+          "space": "O(n)",
+          "pitfall": "严格递增，相等值替换；tails 不是直接重建答案。"
+        },
+        {
+          "id": 152,
+          "title": "乘积最大子数组",
+          "slug": "maximum-product-subarray",
+          "section": 5,
+          "idea": "同时维护以当前位置结束的最大、最小乘积。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "负数可交换极值角色，更新必须使用旧状态。"
+        },
+        {
+          "id": 416,
+          "title": "分割等和子集",
+          "slug": "partition-equal-subset-sum",
+          "section": 6,
+          "idea": "检查半和是否可达，每个数只用一次，容量倒序更新。",
+          "time": "O(nS)",
+          "space": "O(S)",
+          "pitfall": "S 为目标半和；正序会重复使用本轮元素。"
+        },
+        {
+          "id": 32,
+          "title": "最长有效括号",
+          "slug": "longest-valid-parentheses",
+          "section": 7,
+          "idea": "DP 记录当前位置结尾的有效长度，或用下标栈维护断点。",
+          "time": "O(n)",
+          "space": "O(n)",
+          "pitfall": "连续子串；跨过已有合法段后还需检查配对边界。"
+        }
+      ]
+    },
+    {
+      "name": "多维动态规划",
+      "chapter": 96,
+      "problems": [
+        {
+          "id": 62,
+          "title": "不同路径",
+          "slug": "unique-paths",
+          "section": 1,
+          "idea": "格子路径数来自上方与左方，用一维滚动数组。",
+          "time": "O(rc)",
+          "space": "O(c)",
+          "pitfall": "移动方向限制是状态无环的前提。"
+        },
+        {
+          "id": 64,
+          "title": "最小路径和",
+          "slug": "minimum-path-sum",
+          "section": 1,
+          "idea": "本格最优代价等于上左较小值加当前权值。",
+          "time": "O(rc)",
+          "space": "O(c)",
+          "pitfall": "首行首列只有一种进入方向。"
+        },
+        {
+          "id": 5,
+          "title": "最长回文子串",
+          "slug": "longest-palindromic-substring",
+          "section": 2,
+          "idea": "枚举奇偶两类中心向外扩张；也可使用区间 DP。",
+          "time": "O(n²)",
+          "space": "O(1)，中心扩展",
+          "pitfall": "不是子序列；偶数长度有字符间隙中心。"
+        },
+        {
+          "id": 1143,
+          "title": "最长公共子序列",
+          "slug": "longest-common-subsequence",
+          "section": 3,
+          "idea": "相同末尾走对角加一，不同末尾舍弃一边取最大。",
+          "time": "O(mn)",
+          "space": "O(min(m,n))，滚动",
+          "pitfall": "允许不连续，不同字符时不能简单清零。"
+        },
+        {
+          "id": 72,
+          "title": "编辑距离",
+          "slug": "edit-distance",
+          "section": 4,
+          "idea": "前缀 DP 比较插入、删除、替换，空前缀给出边界。",
+          "time": "O(mn)",
+          "space": "O(min(m,n))，滚动",
+          "pitfall": "滚动压缩必须保存旧左上角。"
+        }
+      ]
+    },
+    {
+      "name": "技巧",
+      "chapter": 97,
+      "problems": [
+        {
+          "id": 136,
+          "title": "只出现一次的数字",
+          "slug": "single-number",
+          "section": 1,
+          "idea": "全部异或，让成对元素抵消。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "依赖其他值恰好出现两次的约束。"
+        },
+        {
+          "id": 169,
+          "title": "多数元素",
+          "slug": "majority-element",
+          "section": 2,
+          "idea": "候选计数用不同元素成对抵消，得到多数候选。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "不保证多数存在时必须二次验证。"
+        },
+        {
+          "id": 75,
+          "title": "颜色分类",
+          "slug": "sort-colors",
+          "section": 3,
+          "idea": "三路分区维护零区、一区、未知区与二区。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "交换右边界来的值后，当前指针不能直接跳过。"
+        },
+        {
+          "id": 31,
+          "title": "下一个排列",
+          "slug": "next-permutation",
+          "section": 4,
+          "idea": "找右侧首个拐点，交换最小可增大值，再反转后缀。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "完全降序时回到升序；重复值使用严格比较。"
+        },
+        {
+          "id": 287,
+          "title": "寻找重复数",
+          "slug": "find-the-duplicate-number",
+          "section": 5,
+          "idea": "下标到数值构成函数图，Floyd 找环入口即重复值。",
+          "time": "O(n)",
+          "space": "O(1)",
+          "pitfall": "需要一到 n 值域与 n+1 长度，不修改输入。"
+        }
+      ]
+    }
+  ]
+}

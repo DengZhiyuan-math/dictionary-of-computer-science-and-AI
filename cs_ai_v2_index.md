@@ -2,9 +2,9 @@
 
 # CS 与 AI：章节及知识点索引
 
-共 80 讲、349 个细讲小节、90 道口述题；正文里的导览段落另行保留。一个小节可比较多个概念，小节数不等于算法数。
+共 97 讲、452 个细讲小节、90 道口述题；正文里的导览段落另行保留。一个小节可比较多个概念，小节数不等于算法数。
 
-[按英文查术语](docs/GLOSSARY.md) · [学习路线](docs/LEARNING_PATHS.md) · [训练速查](docs/TRAINING_CHEATSHEET.md)
+[按英文查术语](docs/GLOSSARY.md) · [学习路线](docs/LEARNING_PATHS.md) · [训练速查](docs/TRAINING_CHEATSHEET.md) · [Hot 100 的 100 题映射](docs/LEETCODE_HOT100.md)
 
 ## 快速入口
 
@@ -26,6 +26,7 @@
 - [强化学习：第 65–68 讲](#chapter-65)
 - [机器人、VLA 与世界模型：第 69–73 讲](#chapter-69)
 - [口述练习与复习：第 74–80 讲](#chapter-74)
+- [LeetCode Hot 100 算法思想：第 81–97 讲](#chapter-81)
 
 <a id="chapter-01"></a>
 
@@ -1210,3 +1211,259 @@ World Model，世界模型，核心思想是学习一个环境模型，描述环
 [阅读本讲](chapters/80.md) · [完整讲稿](cs_ai_v2_full.md#chapter-80)
 
 这是一个很重要的问题，因为面试官不仅评估知识，也在评估你对自己能力边界的认识。不要仅仅因为听过很多算法名称，就声称自己精通所有机器学习方法。也不要因为没有系统上过计算机科学专业课程，就完全低估自己的数学和建模能力。
+
+<a id="chapter-81"></a>
+
+## 第 81 讲：Hot 100 · 哈希：把反复查找变成状态查询
+
+LeetCode Hot 100 算法思想
+
+[阅读本讲](chapters/81.md) · [完整讲稿](cs_ai_v2_full.md#chapter-81)
+
+- [Hash Map：把“两两枚举”改成查询补数【重点精学】](chapters/81.md#chapter-81-section-01)
+- [Canonical Key：先定义“什么算同一组”【重点】](chapters/81.md#chapter-81-section-02)
+- [Hash Set：只从连续区间起点扩展【重点精学】](chapters/81.md#chapter-81-section-03)
+- [从题目反推哈希表应保存的状态【重点】](chapters/81.md#chapter-81-section-04)
+- [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/81.md#chapter-81-section-05)
+
+<a id="chapter-82"></a>
+
+## 第 82 讲：Hot 100 · 双指针：一次移动排除哪些候选
+
+LeetCode Hot 100 算法思想
+
+[阅读本讲](chapters/82.md) · [完整讲稿](cs_ai_v2_full.md#chapter-82)
+
+- [Two Pointers 与 Loop Invariant：先说清两个指针的职责【重点精学】](chapters/82.md#chapter-82-section-01)
+- [Container：移动短板需要排除证明【重点精学】](chapters/82.md#chapter-82-section-02)
+- [Three Sum：排序后固定一个数，再左右夹逼【重点】](chapters/82.md#chapter-82-section-03)
+- [Trapping Rain Water：前后最高边界决定当前水位【重点精学】](chapters/82.md#chapter-82-section-04)
+- [口述双指针：职责、移动依据、终止条件【重点】](chapters/82.md#chapter-82-section-05)
+- [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/82.md#chapter-82-section-06)
+
+<a id="chapter-83"></a>
+
+## 第 83 讲：Hot 100 · 滑动窗口：维护一个可解释的连续区间
+
+LeetCode Hot 100 算法思想
+
+[阅读本讲](chapters/83.md) · [完整讲稿](cs_ai_v2_full.md#chapter-83)
+
+- [Sliding Window，滑动窗口：合法性与收缩条件【重点精学】](chapters/83.md#chapter-83-section-01)
+- [Fixed Window：用频次差判断异位词【重点】](chapters/83.md#chapter-83-section-02)
+- [线性复杂度：指针只向前，而不是每轮重新扫描【重点】](chapters/83.md#chapter-83-section-03)
+- [适用边界：连续并不自动意味着可以滑动【重点精学】](chapters/83.md#chapter-83-section-04)
+- [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/83.md#chapter-83-section-05)
+
+<a id="chapter-84"></a>
+
+## 第 84 讲：Hot 100 · 连续区间：前缀和、单调队列与最小覆盖
+
+LeetCode Hot 100 算法思想
+
+[阅读本讲](chapters/84.md) · [完整讲稿](cs_ai_v2_full.md#chapter-84)
+
+- [Prefix Sum，前缀和：把区间性质变成两个前缀的关系【重点精学】](chapters/84.md#chapter-84-section-01)
+- [Monotonic Deque，单调队列：只保留仍可能成为最大值的候选【重点精学】](chapters/84.md#chapter-84-section-02)
+- [Minimum Cover：满足条件后尽量收缩【重点精学】](chapters/84.md#chapter-84-section-03)
+- [连续区间选型：累计量、候选极值还是覆盖条件【重点】](chapters/84.md#chapter-84-section-04)
+- [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/84.md#chapter-84-section-05)
+
+<a id="chapter-85"></a>
+
+## 第 85 讲：Hot 100 · 数组：局部最优、区间合并与原地编码
+
+LeetCode Hot 100 算法思想
+
+[阅读本讲](chapters/85.md) · [完整讲稿](cs_ai_v2_full.md#chapter-85)
+
+- [Kadane：以当前位置结尾的最优解【重点精学】](chapters/85.md#chapter-85-section-01)
+- [Sort and Sweep：排序后合并相交区间【重点】](chapters/85.md#chapter-85-section-02)
+- [Reversal：用局部翻转实现整体轮转【重点】](chapters/85.md#chapter-85-section-03)
+- [Prefix and Suffix Product：排除当前位置的组合【重点】](chapters/85.md#chapter-85-section-04)
+- [Index Placement：利用值域把数组当成标记空间【重点精学】](chapters/85.md#chapter-85-section-05)
+- [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/85.md#chapter-85-section-06)
+
+<a id="chapter-86"></a>
+
+## 第 86 讲：Hot 100 · 矩阵：标记、边界与有序性
+
+LeetCode Hot 100 算法思想
+
+[阅读本讲](chapters/86.md) · [完整讲稿](cs_ai_v2_full.md#chapter-86)
+
+- [In-place Marking：用首行首列保存延迟操作【重点】](chapters/86.md#chapter-86-section-01)
+- [Boundary Simulation：螺旋遍历维护四条边【重点】](chapters/86.md#chapter-86-section-02)
+- [Transpose and Reverse：把几何变换分解成简单置换【重点】](chapters/86.md#chapter-86-section-03)
+- [Staircase Search：每次比较排除一整行或列【重点精学】](chapters/86.md#chapter-86-section-04)
+- [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/86.md#chapter-86-section-05)
+
+<a id="chapter-87"></a>
+
+## 第 87 讲：Hot 100 · 链表：连接关系、指针距离与组合数据结构
+
+LeetCode Hot 100 算法思想
+
+[阅读本讲](chapters/87.md) · [完整讲稿](cs_ai_v2_full.md#chapter-87)
+
+- [Dummy Node：统一头节点与普通节点的边界【重点】](chapters/87.md#chapter-87-section-01)
+- [Pointer Rewiring：先保存后继，再修改连接【重点精学】](chapters/87.md#chapter-87-section-02)
+- [Fast and Slow Pointers，快慢指针：中点、环与入口【重点精学】](chapters/87.md#chapter-87-section-03)
+- [Intersection：让两条访问路径长度相等【重点】](chapters/87.md#chapter-87-section-04)
+- [Copy with Random Pointer：复制节点与复制关系分开【重点】](chapters/87.md#chapter-87-section-05)
+- [Merge and Divide：有序链表的合并、排序与加法【重点】](chapters/87.md#chapter-87-section-06)
+- [LRU：哈希表管定位，双向链表管最近使用顺序【重点精学】](chapters/87.md#chapter-87-section-07)
+- [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/87.md#chapter-87-section-08)
+
+<a id="chapter-88"></a>
+
+## 第 88 讲：Hot 100 · 二叉树：返回给父节点什么，在哪里更新答案
+
+LeetCode Hot 100 算法思想
+
+[阅读本讲](chapters/88.md) · [完整讲稿](cs_ai_v2_full.md#chapter-88)
+
+- [Traversal and BFS：遍历顺序与分层语义【重点】](chapters/88.md#chapter-88-section-01)
+- [Postorder DP：单侧贡献与全局路径分开【重点精学】](chapters/88.md#chapter-88-section-02)
+- [BST Invariant：限制来自所有祖先【重点精学】](chapters/88.md#chapter-88-section-03)
+- [Recursive Contracts：翻转、对称与最近公共祖先【重点】](chapters/88.md#chapter-88-section-04)
+- [Build and Flatten：区间分治与重连顺序【重点】](chapters/88.md#chapter-88-section-05)
+- [Tree Prefix Sum：路径状态必须回溯撤销【重点精学】](chapters/88.md#chapter-88-section-06)
+- [递归复杂度：树高、节点数与隐藏切片【重点】](chapters/88.md#chapter-88-section-07)
+- [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/88.md#chapter-88-section-08)
+
+<a id="chapter-89"></a>
+
+## 第 89 讲：Hot 100 · 图与前缀树：访问状态、传播层次与依赖关系
+
+LeetCode Hot 100 算法思想
+
+[阅读本讲](chapters/89.md) · [完整讲稿](cs_ai_v2_full.md#chapter-89)
+
+- [Connected Components：一次遍历吃掉一个连通块【重点】](chapters/89.md#chapter-89-section-01)
+- [Multi-source BFS：所有起点同时扩散【重点精学】](chapters/89.md#chapter-89-section-02)
+- [Topological Sort，拓扑排序：把“还欠几个前置条件”变成入度【重点精学】](chapters/89.md#chapter-89-section-03)
+- [Trie：共享前缀与完整单词标记【重点】](chapters/89.md#chapter-89-section-04)
+- [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/89.md#chapter-89-section-05)
+
+<a id="chapter-90"></a>
+
+## 第 90 讲：Hot 100 · 回溯：选择、约束、撤销与枚举成本
+
+LeetCode Hot 100 算法思想
+
+[阅读本讲](chapters/90.md) · [完整讲稿](cs_ai_v2_full.md#chapter-90)
+
+- [Backtracking，回溯：路径、候选集合与撤销操作【重点精学】](chapters/90.md#chapter-90-section-01)
+- [Cartesian Product：独立位置选择与组合树【重点】](chapters/90.md#chapter-90-section-02)
+- [Reusable Choice and Pruning：可重复选与剪枝前提【重点】](chapters/90.md#chapter-90-section-03)
+- [Constraint Construction：生成时就避免非法前缀【重点精学】](chapters/90.md#chapter-90-section-04)
+- [Grid Search：访问限制只属于当前路径【重点】](chapters/90.md#chapter-90-section-05)
+- [Partition and Output Complexity：切分位置与答案规模【重点】](chapters/90.md#chapter-90-section-06)
+- [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/90.md#chapter-90-section-07)
+
+<a id="chapter-91"></a>
+
+## 第 91 讲：Hot 100 · 二分：边界语义、有序半边与划分条件
+
+LeetCode Hot 100 算法思想
+
+[阅读本讲](chapters/91.md) · [完整讲稿](cs_ai_v2_full.md#chapter-91)
+
+- [Lower Bound，下界二分：寻找第一个满足条件的位置【重点精学】](chapters/91.md#chapter-91-section-01)
+- [Two Boundaries：重复元素的左右边界【重点】](chapters/91.md#chapter-91-section-02)
+- [Flattened Matrix：更强有序条件支持一维二分【重点】](chapters/91.md#chapter-91-section-03)
+- [Rotated Array：至少一侧保持正常顺序【重点精学】](chapters/91.md#chapter-91-section-04)
+- [Median Partition：二分的是切分位置【重点精学】](chapters/91.md#chapter-91-section-05)
+- [用单调条件解释每次删掉的区间【重点】](chapters/91.md#chapter-91-section-06)
+- [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/91.md#chapter-91-section-07)
+
+<a id="chapter-92"></a>
+
+## 第 92 讲：Hot 100 · 栈：嵌套结构与尚未解决的候选
+
+LeetCode Hot 100 算法思想
+
+[阅读本讲](chapters/92.md) · [完整讲稿](cs_ai_v2_full.md#chapter-92)
+
+- [Stack：最近打开的结构最先关闭【重点】](chapters/92.md#chapter-92-section-01)
+- [Auxiliary State：让最小值也能随弹栈恢复【重点】](chapters/92.md#chapter-92-section-02)
+- [Nested Decode：栈保存被暂停的上下文【重点】](chapters/92.md#chapter-92-section-03)
+- [Monotonic Stack，单调栈：等待下一个更大元素【重点精学】](chapters/92.md#chapter-92-section-04)
+- [Histogram：弹出时结算以该高度为短板的最大宽度【重点精学】](chapters/92.md#chapter-92-section-05)
+- [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/92.md#chapter-92-section-06)
+
+<a id="chapter-93"></a>
+
+## 第 93 讲：Hot 100 · 堆与选择：维护排名边界而非完整排序
+
+LeetCode Hot 100 算法思想
+
+[阅读本讲](chapters/93.md) · [完整讲稿](cs_ai_v2_full.md#chapter-93)
+
+- [Top K：小根堆维护最大的 k 个候选【重点精学】](chapters/93.md#chapter-93-section-01)
+- [Quickselect：只进入目标排名所在的一半【重点】](chapters/93.md#chapter-93-section-02)
+- [Two Heaps：用两个极值维护动态中位数【重点精学】](chapters/93.md#chapter-93-section-03)
+- [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/93.md#chapter-93-section-04)
+
+<a id="chapter-94"></a>
+
+## 第 94 讲：Hot 100 · 贪心：证明当前选择不会损失未来解
+
+LeetCode Hot 100 算法思想
+
+[阅读本讲](chapters/94.md) · [完整讲稿](cs_ai_v2_full.md#chapter-94)
+
+- [Running Minimum：以当前卖出日看最佳买入日【重点】](chapters/94.md#chapter-94-section-01)
+- [Reachability Frontier：只记最远可达位置【重点精学】](chapters/94.md#chapter-94-section-02)
+- [Greedy as Layers：最少跳跃的当前边界与下一边界【重点精学】](chapters/94.md#chapter-94-section-03)
+- [Last Occurrence：当所有已见字符都能封闭才切段【重点】](chapters/94.md#chapter-94-section-04)
+- [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/94.md#chapter-94-section-05)
+
+<a id="chapter-95"></a>
+
+## 第 95 讲：Hot 100 · 动态规划：状态含义、转移与遍历顺序
+
+LeetCode Hot 100 算法思想
+
+[阅读本讲](chapters/95.md) · [完整讲稿](cs_ai_v2_full.md#chapter-95)
+
+- [State and Transition：先定义一个格子到底代表什么【重点精学】](chapters/95.md#chapter-95-section-01)
+- [Unbounded Knapsack，完全背包：最少数量与不可达状态【重点精学】](chapters/95.md#chapter-95-section-02)
+- [Word Break：前缀可行性与最后一段【重点】](chapters/95.md#chapter-95-section-03)
+- [LIS：最优长度状态与最小结尾并不相同【重点精学】](chapters/95.md#chapter-95-section-04)
+- [Maximum Product：负号会交换最大与最小角色【重点精学】](chapters/95.md#chapter-95-section-05)
+- [0/1 Knapsack，零一背包：倒序容量防止同一物品被重复使用【重点精学】](chapters/95.md#chapter-95-section-06)
+- [Longest Valid Parentheses：以当前字符结尾的合法长度【重点精学】](chapters/95.md#chapter-95-section-07)
+- [压缩空间前，先确认哪些旧状态必须保留【重点】](chapters/95.md#chapter-95-section-08)
+- [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/95.md#chapter-95-section-09)
+
+<a id="chapter-96"></a>
+
+## 第 96 讲：Hot 100 · 多维 DP：网格路径、回文与双序列对齐
+
+LeetCode Hot 100 算法思想
+
+[阅读本讲](chapters/96.md) · [完整讲稿](cs_ai_v2_full.md#chapter-96)
+
+- [Grid DP：最后一步从哪个方向来【重点】](chapters/96.md#chapter-96-section-01)
+- [Palindrome Interval：两端相同还要看内部【重点精学】](chapters/96.md#chapter-96-section-02)
+- [LCS：前缀对前缀的最优公共子序列【重点精学】](chapters/96.md#chapter-96-section-03)
+- [Edit Distance：明确每种操作消耗了哪些前缀【重点精学】](chapters/96.md#chapter-96-section-04)
+- [二维状态为何有用：两个独立进度或一个区间的两端【重点】](chapters/96.md#chapter-96-section-05)
+- [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/96.md#chapter-96-section-06)
+
+<a id="chapter-97"></a>
+
+## 第 97 讲：Hot 100 · 约束驱动技巧：异或、抵消、分区、排列与找环
+
+LeetCode Hot 100 算法思想
+
+[阅读本讲](chapters/97.md) · [完整讲稿](cs_ai_v2_full.md#chapter-97)
+
+- [XOR：成对抵消依赖出现次数约束【重点】](chapters/97.md#chapter-97-section-01)
+- [Boyer–Moore Majority Vote：不同候选成对抵消【重点精学】](chapters/97.md#chapter-97-section-02)
+- [Dutch National Flag：三个区域与一个未知区【重点精学】](chapters/97.md#chapter-97-section-03)
+- [Next Permutation：最小幅度地增大字典序【重点精学】](chapters/97.md#chapter-97-section-04)
+- [Floyd on Array：把值当成下一条边【重点精学】](chapters/97.md#chapter-97-section-05)
+- [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/97.md#chapter-97-section-06)

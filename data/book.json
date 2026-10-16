@@ -6876,7 +6876,7 @@
   ],
   "metadata": {
     "title": "dictionary of computer science and AI",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "date": "2026-10-16",
     "language": "zh-CN",
     "originalVersion": "v2 · 2026-10-14",
@@ -6886,6 +6886,6 @@
       "detailedSubsections": 343,
       "quizQuestions": 90
     },
-    "description": "中英术语解释、80 讲通识讲稿、训练数值例题与口述练习。"
+    "description": "中英术语解释、97 讲通识讲稿、Hot 100 算法思想、训练数值例题与口述练习。"
   }
 }

@@ -1,14 +1,16 @@
 {
-  "chapters": 80,
-  "new_chapters": 52,
-  "new_subsections": 349,
+  "chapters": 97,
+  "new_chapters": 69,
+  "new_subsections": 452,
   "quiz_questions": 90,
   "training_chapters": 10,
-  "body_characters_including_whitespace": 111376,
-  "body_characters_no_whitespace": 105906,
-  "chinese_characters": 73009,
-  "sources": 168,
-  "glossary_entries": 85,
+  "body_characters_including_whitespace": 138143,
+  "body_characters_no_whitespace": 131180,
+  "chinese_characters": 92464,
+  "sources": 173,
+  "glossary_entries": 103,
+  "hot100_chapters": 17,
+  "hot100_problems": 100,
   "groups": {
     "计算机系统与软件": 3,
     "计算机系统补充": 2,
@@ -23,6 +25,7 @@
     "LLM 与智能体": 10,
     "强化学习与具身智能": 9,
     "口述练习": 5,
-    "复习与表达": 2
+    "复习与表达": 2,
+    "LeetCode Hot 100 算法思想": 17
   }
 }
