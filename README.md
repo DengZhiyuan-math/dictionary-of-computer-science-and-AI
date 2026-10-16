@@ -4,12 +4,14 @@
 
 A Chinese-first, bilingual learning dictionary covering computer science, algorithms, machine learning, deep learning, LLMs, reinforcement learning, VLA, and world models. Includes 97 lessons, a complete LeetCode Hot 100 pattern map, a searchable glossary, worked training examples, 90 oral questions, and a browser speech reader.
 
-**v2.2.0 · 2026-10-16** · 97 讲 · 452 个细讲小节 · 90 道口述题 · 103 个核心词条组 · 173 条参考资料
+**v2.3.0 · 2026-10-16** · 97 讲 · 452 个细讲小节 · 90 道口述题 · 103 个核心词条组 · 173 条参考资料
 
 ## 从这里开始
 
 | 你想做什么 | 入口 |
 | --- | --- |
+| 看整体结构、概念联系和先修顺序 | **[知识地图](docs/KNOWLEDGE_MAP.md)** · [交互图文件](docs/knowledge-map.html) |
+| 用 Obsidian 双链浏览完整笔记 | [笔记库首页](obsidian-vault/00-知识地图.md)，下载后将 `obsidian-vault` 文件夹作为仓库打开 |
 | 遇到缩写，先查定义和易混点 | [中英核心术语词典](docs/GLOSSARY.md) |
 | 看有哪些知识点，直接跳到解释 | [章节与小节索引](cs_ai_v2_index.md) |
 | 系统阅读全部内容 | [完整讲稿](cs_ai_v2_full.md) |
@@ -21,6 +23,14 @@ A Chinese-first, bilingual learning dictionary covering computer science, algori
 | 下载后听讲稿 | [播放器文件](cs_ai_v2_audiobook.html) · [下载整套资料](https://github.com/DengZhiyuan-math/dictionary-of-computer-science-and-AI/releases/latest) |
 | 阅读纯文本 | [全书 TXT](text/cs_ai_v2_full.txt) · [逐讲 TXT](text/chapters/) |
 | 追溯定义和方法 | [官方文档、论文与课程](docs/REFERENCES.md) |
+
+## 知识地图与双向链接
+
+知识地图将全书组织为 **14 个领域 → 131 个概念词条组 → 97 讲原文 → 100 道 Hot 100 练习**，并提供训练、算法、LLM 系统、行动与世界模型四条专题路线。
+
+每个概念页都有定义、易混点、推荐先修、后续概念、应用与对照、章节依据和相关练习。关系附有解释，目录归属、理解先修与概念对照分别标注。地图中的 131 个概念组包括原词典的 103 组及 28 个用于连接整体结构的主题概念。
+
+下载 [最新资料](https://github.com/DengZhiyuan-math/dictionary-of-computer-science-and-AI/releases/latest)，解压后用 Obsidian 打开 `obsidian-vault` 文件夹，入口是 `00-知识地图.md`。内部使用 `[[笔记路径|显示名称]]` 与章节标题链接，保留全部章节原文，并附两张原生 Canvas；无需社区插件。GitHub 上可通过[文字知识地图](docs/KNOWLEDGE_MAP.md)的普通链接阅读。交互图需要下载后在浏览器打开。
 
 ## 这份笔记怎样解释概念
 
@@ -57,6 +67,7 @@ GitHub 文件预览只显示 HTML 源码，需下载后在浏览器打开。播�
 - 保留原稿 80 讲与全部 90 道口述题，将长文拆成可独立阅读的章节，补齐前后章导航。
 - 从原稿的 343 个细讲小节增加到 452 个，补充训练数值例题、输入契约，以及 Hot 100 的算法思想与逐题映射。
 - 追加 17 讲 Hot 100 内容，原 80 讲编号稳定；播放器新增独立学习路线。
+- 新增分层知识地图、可搜索的局部关系图与完整 Obsidian 双链笔记库。
 - 新增 103 个中英核心词条组，每条都有解释、易混点和正文入口；完整覆盖仍以全书索引为准。
 - 正文、训练选编、索引、TXT、统计与播放器共享内容源，修改后统一生成。
 
@@ -71,6 +82,6 @@ node scripts/build.mjs
 node scripts/check.mjs
 ```
 
-原 80 讲在 `data/book.json`，Hot 100 内容源在 `data/hot100.mjs`，词典在 `data/glossary.json`，播放器模板在 `src/player.html`。不要单独修改生成后的讲稿或 HTML，以免下次生成覆盖。详见 [贡献说明](CONTRIBUTING.md) 与 [更新记录](CHANGELOG.md)。
+原 80 讲在 `data/book.json`，Hot 100 内容源在 `data/hot100.mjs`，词典在 `data/glossary.json`，地图结构与关系在 `data/knowledge-map.mjs`。不要单独修改生成后的讲稿、笔记库或 HTML，以免下次生成覆盖。详见 [贡献说明](CONTRIBUTING.md) 与 [更新记录](CHANGELOG.md)。
 
 本仓库整理自用户提供的 v2 讲稿、训练选编、索引和播放器，并补充原创算法思想讲解。保留原参考来源；重点核对训练接口、更新顺序与官方 Hot 100 题单，未对全部 173 条参考资料逐一重新核验。仓库尚未指定内容再利用许可证，公开访问不代表已授予任意再分发许可。

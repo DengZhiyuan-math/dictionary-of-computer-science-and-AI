@@ -1,0 +1,39 @@
+---
+title: "第 48 讲 · 深度学习架构：CNN、RNN、Transformer 与视觉模型"
+aliases: []
+tags: ["chapter","area/architectures"]
+---
+
+<!-- Generated. Edit data/knowledge-map.mjs and canonical book content. -->
+
+[[Areas/网络架构与 AI 工程|网络架构与 AI 工程]]
+
+## 本讲概念
+
+- [[Concepts/神经网络与可微建模|神经网络与可微建模]]
+- [[Concepts/卷积与视觉归纳偏置|卷积与视觉归纳偏置]]
+- [[Concepts/循环、状态与序列|循环、状态与序列]]
+
+<a id="chapter-48"></a>
+
+## 第 48 讲｜深度学习架构：CNN、RNN、Transformer 与视觉模型
+
+领域：深度学习导览 · 导览 / 复习
+
+不同神经网络架构，是对不同数据结构采取的不同设计偏好。CNN，Convolutional Neural Network，卷积神经网络，使用局部卷积核处理图像等网格结构数据。它利用局部模式复用的思想，在图像识别、目标检测和许多视觉任务中长期非常重要。ResNet，残差网络，通过残差连接使深层网络更容易训练。
+
+RNN，Recurrent Neural Network，循环神经网络，通过隐藏状态顺序处理时间序列。LSTM 和 GRU 是改进的循环结构，用于缓解普通 RNN 处理长期依赖时遇到的一些困难。它们曾是语言和时间序列建模的重要选择，现在 Transformer 在许多大规模任务中更加常见。
+
+Attention，注意力机制，允许模型根据当前任务有选择地关注输入的不同部分。Self Attention，自注意力，让同一个序列内部的不同位置相互交换信息。Transformer 把注意力和前馈网络等组件组合起来，能够并行处理序列中的大量位置，成为现代 LLM 的核心架构之一。
+
+Transformer 有三种常见组织方式。Encoder Only，只有编码器，例如 BERT，适合提取表征、分类和理解类任务。Decoder Only，只有解码器，例如多数 GPT 风格的自回归语言模型，适合逐个生成后续 Token。Encoder Decoder，编码器解码器，例如 T5，把输入编码后再生成输出，常用于翻译和序列转换。
+
+ViT，Vision Transformer，把图像拆成若干小块，转换为类似 Token 的表示，再由 Transformer 处理。Object Detection，目标检测，不仅识别画面里有什么，还给出物体位置；YOLO 是知名的高效目标检测系列。Semantic Segmentation，语义分割，为不同像素分配类别；Instance Segmentation，实例分割，还区分同类的不同物体。SAM，Segment Anything Model，是通用图像分割的重要系列。
+
+U Net 是一种具有多尺度特征和跳跃连接的网络结构，常用于医学图像分割，也出现在扩散生成模型中。CLIP 通过图像与文字之间的对比学习，建立跨模态语义表示，可用于图文检索和零样本分类。Contrastive Learning，对比学习，大体思想是让应该相似的表示靠近，让不相关的表示更容易区分。
+
+Graph Neural Network，图神经网络，让节点沿着图中的边交换信息。它适合分子、社交网络、知识图谱等存在显式关系结构的数据。State Space Model，状态空间模型，也发展出可以处理序列的神经网络架构，例如 Mamba 家族；它们在长序列效率等方面提供与标准注意力不同的技术路线。
+
+讲到这里，你已经能够解释为什么“深度学习”不是只有一种模型。CNN 利用空间局部性；RNN 强调顺序状态；Transformer 强调动态的信息关联；GNN 利用图结构；不同设计体现了不同任务的归纳偏置。
+
+参考资料（不朗读）：[S091 · Attention Is All You Need](https://arxiv.org/abs/1706.03762)；[S092 · Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)；[S093 · Mamba: Linear-Time Sequence Modeling with Selective State Spaces](https://arxiv.org/abs/2312.00752)；[S094 · Learning Transferable Visual Models From Natural Language Supervision](https://arxiv.org/abs/2103.00020)

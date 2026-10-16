@@ -1,0 +1,63 @@
+---
+title: "第 68 讲 · 模仿与多智能体：BC、DAgger、GAIL、Self-Play、MAPPO"
+aliases: []
+tags: ["chapter","area/rl"]
+---
+
+<!-- Generated. Edit data/knowledge-map.mjs and canonical book content. -->
+
+[[Areas/强化学习与模仿|强化学习与模仿]]
+
+## 本讲概念
+
+- [[Concepts/模仿学习与示范数据|模仿学习与示范数据]]
+
+<a id="chapter-68"></a>
+
+## 第 68 讲｜模仿与多智能体：BC、DAgger、GAIL、Self-Play、MAPPO
+
+领域：强化学习与具身智能 · 细讲
+
+<a id="chapter-68-section-01"></a>
+
+### Behavior Cloning，行为克隆【重点】
+
+行为克隆把专家看到的观察与专家动作当作监督数据，学习在类似情形下模仿。它起步直接，不必从零探索奖励。问题是策略出现一个小失误后，可能进入专家示范没覆盖的状态，随后越错越远。这叫分布偏移或累积误差，不是增加一点训练准确率就一定能解决。
+
+<a id="chapter-68-section-02"></a>
+
+### DAgger【重点】
+
+DAgger 让当前策略实际行动，在它会遇到的状态上请专家提供应采取的动作，再把这些新数据加入训练。它针对的是仅在专家轨迹上学习导致的分布问题。代价是需要专家持续可用，真实机器人还必须控制危险探索。因此它不是无示范学习，也不是模型自己随意改标签。
+
+<a id="chapter-68-section-03"></a>
+
+### Inverse RL 与 GAIL【认识】
+
+逆强化学习从示范推断什么奖励或偏好能够解释专家行为。GAIL 用对抗方式让学习策略产生的行为与专家难以区分，避免简单逐步复制动作。它与 GAN 有思想联系，但生成对象是交互行为。示范并不能唯一确定真实意图，多个奖励都可能解释同样行为，必须认识识别的局限。
+
+<a id="chapter-68-section-04"></a>
+
+### Self-Play 与 Opponent Pool【重点】
+
+自我博弈让策略与自身版本或训练中的其他策略对抗，通过竞争产生经验。只与当前版本交手可能导致遗忘旧打法或形成循环，opponent pool 保留多种历史对手，league training 进一步组织多样化对抗。击败一个固定对手不代表综合实力提高，需要对未见对手、不同策略类型与多种随机条件测试。
+
+<a id="chapter-68-section-05"></a>
+
+### Non-Stationarity 与 Credit Assignment【重点】
+
+多智能体里，其他人也在学习，所以一个智能体面对的环境规则在不断变化，这叫非平稳性。团队最终进球，但哪个传球、跑位或掩护应该得到多少信用，是 credit assignment 问题。所有人共享一个奖励并不自动学会合理分工。过分奖励局部指标，还可能形成一直传球却不尝试得分的行为。
+
+<a id="chapter-68-section-06"></a>
+
+### CTDE、IPPO、MAPPO、QMIX【认识】
+
+CTDE 是集中训练、分散执行：训练时可以利用更完整的团队信息，真正执行时每个个体只依赖允许看到的观察。IPPO 把每个体较独立地按 PPO 训练。MAPPO 常使用集中式价值评价帮助协作。QMIX 用受约束的混合网络将个体价值组成团队价值，便于分散选动作。它们有不同信息与动作假设，不是可在所有多智能体任务中随意互换。
+
+<a id="chapter-68-section-07"></a>
+
+### Curriculum、Reward Shaping、Domain Randomization【重点】
+
+课程学习先从简单任务开始，逐渐增加难度。奖励塑形增加辅助反馈，帮助探索；域随机化改变环境参数，训练对变化更稳健。三者分别改变任务难度、反馈设计和环境分布。训练足球智能体时，简化人数、奖励前进、随机化摩擦是三种不同手段。设计实验时应逐一比较贡献，否则看不到真正学到协作的原因。
+
+参考资料（不朗读）：[S151 · A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning](https://arxiv.org/abs/1011.0686)；[S152 · Generative Adversarial Imitation Learning](https://arxiv.org/abs/1606.03476)；[S153 · The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games](https://arxiv.org/abs/2103.01955)；[S154 · QMIX: Monotonic Value Function Factorisation for Deep Multi-Agent Reinforcement Learning](https://arxiv.org/abs/1803.11485)；[S155 · Vinyals et al. — Grandmaster level in StarCraft II using multi-agent reinforcement learning](https://www.nature.com/articles/s41586-019-1724-z)

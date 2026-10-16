@@ -4,7 +4,7 @@
 
 共 97 讲、452 个细讲小节、90 道口述题；正文里的导览段落另行保留。一个小节可比较多个概念，小节数不等于算法数。
 
-[按英文查术语](docs/GLOSSARY.md) · [学习路线](docs/LEARNING_PATHS.md) · [训练速查](docs/TRAINING_CHEATSHEET.md) · [Hot 100 的 100 题映射](docs/LEETCODE_HOT100.md)
+[知识地图](docs/KNOWLEDGE_MAP.md) · [按英文查术语](docs/GLOSSARY.md) · [学习路线](docs/LEARNING_PATHS.md) · [训练速查](docs/TRAINING_CHEATSHEET.md) · [Hot 100 的 100 题映射](docs/LEETCODE_HOT100.md)
 
 ## 快速入口
 

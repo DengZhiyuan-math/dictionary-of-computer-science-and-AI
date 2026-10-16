@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {read} from './model.mjs';
+import {areas} from '../data/knowledge-map.mjs';
+const output=process.argv[2];
+if(!output||!path.isAbsolute(output))throw new Error('Supply an absolute output path for the inline visualization.');
+const source=read('src/knowledge-map-inline.html');
+if(source.split('__OVERVIEW__').length!==2)throw new Error('Expected one overview placeholder');
+fs.writeFileSync(output,source.replace('__OVERVIEW__',()=>JSON.stringify(areas).replace(/</g,'\\u003c')));
+console.log('Inline knowledge overview generated.');

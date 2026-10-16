@@ -1,0 +1,213 @@
+{
+  "nodes": [
+    {
+      "id": "sample-feature-label",
+      "type": "file",
+      "file": "Concepts/样本／特征／标签.md",
+      "x": 0,
+      "y": 0,
+      "width": 500,
+      "height": 320
+    },
+    {
+      "id": "tensor-shape-axis",
+      "type": "file",
+      "file": "Concepts/张量／形状／轴.md",
+      "x": 560,
+      "y": 0,
+      "width": 500,
+      "height": 320
+    },
+    {
+      "id": "binary-multiclass-multilabel",
+      "type": "file",
+      "file": "Concepts/二分类／互斥多分类／多标签.md",
+      "x": 1120,
+      "y": 0,
+      "width": 500,
+      "height": 320
+    },
+    {
+      "id": "logit",
+      "type": "file",
+      "file": "Concepts/概率变换前的分数.md",
+      "x": 1680,
+      "y": 0,
+      "width": 500,
+      "height": 320
+    },
+    {
+      "id": "bcewithlogitsloss",
+      "type": "file",
+      "file": "Concepts/融合 Sigmoid 的二元交叉熵.md",
+      "x": 0,
+      "y": 420,
+      "width": 500,
+      "height": 320
+    },
+    {
+      "id": "forward-backward",
+      "type": "file",
+      "file": "Concepts/前向／反向传播.md",
+      "x": 560,
+      "y": 420,
+      "width": 500,
+      "height": 320
+    },
+    {
+      "id": "gradient",
+      "type": "file",
+      "file": "Concepts/梯度.md",
+      "x": 1120,
+      "y": 420,
+      "width": 500,
+      "height": 320
+    },
+    {
+      "id": "learning-rate",
+      "type": "file",
+      "file": "Concepts/学习率.md",
+      "x": 1680,
+      "y": 420,
+      "width": 500,
+      "height": 320
+    },
+    {
+      "id": "adam-adamw",
+      "type": "file",
+      "file": "Concepts/自适应矩估计／解耦权重衰减.md",
+      "x": 0,
+      "y": 840,
+      "width": 500,
+      "height": 320
+    },
+    {
+      "id": "scheduler",
+      "type": "file",
+      "file": "Concepts/学习率调度器.md",
+      "x": 560,
+      "y": 840,
+      "width": 500,
+      "height": 320
+    },
+    {
+      "id": "precision",
+      "type": "file",
+      "file": "Concepts/精确率.md",
+      "x": 1120,
+      "y": 840,
+      "width": 500,
+      "height": 320
+    },
+    {
+      "id": "calibration",
+      "type": "file",
+      "file": "Concepts/概率校准.md",
+      "x": 1680,
+      "y": 840,
+      "width": 500,
+      "height": 320
+    }
+  ],
+  "edges": [
+    {
+      "id": "step-0",
+      "fromNode": "sample-feature-label",
+      "toNode": "tensor-shape-axis",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "推荐阅读下一步",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "step-1",
+      "fromNode": "tensor-shape-axis",
+      "toNode": "binary-multiclass-multilabel",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "推荐阅读下一步",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "step-2",
+      "fromNode": "binary-multiclass-multilabel",
+      "toNode": "logit",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "推荐阅读下一步",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "step-3",
+      "fromNode": "logit",
+      "toNode": "bcewithlogitsloss",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "推荐阅读下一步",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "step-4",
+      "fromNode": "bcewithlogitsloss",
+      "toNode": "forward-backward",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "推荐阅读下一步",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "step-5",
+      "fromNode": "forward-backward",
+      "toNode": "gradient",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "推荐阅读下一步",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "step-6",
+      "fromNode": "gradient",
+      "toNode": "learning-rate",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "推荐阅读下一步",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "step-7",
+      "fromNode": "learning-rate",
+      "toNode": "adam-adamw",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "推荐阅读下一步",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "step-8",
+      "fromNode": "adam-adamw",
+      "toNode": "scheduler",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "推荐阅读下一步",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "step-9",
+      "fromNode": "scheduler",
+      "toNode": "precision",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "推荐阅读下一步",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "step-10",
+      "fromNode": "precision",
+      "toNode": "calibration",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "推荐阅读下一步",
+      "toEnd": "arrow"
+    }
+  ]
+}

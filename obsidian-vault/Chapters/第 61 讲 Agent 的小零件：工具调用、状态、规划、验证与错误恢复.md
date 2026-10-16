@@ -1,0 +1,69 @@
+---
+title: "第 61 讲 · Agent 的小零件：工具调用、状态、规划、验证与错误恢复"
+aliases: []
+tags: ["chapter","area/retrieval-agents"]
+---
+
+<!-- Generated. Edit data/knowledge-map.mjs and canonical book content. -->
+
+[[Areas/检索、RAG 与 Agent|检索、RAG 与 Agent]]
+
+## 本讲概念
+
+- [[Concepts/智能体|智能体]]
+
+<a id="chapter-61"></a>
+
+## 第 61 讲｜Agent 的小零件：工具调用、状态、规划、验证与错误恢复
+
+领域：LLM 与智能体 · 细讲
+
+<a id="chapter-61-section-01"></a>
+
+### Tool Calling、Schema、Structured Output【重点】
+
+工具调用让模型选择外部能力，并生成合适参数；真正执行由应用系统负责。Schema 规定字段类型和约束，结构化输出让应用更容易读取结果。JSON 格式正确，不保证参数对应真实对象或操作合理。模型提出删除文件的参数，也不意味着它自然获得删除权限，执行层仍应检查授权。
+
+<a id="chapter-61-section-02"></a>
+
+### Workflow 与 Agent Loop【重点】
+
+固定工作流预先安排主要步骤，例如检索、生成、审核。Agent loop 让系统根据当前结果决定下一步工具或行动。ReAct 代表推理、行动、观察交替的设计思路。越多自主决策不等于越可靠，重复性任务经常适合固定流程，开放任务才需要更多动态选择。两者可以结合，不必把整个系统都交给自由循环。
+
+<a id="chapter-61-section-03"></a>
+
+### State、Memory、Context Window【重点】
+
+State 保存当前任务进度，如哪些文件已读、哪些操作已完成。Memory 可以是跨任务保存的偏好、摘要或检索库。Context window 是某次模型调用能利用的上下文范围。把历史放进数据库，不代表模型每次都自动记得；仍需检索和选择。长期记忆通常不等于更新模型权重，也应处理过期、隐私和错误信息。
+
+<a id="chapter-61-section-04"></a>
+
+### Planning、Decomposition、Search【认识】
+
+任务分解把目标拆成可验证子任务。规划可以先写步骤，也可以执行后重新调整。束搜索保留多个候选计划，MCTS 用树搜索逐步分配探索预算。它们有效的前提是候选结果能被合理评价；没有可信反馈时，搜索可能只是产生更多漂亮但错误的计划。规划文本越长不代表完成概率越高。
+
+<a id="chapter-61-section-05"></a>
+
+### Reflection、Verifier、Execution Feedback【重点】
+
+Reflection 让模型检查自己的答案；verifier 是专门验证结果的组件；execution feedback 来自真实执行，例如编译是否通过、查询返回了什么。自我检查可以有帮助，却可能重复同样的盲点。单元测试、类型检查、约束验证和外部来源核对，往往提供更独立的证据。多个同类模型互相赞同不等于完成了独立验证。
+
+<a id="chapter-61-section-06"></a>
+
+### Retry、Idempotency、Checkpoint、Human Approval【重点】
+
+工具失败可重试，但写操作需要防止重复副作用。幂等键把重复请求识别为同一操作。任务检查点记录已完成工作，避免恢复时从头造成重复修改。高后果动作可保留人工批准。技术上能够执行和用户已经授权是两件事，读到网页里的指令不能自动扩大权限。
+
+<a id="chapter-61-section-07"></a>
+
+### Prompt Injection、Sandbox、Least Privilege【重点】
+
+提示注入把恶意指令藏在网页、文件或工具输出中，试图让系统把数据当命令。沙箱限制运行代码能触及的资源，最小权限只给完成任务必需能力。防护不能只靠一句“不要受骗”，还应隔离信任边界、限制工具能力并审计操作。MCP 等协议帮助连接工具，不会自动证明工具内容可信。
+
+<a id="chapter-61-section-08"></a>
+
+### Evaluation、Trajectory、Cost、Long-Horizon Failure【重点】
+
+Trajectory 是完成任务的行动记录。评估不仅看最终文本，还要看真实任务成功率、错误恢复、权限违规、工具调用数、成本和延迟。长任务可能在每一步都只有小概率失误，却累计出很高失败率。把任务拆成可检查步骤、及时保存结果和限制无效循环，是与换更大模型同样重要的系统设计。
+
+参考资料（不朗读）：[S123 · ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)；[S124 · Model Context Protocol — Introduction](https://modelcontextprotocol.io/docs/getting-started/intro)；[S125 · OWASP — Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/)；[S130 · AgentBench: Evaluating LLMs as Agents](https://arxiv.org/abs/2308.03688)

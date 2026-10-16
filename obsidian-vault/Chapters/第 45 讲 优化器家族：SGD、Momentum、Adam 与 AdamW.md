@@ -1,0 +1,66 @@
+---
+title: "第 45 讲 · 优化器家族：SGD、Momentum、Adam 与 AdamW"
+aliases: []
+tags: ["chapter","area/training"]
+---
+
+<!-- Generated. Edit data/knowledge-map.mjs and canonical book content. -->
+
+[[Areas/损失、训练与优化|损失、训练与优化]]
+
+## 本讲概念
+
+- [[Concepts/逐参数自适应更新方法|逐参数自适应更新方法]]
+- [[Concepts/自适应矩估计／解耦权重衰减|自适应矩估计／解耦权重衰减]]
+- [[Concepts/随机梯度下降／动量|随机梯度下降／动量]]
+- [[Concepts/权重衰减|权重衰减]]
+
+<a id="chapter-45"></a>
+
+## 第 45 讲｜优化器家族：SGD、Momentum、Adam 与 AdamW
+
+领域：训练微知识点 · 细讲
+
+<a id="chapter-45-section-01"></a>
+
+### Batch GD 与 SGD【重点】
+
+全批量梯度下降用全部训练数据计算一次更新方向，每一步比较稳定，但大数据时成本高。随机梯度下降在严格命名下可指每次只用一个样本；现代训练中说 SGD，经常实际上使用小批量。小批量牺牲了单步方向的精确性，却让模型更频繁地更新，并能利用硬件并行。不要把随机梯度理解为随便乱改参数：它来自抽样数据对全体梯度的估计。
+
+<a id="chapter-45-section-02"></a>
+
+### Momentum 与 Nesterov【重点】
+
+Momentum，动量，综合此前的更新趋势，而不只看当前一个批次。可以想象推动一个有惯性的球：持续方向得到积累，左右抖动在一定程度上被平滑。Nesterov 动量在相关设计中考虑沿动量前进后的位置再修正方向。二者帮助优化，不保证越大动量越好；如果方向已经改变，过强惯性也可能导致过冲。
+
+<a id="chapter-45-section-03"></a>
+
+### AdaGrad 与 RMSProp【认识】
+
+AdaGrad 根据每个参数过去的梯度情况调整更新幅度，对稀疏特征等问题有吸引力，但长期累计可能使有效步幅越来越小。RMSProp 使用近期梯度平方的滑动统计，减轻无限累积导致的衰减问题。这些方法体现自适应步长：不同参数可以采用不同的有效更新尺度。“自适应”不等于不需要设置学习率，更不意味着不需要验证。
+
+<a id="chapter-45-section-04"></a>
+
+### Adam【重点精学】
+
+Adam 综合梯度方向的历史平均与梯度大小的历史统计，使更新既带有动量，又有逐参数的尺度调整。beta 参数控制历史信息保留多久；epsilon 是数值计算中的小稳定项，不是探索概率。在不同优化器中看到同一个名字，应先确认语境。Adam 在很多深度学习任务中方便使用，但它不是理论上或实践中无条件最好的优化器。
+
+<a id="chapter-45-section-05"></a>
+
+### AdamW 与 Weight Decay【重点精学】
+
+Weight decay，权重衰减，倾向于抑制权重过大。AdamW 将权重衰减与 Adam 的梯度自适应处理分开，避免把它完全当作普通梯度项一起缩放。对于基本 SGD，某些常见条件下 L2 惩罚与权重衰减可以等价；换成自适应优化器后，不能直接照搬这个等价关系。面试只需说清 AdamW 的 W 与解耦权重衰减有关，而不只是“更快的 Adam”。
+
+<a id="chapter-45-section-06"></a>
+
+### L-BFGS、Coordinate Descent【认识】
+
+L-BFGS 用有限历史信息近似曲率，属于拟牛顿优化，常见于中小规模、目标比较平滑的问题。Coordinate descent，坐标下降，每次优化一个或一组变量，适合某些线性模型和稀疏优化。优化器不是深度学习独有：逻辑回归、支持向量机和矩阵分解也需要求解参数，只是合适的算法不一定相同。
+
+<a id="chapter-45-section-07"></a>
+
+### EMA、SWA 与 SAM【认识】
+
+EMA，对模型权重作指数滑动平均，试图获得比单个训练瞬间更平稳的权重。SWA，随机权重平均，汇总一段训练中的权重。SAM，锐度感知最小化，关注参数附近受扰动后的损失，而不只优化一个精确位置。它们不是同一种操作，且可能增加计算或调参工作。权重平均与模型集成也不同：前者平均参数，后者组合预测，并不总能互相替代。
+
+参考资料（不朗读）：[S070 · PyTorch — 优化器](https://docs.pytorch.org/docs/stable/optim.html)；[S084 · Decoupled Weight Decay Regularization](https://arxiv.org/abs/1711.05101)；[S023 · scikit-learn — 线性模型](https://scikit-learn.org/stable/modules/linear_model.html)；[S085 · PyTorch — 权重平均](https://docs.pytorch.org/docs/stable/optim.html#weight-averaging-swa-and-ema)；[S086 · Sharpness-Aware Minimization for Efficiently Improving Generalization](https://arxiv.org/abs/2010.01412)

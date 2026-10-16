@@ -1,0 +1,39 @@
+---
+title: "第 69 讲 · VLA 与具身智能：让模型从理解走向行动"
+aliases: []
+tags: ["chapter","area/embodied"]
+---
+
+<!-- Generated. Edit data/knowledge-map.mjs and canonical book content. -->
+
+[[Areas/机器人、VLA 与世界模型|机器人、VLA 与世界模型]]
+
+## 本讲概念
+
+- [[Concepts/视觉语言动作模型|视觉语言动作模型]]
+
+<a id="chapter-69"></a>
+
+## 第 69 讲｜VLA 与具身智能：让模型从理解走向行动
+
+领域：强化学习与具身智能 · 导览 / 复习
+
+Embodied AI，具身智能，研究具有身体或行动接口的智能体怎样感知环境、决策并采取动作。Robot Learning，机器人学习，用数据驱动的方法获得控制能力。VLA，Vision Language Action，视觉语言动作模型，是近年重要的研究方向之一。它的典型输入是摄像头观察、语言任务以及可能存在的机器人内部状态，输出是某种可执行的动作表示。
+
+先比较三个名称。LLM 主要处理语言和相关符号序列。VLM 能把视觉输入和语言语义结合起来。VLA 不只是告诉你“桌上有杯子”，还需要输出“手臂接下来怎样移动，才能把杯子拿起来”。这意味着模型不仅要理解是什么，还要决定怎样做。
+
+Action Space，动作空间，定义智能体能够输出什么。对于机械臂，可以是末端执行器的位置变化、姿态变化、夹爪开合或关节控制指令。对于移动机器人，可以是速度、转向角或离散导航动作。Action Tokenization，把动作离散化为 Token，是一种方法；Continuous Action Generation，连续动作生成，则直接输出连续控制量或动作轨迹。
+
+Action Chunking，动作分块，是一次预测未来的一小段动作，而不只是一个控制时刻。这样可以减少频繁生成和短时动作抖动，但也需要随新观察及时调整。Diffusion Policy，扩散策略，用扩散类生成方法预测动作序列。ACT，Action Chunking with Transformers，是动作分块相关的代表性模仿学习方法。Flow Matching，也被一些 VLA 系统用于连续动作生成。
+
+你可能听到 RT 2、OpenVLA、Octo、Pi Zero、SmolVLA 等代表性名称。RT 2 是把视觉语言知识用于机器人动作生成的早期重要工作。OpenVLA 是开放研究生态中的代表模型。Pi Zero 等路线体现了视觉语言条件与连续动作生成相结合的方向。记住这些是研究和系统路线的例子，不必背模型的参数规模。
+
+Perception，感知，识别环境里有哪些物体，它们在哪里。Object Detection，目标检测，给出物体类别与位置。Depth Estimation，深度估计，推测物体距离。Pose Estimation，位姿估计，判断物体或机器人的位置和方向。SLAM，Simultaneous Localization and Mapping，同步定位与建图，让机器人一边估计自己的位置，一边构建环境地图。
+
+Motion Planning，运动规划，决定从当前位置到目标位置采用什么轨迹。Inverse Kinematics，逆运动学，从期望的末端位置反推关节应如何设置。MPC，Model Predictive Control，模型预测控制，在有限预测窗口中反复优化未来动作，并随着新观测重新规划。PID Controller，是经典反馈控制器。Safety Constraint，安全约束，用于限制速度、碰撞、关节范围等危险行为。
+
+Sim To Real，仿真到现实，是先在模拟环境训练，再迁移到真实机器。Domain Randomization，域随机化，通过改变仿真中的光照、摩擦、物体外观或动力学条件，提高策略对真实差异的适应能力。Proprioception，本体感知，是机器人对自身关节位置、速度等内部状态的感知。
+
+VLA 的核心困难是：机器人演示数据昂贵，动作精度要求高，训练硬件平台各不相同，真实环境存在延迟、碰撞和安全限制。仅仅在视觉和语言上回答正确，不代表机器人在物理世界中能可靠执行。解释 VLA 时，请用“感知、理解指令、生成动作、反馈控制”这四步描述。
+
+参考资料（不朗读）：[S003 · OpenVLA: An Open-Source Vision-Language-Action Model](https://arxiv.org/abs/2406.09246)；[S156 · Diffusion Policy: Visuomotor Policy Learning via Action Diffusion](https://arxiv.org/abs/2303.04137)；[S157 · Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware](https://arxiv.org/abs/2304.13705)；[S158 · Pi Zero: A Vision-Language-Action Flow Model for General Robot Control](https://arxiv.org/abs/2410.24164)

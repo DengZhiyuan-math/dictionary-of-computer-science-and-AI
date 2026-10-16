@@ -2,7 +2,7 @@
 
 # dictionary of computer science and AI
 
-计算机科学与现代 AI：97 讲通识笔记 · v2.2.0
+计算机科学与现代 AI：97 讲通识笔记 · v2.3.0
 
 版本日期：2026-10-16。原稿 v2 的 80 讲与 90 道口述题保持完整，追加 Hot 100 的 17 讲；当前含 452 个细讲小节。
 
@@ -10,7 +10,7 @@
 
 这份通识笔记不穷尽所有 CS 分支，也不作为最新模型排行榜。口述参考答案应结合自己的真实经历。播放器使用浏览器或系统语音，不包含预录 MP3；离线语音与后台播放取决于设备。
 
-[学习路线](docs/LEARNING_PATHS.md) · [术语词典](docs/GLOSSARY.md) · [小节索引](cs_ai_v2_index.md) · [训练速查](docs/TRAINING_CHEATSHEET.md) · [Hot 100 算法思想](docs/LEETCODE_HOT100.md) · [全部参考资料](docs/REFERENCES.md)
+[知识地图](docs/KNOWLEDGE_MAP.md) · [学习路线](docs/LEARNING_PATHS.md) · [术语词典](docs/GLOSSARY.md) · [小节索引](cs_ai_v2_index.md) · [训练速查](docs/TRAINING_CHEATSHEET.md) · [Hot 100 算法思想](docs/LEETCODE_HOT100.md) · [全部参考资料](docs/REFERENCES.md)
 
 ## 目录
 

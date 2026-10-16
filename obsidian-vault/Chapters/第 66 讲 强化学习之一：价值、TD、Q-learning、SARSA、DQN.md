@@ -1,0 +1,70 @@
+---
+title: "第 66 讲 · 强化学习之一：价值、TD、Q-learning、SARSA、DQN"
+aliases: []
+tags: ["chapter","area/rl"]
+---
+
+<!-- Generated. Edit data/knowledge-map.mjs and canonical book content. -->
+
+[[Areas/强化学习与模仿|强化学习与模仿]]
+
+## 本讲概念
+
+- [[Concepts/离策略／在策略时序差分控制|离策略／在策略时序差分控制]]
+- [[Concepts/回报、价值与 Bellman 关系|回报、价值与 Bellman 关系]]
+
+<a id="chapter-66"></a>
+
+## 第 66 讲｜强化学习之一：价值、TD、Q-learning、SARSA、DQN
+
+领域：强化学习与具身智能 · 细讲
+
+<a id="chapter-66-section-01"></a>
+
+### State、Observation、Action、Episode【重点】
+
+State 是环境完整状态，observation 是智能体实际看到的信息。机器人摄像头看不到被遮住的物体，因此二者往往不同。Action 是可采取的动作。Episode 是一段从开始到终止的交互，如一局游戏，不是训练数据完整遍历一遍的 epoch。Trajectory 或 rollout 是这段状态、动作、奖励的记录，也可以是一段未结束的轨迹。
+
+<a id="chapter-66-section-02"></a>
+
+### Reward、Return、Discount、Horizon【重点】
+
+Reward 是一步的反馈，return 汇总后续回报。Discount 控制未来回报相对当前的权重，horizon 是考虑多长未来。一个短期动作可能没有奖励，却为之后进球创造机会，因此强化学习不只是找眼前得分最高的动作。稀疏奖励是很久才有有效反馈，密集奖励提供更频繁信号，但设计不当会鼓励钻空子。
+
+<a id="chapter-66-section-03"></a>
+
+### Value、Q Value、Bellman Backup【重点】
+
+状态价值评估处于某种情形后长期可能得到多少回报。Q value 进一步指定当前采取哪个动作。Bellman backup 利用当前奖励和未来价值估计更新现在的价值，将长远问题递归分解。它是许多方法共享的思想，不是只在一条特定公式里出现。价值分数准确与动作搜索充分，是两个需要分别关注的问题。
+
+<a id="chapter-66-section-04"></a>
+
+### Value Iteration、Policy Iteration【认识】
+
+已知环境转移和奖励模型时，价值迭代反复改善价值估计，再据此选动作；策略迭代交替评估当前策略、改进策略。它们是动态规划的重要例子。状态太多时不能逐一列举，所以实际强化学习会使用采样和函数近似。这里的 policy 是行动规则，不是公司政策。
+
+<a id="chapter-66-section-05"></a>
+
+### Monte Carlo 与 Temporal Difference【重点】
+
+蒙特卡洛价值学习观察一段完整结果，再回头评价先前状态。TD，时序差分，利用下一步已有价值估计，没等整段结束也能更新。前者依赖实际回报，后者会使用自己的估计来更新自己，这常叫 bootstrapping。它与统计里有放回重采样的 bootstrap 同名，但这里含义不同。TD error 是目标与当前估计的差异信号。
+
+<a id="chapter-66-section-06"></a>
+
+### Q-learning 与 SARSA【重点】
+
+Q-learning 的经典更新朝下一状态最好动作的估计价值学习，即使实际探索时选了其他动作。SARSA 则使用实际接下来采取动作的价值，反映当前行为策略。它们体现 off-policy 与 on-policy 的区别：学习目标策略是否必须与采集数据的策略一致。不能只把 off-policy 理解为“完全离线不交互”，它也可以边收集数据边学习。
+
+<a id="chapter-66-section-07"></a>
+
+### DQN、Replay Buffer、Target Network【重点】
+
+DQN 用神经网络近似 Q 值。Replay buffer 保存经验并打乱抽样重用，减少连续数据相关性并提高复用。Target network 使用较慢更新的目标估计，减轻自己追逐自己导致的不稳定。它们不是额外的环境模拟器。经典 DQN 特别适合可枚举的离散动作，对连续动作直接穷举最大 Q 不方便。
+
+<a id="chapter-66-section-08"></a>
+
+### Double DQN、Dueling、Prioritized Replay、Distributional RL【认识】
+
+Double DQN 将动作选择与价值评价适当分离，缓解最大值估计偏高。Dueling 架构拆开状态价值与动作优势。优先经验回放更常抽到有信息的经验，并注意采样偏差。分布式回报建模的 distributional RL 学习回报分布，而不只学习均值；这里的 distributional 不是多机分布式训练。Rainbow 组合若干 DQN 改进，便于认识这些方法可以叠加。
+
+参考资料（不朗读）：[S002 · OpenAI Spinning Up — Key Concepts in RL](https://spinningup.openai.com/en/latest/spinningup/rl_intro.html)；[S144 · Playing Atari with Deep Reinforcement Learning](https://arxiv.org/abs/1312.5602)；[S145 · Deep Reinforcement Learning with Double Q-learning](https://arxiv.org/abs/1509.06461)；[S146 · Rainbow: Combining Improvements in Deep Reinforcement Learning](https://arxiv.org/abs/1710.02298)

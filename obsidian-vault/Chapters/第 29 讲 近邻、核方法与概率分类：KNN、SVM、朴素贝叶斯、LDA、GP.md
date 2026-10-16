@@ -1,0 +1,53 @@
+---
+title: "第 29 讲 · 近邻、核方法与概率分类：KNN、SVM、朴素贝叶斯、LDA、GP"
+aliases: []
+tags: ["chapter","area/ml-methods"]
+---
+
+<!-- Generated. Edit data/knowledge-map.mjs and canonical book content. -->
+
+[[Areas/机器学习与统计模型|机器学习与统计模型]]
+
+<a id="chapter-29"></a>
+
+## 第 29 讲｜近邻、核方法与概率分类：KNN、SVM、朴素贝叶斯、LDA、GP
+
+领域：机器学习算法 · 细讲
+
+<a id="chapter-29-section-01"></a>
+
+### KNN，K 近邻【重点】
+
+KNN 对新样本寻找最相近的若干已知样本，再投票或平均得到预测。它把“相似输入往往有相似答案”作为基本假设，几乎不需要传统意义上的参数拟合。关键在距离怎么定义、特征是否缩放，以及选择多少邻居。高维时距离可能不再容易区分，预测计算与存储也可能很贵。KNN 有标签并用邻居答案预测；K-means 没有这类监督标签，目的是分组。
+
+<a id="chapter-29-section-02"></a>
+
+### SVM、Support Vector 与 Margin【重点】
+
+支持向量机寻找能把类别分开、同时留出较大间隔的边界。靠近边界、影响边界位置的训练样本称为支持向量。软间隔允许一定违规，避免为了完美分开训练样本而得到不合理边界。C 等超参数影响间隔与训练错误之间的权衡。它常用于中小规模分类或高维特征任务，但核版本在大样本上可能训练昂贵。
+
+<a id="chapter-29-section-03"></a>
+
+### Kernel Trick、RBF 与 SVR【重点】
+
+核技巧用一种相似性计算，间接表达在更丰富特征空间中的关系，而不显式展开所有特征。RBF kernel 是常见选择，其尺度影响模型关注多局部的变化。不是任何随意设计的相似分数都能直接作为合适的核。SVR 是支持向量回归，用相关思想预测连续量，通常容忍一个小误差带，再惩罚超出的误差。核是设计工具，不是神经网络的专有层。
+
+<a id="chapter-29-section-04"></a>
+
+### Naive Bayes，朴素贝叶斯【重点】
+
+朴素贝叶斯为各类别下的特征建立简单概率模型，再结合类别先验作判断。朴素指给定类别后对特征作条件独立假设，不是说模型完全不使用概率。Multinomial 常见于词频，Bernoulli 常见于出现或不出现，Gaussian 适合某些连续特征假设。即使独立假设不完全真实，它仍能成为快速文本分类基线。拉普拉斯平滑避免没见过的词让相关概率直接变成零。
+
+<a id="chapter-29-section-05"></a>
+
+### LDA 与 QDA【认识】
+
+这里的 LDA 指线性判别分析，通过为各类建模并共享某些协方差结构，得到线性分类边界。QDA 放松共享协方差的限制，能得到更复杂边界，但需要估计更多信息。它们可以与逻辑回归比较：前者对各类如何生成特征作更明确假设，后者直接建模类别概率。LDA 也可能指主题模型 latent Dirichlet allocation，必须根据语境分清。
+
+<a id="chapter-29-section-06"></a>
+
+### Gaussian Process，高斯过程【重点】
+
+高斯过程用核表达不同输入位置的函数值如何相关，结合观测得到预测及模型下的不确定性。它适合数据不太多、每次实验很贵、需要量化未知区域的任务，如贝叶斯优化中的代理模型。朴素精确方法随样本增长成本很高，实际可用稀疏或近似方法。给出方差不等于现实世界绝不会超出预测范围：核假设和噪声模型错了，不确定性也可能失真。
+
+参考资料（不朗读）：[S044 · scikit-learn — 近邻方法](https://scikit-learn.org/stable/modules/neighbors.html)；[S039 · scikit-learn — 支持向量机](https://scikit-learn.org/stable/modules/svm.html)；[S045 · scikit-learn — 朴素贝叶斯](https://scikit-learn.org/stable/modules/naive_bayes.html)；[S046 · scikit-learn — 判别分析](https://scikit-learn.org/stable/modules/lda_qda.html)；[S047 · scikit-learn — 高斯过程](https://scikit-learn.org/stable/modules/gaussian_process.html)

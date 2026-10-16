@@ -1,0 +1,48 @@
+<div id="cs-ai-knowledge-inline">
+  <style>
+    #cs-ai-knowledge-inline .km-title{margin-bottom:12px}
+    #cs-ai-knowledge-inline .km-map{position:relative}
+    #cs-ai-knowledge-inline .km-layers{padding-right:18px}
+    #cs-ai-knowledge-inline .km-links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+    #cs-ai-knowledge-inline .km-layer{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0 24px}
+    #cs-ai-knowledge-inline .km-layer-label{grid-column:1/-1;color:var(--muted-foreground)}
+    #cs-ai-knowledge-inline .km-links path{fill:none;stroke:var(--border);stroke-width:1.5}
+    #cs-ai-knowledge-inline .km-summary{color:var(--foreground);margin-top:12px}
+    @media(max-width:520px){#cs-ai-knowledge-inline .km-layer{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
+  <h3 class="km-title">CS 与 AI 知识地图</h3>
+  <div class="km-map"><svg class="km-links" aria-hidden="true"></svg><div class="km-layers"></div></div>
+  <div class="km-summary" aria-live="polite"></div>
+  <script type="application/json" id="cs-ai-overview-data">__OVERVIEW__</script>
+  <script>
+  (()=>{
+    const root=document.getElementById('cs-ai-knowledge-inline');
+    const areas=JSON.parse(root.querySelector('#cs-ai-overview-data').textContent),container=root.querySelector('.km-layers'),svg=root.querySelector('.km-links'),summary=root.querySelector('.km-summary');
+    let selected=window.openai?.widgetState?.modelContent?.area||'training';
+    if(!areas.some(a=>a.id===selected))selected='training';
+    const buttons=new Map(),ns='http://www.w3.org/2000/svg';
+    for(const layer of [...new Set(areas.map(a=>a.layer))]){
+      const row=document.createElement('div');row.className='km-layer';
+      const label=document.createElement('div');label.className='km-layer-label text-small';label.textContent=layer;row.append(label);
+      for(const area of areas.filter(a=>a.layer===layer)){
+        const button=document.createElement('button');button.type='button';button.className='btn viz-tile';button.textContent=area.name;button.setAttribute('data-tooltip',area.question);button.setAttribute('aria-pressed',String(area.id===selected));
+        button.onclick=()=>{selected=area.id;render();if(window.openai?.setWidgetState)window.openai.setWidgetState({modelContent:{area:selected},privateContent:null}).catch(()=>{})};
+        buttons.set(area.id,button);row.append(button);
+      }
+      container.append(row);
+    }
+    function render(){
+      for(const [id,b] of buttons)b.setAttribute('aria-pressed',String(id===selected));
+      const area=areas.find(a=>a.id===selected),incoming=areas.filter(a=>a.next.includes(selected)).map(a=>a.name),outgoing=area.next.map(id=>areas.find(a=>a.id===id).name);
+      summary.textContent=area.name+'：'+area.question+(incoming.length?' 可从'+incoming.join('、')+'衔接。':'')+(outgoing.length?' 继续到'+outgoing.join('、')+'。':'');
+      draw();
+    }
+    function draw(){
+      const box=svg.parentElement.getBoundingClientRect();svg.setAttribute('viewBox',`0 0 ${box.width} ${box.height}`);svg.replaceChildren();
+      for(const a of areas)for(const target of a.next){if(a.id!==selected&&target!==selected)continue;const from=buttons.get(a.id).getBoundingClientRect(),to=buttons.get(target).getBoundingClientRect();const x1=from.left+from.width/2-box.left,y1=from.bottom-box.top,x2=to.left+to.width/2-box.left,y2=to.top-box.top,lane=box.width-5;const p=document.createElementNS(ns,'path');p.setAttribute('d',Math.abs(from.top-to.top)<2?`M ${x1} ${y1} V ${y1+5} H ${x2} V ${to.bottom-box.top}`:`M ${x1} ${y1} V ${y1+5} H ${lane} V ${y2-5} H ${x2} V ${y2}`);svg.append(p)}
+    }
+    window.addEventListener('openai:set_globals',event=>{const id=event.detail?.globals?.widgetState?.modelContent?.area;if(areas.some(a=>a.id===id)){selected=id;render()}});
+    new ResizeObserver(draw).observe(svg.parentElement);render();
+  })();
+  </script>
+</div>

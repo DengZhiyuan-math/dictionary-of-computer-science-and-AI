@@ -1,0 +1,312 @@
+{
+  "nodes": [
+    {
+      "id": "home",
+      "type": "file",
+      "file": "00-知识地图.md",
+      "x": 1100,
+      "y": -420,
+      "width": 420,
+      "height": 260
+    },
+    {
+      "id": "group-0",
+      "type": "group",
+      "label": "计算基础",
+      "x": -20,
+      "y": -20,
+      "width": 580,
+      "height": 1060
+    },
+    {
+      "id": "systems",
+      "type": "file",
+      "file": "Areas/计算机系统与软件.md",
+      "x": 0,
+      "y": 0,
+      "width": 540,
+      "height": 300
+    },
+    {
+      "id": "algorithms",
+      "type": "file",
+      "file": "Areas/数据结构与算法.md",
+      "x": 0,
+      "y": 340,
+      "width": 540,
+      "height": 300
+    },
+    {
+      "id": "infrastructure",
+      "type": "file",
+      "file": "Areas/数据库、网络与分布式.md",
+      "x": 0,
+      "y": 680,
+      "width": 540,
+      "height": 300
+    },
+    {
+      "id": "group-1",
+      "type": "group",
+      "label": "统计学习",
+      "x": 600,
+      "y": -20,
+      "width": 580,
+      "height": 720
+    },
+    {
+      "id": "data-evaluation",
+      "type": "file",
+      "file": "Areas/数据、任务与评估.md",
+      "x": 620,
+      "y": 0,
+      "width": 540,
+      "height": 300
+    },
+    {
+      "id": "ml-methods",
+      "type": "file",
+      "file": "Areas/机器学习与统计模型.md",
+      "x": 620,
+      "y": 340,
+      "width": 540,
+      "height": 300
+    },
+    {
+      "id": "group-2",
+      "type": "group",
+      "label": "深度模型",
+      "x": 1220,
+      "y": -20,
+      "width": 580,
+      "height": 1400
+    },
+    {
+      "id": "training",
+      "type": "file",
+      "file": "Areas/损失、训练与优化.md",
+      "x": 1240,
+      "y": 0,
+      "width": 540,
+      "height": 300
+    },
+    {
+      "id": "architectures",
+      "type": "file",
+      "file": "Areas/网络架构与 AI 工程.md",
+      "x": 1240,
+      "y": 340,
+      "width": 540,
+      "height": 300
+    },
+    {
+      "id": "llm",
+      "type": "file",
+      "file": "Areas/LLM 训练与推理.md",
+      "x": 1240,
+      "y": 680,
+      "width": 540,
+      "height": 300
+    },
+    {
+      "id": "multimodal",
+      "type": "file",
+      "file": "Areas/生成模型与多模态.md",
+      "x": 1240,
+      "y": 1020,
+      "width": 540,
+      "height": 300
+    },
+    {
+      "id": "group-3",
+      "type": "group",
+      "label": "系统与行动",
+      "x": 1840,
+      "y": -20,
+      "width": 580,
+      "height": 1060
+    },
+    {
+      "id": "retrieval-agents",
+      "type": "file",
+      "file": "Areas/检索、RAG 与 Agent.md",
+      "x": 1860,
+      "y": 0,
+      "width": 540,
+      "height": 300
+    },
+    {
+      "id": "rl",
+      "type": "file",
+      "file": "Areas/强化学习与模仿.md",
+      "x": 1860,
+      "y": 340,
+      "width": 540,
+      "height": 300
+    },
+    {
+      "id": "embodied",
+      "type": "file",
+      "file": "Areas/机器人、VLA 与世界模型.md",
+      "x": 1860,
+      "y": 680,
+      "width": 540,
+      "height": 300
+    },
+    {
+      "id": "group-4",
+      "type": "group",
+      "label": "理解与实践",
+      "x": 2460,
+      "y": -20,
+      "width": 580,
+      "height": 720
+    },
+    {
+      "id": "practice",
+      "type": "file",
+      "file": "Areas/口述、复习与表达.md",
+      "x": 2480,
+      "y": 0,
+      "width": 540,
+      "height": 300
+    },
+    {
+      "id": "hot100",
+      "type": "file",
+      "file": "Areas/Hot 100 算法实践.md",
+      "x": 2480,
+      "y": 340,
+      "width": 540,
+      "height": 300
+    }
+  ],
+  "edges": [
+    {
+      "id": "home-systems",
+      "fromNode": "home",
+      "fromSide": "bottom",
+      "toNode": "systems",
+      "toSide": "top",
+      "label": "领域",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "home-algorithms",
+      "fromNode": "home",
+      "fromSide": "bottom",
+      "toNode": "algorithms",
+      "toSide": "top",
+      "label": "领域",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "home-infrastructure",
+      "fromNode": "home",
+      "fromSide": "bottom",
+      "toNode": "infrastructure",
+      "toSide": "top",
+      "label": "领域",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "home-data-evaluation",
+      "fromNode": "home",
+      "fromSide": "bottom",
+      "toNode": "data-evaluation",
+      "toSide": "top",
+      "label": "领域",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "home-ml-methods",
+      "fromNode": "home",
+      "fromSide": "bottom",
+      "toNode": "ml-methods",
+      "toSide": "top",
+      "label": "领域",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "home-training",
+      "fromNode": "home",
+      "fromSide": "bottom",
+      "toNode": "training",
+      "toSide": "top",
+      "label": "领域",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "home-architectures",
+      "fromNode": "home",
+      "fromSide": "bottom",
+      "toNode": "architectures",
+      "toSide": "top",
+      "label": "领域",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "home-llm",
+      "fromNode": "home",
+      "fromSide": "bottom",
+      "toNode": "llm",
+      "toSide": "top",
+      "label": "领域",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "home-retrieval-agents",
+      "fromNode": "home",
+      "fromSide": "bottom",
+      "toNode": "retrieval-agents",
+      "toSide": "top",
+      "label": "领域",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "home-multimodal",
+      "fromNode": "home",
+      "fromSide": "bottom",
+      "toNode": "multimodal",
+      "toSide": "top",
+      "label": "领域",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "home-rl",
+      "fromNode": "home",
+      "fromSide": "bottom",
+      "toNode": "rl",
+      "toSide": "top",
+      "label": "领域",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "home-embodied",
+      "fromNode": "home",
+      "fromSide": "bottom",
+      "toNode": "embodied",
+      "toSide": "top",
+      "label": "领域",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "home-practice",
+      "fromNode": "home",
+      "fromSide": "bottom",
+      "toNode": "practice",
+      "toSide": "top",
+      "label": "领域",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "home-hot100",
+      "fromNode": "home",
+      "fromSide": "bottom",
+      "toNode": "hot100",
+      "toSide": "top",
+      "label": "领域",
+      "toEnd": "arrow"
+    }
+  ]
+}

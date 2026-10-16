@@ -1,0 +1,33 @@
+---
+title: "第 57 讲 · LLM 推理：为什么有的模型又快又便宜"
+aliases: []
+tags: ["chapter","area/llm"]
+---
+
+<!-- Generated. Edit data/knowledge-map.mjs and canonical book content. -->
+
+[[Areas/LLM 训练与推理|LLM 训练与推理]]
+
+<a id="chapter-57"></a>
+
+## 第 57 讲｜LLM 推理：为什么有的模型又快又便宜
+
+领域：LLM 与智能体 · 导览 / 复习
+
+Inference，推理，指模型训练结束后实际产生回答。Prompt Processing，也叫 Prefill，是模型先处理已提供的上下文。Decoding，解码，是模型继续生成新 Token。TTFT，Time To First Token，首个 Token 延迟，影响用户多久看到回复开始。Tokens Per Second，每秒 Token 数，影响回复生成速度。Throughput，吞吐量，衡量系统在一段时间内能够处理多少请求或 Token。
+
+Sampling，采样，是模型决定下一个 Token 的方式。Temperature，温度，调整输出分布的随机程度，较低通常更确定。Top K Sampling，只在概率最高的一部分候选中采样。Top P，也叫 Nucleus Sampling，从累计概率达到一定比例的候选中采样。Greedy Decoding，每次选概率最高的 Token。Beam Search，同时保留多个候选生成路径，在一些序列生成任务中很有用，但并不总是聊天生成的默认策略。
+
+KV Cache，键值缓存，是一个重要概念。自回归生成时，前面的 Token 已经处理过；如果每一步都完全重算，会浪费大量计算。KV Cache 保存注意力机制中可复用的 Key 和 Value，从而加快后续生成，但会占用显存。PagedAttention，是 vLLM 等系统采用的重要思路，借鉴类似虚拟内存的分页管理方式，更灵活地管理 KV Cache。
+
+Batching，批处理，把多个请求放到一起用 GPU 执行。Continuous Batching，连续批处理，可以在服务运行过程中动态插入与移除请求，提高硬件利用率。Speculative Decoding，推测解码，先由较小或更快的模型提出若干候选 Token，再由目标模型并行验证，目的是在不改变目标采样分布的特定条件下加速生成。
+
+Quantization，量化，用更低位宽存储或计算模型权重、激活值，降低显存需求和计算成本，但可能带来精度损失。Pruning，剪枝，移除不重要的参数或结构。Distillation，蒸馏，用教师模型帮助更小的学生模型训练。FlashAttention，是优化注意力计算的算法与实现路线，重点在于改善 GPU 内存访问方式，减少不必要的数据搬运。
+
+Tensor Parallelism，张量并行，把某些大型矩阵计算拆到多张 GPU 上。Pipeline Parallelism，流水线并行，把不同网络层分散到设备并按阶段执行。Data Parallelism，数据并行，让多个设备处理不同输入。它们适合不同扩展场景，并且通信开销往往是决定实际加速效果的重要因素。
+
+Fine Tuning 和 Inference Optimization 不要混淆。前者通常要继续调整模型权重，改变模型的行为能力；后者主要优化模型执行方式，在尽量不改变目标行为的情况下提高速度、降低成本。Serving Engine，推理服务引擎，例如 vLLM 或 SGLang，核心价值是让模型在实际请求负载下更高效地运行。
+
+如果面试官问为什么一个 LLM API 很贵，你可以提到 GPU 成本、模型规模、KV Cache 显存、长上下文计算、并发调度和输出长度。如果问如何优化，你可以提到合理选择模型、缩短无效上下文、缓存、量化、批处理以及推测解码，但要结合具体瓶颈评估，而不是把所有技术盲目堆上去。
+
+参考资料（不朗读）：[S117 · FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135)；[S118 · Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180)；[S119 · Fast Inference from Transformers via Speculative Decoding](https://arxiv.org/abs/2211.17192)；[S101 · PyTorch — Distributed Overview](https://docs.pytorch.org/tutorials/beginner/dist_overview.html)

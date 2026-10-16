@@ -1,0 +1,70 @@
+---
+title: "第 70 讲 · 机器人基础算法：SLAM、ICP、RRT、PID、MPC、CEM"
+aliases: []
+tags: ["chapter","area/embodied"]
+---
+
+<!-- Generated. Edit data/knowledge-map.mjs and canonical book content. -->
+
+[[Areas/机器人、VLA 与世界模型|机器人、VLA 与世界模型]]
+
+## 本讲概念
+
+- [[Concepts/反馈控制／模型预测控制|反馈控制／模型预测控制]]
+- [[Concepts/定位、规划与控制|定位、规划与控制]]
+
+<a id="chapter-70"></a>
+
+## 第 70 讲｜机器人基础算法：SLAM、ICP、RRT、PID、MPC、CEM
+
+领域：强化学习与具身智能 · 细讲
+
+<a id="chapter-70-section-01"></a>
+
+### Pose、Coordinate Frame、Kinematics【重点】
+
+Pose 表示位置与朝向，coordinate frame 是描述它们的坐标系。机器人相机、机械臂底座、夹爪各有坐标系，必须正确转换。正运动学从关节状态计算末端位置，逆运动学从目标末端姿态求可能的关节配置。逆解可能不唯一或根本不存在，还要考虑关节限位与碰撞，不是把坐标直接抄到电机上。
+
+<a id="chapter-70-section-02"></a>
+
+### Localization、Mapping、SLAM【重点】
+
+定位问自己在哪里，建图问环境结构是什么，SLAM 同时估计两者。机器人通过连续观测寻找共同特征，并调整位姿和地图。Loop closure，闭环检测，识别重新到达旧地点，修正一路累计的偏差。SLAM 不自动决定去哪，也不等于完整自动驾驶，后面仍需要规划、控制与安全系统。
+
+<a id="chapter-70-section-03"></a>
+
+### ICP、Kalman、Particle Filter、Bundle Adjustment【认识】
+
+ICP 交替建立点集对应关系并调整变换，用于配准点云，初始位置差太多时可能失败。卡尔曼滤波与粒子滤波结合运动预测和传感器观测估计状态。Bundle adjustment 同时优化多个相机位姿与三维点，让投影与观察更一致。它们分别处理配准、状态估计和多视角几何优化，不应统称为识别图像。
+
+<a id="chapter-70-section-04"></a>
+
+### PRM、RRT、RRT*【重点】
+
+PRM 预先采样可行配置并建立路线图，方便反复查询。RRT 从已有可行配置向随机目标扩展树，探索复杂空间。RRT* 通过重新连接等机制改善路径质量，在相应条件下有渐近最优性质。采样规划适合高维机械臂空间，但每次仍需碰撞检测。几何上无碰撞的路径，不一定满足速度、加速度与受力限制。
+
+<a id="chapter-70-section-05"></a>
+
+### PID Controller【重点】
+
+PID 根据当前误差、累积误差与误差变化趋势调整控制，目标是让系统追踪期望状态。比例部分及时纠偏，积分部分处理持续偏差，微分部分根据变化趋势提供阻尼等作用。噪声、延迟与参数设置影响稳定性。它不是从大量视频学习的模型，却能在大量稳定控制任务中发挥作用。
+
+<a id="chapter-70-section-06"></a>
+
+### MPC、Receding Horizon【重点精学】
+
+MPC 用模型预测候选动作在未来一小段时间的效果，优化后只执行前面一部分，再根据新观察重新规划。Receding horizon 就是这种滚动窗口。它结合预测与反馈，能处理动作约束，但依赖模型质量和实时优化速度。它可以使用手工物理模型，也可以使用学到的世界模型，不限定只能属于传统控制。
+
+<a id="chapter-70-section-07"></a>
+
+### CEM、MPPI、Trajectory Optimization【认识】
+
+CEM，交叉熵方法，在规划中反复采样动作序列，保留较好的候选，再更新采样分布。这里的 cross-entropy 不是在做二分类 BCE。MPPI 依据轨迹成本给动作扰动加权，形成更好的控制候选。轨迹优化直接改进连续动作与状态路径。三者都依赖可评价未来的模型或成本，模型不可信时容易优化出真实世界不可行的行为。
+
+<a id="chapter-70-section-08"></a>
+
+### Control Frequency 与 Safety Layer【重点】
+
+控制频率是每秒更新控制多少次，sensor latency 是观测滞后，actuation latency 是指令生效滞后。高层 VLA 生成一段动作后，低层控制仍可能需要更高频反馈。安全层限制速度、力、关节范围和碰撞。语言指令完成率高，不代表已经满足物理安全或稳定性要求。
+
+参考资料（不朗读）：[S159 · Steven LaValle — Planning Algorithms](https://lavalle.pl/planning/)；[S160 · Lynch and Park — Modern Robotics](https://modernrobotics.northwestern.edu/nu-gm-book-resource/)；[S161 · do-mpc — Model Predictive Control theory](https://www.do-mpc.com/en/latest/theory_mpc.html)；[S162 · Williams et al. — Information Theoretic MPC](https://arxiv.org/abs/1707.02342)

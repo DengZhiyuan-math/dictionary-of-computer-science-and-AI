@@ -1,0 +1,63 @@
+---
+title: "第 33 讲 · 概率模型与隐藏状态：EM、HMM、Viterbi、贝叶斯网络"
+aliases: []
+tags: ["chapter","area/ml-methods"]
+---
+
+<!-- Generated. Edit data/knowledge-map.mjs and canonical book content. -->
+
+[[Areas/机器学习与统计模型|机器学习与统计模型]]
+
+## 本讲概念
+
+- [[Concepts/潜变量参数估计／最可能路径解码|潜变量参数估计／最可能路径解码]]
+
+<a id="chapter-33"></a>
+
+## 第 33 讲｜概率模型与隐藏状态：EM、HMM、Viterbi、贝叶斯网络
+
+领域：机器学习算法 · 细讲
+
+<a id="chapter-33-section-01"></a>
+
+### Maximum Likelihood 与 MAP【认识】
+
+最大似然选择让已有观察在模型下尽量合理的参数。MAP，最大后验，在观察之外还加入先验偏好。它们是参数估计原则，不是只属于某个模型的算法。神经网络用交叉熵训练，在相应概率解释下也与最大似然有关。先验不是随意相信某种结果，而是把已有假设放进模型，并应检查结论对它是否敏感。
+
+<a id="chapter-33-section-02"></a>
+
+### Latent Variable 与 EM【重点】
+
+Latent variable，潜变量，是没有直接观察到、但用于解释数据的内部变量。例如看到顾客消费，却不知道他属于哪种潜在群体。EM 先根据当前参数估计隐藏情况的概率，再在这些估计基础上更新参数，交替进行。GMM 中就是反复估计样本属于各成分的程度，再更新成分。它通常只能保证适当条件下目标不变差，不保证找到全局最佳。
+
+<a id="chapter-33-section-03"></a>
+
+### HMM，隐马尔可夫模型【重点】
+
+HMM 假设有一个按马尔可夫规则变化的隐藏状态，并由该状态产生观察。例如机器处于正常、磨损或故障前兆状态，传感器只看到带噪音的信号。模型包含状态转移规律和各状态下的观测规律。它适合序列分段、状态识别等问题，但简单的状态与记忆假设可能不足以表达很长的依赖。
+
+<a id="chapter-33-section-04"></a>
+
+### Forward-Backward 与 Viterbi【认识】
+
+Forward-backward 综合序列前后信息，估计某个时刻属于各隐藏状态的概率。Viterbi 则通过动态规划寻找整条最可能的隐藏状态序列。逐时选择最大概率状态，不一定得到全局最可能的状态路径。Baum-Welch 是 HMM 中基于 EM 的经典参数学习方法。记住三种问题：求概率、找路径、学参数，不要把相关算法只记成同义词。
+
+<a id="chapter-33-section-05"></a>
+
+### Bayesian Network、MRF、CRF【认识】
+
+贝叶斯网络用有向无环图表达条件依赖，并组织联合概率。Markov random field 用无向图表达局部相互作用。CRF，条件随机场，直接建模给定输入后的结构化输出，在文本序列标注等任务中有经典应用。它们的图首先表达概率关系；只有满足额外因果建模条件，才能把箭头直接解释为干预后果。
+
+<a id="chapter-33-section-06"></a>
+
+### MCMC、Gibbs Sampling、Variational Inference【认识】
+
+复杂模型的后验难以直接计算时，可以近似求解。MCMC 构造一个长期分布与目标匹配的采样过程；Gibbs sampling 交替按条件分布更新变量。变分推断选择一类易处理的近似分布，通过优化让它接近目标后验。前者更像不断采样探索，后者更像训练一个可计算的近似。两者都有收敛、偏差或诊断问题，不是运行后就自动精确。
+
+<a id="chapter-33-section-07"></a>
+
+### Topic Model 与 Latent Dirichlet Allocation【认识】
+
+主题模型用隐藏主题解释文档里的词。Latent Dirichlet Allocation 让一篇文档混合多个主题，每个主题又偏好一组词。它与线性判别分析共享 LDA 缩写，却是不同模型。主题是依据统计共同出现模式得到的解释，不一定对应人预先命名的唯一分类。现代语义表示提供其他路线，但认识这些模型有助于读懂概率建模与文本分析讨论。
+
+参考资料（不朗读）：[S051 · scikit-learn — 高斯混合](https://scikit-learn.org/stable/modules/mixture.html)；[S054 · pgmpy — Probabilistic Graphical Models](https://pgmpy.org/)；[S055 · hmmlearn — Tutorial](https://hmmlearn.readthedocs.io/en/stable/tutorial.html)；[S048 · scikit-learn — 矩阵分解与降维](https://scikit-learn.org/stable/modules/decomposition.html)

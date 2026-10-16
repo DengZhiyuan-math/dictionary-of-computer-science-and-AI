@@ -1,0 +1,39 @@
+---
+title: "第 52 讲 · LLM 入门：Token、Embedding、Transformer 与生成机制"
+aliases: []
+tags: ["chapter","area/llm"]
+---
+
+<!-- Generated. Edit data/knowledge-map.mjs and canonical book content. -->
+
+[[Areas/LLM 训练与推理|LLM 训练与推理]]
+
+## 本讲概念
+
+- [[Concepts/词元／向量表示|词元／向量表示]]
+
+<a id="chapter-52"></a>
+
+## 第 52 讲｜LLM 入门：Token、Embedding、Transformer 与生成机制
+
+领域：LLM 与智能体 · 导览 / 复习
+
+LLM，是 Large Language Model，大语言模型。它通常先通过大规模数据训练，再根据上下文生成后续的 Token。Token 可以是一个字、一个词的一部分、一个词或其他符号，并不总等于一个完整单词。Tokenization，分词或标记化，把文字转换为模型可以处理的 Token 序列。BPE，Byte Pair Encoding，是常见 Tokenizer 设计思路之一，通过逐步合并频繁出现的符号片段建立词表。
+
+Embedding，把 Token 转换成向量。Positional Encoding，位置编码，让模型知道 Token 的相对或绝对位置。Self Attention，自注意力，根据上下文动态决定各个位置应该从其他位置获取多少信息。你会听到 Q、K、V，分别是 Query、Key、Value。直观上，Query 表示当前需要找什么，Key 表示其他位置能提供什么线索，Value 是最终要取走的信息。Multi Head Attention，多头注意力，让模型从多个不同的表示角度处理信息。
+
+Autoregressive Model，自回归模型，在生成时一个 Token 接一个 Token 地预测后续内容。Decoder Only Transformer 是当代很多主流通用 LLM 的基础架构。Causal Mask，因果掩码，限制某个位置在自回归训练时不能直接读取它之后的目标答案。Context Window，上下文窗口，是模型一次推理能够利用的上下文长度限制。窗口更长不等于对所有位置都能同样可靠地理解。
+
+Pretraining，预训练，让模型在大规模数据上学习广泛统计结构。Next Token Prediction，下一个 Token 预测，是自回归语言模型的核心预训练任务。模型在训练中不断调整参数，使预测的下一个 Token 更符合训练数据。这个目标表面上很简单，却可以使模型学习语言、知识、代码模式和一定程度的推理能力。
+
+Parameters，参数，是模型训练得到的权重。一个模型有多少参数，表示其容量的一种尺度，但不能单独决定实际能力。Scaling Law，缩放规律，研究性能如何随模型规模、数据量和训练计算量变化。Compute Optimal Training，计算最优训练，讨论在给定算力预算下怎样平衡模型大小与训练数据量。训练数据质量、架构和后训练方法同样重要。
+
+Dense Model，稠密模型，在每次计算中使用相对完整的一组相关参数。MoE，Mixture of Experts，混合专家模型，在某些层通过 Router，路由器，为不同 Token 选择一部分专家子网络。MoE 的思路是增加模型总容量，同时控制每个 Token 激活的计算量。它的局限包括路由复杂性、负载均衡和跨设备通信成本。
+
+Embedding Model，嵌入模型，通常专门把文本或其他内容变成适合相似性比较的向量。它与负责生成回复的聊天 LLM 不完全是同一种任务。Encoder Model，例如 BERT 风格，常用于表示或理解任务；Decoder Model，例如 GPT 风格，常用于生成任务；Encoder Decoder 既读入信息又生成输出。
+
+Prompt，是提供给模型的输入和指令。System Instruction、User Message 和 Tool Result 是不同来源的上下文。Prompt Engineering，提示词工程，是设计有效输入的方法；Context Engineering，上下文工程，进一步强调整个上下文中有哪些资料、历史、工具结果与约束。In Context Learning，上下文学习，是模型在推理时利用提示中的例子表现出新的任务行为，并不意味着权重发生了更新。
+
+关键理解是：LLM 的语言能力主要来自大规模数据驱动的训练，其生成过程仍受到上下文、训练目标和采样策略影响。它既不是简单的关键词搜索引擎，也不等于一个天然可靠的知识数据库。
+
+参考资料（不朗读）：[S091 · Attention Is All You Need](https://arxiv.org/abs/1706.03762)；[S102 · Hugging Face — Tokenizer Summary](https://huggingface.co/docs/transformers/tokenizer_summary)；[S103 · Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)

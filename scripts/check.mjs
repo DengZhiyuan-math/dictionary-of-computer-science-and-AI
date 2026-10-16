@@ -4,6 +4,8 @@ import path from 'node:path';
 import vm from 'node:vm';
 import {spawnSync} from 'node:child_process';
 import {root, read, book, glossary, hot100} from './model.mjs';
+import {graph} from './knowledge-map.mjs';
+import {areas} from '../data/knowledge-map.mjs';
 
 const build = spawnSync(process.execPath, ['scripts/build.mjs', '--check'], {cwd: root, encoding: 'utf8'});
 process.stdout.write(build.stdout);
@@ -80,6 +82,55 @@ assert(html.includes("case'hot100':return c.hot100===true"));
 assert(!html.includes('全部 80 讲'));
 assert(!html.includes('__BOOK_DATA__'));
 
+// Validate the editorial graph independently of its generated navigation.
+assert.equal(graph.stats.areas,14);assert.equal(graph.stats.concepts,131);
+assert.equal(graph.stats.chapters,97);assert.equal(graph.stats.problems,100);
+assert.deepEqual(areas.flatMap(a=>a.chapters).sort((a,b)=>a-b),Array.from({length:97},(_,i)=>i+1));
+const graphNodes=new Map(graph.nodes.map(n=>[n.id,n]));
+assert.equal(graphNodes.size,graph.nodes.length);
+assert.equal(new Set(graph.nodes.map(n=>n.note.toLowerCase())).size,graph.nodes.length,'Note filenames must be unique on Windows');
+const edgeKeys=new Set();
+for(const e of graph.edges){
+  assert(graphNodes.has(e.from)&&graphNodes.has(e.to),`Invalid graph edge ${e.id}`);
+  assert(e.from!==e.to);assert(e.label.trim());assert(graph.metadata.semantics[e.type]);
+  const key=JSON.stringify([e.from,e.to,e.type]);assert(!edgeKeys.has(key),`Duplicate edge ${key}`);edgeKeys.add(key);
+}
+const reached=new Set(['home']),queue=['home'];
+for(let i=0;i<queue.length;i++)for(const e of graph.edges){
+  const next=e.from===queue[i]?e.to:e.to===queue[i]?e.from:null;
+  if(next&&!reached.has(next)){reached.add(next);queue.push(next)}
+}
+assert.equal(reached.size,graph.nodes.length,'Knowledge graph contains disconnected notes');
+const visiting=new Set(),visited=new Set();
+function visit(id){assert(!visiting.has(id),`Cyclic concept prerequisite at ${id}`);if(visited.has(id))return;visiting.add(id);for(const e of graph.edges.filter(e=>e.type==='prerequisite'&&e.from===id))visit(e.to);visiting.delete(id);visited.add(id)}
+for(const n of graph.nodes)visit(n.id);
+for(const n of graph.nodes.filter(n=>n.type==='problem')){
+  assert(graph.edges.some(e=>e.type==='practice'&&e.from===n.id&&e.to.startsWith('concept:')));
+  assert(graph.edges.some(e=>e.type==='practice'&&e.from===n.id&&e.to.startsWith('chapter:')));
+}
+const vaultRoot=path.join(root,'obsidian-vault');let wikiCount=0;
+assert.equal(walk(vaultRoot).filter(p=>p.endsWith('.md')).length,graph.nodes.length,'Stale generated notes remain in the vault');
+for(const file of walk(vaultRoot).filter(p=>p.endsWith('.md'))){
+  const source=fs.readFileSync(file,'utf8');assert(source.startsWith('---\n'));
+  for(const m of source.matchAll(/\[\[([^\]\n]+)\]\]/g)){
+    wikiCount++;const target=m[1].split('|')[0],hash=target.indexOf('#');
+    const name=hash<0?target:target.slice(0,hash),heading=hash<0?null:target.slice(hash+1);
+    const resolved=path.resolve(vaultRoot,name+(path.extname(name)?'':'.md'));
+    assert(resolved.startsWith(vaultRoot+path.sep)&&fs.existsSync(resolved),`Broken wikilink in ${file}: ${target}`);
+    if(heading){const headings=[...fs.readFileSync(resolved,'utf8').matchAll(/^#{1,6} (.+)$/gm)].map(m=>m[1].trim());assert(headings.includes(heading),`Unknown wiki heading: ${target}`)}
+  }
+}
+for(const n of graph.nodes)assert(fs.existsSync(path.join(vaultRoot,n.note)));
+for(const file of walk(vaultRoot).filter(p=>p.endsWith('.canvas'))){
+  const canvas=JSON.parse(fs.readFileSync(file,'utf8')),ids=new Set(canvas.nodes.map(n=>n.id));assert.equal(ids.size,canvas.nodes.length);
+  for(const n of canvas.nodes){assert(['file','group','text','link'].includes(n.type));for(const key of ['x','y','width','height'])assert(Number.isInteger(n[key]));assert(n.width>0&&n.height>0);if(n.type==='file')assert(fs.existsSync(path.join(vaultRoot,n.file)))}
+  for(const e of canvas.edges)assert(ids.has(e.fromNode)&&ids.has(e.toNode));
+}
+const mapHtml=read('docs/knowledge-map.html');
+assert.deepEqual(JSON.parse(mapHtml.match(/<script id="graphData" type="application\/json">([\s\S]*?)<\/script>/)[1]),graph);
+for(const script of mapHtml.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g))if(!script[1].includes('application/json'))new vm.Script(script[2]);
+assert(!mapHtml.includes('__KNOWLEDGE_GRAPH__'));
+
 // Independent arithmetic checks anchor the published worked examples.
 assert(Math.abs(-Math.log(.49)-.71335)<.00001);
 assert(Math.abs(-Math.log(.01)-4.60517)<.00001);
@@ -89,3 +140,4 @@ assert(Math.abs(120/(120+20+40)-2/3)<1e-12);
 assert.equal(Math.ceil(10/4),3);
 assert(read('text/chapters/77.txt').includes('请暂停，先尝试回答'));
 console.log(`Passed: source structure, 90 questions, all 100 official Hot 100 IDs/groupings, routes, ${linkCount} local links, embedded content, script syntax and worked arithmetic.`);
+console.log(`Knowledge map passed: ${graph.nodes.length} notes, ${graph.edges.length} typed edges, ${wikiCount} wikilinks, complete chapter coverage, acyclic prerequisites and two Canvas files.`);
