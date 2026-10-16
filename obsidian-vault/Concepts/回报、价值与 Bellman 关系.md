@@ -38,3 +38,7 @@ tags: ["concept","area/rl"]
 ## 所在路线
 
 - [[Routes/行动与世界模型地图|行动与世界模型地图]]
+
+## 具体案例与可视化
+
+- [[Examples/18 Q-learning：终止状态不再自举|案例 18 · Q-learning：终止状态不再自举]]

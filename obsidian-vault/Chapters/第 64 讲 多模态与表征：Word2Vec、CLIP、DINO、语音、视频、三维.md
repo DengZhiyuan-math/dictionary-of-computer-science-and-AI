@@ -12,6 +12,10 @@ tags: ["chapter","area/multimodal"]
 
 - [[Concepts/多模态对齐与表征|多模态对齐与表征]]
 
+## 具体案例与可视化
+
+- [[Examples/28 跨模态表征：余弦相似度不是事实核验|案例 28 · 跨模态表征：余弦相似度不是事实核验]]
+
 <a id="chapter-64"></a>
 
 ## 第 64 讲｜多模态与表征：Word2Vec、CLIP、DINO、语音、视频、三维
@@ -59,5 +63,25 @@ ASR 将声音转为文字，可以使用 CTC、encoder-decoder 或 transducer �
 ### Point Cloud、NeRF、Gaussian Splatting【认识】
 
 点云用三维点及附加属性表示场景。NeRF 通过学习空间与视角相关的辐射场渲染新视角。三维高斯泼溅用一组可优化的空间高斯基元高效表示与渲染场景。它们解决三维表示和视角合成，不等于已经掌握物体怎样受力运动。静态重建模型、可交互世界模型和机器人控制模型是三个不同层次。
+
+<a id="chapter-64-section-08"></a>
+
+### 案例 28：跨模态表征：余弦相似度不是事实核验
+
+场景与输入：将图像向量设为 [1,0]，两个文本向量为 [2,0] 和 [1,1]，仅演示向量比较。
+
+手算第 1 步：图像与第一段文本的余弦为 2/(1×2)=1；第二段为 1/√2≈0.707。
+
+手算第 2 步：归一化后，第一文本为 [1,0]，第二文本约为 [.707,.707]；点积就等于余弦。
+
+手算第 3 步：第一文本长度变成 [20,0] 仍得余弦 1，说明度量忽略向量的正比例长度变化。
+
+结果与解释：共享表征可把跨模态检索写成向量邻近问题；这个人造向量例子没有训练或验证真实图文模型。
+
+易错点与边界：相似度不是正确性或概率；零向量的余弦未定义，否定、数量与细粒度空间关系还可能被模型误判。
+
+改变条件再想一想：文本向量为 [-1,0] 时，余弦是多少？
+
+自测参考：-1，表示方向相反；语义上如何解释仍取决于模型学到的空间。
 
 参考资料（不朗读）：[S139 · Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/abs/1301.3781)；[S094 · Learning Transferable Visual Models From Natural Language Supervision](https://arxiv.org/abs/2103.00020)；[S035 · Emerging Properties in Self-Supervised Vision Transformers](https://arxiv.org/abs/2104.14294)；[S140 · Masked Autoencoders Are Scalable Vision Learners](https://arxiv.org/abs/2111.06377)；[S077 · PyTorch — torch.nn.CTCLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CTCLoss.html)；[S141 · NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis](https://arxiv.org/abs/2003.08934)；[S142 · 3D Gaussian Splatting for Real-Time Radiance Field Rendering](https://arxiv.org/abs/2308.04079)

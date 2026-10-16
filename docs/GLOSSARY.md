@@ -215,7 +215,7 @@ CPU 擅长复杂控制流程；GPU 擅长适合并行的大量相似计算。
 
 **易混点：** GPU 并不对所有任务都更快。
 
-系统 · [第 02 讲：计算机组成：CPU、GPU、内存、存储和操作系统](../chapters/02.md)
+系统 · [第 02 讲：计算机组成：CPU、GPU、内存、存储和操作系统](../chapters/02.md#chapter-02-section-01)
 
 ### Cross-Entropy / NLL｜交叉熵／负对数似然
 

@@ -14,6 +14,10 @@ tags: ["chapter","area/architectures"]
 - [[Concepts/卷积与视觉归纳偏置|卷积与视觉归纳偏置]]
 - [[Concepts/循环、状态与序列|循环、状态与序列]]
 
+## 具体案例与可视化
+
+- [[Examples/20 卷积窗口：一次输出来自哪些像素|案例 20 · 卷积窗口：一次输出来自哪些像素]]
+
 <a id="chapter-48"></a>
 
 ## 第 48 讲｜深度学习架构：CNN、RNN、Transformer 与视觉模型
@@ -36,4 +40,4 @@ Graph Neural Network，图神经网络，让节点沿着图中的边交换信息
 
 讲到这里，你已经能够解释为什么“深度学习”不是只有一种模型。CNN 利用空间局部性；RNN 强调顺序状态；Transformer 强调动态的信息关联；GNN 利用图结构；不同设计体现了不同任务的归纳偏置。
 
-参考资料（不朗读）：[S091 · Attention Is All You Need](https://arxiv.org/abs/1706.03762)；[S092 · Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)；[S093 · Mamba: Linear-Time Sequence Modeling with Selective State Spaces](https://arxiv.org/abs/2312.00752)；[S094 · Learning Transferable Visual Models From Natural Language Supervision](https://arxiv.org/abs/2103.00020)
+参考资料（不朗读）：[S091 · Attention Is All You Need](https://arxiv.org/abs/1706.03762)；[S092 · Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)；[S093 · Mamba: Linear-Time Sequence Modeling with Selective State Spaces](https://arxiv.org/abs/2312.00752)；[S094 · Learning Transferable Visual Models From Natural Language Supervision](https://arxiv.org/abs/2103.00020)；[S174 · PyTorch 2.14 — Conv2d：二维互相关](https://docs.pytorch.org/docs/2.14/generated/torch.nn.Conv2d.html)

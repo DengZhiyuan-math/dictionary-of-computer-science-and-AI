@@ -12,6 +12,10 @@ tags: ["chapter","area/llm"]
 
 - [[Concepts/词元／向量表示|词元／向量表示]]
 
+## 具体案例与可视化
+
+- [[Examples/15 注意力：分数、归一化与加权求和|案例 15 · 注意力：分数、归一化与加权求和]]
+
 <a id="chapter-52"></a>
 
 ## 第 52 讲｜LLM 入门：Token、Embedding、Transformer 与生成机制
@@ -36,4 +40,4 @@ Prompt，是提供给模型的输入和指令。System Instruction、User Messag
 
 关键理解是：LLM 的语言能力主要来自大规模数据驱动的训练，其生成过程仍受到上下文、训练目标和采样策略影响。它既不是简单的关键词搜索引擎，也不等于一个天然可靠的知识数据库。
 
-参考资料（不朗读）：[S091 · Attention Is All You Need](https://arxiv.org/abs/1706.03762)；[S102 · Hugging Face — Tokenizer Summary](https://huggingface.co/docs/transformers/tokenizer_summary)；[S103 · Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)
+参考资料（不朗读）：[S091 · Attention Is All You Need](https://arxiv.org/abs/1706.03762)；[S102 · Hugging Face — Tokenizer Summary](https://huggingface.co/docs/transformers/tokenizer_summary)；[S103 · Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)；[S175 · PyTorch 2.14 — Scaled Dot Product Attention](https://docs.pytorch.org/docs/2.14/generated/torch.nn.functional.scaled_dot_product_attention.html)

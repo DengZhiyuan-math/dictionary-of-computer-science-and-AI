@@ -16,6 +16,10 @@ tags: ["chapter","area/training"]
 - [[Concepts/混合精度／损失缩放|混合精度／损失缩放]]
 - [[Concepts/无效数值／无穷／内存不足|无效数值／无穷／内存不足]]
 
+## 具体案例与可视化
+
+- [[Examples/25 两种 checkpoint：恢复状态与重算激活|案例 25 · 两种 checkpoint：恢复状态与重算激活]]
+
 <a id="chapter-47"></a>
 
 ## 第 47 讲｜训练稳定性与显存词汇：NaN、梯度裁剪、混合精度、Checkpointing
@@ -71,5 +75,25 @@ Activation checkpointing 不保存全部中间激活，而在反向传播时重�
 使用梯度缩放时，反向传播得到的梯度也被放大。如果要按真实梯度范数裁剪，应该在一次累积结束后，先还原梯度尺度，再裁剪，然后执行缩放器管理的优化器更新。一个更新组内不要混入不同的缩放尺度，也不要每处理一个小批就提前还原；否则累计的量不再具有统一含义。
 
 混合精度检测到非有限梯度时，缩放器可能跳过实际参数更新。按参数更新次数管理的学习率调度和日志，应与实际更新保持一致，不能只数循环执行了几次。具体调用顺序应以使用的框架与训练封装为准。
+
+<a id="chapter-47-section-09"></a>
+
+### 案例 25：两种 checkpoint：恢复状态与重算激活
+
+场景与输入：网络有四段，每段需保存约 100 MB 中间激活。机器可能中断，也可能训练显存不足。
+
+手算第 1 步：为中断恢复而保存 checkpoint：需要模型、优化器、调度器、训练步数，必要时还包括随机状态和数据进度。它主要写到持久存储。
+
+手算第 2 步：Activation checkpointing：只保留选定边界的激活，在反向时重新执行某些前向计算，以计算时间换激活显存。
+
+手算第 3 步：假设保留两段边界能减少部分中间保存量，但还要计入边界、输入、临时张量与其他状态，不能简单承诺显存精确减半。
+
+结果与解释：磁盘快照解决恢复问题；激活重计算解决训练时部分内存开销。两个机制可以同时使用。
+
+易错点与边界：只保存模型权重通常不能精确续训；激活 checkpoint 不会自动保存一个可恢复的训练任务。
+
+改变条件再想一想：优化器状态很大，开启激活 checkpoint 就能把它省掉吗？
+
+自测参考：不能；它针对中间激活，优化器状态需采用另外的存储或分片方案。
 
 参考资料（不朗读）：[S083 · PyTorch — 混合精度与梯度累积](https://docs.pytorch.org/docs/stable/notes/amp_examples.html)；[S088 · PyTorch — 参数初始化](https://docs.pytorch.org/docs/stable/nn.init.html)；[S089 · PyTorch — torch.nn.utils.clip_grad_norm_](https://docs.pytorch.org/docs/stable/generated/torch.nn.utils.clip_grad_norm_.html)；[S090 · PyTorch — 激活检查点](https://docs.pytorch.org/docs/stable/checkpoint.html)；[S081 · PyTorch — 自动求导机制](https://docs.pytorch.org/docs/stable/notes/autograd.html)

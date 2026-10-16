@@ -44,9 +44,9 @@ const $=id=>document.getElementById(id), synth=window.speechSynthesis;
 const storeKey='cs-ai-audio-v2-state';let saved={};try{saved=JSON.parse(localStorage.getItem(storeKey)||'{}')||{}}catch(e){}
 let mode=typeof saved.mode==='string'?saved.mode:'all', query='', current=Number.isInteger(saved.current)&&chapters[saved.current]?saved.current:0;
 let part=Number.isInteger(saved.part)?saved.part:0, chunks=[],voices=[], playing=false,paused=false,session=0,timer=null,utterance=null,highlighted=-1;
-const modes=[['all',`全部 ${chapters.length} 讲`],['new','新增细讲'],['micro','训练微知识点'],['ml','机器学习算法'],['cs','CS 基础'],['hot100','LeetCode Hot 100'],['llm','LLM 与 Agent'],['rl','RL / VLA / WM'],['quiz','口述练习'],['review','快速复习']];
+const modes=[['all',`全部 ${chapters.length} 讲`],['new','新增细讲'],['micro','训练微知识点'],['ml','机器学习算法'],['cs','CS 基础'],['hot100','LeetCode Hot 100'],['examples','案例讲解'],['llm','LLM 与 Agent'],['rl','RL / VLA / WM'],['quiz','口述练习'],['review','快速复习']];
 if(!modes.some(x=>x[0]===mode))mode='all';
-function matchMode(c){switch(mode){case'new':return c.new;case'micro':return c.micro;case'ml':return c.group==='机器学习算法';case'cs':return c.id<20;case'hot100':return c.hot100===true;case'llm':return c.group==='LLM 与智能体';case'rl':return c.group==='强化学习与具身智能';case'quiz':return c.quiz;case'review':return c.group==='复习与表达';default:return true}}
+function matchMode(c){switch(mode){case'new':return c.new;case'micro':return c.micro;case'ml':return c.group==='机器学习算法';case'cs':return c.id<20;case'hot100':return c.hot100===true;case'examples':return c.blocks.some(b=>b.example);case'llm':return c.group==='LLM 与智能体';case'rl':return c.group==='强化学习与具身智能';case'quiz':return c.quiz;case'review':return c.group==='复习与表达';default:return true}}
 function visibleChapters(){let result=chapters.filter(c=>query?(c.title+' '+c.blocks.map(b=>b.text).join(' ')).toLowerCase().includes(query.toLowerCase()):matchMode(c));if(mode==='micro'&&!query)result.sort((a,b)=>book.microOrder.indexOf(a.id)-book.microOrder.indexOf(b.id));return result}
 function save(){try{localStorage.setItem(storeKey,JSON.stringify({current,part,mode,voice:$('voice').value||saved.voice||'',rate:$('rate').value,loop:$('loop').checked,autoNext:$('autoNext').checked,follow:$('follow').checked,spell:$('spell').checked,quizPause:$('quizPause').value}))}catch(e){}}
 function status(t){$('status').textContent=t}

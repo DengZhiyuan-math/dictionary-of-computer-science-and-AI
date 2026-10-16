@@ -12,6 +12,10 @@ tags: ["chapter","area/retrieval-agents"]
 
 - [[Concepts/检索增强生成|检索增强生成]]
 
+## 具体案例与可视化
+
+- [[Examples/17 RRF：融合排名而非直接相加原始分数|案例 17 · RRF：融合排名而非直接相加原始分数]]
+
 <a id="chapter-59"></a>
 
 ## 第 59 讲｜RAG、搜索、Agent 与工具调用
@@ -36,4 +40,4 @@ Agent Evaluation，智能体评测，不能只看最终回答，还要看任务�
 
 要牢牢记住三个区别。LLM 是提供语言与推理能力的模型。RAG 是为它提供外部知识的系统方法。Agent 是让模型能够通过工具和流程执行任务的系统设计。三者可以结合，但不是一回事。
 
-参考资料（不朗读）：[S122 · Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)；[S123 · ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)；[S124 · Model Context Protocol — Introduction](https://modelcontextprotocol.io/docs/getting-started/intro)；[S125 · OWASP — Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/)
+参考资料（不朗读）：[S122 · Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)；[S123 · ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)；[S124 · Model Context Protocol — Introduction](https://modelcontextprotocol.io/docs/getting-started/intro)；[S125 · OWASP — Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/)；[S177 · Cormack, Clarke, Buettcher — Reciprocal Rank Fusion](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf)

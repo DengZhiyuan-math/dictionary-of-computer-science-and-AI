@@ -11,6 +11,7 @@ A Chinese-first, bilingual learning dictionary covering computer science, algori
 | 你想做什么 | 入口 |
 | --- | --- |
 | 看整体结构、概念联系和先修顺序 | **[知识地图](docs/KNOWLEDGE_MAP.md)** · [交互图文件](docs/knowledge-map.html) |
+| 用小输入手算，再改变条件观察 | **[30 个完整案例](docs/EXAMPLES.md)** · [20 个离线交互演示](docs/visual-demos.html) |
 | 用 Obsidian 双链浏览完整笔记 | [笔记库首页](obsidian-vault/00-知识地图.md)，下载后将 `obsidian-vault` 文件夹作为仓库打开 |
 | 遇到缩写，先查定义和易混点 | [中英核心术语词典](docs/GLOSSARY.md) |
 | 看有哪些知识点，直接跳到解释 | [章节与小节索引](cs_ai_v2_index.md) |
@@ -33,6 +34,10 @@ A Chinese-first, bilingual learning dictionary covering computer science, algori
 下载 [最新资料](https://github.com/DengZhiyuan-math/dictionary-of-computer-science-and-AI/releases/latest)，解压后用 Obsidian 打开 `obsidian-vault` 文件夹，入口是 `00-知识地图.md`。内部使用 `[[笔记路径|显示名称]]` 与章节标题链接，保留全部章节原文，并附两张原生 Canvas；无需社区插件。GitHub 上可通过[文字知识地图](docs/KNOWLEDGE_MAP.md)的普通链接阅读。交互图需要下载后在浏览器打开。
 
 ## 这份笔记怎样解释概念
+
+新增 **30 个完整案例、20 个可交互演示**：每个案例都有具体输入、逐步计算、结果、易错点，以及带参考答案的变式自测。算法可以逐步查看指针、队列、栈与 DP 状态；BCE、学习率、阈值、注意力、Q-learning 等可以调参数观察数值变化。还包括 K-means、RRF、卷积、位置反馈，以及广播、泄露、事务和 KV cache 等手算案例。
+
+下载后打开 `docs/visual-demos.html`，无需联网或安装依赖。案例同步进入相关章节、TXT 与播放器的“案例讲解”路线；Obsidian 的 `Examples` 提供 30 篇双链笔记，`Demos` 内保留可独立离线运行的演示。GitHub 文件预览显示源码，浏览演示请下载后打开。
 
 每个概念优先回答：**解决什么问题 → 输入输出是什么 → 基本思路 → 适用条件与局限 → 相邻概念怎样区分。**
 
@@ -68,6 +73,7 @@ GitHub 文件预览只显示 HTML 源码，需下载后在浏览器打开。播�
 - 从原稿的 343 个细讲小节增加到 {{SUBSECTIONS}} 个，补充训练数值例题、输入契约，以及 Hot 100 的算法思想与逐题映射。
 - 追加 17 讲 Hot 100 内容，原 80 讲编号稳定；播放器新增独立学习路线。
 - 新增分层知识地图、可搜索的局部关系图与完整 Obsidian 双链笔记库。
+- 增加 30 个案例、20 个离线演示，并连入概念、章节和播放器；Obsidian 笔记总数增至 377 篇。
 - 新增 {{GLOSSARY}} 个中英核心词条组，每条都有解释、易混点和正文入口；完整覆盖仍以全书索引为准。
 - 正文、训练选编、索引、TXT、统计与播放器共享内容源，修改后统一生成。
 
@@ -82,6 +88,6 @@ node scripts/build.mjs
 node scripts/check.mjs
 ```
 
-原 80 讲在 `data/book.json`，Hot 100 内容源在 `data/hot100.mjs`，词典在 `data/glossary.json`，地图结构与关系在 `data/knowledge-map.mjs`。不要单独修改生成后的讲稿、笔记库或 HTML，以免下次生成覆盖。详见 [贡献说明](CONTRIBUTING.md) 与 [更新记录](CHANGELOG.md)。
+原 80 讲在 `data/book.json`，Hot 100 内容源在 `data/hot100.mjs`，词典在 `data/glossary.json`，地图结构与关系在 `data/knowledge-map.mjs`。案例在 `data/examples.mjs`，演示计算在 `data/demo-engines.mjs`。不要单独修改生成后的讲稿、笔记库或 HTML，以免下次生成覆盖。详见 [贡献说明](CONTRIBUTING.md) 与 [更新记录](CHANGELOG.md)。
 
 本仓库整理自用户提供的 v2 讲稿、训练选编、索引和播放器，并补充原创算法思想讲解。保留原参考来源；重点核对训练接口、更新顺序与官方 Hot 100 题单，未对全部 {{SOURCES}} 条参考资料逐一重新核验。仓库尚未指定内容再利用许可证，公开访问不代表已授予任意再分发许可。

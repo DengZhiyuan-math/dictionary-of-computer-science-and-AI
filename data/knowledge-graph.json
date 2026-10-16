@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "version": "2.3.0",
+    "version": "2.4.0",
     "date": "2026-10-16",
     "title": "CS 与 AI 知识地图",
     "semantics": {
@@ -11,6 +11,7 @@
       "related": "有解释的关联",
       "contrast": "需要区分",
       "practice": "题目练习",
+      "demonstrates": "案例与演示",
       "learning-path": "推荐领域衔接",
       "route-step": "专题学习顺序"
     }
@@ -544,7 +545,7 @@
       "chapters": [
         2
       ],
-      "heading": null,
+      "heading": "案例 26：CPU 与 GPU：先算不能加速的部分",
       "category": "系统"
     },
     {
@@ -4878,6 +4879,404 @@
         "world-model",
         "dreamer-muzero"
       ]
+    },
+    {
+      "id": "example:two-sum",
+      "type": "example",
+      "label": "案例 01 · 哈希配对：先查再存",
+      "area": "hot100",
+      "note": "Examples/01 哈希配对：先查再存.md",
+      "description": "数组 [4,1,5,3]，目标和 8。需要返回两个不同位置。哈希表保存已经读过的值及其下标。",
+      "chapters": [
+        81
+      ],
+      "source": "docs/EXAMPLES.md#example-two-sum",
+      "demo": "hash"
+    },
+    {
+      "id": "example:container",
+      "type": "example",
+      "label": "案例 02 · 双指针：为什么移动短板",
+      "area": "hot100",
+      "note": "Examples/02 双指针：为什么移动短板.md",
+      "description": "高度 [2,7,4,6,3]。两条线与横轴形成容器，面积是宽度乘较短高度。",
+      "chapters": [
+        82
+      ],
+      "source": "docs/EXAMPLES.md#example-container",
+      "demo": "pointers"
+    },
+    {
+      "id": "example:unique-window",
+      "type": "example",
+      "label": "案例 03 · 滑动窗口：重复字符出现时逐步收缩",
+      "area": "hot100",
+      "note": "Examples/03 滑动窗口：重复字符出现时逐步收缩.md",
+      "description": "字符串 abcaad，求不含重复字符的最长连续子串。维护区间 [left,right] 的字符集合。",
+      "chapters": [
+        83
+      ],
+      "source": "docs/EXAMPLES.md#example-unique-window",
+      "demo": "window"
+    },
+    {
+      "id": "example:prefix-count",
+      "type": "example",
+      "label": "案例 04 · 前缀和：负数为什么不妨碍计数",
+      "area": "hot100",
+      "note": "Examples/04 前缀和：负数为什么不妨碍计数.md",
+      "description": "数组 [1,-1,1]，统计和为 1 的连续子数组。令前缀和 s，历史频次表起始为 {0:1}。",
+      "chapters": [
+        84
+      ],
+      "source": "docs/EXAMPLES.md#example-prefix-count",
+      "demo": "prefix"
+    },
+    {
+      "id": "example:temperatures",
+      "type": "example",
+      "label": "案例 05 · 单调栈：弹栈时确定等待天数",
+      "area": "hot100",
+      "note": "Examples/05 单调栈：弹栈时确定等待天数.md",
+      "description": "温度 [20,24,22,27,21]，求每一天到更暖一天的等待天数。栈里保存尚未找到答案的下标。",
+      "chapters": [
+        92
+      ],
+      "source": "docs/EXAMPLES.md#example-temperatures",
+      "demo": "stack"
+    },
+    {
+      "id": "example:bfs-path",
+      "type": "example",
+      "label": "案例 06 · BFS：入队即标记与最短路",
+      "area": "hot100",
+      "note": "Examples/06 BFS：入队即标记与最短路.md",
+      "description": "有向等权图 A→B、A→C、B→D、C→D、D→E，F 是孤立节点。寻找从 A 出发的最少边数。",
+      "chapters": [
+        89
+      ],
+      "source": "docs/EXAMPLES.md#example-bfs-path",
+      "demo": "bfs"
+    },
+    {
+      "id": "example:topo-cycle",
+      "type": "example",
+      "label": "案例 07 · 拓扑排序：队列为空与有向环",
+      "area": "hot100",
+      "note": "Examples/07 拓扑排序：队列为空与有向环.md",
+      "description": "依赖关系 A→C、B→C、C→D、D→E，F 无依赖。每条边表示前者必须先完成。",
+      "chapters": [
+        89
+      ],
+      "source": "docs/EXAMPLES.md#example-topo-cycle",
+      "demo": "topo"
+    },
+    {
+      "id": "example:knapsack",
+      "type": "example",
+      "label": "案例 08 · 0/1 背包：倒序容量避免重复使用",
+      "area": "hot100",
+      "note": "Examples/08 0 1 背包：倒序容量避免重复使用.md",
+      "description": "物品重量 [1,2,5]，每件最多一次，容量 4，问能否恰好装满。布尔 dp[c] 表示已处理物品是否能组成 c。",
+      "chapters": [
+        95
+      ],
+      "source": "docs/EXAMPLES.md#example-knapsack",
+      "demo": "knapsack"
+    },
+    {
+      "id": "example:permutations",
+      "type": "example",
+      "label": "案例 09 · 回溯：选择、递归与撤销",
+      "area": "hot100",
+      "note": "Examples/09 回溯：选择、递归与撤销.md",
+      "description": "枚举 [1,2,3] 的全排列。path 保存当前路径，used 标记已选位置。",
+      "chapters": [
+        90
+      ],
+      "source": "docs/EXAMPLES.md#example-permutations",
+      "demo": "backtrack"
+    },
+    {
+      "id": "example:lower-bound",
+      "type": "example",
+      "label": "案例 10 · 二分：半开区间与第一个不小于",
+      "area": "hot100",
+      "note": "Examples/10 二分：半开区间与第一个不小于.md",
+      "description": "有序数组 [1,2,2,4,7]，找第一个不小于 2 的位置，区间约定为 [left,right)，初始 [0,5)。",
+      "chapters": [
+        91
+      ],
+      "source": "docs/EXAMPLES.md#example-lower-bound",
+      "demo": "binary"
+    },
+    {
+      "id": "example:lru-cache",
+      "type": "example",
+      "label": "案例 11 · LRU：一次访问怎样改变淘汰对象",
+      "area": "infrastructure",
+      "note": "Examples/11 LRU：一次访问怎样改变淘汰对象.md",
+      "description": "缓存容量 2。以最近使用在左的顺序显示条目，依次执行 put(1)、put(2)、get(1)、put(3)、get(2)。",
+      "chapters": [
+        18,
+        87
+      ],
+      "source": "docs/EXAMPLES.md#example-lru-cache",
+      "demo": "lru"
+    },
+    {
+      "id": "example:bce-confidence",
+      "type": "example",
+      "label": "案例 12 · BCE：同样判错，损失差多少",
+      "area": "training",
+      "note": "Examples/12 BCE：同样判错，损失差多少.md",
+      "description": "真实标签 y=1；模型给正类概率 p。阈值固定为 0.5，比较 p=0.49 与 p=0.01。",
+      "chapters": [
+        41
+      ],
+      "source": "docs/EXAMPLES.md#example-bce-confidence",
+      "demo": "bce"
+    },
+    {
+      "id": "example:learning-rate",
+      "type": "example",
+      "label": "案例 13 · 学习率：收敛、震荡与发散",
+      "area": "training",
+      "note": "Examples/13 学习率：收敛、震荡与发散.md",
+      "description": "简化目标 L(θ)=θ²/2，梯度为 θ，初始 θ=4，每步使用固定学习率 η。",
+      "chapters": [
+        43
+      ],
+      "source": "docs/EXAMPLES.md#example-learning-rate",
+      "demo": "gd"
+    },
+    {
+      "id": "example:threshold-metrics",
+      "type": "example",
+      "label": "案例 14 · 阈值：重新计算混淆矩阵",
+      "area": "data-evaluation",
+      "note": "Examples/14 阈值：重新计算混淆矩阵.md",
+      "description": "分数 [.95,.8,.7,.6,.4,.3,.2,.05]，真实标签 [1,0,1,0,1,0,0,0]。规定分数大于等于阈值即预测为正。",
+      "chapters": [
+        38
+      ],
+      "source": "docs/EXAMPLES.md#example-threshold-metrics",
+      "demo": "metrics"
+    },
+    {
+      "id": "example:attention",
+      "type": "example",
+      "label": "案例 15 · 注意力：分数、归一化与加权求和",
+      "area": "architectures",
+      "note": "Examples/15 注意力：分数、归一化与加权求和.md",
+      "description": "查询 q=[1,0]，三个键为 [1,0]、[0,1]、[1,1]，值为 [2,0]、[0,2]、[1,1]。键维度为 2。",
+      "chapters": [
+        53,
+        52
+      ],
+      "source": "docs/EXAMPLES.md#example-attention",
+      "demo": "attention"
+    },
+    {
+      "id": "example:kmeans",
+      "type": "example",
+      "label": "案例 16 · K-means：分配与均值更新",
+      "area": "ml-methods",
+      "note": "Examples/16 K-means：分配与均值更新.md",
+      "description": "六个二维点为 (0,0)、(0,2)、(2,0)、(7,7)、(7,9)、(9,7)，取 K=2，初始中心为 (0,0)、(2,0)。",
+      "chapters": [
+        31
+      ],
+      "source": "docs/EXAMPLES.md#example-kmeans",
+      "demo": "kmeans"
+    },
+    {
+      "id": "example:rrf",
+      "type": "example",
+      "label": "案例 17 · RRF：融合排名而非直接相加原始分数",
+      "area": "retrieval-agents",
+      "note": "Examples/17 RRF：融合排名而非直接相加原始分数.md",
+      "description": "关键词检索排名 A、B、C；向量检索排名 C、B、D。每个文档在一个列表中贡献 1/(k+rank)，rank 从 1 开始。",
+      "chapters": [
+        60,
+        59
+      ],
+      "source": "docs/EXAMPLES.md#example-rrf",
+      "demo": "rrf"
+    },
+    {
+      "id": "example:q-update",
+      "type": "example",
+      "label": "案例 18 · Q-learning：终止状态不再自举",
+      "area": "rl",
+      "note": "Examples/18 Q-learning：终止状态不再自举.md",
+      "description": "当前 Q(s,a)=2，奖励 r=1，下一状态最大 Q 为 4，折扣 γ=0.9，步长 α=0.5。",
+      "chapters": [
+        66,
+        65
+      ],
+      "source": "docs/EXAMPLES.md#example-q-update",
+      "demo": "qlearning"
+    },
+    {
+      "id": "example:world-feedback",
+      "type": "example",
+      "label": "案例 19 · 世界模型：预测偏差与反馈修正",
+      "area": "embodied",
+      "note": "Examples/19 世界模型：预测偏差与反馈修正.md",
+      "description": "一维位置 x，目标为 5。真实系统 x下一步=x+u+风，预测模型忽略风。动作限制在 [-1,1]，初始位置为 0。",
+      "chapters": [
+        73
+      ],
+      "source": "docs/EXAMPLES.md#example-world-feedback",
+      "demo": "world"
+    },
+    {
+      "id": "example:convolution",
+      "type": "example",
+      "label": "案例 20 · 卷积窗口：一次输出来自哪些像素",
+      "area": "architectures",
+      "note": "Examples/20 卷积窗口：一次输出来自哪些像素.md",
+      "description": "输入为 3×3 矩阵 [[1,2,3],[4,5,6],[7,8,9]]，核为 [[1,0],[0,1]]，步长 1，无填充，偏置为 0。",
+      "chapters": [
+        49,
+        48
+      ],
+      "source": "docs/EXAMPLES.md#example-convolution",
+      "demo": "conv"
+    },
+    {
+      "id": "example:broadcast",
+      "type": "example",
+      "label": "案例 21 · 张量广播：一列加一行变成矩阵",
+      "area": "training",
+      "note": "Examples/21 张量广播：一列加一行变成矩阵.md",
+      "description": "预测张量形状为 [3,1]，标签形状为 [3]，做一般逐元素减法来计算误差。",
+      "chapters": [
+        22
+      ],
+      "source": "docs/EXAMPLES.md#example-broadcast",
+      "demo": null
+    },
+    {
+      "id": "example:leakage",
+      "type": "example",
+      "label": "案例 22 · 数据泄露：用未来均值修正过去",
+      "area": "data-evaluation",
+      "note": "Examples/22 数据泄露：用未来均值修正过去.md",
+      "description": "用前两个月数据训练，第三个月验证。某特征训练值 [0,2]，未来验证值 [100,102]。",
+      "chapters": [
+        23,
+        37
+      ],
+      "source": "docs/EXAMPLES.md#example-leakage",
+      "demo": null
+    },
+    {
+      "id": "example:forest-vote",
+      "type": "example",
+      "label": "案例 23 · 随机森林：相关性决定投票能帮多少",
+      "area": "ml-methods",
+      "note": "Examples/23 随机森林：相关性决定投票能帮多少.md",
+      "description": "五棵分类树对同一邮件投票 [1,1,0,1,0]。正类表示垃圾邮件。",
+      "chapters": [
+        27
+      ],
+      "source": "docs/EXAMPLES.md#example-forest-vote",
+      "demo": null
+    },
+    {
+      "id": "example:weight-decay",
+      "type": "example",
+      "label": "案例 24 · Weight decay 与学习率衰减：两个不同的旋钮",
+      "area": "training",
+      "note": "Examples/24 Weight decay 与学习率衰减：两个不同的旋钮.md",
+      "description": "用简化的解耦更新 θ下一步=(1-ηλ)θ-ηg 表示参数收缩与梯度更新，取 θ=2、η=0.1、λ=0.01、g=0.4。",
+      "chapters": [
+        45,
+        46
+      ],
+      "source": "docs/EXAMPLES.md#example-weight-decay",
+      "demo": null
+    },
+    {
+      "id": "example:checkpoint",
+      "type": "example",
+      "label": "案例 25 · 两种 checkpoint：恢复状态与重算激活",
+      "area": "training",
+      "note": "Examples/25 两种 checkpoint：恢复状态与重算激活.md",
+      "description": "网络有四段，每段需保存约 100 MB 中间激活。机器可能中断，也可能训练显存不足。",
+      "chapters": [
+        47
+      ],
+      "source": "docs/EXAMPLES.md#example-checkpoint",
+      "demo": null
+    },
+    {
+      "id": "example:amdahl",
+      "type": "example",
+      "label": "案例 26 · CPU 与 GPU：先算不能加速的部分",
+      "area": "systems",
+      "note": "Examples/26 CPU 与 GPU：先算不能加速的部分.md",
+      "description": "程序耗时 100 秒，其中 80 秒可被 GPU 加速 10 倍，其余 20 秒保持不变，先忽略传输开销。",
+      "chapters": [
+        2
+      ],
+      "source": "docs/EXAMPLES.md#example-amdahl",
+      "demo": null
+    },
+    {
+      "id": "example:transaction",
+      "type": "example",
+      "label": "案例 27 · 事务：转账中途失败怎么办",
+      "area": "infrastructure",
+      "note": "Examples/27 事务：转账中途失败怎么办.md",
+      "description": "账户 A 有 100，B 有 20，转账 30，预期结果 A=70、B=50。",
+      "chapters": [
+        16,
+        14
+      ],
+      "source": "docs/EXAMPLES.md#example-transaction",
+      "demo": null
+    },
+    {
+      "id": "example:cosine",
+      "type": "example",
+      "label": "案例 28 · 跨模态表征：余弦相似度不是事实核验",
+      "area": "multimodal",
+      "note": "Examples/28 跨模态表征：余弦相似度不是事实核验.md",
+      "description": "将图像向量设为 [1,0]，两个文本向量为 [2,0] 和 [1,1]，仅演示向量比较。",
+      "chapters": [
+        64
+      ],
+      "source": "docs/EXAMPLES.md#example-cosine",
+      "demo": null
+    },
+    {
+      "id": "example:kv-cache",
+      "type": "example",
+      "label": "案例 29 · KV cache：复用的是哪些计算",
+      "area": "llm",
+      "note": "Examples/29 KV cache：复用的是哪些计算.md",
+      "description": "自回归解码已有 4 个 token，现在生成第 5 个。前缀各层的 Key 与 Value 可在先前步骤保存。",
+      "chapters": [
+        58
+      ],
+      "source": "docs/EXAMPLES.md#example-kv-cache",
+      "demo": null
+    },
+    {
+      "id": "example:top-k-interview",
+      "type": "example",
+      "label": "案例 30 · Top K：用需求解释算法选择",
+      "area": "practice",
+      "note": "Examples/30 Top K：用需求解释算法选择.md",
+      "description": "输入 [9,1,7,3,8]，求最大的两个数。先确认是否要求有序、输入能否修改、是否持续接收数据。",
+      "chapters": [
+        93
+      ],
+      "source": "docs/EXAMPLES.md#example-top-k-interview",
+      "demo": null
     }
   ],
   "edges": [
@@ -10284,6 +10683,839 @@
       "to": "concept:dreamer-muzero",
       "type": "route-step",
       "label": "路线中的概念"
+    },
+    {
+      "id": "e773",
+      "from": "area:hot100",
+      "to": "example:two-sum",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e774",
+      "from": "example:two-sum",
+      "to": "concept:hash-table",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e775",
+      "from": "example:two-sum",
+      "to": "chapter:81",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e776",
+      "from": "area:hot100",
+      "to": "example:container",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e777",
+      "from": "example:container",
+      "to": "concept:two-pointers",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e778",
+      "from": "example:container",
+      "to": "concept:loop-invariant",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e779",
+      "from": "example:container",
+      "to": "chapter:82",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e780",
+      "from": "area:hot100",
+      "to": "example:unique-window",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e781",
+      "from": "example:unique-window",
+      "to": "concept:sliding-window",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e782",
+      "from": "example:unique-window",
+      "to": "chapter:83",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e783",
+      "from": "area:hot100",
+      "to": "example:prefix-count",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e784",
+      "from": "example:prefix-count",
+      "to": "concept:prefix-sum",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e785",
+      "from": "example:prefix-count",
+      "to": "concept:hash-table",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e786",
+      "from": "example:prefix-count",
+      "to": "chapter:84",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e787",
+      "from": "area:hot100",
+      "to": "example:temperatures",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e788",
+      "from": "example:temperatures",
+      "to": "concept:monotonic-stack",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e789",
+      "from": "example:temperatures",
+      "to": "chapter:92",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e790",
+      "from": "area:hot100",
+      "to": "example:bfs-path",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e791",
+      "from": "example:bfs-path",
+      "to": "concept:bfs-dfs",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e792",
+      "from": "example:bfs-path",
+      "to": "chapter:89",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e793",
+      "from": "area:hot100",
+      "to": "example:topo-cycle",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e794",
+      "from": "example:topo-cycle",
+      "to": "concept:topological-sort",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e795",
+      "from": "example:topo-cycle",
+      "to": "chapter:89",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e796",
+      "from": "area:hot100",
+      "to": "example:knapsack",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e797",
+      "from": "example:knapsack",
+      "to": "concept:0-1-knapsack-unbounded-knapsack",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e798",
+      "from": "example:knapsack",
+      "to": "chapter:95",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e799",
+      "from": "area:hot100",
+      "to": "example:permutations",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e800",
+      "from": "example:permutations",
+      "to": "concept:backtracking-pruning",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e801",
+      "from": "example:permutations",
+      "to": "chapter:90",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e802",
+      "from": "area:hot100",
+      "to": "example:lower-bound",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e803",
+      "from": "example:lower-bound",
+      "to": "concept:lower-bound-upper-bound",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e804",
+      "from": "example:lower-bound",
+      "to": "chapter:91",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e805",
+      "from": "area:infrastructure",
+      "to": "example:lru-cache",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e806",
+      "from": "example:lru-cache",
+      "to": "concept:cache",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e807",
+      "from": "example:lru-cache",
+      "to": "concept:hash-table",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e808",
+      "from": "example:lru-cache",
+      "to": "chapter:18",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e809",
+      "from": "example:lru-cache",
+      "to": "chapter:87",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e810",
+      "from": "area:training",
+      "to": "example:bce-confidence",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e811",
+      "from": "example:bce-confidence",
+      "to": "concept:bce",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e812",
+      "from": "example:bce-confidence",
+      "to": "concept:bcewithlogitsloss",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e813",
+      "from": "example:bce-confidence",
+      "to": "chapter:41",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e814",
+      "from": "area:training",
+      "to": "example:learning-rate",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e815",
+      "from": "example:learning-rate",
+      "to": "concept:learning-rate",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e816",
+      "from": "example:learning-rate",
+      "to": "concept:gradient",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e817",
+      "from": "example:learning-rate",
+      "to": "chapter:43",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e818",
+      "from": "area:data-evaluation",
+      "to": "example:threshold-metrics",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e819",
+      "from": "example:threshold-metrics",
+      "to": "concept:threshold",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e820",
+      "from": "example:threshold-metrics",
+      "to": "concept:precision",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e821",
+      "from": "example:threshold-metrics",
+      "to": "concept:recall",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e822",
+      "from": "example:threshold-metrics",
+      "to": "concept:f1",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e823",
+      "from": "example:threshold-metrics",
+      "to": "chapter:38",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e824",
+      "from": "area:architectures",
+      "to": "example:attention",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e825",
+      "from": "example:attention",
+      "to": "concept:attention-transformer",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e826",
+      "from": "example:attention",
+      "to": "chapter:53",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e827",
+      "from": "example:attention",
+      "to": "chapter:52",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e828",
+      "from": "area:ml-methods",
+      "to": "example:kmeans",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e829",
+      "from": "example:kmeans",
+      "to": "concept:knn-k-means",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e830",
+      "from": "example:kmeans",
+      "to": "concept:clustering",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e831",
+      "from": "example:kmeans",
+      "to": "chapter:31",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e832",
+      "from": "area:retrieval-agents",
+      "to": "example:rrf",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e833",
+      "from": "example:rrf",
+      "to": "concept:bm25-hnsw",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e834",
+      "from": "example:rrf",
+      "to": "concept:rag",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e835",
+      "from": "example:rrf",
+      "to": "chapter:60",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e836",
+      "from": "example:rrf",
+      "to": "chapter:59",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e837",
+      "from": "area:rl",
+      "to": "example:q-update",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e838",
+      "from": "example:q-update",
+      "to": "concept:q-learning-sarsa",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e839",
+      "from": "example:q-update",
+      "to": "concept:bellman",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e840",
+      "from": "example:q-update",
+      "to": "chapter:66",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e841",
+      "from": "example:q-update",
+      "to": "chapter:65",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e842",
+      "from": "area:embodied",
+      "to": "example:world-feedback",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e843",
+      "from": "example:world-feedback",
+      "to": "concept:world-model",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e844",
+      "from": "example:world-feedback",
+      "to": "concept:pid-mpc",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e845",
+      "from": "example:world-feedback",
+      "to": "chapter:73",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e846",
+      "from": "area:architectures",
+      "to": "example:convolution",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e847",
+      "from": "example:convolution",
+      "to": "concept:cnn",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e848",
+      "from": "example:convolution",
+      "to": "chapter:49",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e849",
+      "from": "example:convolution",
+      "to": "chapter:48",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e850",
+      "from": "area:training",
+      "to": "example:broadcast",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e851",
+      "from": "example:broadcast",
+      "to": "concept:tensor-shape-axis",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e852",
+      "from": "example:broadcast",
+      "to": "concept:broadcasting",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e853",
+      "from": "example:broadcast",
+      "to": "chapter:22",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e854",
+      "from": "area:data-evaluation",
+      "to": "example:leakage",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e855",
+      "from": "example:leakage",
+      "to": "concept:data-leakage",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e856",
+      "from": "example:leakage",
+      "to": "concept:cross-validation",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e857",
+      "from": "example:leakage",
+      "to": "chapter:23",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e858",
+      "from": "example:leakage",
+      "to": "chapter:37",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e859",
+      "from": "area:ml-methods",
+      "to": "example:forest-vote",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e860",
+      "from": "example:forest-vote",
+      "to": "concept:decision-tree",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e861",
+      "from": "example:forest-vote",
+      "to": "concept:random-forest",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e862",
+      "from": "example:forest-vote",
+      "to": "chapter:27",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e863",
+      "from": "area:training",
+      "to": "example:weight-decay",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e864",
+      "from": "example:weight-decay",
+      "to": "concept:adam-adamw",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e865",
+      "from": "example:weight-decay",
+      "to": "concept:weight-decay",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e866",
+      "from": "example:weight-decay",
+      "to": "concept:learning-rate",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e867",
+      "from": "example:weight-decay",
+      "to": "chapter:45",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e868",
+      "from": "example:weight-decay",
+      "to": "chapter:46",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e869",
+      "from": "area:training",
+      "to": "example:checkpoint",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e870",
+      "from": "example:checkpoint",
+      "to": "concept:activation-checkpointing",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e871",
+      "from": "example:checkpoint",
+      "to": "concept:checkpoint-resume-seed",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e872",
+      "from": "example:checkpoint",
+      "to": "chapter:47",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e873",
+      "from": "area:systems",
+      "to": "example:amdahl",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e874",
+      "from": "example:amdahl",
+      "to": "concept:cpu-gpu",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e875",
+      "from": "example:amdahl",
+      "to": "concept:concurrency-parallelism",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e876",
+      "from": "example:amdahl",
+      "to": "chapter:02",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e877",
+      "from": "area:infrastructure",
+      "to": "example:transaction",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e878",
+      "from": "example:transaction",
+      "to": "concept:transaction-acid",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e879",
+      "from": "example:transaction",
+      "to": "chapter:16",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e880",
+      "from": "example:transaction",
+      "to": "chapter:14",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e881",
+      "from": "area:multimodal",
+      "to": "example:cosine",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e882",
+      "from": "example:cosine",
+      "to": "concept:multimodal-representation",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e883",
+      "from": "example:cosine",
+      "to": "chapter:64",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e884",
+      "from": "area:llm",
+      "to": "example:kv-cache",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e885",
+      "from": "example:kv-cache",
+      "to": "concept:kv-cache-flashattention",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e886",
+      "from": "example:kv-cache",
+      "to": "concept:attention-transformer",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e887",
+      "from": "example:kv-cache",
+      "to": "chapter:58",
+      "type": "demonstrates",
+      "label": "配套章节"
+    },
+    {
+      "id": "e888",
+      "from": "area:practice",
+      "to": "example:top-k-interview",
+      "type": "contains",
+      "label": "案例"
+    },
+    {
+      "id": "e889",
+      "from": "example:top-k-interview",
+      "to": "concept:heap",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e890",
+      "from": "example:top-k-interview",
+      "to": "concept:quickselect-top-k",
+      "type": "demonstrates",
+      "label": "具体案例与自测"
+    },
+    {
+      "id": "e891",
+      "from": "example:top-k-interview",
+      "to": "chapter:93",
+      "type": "demonstrates",
+      "label": "配套章节"
     }
   ],
   "stats": {
@@ -10291,8 +11523,10 @@
     "concepts": 131,
     "chapters": 97,
     "problems": 100,
+    "examples": 30,
+    "demos": 20,
     "routes": 4,
-    "nodes": 347,
-    "edges": 772
+    "nodes": 377,
+    "edges": 891
   }
 }

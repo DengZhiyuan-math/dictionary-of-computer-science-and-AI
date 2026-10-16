@@ -33,3 +33,7 @@ KNN 利用邻居答案预测；K-means 在无标签数据中找指定数量的�
 ## 章节依据
 
 - [[Chapters/第 31 讲 聚类算法：K-means、DBSCAN、HDBSCAN、层次聚类与 GMM|第 31 讲 · 聚类算法：K-means、DBSCAN、HDBSCAN、层次聚类与 GMM]] · [[Chapters/第 31 讲 聚类算法：K-means、DBSCAN、HDBSCAN、层次聚类与 GMM#K-means 与 K-means++【重点】|直达解释小节]]
+
+## 具体案例与可视化
+
+- [[Examples/16 K-means：分配与均值更新|案例 16 · K-means：分配与均值更新]]

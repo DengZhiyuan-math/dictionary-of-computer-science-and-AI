@@ -13,6 +13,10 @@ tags: ["chapter","area/rl"]
 - [[Concepts/回报、价值与 Bellman 关系|回报、价值与 Bellman 关系]]
 - [[Concepts/策略梯度与 Actor-Critic|策略梯度与 Actor-Critic]]
 
+## 具体案例与可视化
+
+- [[Examples/18 Q-learning：终止状态不再自举|案例 18 · Q-learning：终止状态不再自举]]
+
 <a id="chapter-65"></a>
 
 ## 第 65 讲｜强化学习：Q-learning、PPO、Actor-Critic 与自我博弈

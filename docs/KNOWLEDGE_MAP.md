@@ -496,3 +496,9 @@ PPO 可用于策略学习与某些偏好训练；世界模型可提供想象中�
 地图由 `data/knowledge-map.mjs` 与原讲稿统一生成。新增或调整关系时请注明理由，重新执行构建和校验；不要只修改生成后的双链。原章节编号与内容保持稳定。
 
 格式依据：[Obsidian 内部链接](https://help.obsidian.md/links)、[关系图谱](https://help.obsidian.md/plugins/graph)、[JSON Canvas 1.0](https://jsoncanvas.org/spec/1.0/)。
+
+## 案例与可视化演示
+
+[完整案例集](EXAMPLES.md) · [离线交互演示](visual-demos.html)
+
+新增 30 个带手算、自测与反例的案例，其中 20 个配有交互演示。Obsidian 的 `Examples` 笔记连接概念和章节，`Demos` 保存完整离线演示。

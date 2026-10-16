@@ -66,6 +66,26 @@ Logit 在神经网络分类讨论中通常指变成概率之前的原始分数�
 
 二分类是判断一个问题的是或否，如是否垃圾邮件。多类别单标签分类是在多个互斥答案中选一个，如主要物种是猫、狗还是鸟。多标签分类允许多个答案同时成立，如图片中既有猫又有狗。后者通常为每个标签分别给一个概率，不要求所有概率加起来是一。这一区别直接影响输出层和损失函数：不能只数类别有几个，就决定该用 BCE 还是互斥类别交叉熵。
 
+<a id="chapter-22-section-07"></a>
+
+### 案例 21：张量广播：一列加一行变成矩阵
+
+场景与输入：预测张量形状为 [3,1]，标签形状为 [3]，做一般逐元素减法来计算误差。
+
+手算第 1 步：广播从尾轴对齐：[3,1] 与 [1,3] 可广播到 [3,3]。这已经不是三个样本一一对应。
+
+手算第 2 步：例如预测 [[1],[2],[3]] 减标签 [1,2,3]，结果是 [[0,-1,-2],[1,0,-1],[2,1,0]]。
+
+手算第 3 步：若先把标签显式变为 [3,1]，差值为三行零，才符合这里的样本配对意图。
+
+结果与解释：错误形状可能产生合法但语义错误的计算；检查 shape、轴含义和期望输出形状。
+
+易错点与边界：不要据此推断所有损失接口都自动广播；BCEWithLogitsLoss 要求输入和目标形状相同。
+
+改变条件再想一想：batch=1 时为何更难发现？
+
+自测参考：[1,1] 和 [1] 的广播结果仍只有一个数，小样本测试可能掩盖轴错误。
+
 参考资料（不朗读）：[S025 · PyTorch — torch.nn.BCEWithLogitsLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html)；[S026 · PyTorch — torch.nn.CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html)；[S027 · PyTorch — 张量](https://docs.pytorch.org/docs/stable/tensors.html)
 
 
@@ -118,6 +138,26 @@ One-hot encoding 为各类别提供独立位置，避免给邮编、颜色等人
 ### Pipeline 与 Fit-Transform【重点】
 
 Pipeline 把预处理、特征选择和模型拟合连在一起，让交叉验证时每一步只在对应训练折学习。Fit 是估计所需参数，如均值或词表；transform 是用已学规则处理数据。测试集只能使用训练集学来的规则，而不是重新估计出一套更方便的规则。所谓数据泄露，经常不是模型显式看到答案，而是预处理悄悄让未来信息进入流程。
+
+<a id="chapter-23-section-08"></a>
+
+### 案例 22：数据泄露：用未来均值修正过去
+
+场景与输入：用前两个月数据训练，第三个月验证。某特征训练值 [0,2]，未来验证值 [100,102]。
+
+手算第 1 步：若全量求均值，得到 51，再据此处理训练数据，训练流程已接触未来分布。
+
+手算第 2 步：按时间先切分，训练集均值为 1；训练和验证都使用训练时得到的 1，验证值可以很大。
+
+手算第 3 步：交叉验证每个折也应在该折的训练部分拟合变换；模型选择完成后再评估独立测试集。
+
+结果与解释：避免泄露的关键是拟合操作的数据边界，包含填补、缩放、特征选择和目标编码等步骤。
+
+易错点与边界：此处大数只是帮助观察泄露，并不表示均值泄露必然提高某个具体模型的分数；时间依赖任务不能随意随机打散。
+
+改变条件再想一想：验证集均值和训练集差很多时，应该用验证集重新拟合缩放器吗？
+
+自测参考：评估阶段不应为获得更好分数这样做；先检查分布漂移，并在明确的数据更新协议下重新训练。
 
 参考资料（不朗读）：[S028 · scikit-learn — 预处理](https://scikit-learn.org/stable/modules/preprocessing.html)；[S029 · scikit-learn — 缺失值处理](https://scikit-learn.org/stable/modules/impute.html)；[S030 · scikit-learn — 特征选择](https://scikit-learn.org/stable/modules/feature_selection.html)；[S031 · scikit-learn — 交叉验证](https://scikit-learn.org/stable/modules/cross_validation.html)；[S032 · imbalanced-learn — Over-sampling](https://imbalanced-learn.org/stable/over_sampling.html)
 
@@ -187,6 +227,26 @@ Huber 在误差较小时像平方误差，在误差很大时更接近绝对误�
 以普通批量分类为例，单 logit 二分类的输出可以是批量大小乘一，目标也应采用相同形状的浮点张量；逐标签多标签任务则常是批量大小乘标签数，两者都可使用 BCEWithLogitsLoss。不要把形状为批量大小的目标，无意广播成批量大小乘一。
 
 互斥多分类使用类别编号目标时，CrossEntropyLoss 通常接收批量大小乘类别数的原始分数，目标是形状为批量大小的长整型类别编号。它也支持与输出同形状的浮点类别分布目标，但需要满足有效分布要求。二分类同样能建模成两个互斥 logits 配合交叉熵；一个 logit 配合 BCE 只是另一种常用参数化。接口形状还会随分割等任务增加空间维度，不能把这里的普通分类示例当成唯一合法形式。
+
+<a id="chapter-41-section-09"></a>
+
+### 案例 12：BCE：同样判错，损失差多少
+
+场景与输入：真实标签 y=1；模型给正类概率 p。阈值固定为 0.5，比较 p=0.49 与 p=0.01。
+
+手算第 1 步：y=1 时，BCE=-ln(p)。p=0.49 得到约 0.71335；p=0.01 得到约 4.60517。
+
+手算第 2 步：两次硬分类都为负类，但后者给真实类别的概率更低，损失约为前者的 6.46 倍。
+
+手算第 3 步：切换 y=0 时，损失改为 -ln(1-p)；同一个 0.01 此时是正确且较自信的预测。
+
+结果与解释：损失衡量概率预测，不等于 0/1 错误数。演示概率限制在 (0,1)，端点的对数发散另行讨论。
+
+易错点与边界：BCEWithLogitsLoss 输入是原始 logit；不要对它的输入再先做 Sigmoid。演示显示概率和对应 logit，计算的是等价的单样本 BCE。
+
+改变条件再想一想：p=0.5 时，两个标签的损失一样吗？
+
+自测参考：一样，均为 ln(2)≈0.69315。
 
 参考资料（不朗读）：[S025 · PyTorch — torch.nn.BCEWithLogitsLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html)；[S072 · PyTorch — torch.nn.BCELoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.BCELoss.html)；[S026 · PyTorch — torch.nn.CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html)；[S073 · PyTorch — torch.nn.MSELoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.MSELoss.html)；[S074 · PyTorch — torch.nn.HuberLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.HuberLoss.html)；[S023 · scikit-learn — 线性模型](https://scikit-learn.org/stable/modules/linear_model.html)
 
@@ -365,6 +425,26 @@ One-cycle 让学习率在一次训练中先升后降，并可能联动动量。W
 
 Adam 等优化器会加入历史统计，因此不能把这个数值计算原样套到所有优化器上。调度日志也要标明记录的是当前更新使用的学习率，还是调度后下一步将使用的值，避免把图表平移一格后误判设置。
 
+<a id="chapter-43-section-08"></a>
+
+### 案例 13：学习率：收敛、震荡与发散
+
+场景与输入：简化目标 L(θ)=θ²/2，梯度为 θ，初始 θ=4，每步使用固定学习率 η。
+
+手算第 1 步：更新为 θ下一步=(1-η)θ。η=0.1 时，4→3.6→3.24，缓慢靠近 0。
+
+手算第 2 步：η=1.8 时，4→-3.2→2.56，符号交替但绝对值缩小，仍会收敛。
+
+手算第 3 步：η=2.2 时，4→-4.8→5.76，符号交替且绝对值增大，发生发散。
+
+结果与解释：在这个曲率恰为 1 的二次函数上，0<η<2 收敛；η=2 保持等幅震荡，η=1 一步到 0。
+
+易错点与边界：区间 (0,2) 不是所有神经网络的安全学习率范围；一般目标的曲率、噪声和优化器都会改变稳定条件。
+
+改变条件再想一想：目标改成 L=5θ²/2，固定学习率的稳定范围怎么变？
+
+自测参考：梯度为 5θ，更新系数为 1-5η；要求其绝对值小于 1，所以 0<η<0.4。
+
 参考资料（不朗读）：[S070 · PyTorch — 优化器](https://docs.pytorch.org/docs/stable/optim.html)；[S078 · PyTorch — 学习率调度](https://docs.pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate)；[S079 · PyTorch — torch.optim.lr_scheduler.OneCycleLR](https://docs.pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.OneCycleLR.html)；[S080 · PyTorch — torch.optim.lr_scheduler.ReduceLROnPlateau](https://docs.pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.ReduceLROnPlateau.html)；[S069 · PyTorch — Optimizing Model Parameters](https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html)
 
 
@@ -417,6 +497,26 @@ L-BFGS 用有限历史信息近似曲率，属于拟牛顿优化，常见于中�
 ### EMA、SWA 与 SAM【认识】
 
 EMA，对模型权重作指数滑动平均，试图获得比单个训练瞬间更平稳的权重。SWA，随机权重平均，汇总一段训练中的权重。SAM，锐度感知最小化，关注参数附近受扰动后的损失，而不只优化一个精确位置。它们不是同一种操作，且可能增加计算或调参工作。权重平均与模型集成也不同：前者平均参数，后者组合预测，并不总能互相替代。
+
+<a id="chapter-45-section-08"></a>
+
+### 案例 24：Weight decay 与学习率衰减：两个不同的旋钮
+
+场景与输入：用简化的解耦更新 θ下一步=(1-ηλ)θ-ηg 表示参数收缩与梯度更新，取 θ=2、η=0.1、λ=0.01、g=0.4。
+
+手算第 1 步：收缩系数为 0.999，收缩后的参数为 1.998。
+
+手算第 2 步：梯度项为 0.04，更新得到 1.958；λ=0 时同一步为 1.96。
+
+手算第 3 步：若下一步把学习率降至 0.01，这是改变 η 的 schedule；λ 仍是参数收缩强度设置。
+
+结果与解释：Weight decay 是参数更新中的收缩机制；learning-rate decay 是 η 随时间的变化规则。示例两者数值作用也有关联，因为收缩含 ηλ。
+
+易错点与边界：上式的 g 是用于更新的方向；真实 AdamW 的梯度方向经过动量与二阶矩调整，不可直接等同于原始梯度。
+
+改变条件再想一想：当前 g=0 时，设置 weight decay 会不会更新参数？
+
+自测参考：会，只要 ηλ 非零且该参数适用衰减，本式仍执行 θ←(1-ηλ)θ。
 
 参考资料（不朗读）：[S070 · PyTorch — 优化器](https://docs.pytorch.org/docs/stable/optim.html)；[S084 · Decoupled Weight Decay Regularization](https://arxiv.org/abs/1711.05101)；[S023 · scikit-learn — 线性模型](https://scikit-learn.org/stable/modules/linear_model.html)；[S085 · PyTorch — 权重平均](https://docs.pytorch.org/docs/stable/optim.html#weight-averaging-swa-and-ema)；[S086 · Sharpness-Aware Minimization for Efficiently Improving Generalization](https://arxiv.org/abs/2010.01412)
 
@@ -532,6 +632,26 @@ Activation checkpointing 不保存全部中间激活，而在反向传播时重�
 
 混合精度检测到非有限梯度时，缩放器可能跳过实际参数更新。按参数更新次数管理的学习率调度和日志，应与实际更新保持一致，不能只数循环执行了几次。具体调用顺序应以使用的框架与训练封装为准。
 
+<a id="chapter-47-section-09"></a>
+
+### 案例 25：两种 checkpoint：恢复状态与重算激活
+
+场景与输入：网络有四段，每段需保存约 100 MB 中间激活。机器可能中断，也可能训练显存不足。
+
+手算第 1 步：为中断恢复而保存 checkpoint：需要模型、优化器、调度器、训练步数，必要时还包括随机状态和数据进度。它主要写到持久存储。
+
+手算第 2 步：Activation checkpointing：只保留选定边界的激活，在反向时重新执行某些前向计算，以计算时间换激活显存。
+
+手算第 3 步：假设保留两段边界能减少部分中间保存量，但还要计入边界、输入、临时张量与其他状态，不能简单承诺显存精确减半。
+
+结果与解释：磁盘快照解决恢复问题；激活重计算解决训练时部分内存开销。两个机制可以同时使用。
+
+易错点与边界：只保存模型权重通常不能精确续训；激活 checkpoint 不会自动保存一个可恢复的训练任务。
+
+改变条件再想一想：优化器状态很大，开启激活 checkpoint 就能把它省掉吗？
+
+自测参考：不能；它针对中间激活，优化器状态需采用另外的存储或分片方案。
+
 参考资料（不朗读）：[S083 · PyTorch — 混合精度与梯度累积](https://docs.pytorch.org/docs/stable/notes/amp_examples.html)；[S088 · PyTorch — 参数初始化](https://docs.pytorch.org/docs/stable/nn.init.html)；[S089 · PyTorch — torch.nn.utils.clip_grad_norm_](https://docs.pytorch.org/docs/stable/generated/torch.nn.utils.clip_grad_norm_.html)；[S090 · PyTorch — 激活检查点](https://docs.pytorch.org/docs/stable/checkpoint.html)；[S081 · PyTorch — 自动求导机制](https://docs.pytorch.org/docs/stable/notes/autograd.html)
 
 
@@ -592,6 +712,26 @@ ROC 曲线比较不同阈值下的真阳性率和假阳性率，AUC 汇总排序
 假设一千封邮件中有一百封垃圾邮件。模型报出八十封，其中六十封确实是垃圾邮件。于是，真阳性为六十，假阳性为二十，假阴性为四十，真阴性为八百八十。精确率为六十除以八十，也就是百分之七十五；召回率为六十除以一百，也就是百分之六十；F1 约为百分之六十六点七；准确率为百分之九十四。
 
 同一数据上，把所有邮件都判为正常，也能得到百分之九十的准确率，却一封垃圾邮件都找不回来。这个例子说明指标选择要对应任务。阈值需要在验证数据上结合误报、漏报成本选择；不能在测试集上挑出最好的阈值，再把同一分数称为独立测试效果。
+
+<a id="chapter-38-section-09"></a>
+
+### 案例 14：阈值：重新计算混淆矩阵
+
+场景与输入：分数 [.95,.8,.7,.6,.4,.3,.2,.05]，真实标签 [1,0,1,0,1,0,0,0]。规定分数大于等于阈值即预测为正。
+
+手算第 1 步：阈值 0.5 时，前四条预测为正，其中两条真阳性、两条假阳性。其余有一条假阴性、三条真阴性。
+
+手算第 2 步：Precision=2/(2+2)=0.5，Recall=2/(2+1)=2/3，F1=4/(4+2+1)=4/7，Accuracy=5/8。
+
+手算第 3 步：把阈值降至 0.4，第三条真实正样本也被找出：TP=3、FP=2、FN=0、TN=3。
+
+结果与解释：降低阈值会扩大预测正集合，召回率不会下降，精确率则不保证单调。分数本身在演示中没有变化。
+
+易错点与边界：没有预测正样本时，Precision 分母为 0；演示显示“未定义”，不悄悄把它解释成 100%。业务需要明确约定。
+
+改变条件再想一想：阈值为 1，准确率与召回率分别是多少？
+
+自测参考：全预测为负，准确率 5/8，召回率 0，Precision 未定义。
 
 参考资料（不朗读）：[S062 · scikit-learn — 评价指标](https://scikit-learn.org/stable/modules/model_evaluation.html)；[S063 · scikit-learn — 概率校准](https://scikit-learn.org/stable/modules/calibration.html)；[S031 · scikit-learn — 交叉验证](https://scikit-learn.org/stable/modules/cross_validation.html)；[S064 · scikit-learn — 置换重要性](https://scikit-learn.org/stable/modules/permutation_importance.html)；[S065 · SHAP — Documentation](https://shap.readthedocs.io/en/latest/)
 

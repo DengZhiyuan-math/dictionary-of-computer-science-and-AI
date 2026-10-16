@@ -14,6 +14,10 @@ tags: ["chapter","area/training"]
 - [[Concepts/随机屏蔽激活|随机屏蔽激活]]
 - [[Concepts/正则化|正则化]]
 
+## 具体案例与可视化
+
+- [[Examples/24 Weight decay 与学习率衰减：两个不同的旋钮|案例 24 · Weight decay 与学习率衰减：两个不同的旋钮]]
+
 <a id="chapter-46"></a>
 
 ## 第 46 讲｜正则化与归一化：Dropout、BatchNorm、LayerNorm、RMSNorm

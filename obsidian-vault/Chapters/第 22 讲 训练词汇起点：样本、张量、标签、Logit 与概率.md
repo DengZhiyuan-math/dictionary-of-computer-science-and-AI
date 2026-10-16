@@ -20,6 +20,10 @@ tags: ["chapter","area/data-evaluation"]
 - [[Concepts/类别概率归一化|类别概率归一化]]
 - [[Concepts/张量／形状／轴|张量／形状／轴]]
 
+## 具体案例与可视化
+
+- [[Examples/21 张量广播：一列加一行变成矩阵|案例 21 · 张量广播：一列加一行变成矩阵]]
+
 <a id="chapter-22"></a>
 
 ## 第 22 讲｜训练词汇起点：样本、张量、标签、Logit 与概率
@@ -63,5 +67,25 @@ Logit 在神经网络分类讨论中通常指变成概率之前的原始分数�
 ### Binary、Multiclass、Multilabel【重点精学】
 
 二分类是判断一个问题的是或否，如是否垃圾邮件。多类别单标签分类是在多个互斥答案中选一个，如主要物种是猫、狗还是鸟。多标签分类允许多个答案同时成立，如图片中既有猫又有狗。后者通常为每个标签分别给一个概率，不要求所有概率加起来是一。这一区别直接影响输出层和损失函数：不能只数类别有几个，就决定该用 BCE 还是互斥类别交叉熵。
+
+<a id="chapter-22-section-07"></a>
+
+### 案例 21：张量广播：一列加一行变成矩阵
+
+场景与输入：预测张量形状为 [3,1]，标签形状为 [3]，做一般逐元素减法来计算误差。
+
+手算第 1 步：广播从尾轴对齐：[3,1] 与 [1,3] 可广播到 [3,3]。这已经不是三个样本一一对应。
+
+手算第 2 步：例如预测 [[1],[2],[3]] 减标签 [1,2,3]，结果是 [[0,-1,-2],[1,0,-1],[2,1,0]]。
+
+手算第 3 步：若先把标签显式变为 [3,1]，差值为三行零，才符合这里的样本配对意图。
+
+结果与解释：错误形状可能产生合法但语义错误的计算；检查 shape、轴含义和期望输出形状。
+
+易错点与边界：不要据此推断所有损失接口都自动广播；BCEWithLogitsLoss 要求输入和目标形状相同。
+
+改变条件再想一想：batch=1 时为何更难发现？
+
+自测参考：[1,1] 和 [1] 的广播结果仍只有一个数，小样本测试可能掩盖轴错误。
 
 参考资料（不朗读）：[S025 · PyTorch — torch.nn.BCEWithLogitsLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html)；[S026 · PyTorch — torch.nn.CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html)；[S027 · PyTorch — 张量](https://docs.pytorch.org/docs/stable/tensors.html)

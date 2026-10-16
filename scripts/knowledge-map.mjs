@@ -1,5 +1,7 @@
 import {book, glossary, hot100, clean, markdown} from './model.mjs';
 import {areas, extraConcepts, relations, routes} from '../data/knowledge-map.mjs';
+import {examples} from '../data/examples.mjs';
+import {exampleMarkdown} from './examples.mjs';
 
 export const slug = text => text.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const github = 'https://github.com/DengZhiyuan-math/dictionary-of-computer-science-and-AI/blob/main/';
@@ -68,11 +70,18 @@ export function makeKnowledgeGraph() {
     edge('home',id,'contains','专题路线');
     for(const key of r.steps) edge(id,`concept:${key}`,'route-step','路线中的概念');
   }
-  return {metadata:{version:book.metadata.version,date:book.metadata.date,title:'CS 与 AI 知识地图',semantics:{contains:'目录归属',explains:'章节解释',prerequisite:'推荐的理解先修',supports:'用于或帮助实现',related:'有解释的关联',contrast:'需要区分',practice:'题目练习', 'learning-path':'推荐领域衔接','route-step':'专题学习顺序'}},nodes,edges};
+  for(const x of examples){
+    const id='example:'+x.id;
+    add({id,type:'example',label:`案例 ${String(x.number).padStart(2,'0')} · ${x.title}`,area:x.area,note:`Examples/${String(x.number).padStart(2,'0')} ${safeName(x.title)}.md`,description:x.scenario,chapters:x.chapters,source:`docs/EXAMPLES.md#example-${x.id}`,demo:x.demo});
+    edge(`area:${x.area}`,id,'contains','案例');
+    for(const key of x.concepts)edge(id,'concept:'+key,'demonstrates','具体案例与自测');
+    for(const num of x.chapters)edge(id,'chapter:'+String(num).padStart(2,'0'),'demonstrates','配套章节');
+  }
+  return {metadata:{version:book.metadata.version,date:book.metadata.date,title:'CS 与 AI 知识地图',semantics:{contains:'目录归属',explains:'章节解释',prerequisite:'推荐的理解先修',supports:'用于或帮助实现',related:'有解释的关联',contrast:'需要区分',practice:'题目练习',demonstrates:'案例与演示', 'learning-path':'推荐领域衔接','route-step':'专题学习顺序'}},nodes,edges};
 }
 
 export const graph = makeKnowledgeGraph();
-graph.stats={areas:areas.length,concepts:graph.nodes.filter(n=>n.type==='concept').length,chapters:book.chapters.length,problems:100,routes:routes.length,nodes:graph.nodes.length,edges:graph.edges.length};
+graph.stats={areas:areas.length,concepts:graph.nodes.filter(n=>n.type==='concept').length,chapters:book.chapters.length,problems:100,examples:examples.length,demos:examples.filter(x=>x.demo).length,routes:routes.length,nodes:graph.nodes.length,edges:graph.edges.length};
 const byId = new Map(graph.nodes.map(n=>[n.id,n]));
 const link = id => {const n=byId.get(id);if(!n) throw new Error(`Unknown knowledge node ${id}`);return wiki(n.note,n.label)};
 
@@ -93,6 +102,7 @@ export function buildKnowledgeMap(emit) {
     '## 画布与关系说明\n\n'+wiki('Maps/总览.canvas','打开总览画布')+' · '+wiki('Maps/训练流程.canvas','打开训练流程画布')+'\n\n'+
     'Obsidian 的全局图适合发现聚类，局部图适合追踪一到两层关联；按 `path:Concepts`、`path:Areas` 或 `tag:area/training` 筛选可减少章节和题目节点的视觉干扰。导航关系、概念关系与学习路线的含义不同。\n\n'+
     '[GitHub 可点击知识地图]('+github+'docs/KNOWLEDGE_MAP.md) · [Obsidian 双链说明](https://help.obsidian.md/links) · [关系图谱说明](https://help.obsidian.md/plugins/graph)\n';
+  home+='\n## 案例与可视化\n\n'+examples.map(x=>`- ${link('example:'+x.id)}${x.demo?' · 交互演示':''}`).join('\n')+'\n';
   emit('obsidian-vault/'+root,home);
   for(const a of areas) {
     const concepts=core.filter(n=>n.area===a.id);
@@ -105,6 +115,8 @@ export function buildKnowledgeMap(emit) {
     text+='\n## 概念间的连接\n\n';
     const local=typed.filter(e=>byId.get(e.from).area===a.id||byId.get(e.to).area===a.id);
     text+=local.map(e=>`- ${link(e.from)} → ${link(e.to)}：${e.label}。`).join('\n')+'\n';
+    const cases=examples.filter(x=>x.area===a.id);
+    if(cases.length)text+='\n## 案例与可视化\n\n'+cases.map(x=>'- '+link('example:'+x.id)).join('\n')+'\n';
     if(a.id==='hot100') text+='\n## 练习题\n\n'+graph.nodes.filter(n=>n.type==='problem').map(n=>'- '+link(n.id)).join('\n')+'\n';
     emit('obsidian-vault/'+byId.get('area:'+a.id).note,text);
   }
@@ -127,6 +139,8 @@ export function buildKnowledgeMap(emit) {
     if(practice.length) text+='\n## 关联练习\n\n'+practice.map(e=>'- '+link(e.from)).join('\n')+'\n';
     const rr=graph.edges.filter(e=>e.type==='route-step'&&e.to===n.id);
     if(rr.length) text+='\n## 所在路线\n\n'+rr.map(e=>'- '+link(e.from)).join('\n')+'\n';
+    const cases=graph.edges.filter(e=>e.type==='demonstrates'&&e.to===n.id);
+    if(cases.length)text+='\n## 具体案例与可视化\n\n'+cases.map(e=>'- '+link(e.from)).join('\n')+'\n';
     emit('obsidian-vault/'+n.note,text);
   }
   for(const c of book.chapters) {
@@ -135,6 +149,8 @@ export function buildKnowledgeMap(emit) {
     let text=front(`第 ${c.num} 讲 · ${c.title}`,'chapter',n.area)+link('area:'+n.area)+'\n\n';
     if(concepts.length) text+='## 本讲概念\n\n'+concepts.map(e=>'- '+link(e.to)).join('\n')+'\n\n';
     if(c.hot100) text+='## 配套练习\n\n'+graph.edges.filter(e=>e.type==='practice'&&e.to===n.id).map(e=>'- '+link(e.from)).join('\n')+'\n\n';
+    const cases=graph.edges.filter(e=>e.type==='demonstrates'&&e.to===n.id);
+    if(cases.length)text+='## 具体案例与可视化\n\n'+cases.map(e=>'- '+link(e.from)).join('\n')+'\n\n';
     text+=markdown(c);
     emit('obsidian-vault/'+n.note,text);
   }
@@ -150,6 +166,13 @@ export function buildKnowledgeMap(emit) {
     let text=front(r.name,'route')+`# ${r.name}\n\n${wiki(root,'知识地图')}\n\n${r.summary}\n\n这些步骤是推荐阅读次序，概念间的具体依赖或对照以各概念页说明为准。\n\n## 路线\n\n`;
     text+=r.steps.map((key,i)=>`${i+1}. ${link('concept:'+key)}：${byId.get('concept:'+key).description}`).join('\n');
     emit('obsidian-vault/'+byId.get('route:'+r.id).note,text+'\n');
+  }
+  for(const x of examples){
+    let body=exampleMarkdown(x);
+    body=body.replaceAll('visual-demos.html#','../Demos/交互演示.html#').replaceAll(/\[第 \d+ 讲\]\(\.\.\/chapters\/\d+\.md\)/g,'');
+    body=body.replace(/(?: · )+\n/g,'\n');
+    const text=front(x.title,'example',x.area)+link('area:'+x.area)+'\n\n'+body+'\n## 关联概念与章节\n\n'+x.concepts.map(k=>'- '+link('concept:'+k)).join('\n')+'\n'+x.chapters.map(n=>'- '+chapterLink(n)).join('\n')+'\n';
+    emit('obsidian-vault/'+byId.get('example:'+x.id).note,text);
   }
   const canvasNodes=[{id:'home',type:'file',file:root,x:1100,y:-420,width:420,height:260}];
   const layers=[...new Set(areas.map(a=>a.layer))];
@@ -191,6 +214,7 @@ export function buildKnowledgeMap(emit) {
   doc+='## 笔记库结构与维护\n\n`Areas` 是领域入口，`Concepts` 是概念，`Chapters` 保存原文，`Practice` 对应 100 道 Hot 100，`Routes` 保存专题路线，`Maps` 提供原生 Canvas。按目录或 `area/...` 标签筛选局部图，可以逐层检查关联。\n\n'+
     '地图由 `data/knowledge-map.mjs` 与原讲稿统一生成。新增或调整关系时请注明理由，重新执行构建和校验；不要只修改生成后的双链。原章节编号与内容保持稳定。\n\n'+
     '格式依据：[Obsidian 内部链接](https://help.obsidian.md/links)、[关系图谱](https://help.obsidian.md/plugins/graph)、[JSON Canvas 1.0](https://jsoncanvas.org/spec/1.0/)。\n';
+  doc+='\n## 案例与可视化演示\n\n[完整案例集](EXAMPLES.md) · [离线交互演示](visual-demos.html)\n\n新增 30 个带手算、自测与反例的案例，其中 20 个配有交互演示。Obsidian 的 `Examples` 笔记连接概念和章节，`Demos` 保存完整离线演示。\n';
   emit('docs/KNOWLEDGE_MAP.md',doc);
   emit('data/knowledge-graph.json',JSON.stringify(graph,null,2));
   return graph;

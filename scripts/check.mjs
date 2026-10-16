@@ -6,6 +6,8 @@ import {spawnSync} from 'node:child_process';
 import {root, read, book, glossary, hot100} from './model.mjs';
 import {graph} from './knowledge-map.mjs';
 import {areas} from '../data/knowledge-map.mjs';
+import {examples} from '../data/examples.mjs';
+import './check-demos.mjs';
 
 const build = spawnSync(process.execPath, ['scripts/build.mjs', '--check'], {cwd: root, encoding: 'utf8'});
 process.stdout.write(build.stdout);
@@ -14,7 +16,7 @@ assert.equal(book.chapters.length, 97);
 assert.equal(book.stats.quiz_questions, 90);
 assert.equal(book.stats.training_chapters, 10);
 const hotSections = hot100.categories.reduce((sum,c)=>sum+c.sections.length+1,0);
-assert.equal(book.stats.new_subsections, book.metadata.baseline.detailedSubsections + 6 + hotSections);
+assert.equal(book.stats.new_subsections, book.metadata.baseline.detailedSubsections + 6 + hotSections + examples.length);
 assert.equal(book.stats.hot100_chapters,17);
 assert.equal(book.stats.hot100_problems,100);
 const expectedGroups = [[1,49,128],[283,11,15,42],[3,438],[560,239,76],[53,56,189,238,41],[73,54,48,240],[160,206,234,141,142,21,2,19,24,25,138,148,23,146],[94,104,226,101,543,102,108,98,230,199,114,105,437,236,124],[200,994,207,208],[46,78,17,39,22,79,131,51],[35,74,34,33,153,4],[20,155,394,739,84],[215,347,295],[121,55,45,763],[70,118,198,279,322,139,300,152,416,32],[62,64,5,1143,72],[136,169,75,31,287]];

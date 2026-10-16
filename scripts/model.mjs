@@ -2,6 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {hot100} from '../data/hot100.mjs';
+import {examples, exampleParagraphs} from '../data/examples.mjs';
+import {demos} from '../data/demo-engines.mjs';
 
 export const root = fileURLToPath(new URL('../', import.meta.url));
 export const read = name => fs.readFileSync(path.join(root, name), 'utf8');
@@ -32,6 +34,19 @@ for (const category of hot100.categories) {
   });
 }
 export const glossary = JSON.parse(read('data/glossary.json')).sort((a, b) => a[0].localeCompare(b[0], 'en'));
+for(const [title,url,chapters] of [
+  ['PyTorch 2.14 — Conv2d：二维互相关','https://docs.pytorch.org/docs/2.14/generated/torch.nn.Conv2d.html',[48,49]],
+  ['PyTorch 2.14 — Scaled Dot Product Attention','https://docs.pytorch.org/docs/2.14/generated/torch.nn.functional.scaled_dot_product_attention.html',[52,53]],
+  ['scikit-learn — KMeans：Lloyd 更新与局部最优','https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html',[31]],
+  ['Cormack, Clarke, Buettcher — Reciprocal Rank Fusion','https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf',[59,60]]
+]){
+  const id=Math.max(...book.sources.map(s=>s.id))+1;
+  book.sources.push({id,title,url});for(const num of chapters)book.chapters[num-1].source_ids.push(id);
+}
+for(const x of examples){
+  const c=book.chapters[x.chapters[0]-1];
+  c.blocks.push({kind:'heading',text:`案例 ${String(x.number).padStart(2,'0')}：${x.title}`,example:x.id},...exampleParagraphs(x).map(text=>({kind:'text',text,example:x.id})));
+}
 export const clean = text => text.replace(/【[^】]+】/g, '').trim();
 export const sectionId = (c, ordinal) => `chapter-${c.num}-section-${String(ordinal).padStart(2, '0')}`;
 for (const c of book.chapters) {
@@ -43,7 +58,7 @@ const text = book.chapters.flatMap(c => c.blocks.map(b => b.text)).join('\n\n');
 book.stats = {
   chapters: book.chapters.length,
   new_chapters: book.chapters.filter(c => c.new).length,
-  new_subsections: book.chapters.filter(c => c.new && !c.quiz).reduce((n, c) => n + c.toc.length, 0),
+  new_subsections: book.chapters.filter(c => !c.quiz).reduce((n, c) => n + (c.new?c.toc.length:c.blocks.filter(b=>b.kind==='heading'&&b.example).length), 0),
   quiz_questions: book.chapters.filter(c => c.quiz).reduce((n, c) => n + c.toc.length, 0),
   training_chapters: book.chapters.filter(c => c.micro).length,
   body_characters_including_whitespace: text.length,
@@ -51,6 +66,8 @@ book.stats = {
   chinese_characters: (text.match(/\p{Script=Han}/gu) || []).length,
   sources: book.sources.length,
   glossary_entries: glossary.length,
+  worked_examples: examples.length,
+  visual_demos: demos.length,
   hot100_chapters: hot100.categories.length,
   hot100_problems: hot100.categories.reduce((sum, c) => sum + c.problems.length, 0),
   groups: Object.fromEntries([...new Set(book.chapters.map(c => c.group))].map(g => [g, book.chapters.filter(c => c.group === g).length]))

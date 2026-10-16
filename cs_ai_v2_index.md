@@ -2,9 +2,9 @@
 
 # CS 与 AI：章节及知识点索引
 
-共 97 讲、452 个细讲小节、90 道口述题；正文里的导览段落另行保留。一个小节可比较多个概念，小节数不等于算法数。
+共 97 讲、482 个细讲小节、90 道口述题；正文里的导览段落另行保留。一个小节可比较多个概念，小节数不等于算法数。
 
-[知识地图](docs/KNOWLEDGE_MAP.md) · [按英文查术语](docs/GLOSSARY.md) · [学习路线](docs/LEARNING_PATHS.md) · [训练速查](docs/TRAINING_CHEATSHEET.md) · [Hot 100 的 100 题映射](docs/LEETCODE_HOT100.md)
+[案例与演示](docs/EXAMPLES.md) · [知识地图](docs/KNOWLEDGE_MAP.md) · [按英文查术语](docs/GLOSSARY.md) · [学习路线](docs/LEARNING_PATHS.md) · [训练速查](docs/TRAINING_CHEATSHEET.md) · [Hot 100 的 100 题映射](docs/LEETCODE_HOT100.md)
 
 ## 快速入口
 
@@ -46,7 +46,7 @@
 
 [阅读本讲](chapters/02.md) · [完整讲稿](cs_ai_v2_full.md#chapter-02)
 
-计算机的基本执行单元是 CPU，中央处理器。CPU 擅长逻辑判断、顺序执行、处理复杂的控制流程。GPU，图形处理器，擅长大量相似计算同时进行。深度学习中的矩阵运算高度并行，所以 GPU 成为训练和推理的主要硬件之一。GPU 并不是在所有事情上都比 CPU 快；它的优势来自合适的计算任务和足够的数据并行性。
+- [案例 26：CPU 与 GPU：先算不能加速的部分](chapters/02.md#chapter-02-section-01)
 
 <a id="chapter-03"></a>
 
@@ -239,6 +239,7 @@ Database，数据库，是组织并管理持久数据的系统。DBMS 是数据�
 - [Optimistic Concurrency Control，乐观并发控制【认识】](chapters/16.md#chapter-16-section-04)
 - [WAL、Checkpoint 与恢复【重点】](chapters/16.md#chapter-16-section-05)
 - [2PC 与 Saga【认识】](chapters/16.md#chapter-16-section-06)
+- [案例 27：事务：转账中途失败怎么办](chapters/16.md#chapter-16-section-07)
 
 <a id="chapter-17"></a>
 
@@ -264,6 +265,7 @@ Database，数据库，是组织并管理持久数据的系统。DBMS 是数据�
 - [Round Robin、Least Connections 与一致性哈希【重点】](chapters/18.md#chapter-18-section-04)
 - [LRU、LFU 与缓存击穿【重点】](chapters/18.md#chapter-18-section-05)
 - [指数退避、Jitter、Circuit Breaker【重点】](chapters/18.md#chapter-18-section-06)
+- [案例 11：LRU：一次访问怎样改变淘汰对象](chapters/18.md#chapter-18-section-07)
 
 <a id="chapter-19"></a>
 
@@ -313,6 +315,7 @@ Machine Learning，机器学习，是从数据中学习输入到输出之间的�
 - [Weight、Bias、Parameter、Hyperparameter【重点】](chapters/22.md#chapter-22-section-04)
 - [Logit、Sigmoid、Softmax【重点精学】](chapters/22.md#chapter-22-section-05)
 - [Binary、Multiclass、Multilabel【重点精学】](chapters/22.md#chapter-22-section-06)
+- [案例 21：张量广播：一列加一行变成矩阵](chapters/22.md#chapter-22-section-07)
 
 <a id="chapter-23"></a>
 
@@ -329,6 +332,7 @@ Machine Learning，机器学习，是从数据中学习输入到输出之间的�
 - [Oversampling、Undersampling 与 SMOTE【重点】](chapters/23.md#chapter-23-section-05)
 - [Train-Test Split、Stratified Split、Group Split【重点】](chapters/23.md#chapter-23-section-06)
 - [Pipeline 与 Fit-Transform【重点】](chapters/23.md#chapter-23-section-07)
+- [案例 22：数据泄露：用未来均值修正过去](chapters/23.md#chapter-23-section-08)
 
 <a id="chapter-24"></a>
 
@@ -388,6 +392,7 @@ Machine Learning，机器学习，是从数据中学习输入到输出之间的�
 - [Random Forest，随机森林【重点精学】](chapters/27.md#chapter-27-section-05)
 - [N Estimators、Max Features、OOB【重点】](chapters/27.md#chapter-27-section-06)
 - [Extra Trees 与局限【认识】](chapters/27.md#chapter-27-section-07)
+- [案例 23：随机森林：相关性决定投票能帮多少](chapters/27.md#chapter-27-section-08)
 
 <a id="chapter-28"></a>
 
@@ -445,6 +450,7 @@ Clustering，聚类，是把相似样本自动分组。K-means，K 均值聚类�
 - [Gaussian Mixture Model 与 Soft Assignment【重点】](chapters/31.md#chapter-31-section-06)
 - [Spectral Clustering、Affinity Propagation、Mean Shift【认识】](chapters/31.md#chapter-31-section-07)
 - [Silhouette 与聚类评价【认识】](chapters/31.md#chapter-31-section-08)
+- [案例 16：K-means：分配与均值更新](chapters/31.md#chapter-31-section-09)
 
 <a id="chapter-32"></a>
 
@@ -552,6 +558,7 @@ Clustering，聚类，是把相似样本自动分组。K-means，K 均值聚类�
 - [Hyperparameter Search 与 Ablation【重点】](chapters/38.md#chapter-38-section-06)
 - [Permutation Importance、SHAP、PDP、ICE【认识】](chapters/38.md#chapter-38-section-07)
 - [混淆矩阵例题：Precision、Recall、F1 各在数什么【重点】](chapters/38.md#chapter-38-section-08)
+- [案例 14：阈值：重新计算混淆矩阵](chapters/38.md#chapter-38-section-09)
 
 <a id="chapter-39"></a>
 
@@ -595,6 +602,7 @@ Deep Learning，深度学习，是通过多层可学习的变换，从数据中�
 - [Huber Loss 与 Quantile Loss【认识】](chapters/41.md#chapter-41-section-06)
 - [BCE 数值例题：同样判错，损失为什么不同【重点】](chapters/41.md#chapter-41-section-07)
 - [输入契约：先看任务，再对齐 Shape 与 Dtype【重点精学】](chapters/41.md#chapter-41-section-08)
+- [案例 12：BCE：同样判错，损失差多少](chapters/41.md#chapter-41-section-09)
 
 <a id="chapter-42"></a>
 
@@ -627,6 +635,7 @@ Deep Learning，深度学习，是通过多层可学习的变换，从数据中�
 - [One-Cycle 与 Restart【认识】](chapters/43.md#chapter-43-section-05)
 - [Learning Rate 与 Batch Size 的关系【重点】](chapters/43.md#chapter-43-section-06)
 - [学习率数值例题：SGD 的一步更新【重点】](chapters/43.md#chapter-43-section-07)
+- [案例 13：学习率：收敛、震荡与发散](chapters/43.md#chapter-43-section-08)
 
 <a id="chapter-44"></a>
 
@@ -660,6 +669,7 @@ Deep Learning，深度学习，是通过多层可学习的变换，从数据中�
 - [AdamW 与 Weight Decay【重点精学】](chapters/45.md#chapter-45-section-05)
 - [L-BFGS、Coordinate Descent【认识】](chapters/45.md#chapter-45-section-06)
 - [EMA、SWA 与 SAM【认识】](chapters/45.md#chapter-45-section-07)
+- [案例 24：Weight decay 与学习率衰减：两个不同的旋钮](chapters/45.md#chapter-45-section-08)
 
 <a id="chapter-46"></a>
 
@@ -693,6 +703,7 @@ Deep Learning，深度学习，是通过多层可学习的变换，从数据中�
 - [Activation Checkpointing 与 Model Checkpoint【重点】](chapters/47.md#chapter-47-section-06)
 - [Gradient Norm、Loss Curve 与 Debugging【重点】](chapters/47.md#chapter-47-section-07)
 - [混合精度与裁剪：先还原梯度尺度【重点】](chapters/47.md#chapter-47-section-08)
+- [案例 25：两种 checkpoint：恢复状态与重算激活](chapters/47.md#chapter-47-section-09)
 
 <a id="chapter-48"></a>
 
@@ -719,6 +730,7 @@ Deep Learning，深度学习，是通过多层可学习的变换，从数据中�
 - [U-Net、FPN、Depthwise Separable Convolution【认识】](chapters/49.md#chapter-49-section-05)
 - [Detection、Segmentation、NMS【重点】](chapters/49.md#chapter-49-section-06)
 - [YOLO、Faster R-CNN、DETR、SAM【认识】](chapters/49.md#chapter-49-section-07)
+- [案例 20：卷积窗口：一次输出来自哪些像素](chapters/49.md#chapter-49-section-08)
 
 <a id="chapter-50"></a>
 
@@ -772,6 +784,7 @@ LLM 与智能体
 - [Positional Encoding、RoPE、ALiBi【重点】](chapters/53.md#chapter-53-section-06)
 - [Causal Mask 与 Padding Mask【重点】](chapters/53.md#chapter-53-section-07)
 - [MoE、Router、Expert、Load Balancing【重点】](chapters/53.md#chapter-53-section-08)
+- [案例 15：注意力：分数、归一化与加权求和](chapters/53.md#chapter-53-section-09)
 
 <a id="chapter-54"></a>
 
@@ -840,6 +853,7 @@ LLM 与智能体
 - [PTQ、QAT、GPTQ、AWQ【重点】](chapters/58.md#chapter-58-section-05)
 - [Speculative Decoding，推测解码【重点】](chapters/58.md#chapter-58-section-06)
 - [Tensor、Pipeline、Data Parallelism 与 ZeRO【重点】](chapters/58.md#chapter-58-section-07)
+- [案例 29：KV cache：复用的是哪些计算](chapters/58.md#chapter-58-section-08)
 
 <a id="chapter-59"></a>
 
@@ -866,6 +880,7 @@ LLM 与智能体
 - [Hybrid Search、RRF、SPLADE、ColBERT【认识】](chapters/60.md#chapter-60-section-05)
 - [Chunking、Overlap、Metadata Filter【重点】](chapters/60.md#chapter-60-section-06)
 - [Query Rewrite、HyDE、Multi-Hop 与评价【重点】](chapters/60.md#chapter-60-section-07)
+- [案例 17：RRF：融合排名而非直接相加原始分数](chapters/60.md#chapter-60-section-08)
 
 <a id="chapter-61"></a>
 
@@ -926,6 +941,7 @@ Generative AI，生成式人工智能，不只有 LLM。生成模型还可以生
 - [ASR、CTC、Transducer、Vocoder【认识】](chapters/64.md#chapter-64-section-05)
 - [Video Token、Temporal Consistency、Optical Flow【认识】](chapters/64.md#chapter-64-section-06)
 - [Point Cloud、NeRF、Gaussian Splatting【认识】](chapters/64.md#chapter-64-section-07)
+- [案例 28：跨模态表征：余弦相似度不是事实核验](chapters/64.md#chapter-64-section-08)
 
 <a id="chapter-65"></a>
 
@@ -953,6 +969,7 @@ Reinforcement Learning，强化学习，研究如何在不断交互的环境中�
 - [Q-learning 与 SARSA【重点】](chapters/66.md#chapter-66-section-06)
 - [DQN、Replay Buffer、Target Network【重点】](chapters/66.md#chapter-66-section-07)
 - [Double DQN、Dueling、Prioritized Replay、Distributional RL【认识】](chapters/66.md#chapter-66-section-08)
+- [案例 18：Q-learning：终止状态不再自举](chapters/66.md#chapter-66-section-09)
 
 <a id="chapter-67"></a>
 
@@ -1056,6 +1073,7 @@ World Model，世界模型，核心思想是学习一个环境模型，描述环
 - [JEPA、V-JEPA、V-JEPA 2-AC【重点】](chapters/73.md#chapter-73-section-06)
 - [Genie 与 Interactive Environment【认识】](chapters/73.md#chapter-73-section-07)
 - [Compounding Error、Model Exploitation 与评价【重点】](chapters/73.md#chapter-73-section-08)
+- [案例 19：世界模型：预测偏差与反馈修正](chapters/73.md#chapter-73-section-09)
 
 <a id="chapter-74"></a>
 
@@ -1225,6 +1243,7 @@ LeetCode Hot 100 算法思想
 - [Hash Set：只从连续区间起点扩展【重点精学】](chapters/81.md#chapter-81-section-03)
 - [从题目反推哈希表应保存的状态【重点】](chapters/81.md#chapter-81-section-04)
 - [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/81.md#chapter-81-section-05)
+- [案例 01：哈希配对：先查再存](chapters/81.md#chapter-81-section-06)
 
 <a id="chapter-82"></a>
 
@@ -1240,6 +1259,7 @@ LeetCode Hot 100 算法思想
 - [Trapping Rain Water：前后最高边界决定当前水位【重点精学】](chapters/82.md#chapter-82-section-04)
 - [口述双指针：职责、移动依据、终止条件【重点】](chapters/82.md#chapter-82-section-05)
 - [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/82.md#chapter-82-section-06)
+- [案例 02：双指针：为什么移动短板](chapters/82.md#chapter-82-section-07)
 
 <a id="chapter-83"></a>
 
@@ -1254,6 +1274,7 @@ LeetCode Hot 100 算法思想
 - [线性复杂度：指针只向前，而不是每轮重新扫描【重点】](chapters/83.md#chapter-83-section-03)
 - [适用边界：连续并不自动意味着可以滑动【重点精学】](chapters/83.md#chapter-83-section-04)
 - [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/83.md#chapter-83-section-05)
+- [案例 03：滑动窗口：重复字符出现时逐步收缩](chapters/83.md#chapter-83-section-06)
 
 <a id="chapter-84"></a>
 
@@ -1268,6 +1289,7 @@ LeetCode Hot 100 算法思想
 - [Minimum Cover：满足条件后尽量收缩【重点精学】](chapters/84.md#chapter-84-section-03)
 - [连续区间选型：累计量、候选极值还是覆盖条件【重点】](chapters/84.md#chapter-84-section-04)
 - [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/84.md#chapter-84-section-05)
+- [案例 04：前缀和：负数为什么不妨碍计数](chapters/84.md#chapter-84-section-06)
 
 <a id="chapter-85"></a>
 
@@ -1345,6 +1367,8 @@ LeetCode Hot 100 算法思想
 - [Topological Sort，拓扑排序：把“还欠几个前置条件”变成入度【重点精学】](chapters/89.md#chapter-89-section-03)
 - [Trie：共享前缀与完整单词标记【重点】](chapters/89.md#chapter-89-section-04)
 - [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/89.md#chapter-89-section-05)
+- [案例 06：BFS：入队即标记与最短路](chapters/89.md#chapter-89-section-06)
+- [案例 07：拓扑排序：队列为空与有向环](chapters/89.md#chapter-89-section-07)
 
 <a id="chapter-90"></a>
 
@@ -1361,6 +1385,7 @@ LeetCode Hot 100 算法思想
 - [Grid Search：访问限制只属于当前路径【重点】](chapters/90.md#chapter-90-section-05)
 - [Partition and Output Complexity：切分位置与答案规模【重点】](chapters/90.md#chapter-90-section-06)
 - [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/90.md#chapter-90-section-07)
+- [案例 09：回溯：选择、递归与撤销](chapters/90.md#chapter-90-section-08)
 
 <a id="chapter-91"></a>
 
@@ -1377,6 +1402,7 @@ LeetCode Hot 100 算法思想
 - [Median Partition：二分的是切分位置【重点精学】](chapters/91.md#chapter-91-section-05)
 - [用单调条件解释每次删掉的区间【重点】](chapters/91.md#chapter-91-section-06)
 - [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/91.md#chapter-91-section-07)
+- [案例 10：二分：半开区间与第一个不小于](chapters/91.md#chapter-91-section-08)
 
 <a id="chapter-92"></a>
 
@@ -1392,6 +1418,7 @@ LeetCode Hot 100 算法思想
 - [Monotonic Stack，单调栈：等待下一个更大元素【重点精学】](chapters/92.md#chapter-92-section-04)
 - [Histogram：弹出时结算以该高度为短板的最大宽度【重点精学】](chapters/92.md#chapter-92-section-05)
 - [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/92.md#chapter-92-section-06)
+- [案例 05：单调栈：弹栈时确定等待天数](chapters/92.md#chapter-92-section-07)
 
 <a id="chapter-93"></a>
 
@@ -1405,6 +1432,7 @@ LeetCode Hot 100 算法思想
 - [Quickselect：只进入目标排名所在的一半【重点】](chapters/93.md#chapter-93-section-02)
 - [Two Heaps：用两个极值维护动态中位数【重点精学】](chapters/93.md#chapter-93-section-03)
 - [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/93.md#chapter-93-section-04)
+- [案例 30：Top K：用需求解释算法选择](chapters/93.md#chapter-93-section-05)
 
 <a id="chapter-94"></a>
 
@@ -1437,6 +1465,7 @@ LeetCode Hot 100 算法思想
 - [Longest Valid Parentheses：以当前字符结尾的合法长度【重点精学】](chapters/95.md#chapter-95-section-07)
 - [压缩空间前，先确认哪些旧状态必须保留【重点】](chapters/95.md#chapter-95-section-08)
 - [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/95.md#chapter-95-section-09)
+- [案例 08：0/1 背包：倒序容量避免重复使用](chapters/95.md#chapter-95-section-10)
 
 <a id="chapter-96"></a>
 

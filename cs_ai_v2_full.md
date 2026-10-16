@@ -2,15 +2,15 @@
 
 # dictionary of computer science and AI
 
-计算机科学与现代 AI：97 讲通识笔记 · v2.3.0
+计算机科学与现代 AI：97 讲通识笔记 · v2.4.0
 
-版本日期：2026-10-16。原稿 v2 的 80 讲与 90 道口述题保持完整，追加 Hot 100 的 17 讲；当前含 452 个细讲小节。
+版本日期：2026-10-16。原稿 v2 的 80 讲与 90 道口述题保持完整，追加 Hot 100 的 17 讲；当前含 482 个细讲小节。
 
 面向入门学习、技术交流和基础面试。先理解问题、输入输出、方法与适用边界，再学习公式和实现。“重点精学”代表值得继续深入，不代表第一次阅读就要掌握推导。
 
 这份通识笔记不穷尽所有 CS 分支，也不作为最新模型排行榜。口述参考答案应结合自己的真实经历。播放器使用浏览器或系统语音，不包含预录 MP3；离线语音与后台播放取决于设备。
 
-[知识地图](docs/KNOWLEDGE_MAP.md) · [学习路线](docs/LEARNING_PATHS.md) · [术语词典](docs/GLOSSARY.md) · [小节索引](cs_ai_v2_index.md) · [训练速查](docs/TRAINING_CHEATSHEET.md) · [Hot 100 算法思想](docs/LEETCODE_HOT100.md) · [全部参考资料](docs/REFERENCES.md)
+[案例与演示](docs/EXAMPLES.md) · [知识地图](docs/KNOWLEDGE_MAP.md) · [学习路线](docs/LEARNING_PATHS.md) · [术语词典](docs/GLOSSARY.md) · [小节索引](cs_ai_v2_index.md) · [训练速查](docs/TRAINING_CHEATSHEET.md) · [Hot 100 算法思想](docs/LEETCODE_HOT100.md) · [全部参考资料](docs/REFERENCES.md)
 
 ## 目录
 
@@ -152,6 +152,26 @@ RAM，也叫内存，负责保存运行中的程序和临时数据。SSD 是持�
 你还会听到 Throughput 和 Latency。Latency 是完成一次请求所需的时间；Throughput 是单位时间内完成多少请求。例如一家餐厅可以平均十分钟完成一桌服务，但每小时能够服务很多桌。吞吐量高不等于单次延迟低。
 
 这些概念是理解 AI 系统性能的基础。比如一个 LLM 运行缓慢，可能是 GPU 算力不足，也可能是显存不足、内存带宽不足、网络通信过慢，或者请求调度不合理。不能一概归结为模型参数太多。
+
+<a id="chapter-02-section-01"></a>
+
+### 案例 26：CPU 与 GPU：先算不能加速的部分
+
+场景与输入：程序耗时 100 秒，其中 80 秒可被 GPU 加速 10 倍，其余 20 秒保持不变，先忽略传输开销。
+
+手算第 1 步：可加速部分从 80 秒降到 8 秒，总耗时变为 28 秒。
+
+手算第 2 步：整体加速比为 100/28≈3.57，而不是 10。
+
+手算第 3 步：即使那 80 秒完全消失，最短也要 20 秒，加速比上界为 5；实际数据传输和调度还会影响结果。
+
+结果与解释：Amdahl 分析提醒我们测量整体瓶颈，而不是只报告某个核函数的倍率。
+
+易错点与边界：假设固定工作量与可加速比例；扩大批次或改变算法可能改变这个比例，需重新测量。
+
+改变条件再想一想：只有 10% 时间可以加速，哪怕无限快，整体上限是多少？
+
+自测参考：1/0.9≈1.11 倍。
 
 参考资料（不朗读）：[S005 · Arpaci-Dusseau and Arpaci-Dusseau — Operating Systems: Three Easy Pieces](https://pages.cs.wisc.edu/~remzi/OSTEP/)
 
@@ -747,6 +767,26 @@ LSM 树把许多零散写入先收集在内存中，再批量写成有序文件�
 
 两阶段提交让参与者先准备，再由协调者通知统一提交或中止，目的是跨资源保持提交结果一致。经典形式会受到协调者故障造成阻塞的影响。Saga 把长事务拆成多个本地事务，失败时执行业务补偿，例如释放预订而不是倒转所有外界影响。两者不是同等语义的快慢版本。Saga 接受中间状态，并要求补偿设计；两阶段提交追求另一种原子提交边界。
 
+<a id="chapter-16-section-07"></a>
+
+### 案例 27：事务：转账中途失败怎么办
+
+场景与输入：账户 A 有 100，B 有 20，转账 30，预期结果 A=70、B=50。
+
+手算第 1 步：若先扣 A 再加 B，恰在两步之间进程崩溃，裸写入可能只留下扣款。
+
+手算第 2 步：将两次更新纳入同一事务，提交前失败时应回滚；成功提交后，两次更新共同构成已提交结果。
+
+手算第 3 步：还应通过条件更新或合适的并发控制检查余额，避免两个同时转账都基于过时余额批准。
+
+结果与解释：原子性关注一组操作共同成功或失败；隔离性处理并发交错；持久性依赖提交与恢复机制。
+
+易错点与边界：只是把两个语句写在一起不等于事务；跨数据库或外部支付还涉及其他协议与幂等设计。
+
+改变条件再想一想：数据库已提交但客户端没收到响应，直接重试一定安全吗？
+
+自测参考：不一定，可能重复转账；需要业务幂等键或可查询的操作状态。
+
 参考资料（不朗读）：[S016 · PostgreSQL — Using EXPLAIN](https://www.postgresql.org/docs/current/using-explain.html)；[S015 · PostgreSQL — Concurrency Control](https://www.postgresql.org/docs/current/mvcc.html)；[S018 · Raft — Consensus Algorithm](https://raft.github.io/)
 
 
@@ -820,6 +860,26 @@ LRU 淘汰最近最久没被访问的数据，利用近期访问可能再次出�
 ### 指数退避、Jitter、Circuit Breaker【重点】
 
 重试失败的服务时逐渐拉长等待时间，叫指数退避；再加入随机抖动，避免所有客户端同一时刻再次冲击。熔断器在连续失败后暂时停止调用，让故障服务有恢复空间，再小规模试探。它们防止一个局部故障被请求风暴放大。重试前还必须确认操作是否幂等，不能把下单失败提示理解为订单一定没有创建。重试策略不是业务去重策略的替代品。
+
+<a id="chapter-18-section-07"></a>
+
+### 案例 11：LRU：一次访问怎样改变淘汰对象
+
+场景与输入：缓存容量 2。以最近使用在左的顺序显示条目，依次执行 put(1)、put(2)、get(1)、put(3)、get(2)。
+
+手算第 1 步：前两次写入后顺序为 [2,1]。get(1) 命中，把 1 移到最前，顺序变为 [1,2]。
+
+手算第 2 步：put(3) 加入后容量超限，淘汰最久未使用的 2，保留 [3,1]。
+
+手算第 3 步：get(2) 未命中，顺序保持 [3,1]。哈希表定位节点，双向链表负责移到头部与删除尾部。
+
+结果与解释：访问 1 改变了后续淘汰对象。哈希表加双向链表可使典型操作达到期望 O(1)，空间 O(容量)。
+
+易错点与边界：演示用短数组显示次序，数组实现本身不是 O(1)。LRU 不是按插入时间淘汰，也不能保证最优命中率。
+
+改变条件再想一想：容量改为 3 时，get(2) 还会未命中吗？
+
+自测参考：不会；写入 3 时容量没有超限，2 仍在缓存中。
 
 参考资料（不朗读）：[S019 · IETF — TCP Congestion Control, RFC 5681](https://www.rfc-editor.org/rfc/rfc5681)；[S021 · IETF — BBR Congestion Control](https://datatracker.ietf.org/doc/draft-ietf-ccwg-bbr/)；[S022 · Redis — Key eviction](https://redis.io/docs/latest/develop/reference/eviction/)；[S020 · AWS Builders Library — Timeouts, retries, and backoff with jitter](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/)
 
@@ -965,6 +1025,26 @@ Logit 在神经网络分类讨论中通常指变成概率之前的原始分数�
 
 二分类是判断一个问题的是或否，如是否垃圾邮件。多类别单标签分类是在多个互斥答案中选一个，如主要物种是猫、狗还是鸟。多标签分类允许多个答案同时成立，如图片中既有猫又有狗。后者通常为每个标签分别给一个概率，不要求所有概率加起来是一。这一区别直接影响输出层和损失函数：不能只数类别有几个，就决定该用 BCE 还是互斥类别交叉熵。
 
+<a id="chapter-22-section-07"></a>
+
+### 案例 21：张量广播：一列加一行变成矩阵
+
+场景与输入：预测张量形状为 [3,1]，标签形状为 [3]，做一般逐元素减法来计算误差。
+
+手算第 1 步：广播从尾轴对齐：[3,1] 与 [1,3] 可广播到 [3,3]。这已经不是三个样本一一对应。
+
+手算第 2 步：例如预测 [[1],[2],[3]] 减标签 [1,2,3]，结果是 [[0,-1,-2],[1,0,-1],[2,1,0]]。
+
+手算第 3 步：若先把标签显式变为 [3,1]，差值为三行零，才符合这里的样本配对意图。
+
+结果与解释：错误形状可能产生合法但语义错误的计算；检查 shape、轴含义和期望输出形状。
+
+易错点与边界：不要据此推断所有损失接口都自动广播；BCEWithLogitsLoss 要求输入和目标形状相同。
+
+改变条件再想一想：batch=1 时为何更难发现？
+
+自测参考：[1,1] 和 [1] 的广播结果仍只有一个数，小样本测试可能掩盖轴错误。
+
 参考资料（不朗读）：[S025 · PyTorch — torch.nn.BCEWithLogitsLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html)；[S026 · PyTorch — torch.nn.CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html)；[S027 · PyTorch — 张量](https://docs.pytorch.org/docs/stable/tensors.html)
 
 
@@ -1017,6 +1097,26 @@ One-hot encoding 为各类别提供独立位置，避免给邮编、颜色等人
 ### Pipeline 与 Fit-Transform【重点】
 
 Pipeline 把预处理、特征选择和模型拟合连在一起，让交叉验证时每一步只在对应训练折学习。Fit 是估计所需参数，如均值或词表；transform 是用已学规则处理数据。测试集只能使用训练集学来的规则，而不是重新估计出一套更方便的规则。所谓数据泄露，经常不是模型显式看到答案，而是预处理悄悄让未来信息进入流程。
+
+<a id="chapter-23-section-08"></a>
+
+### 案例 22：数据泄露：用未来均值修正过去
+
+场景与输入：用前两个月数据训练，第三个月验证。某特征训练值 [0,2]，未来验证值 [100,102]。
+
+手算第 1 步：若全量求均值，得到 51，再据此处理训练数据，训练流程已接触未来分布。
+
+手算第 2 步：按时间先切分，训练集均值为 1；训练和验证都使用训练时得到的 1，验证值可以很大。
+
+手算第 3 步：交叉验证每个折也应在该折的训练部分拟合变换；模型选择完成后再评估独立测试集。
+
+结果与解释：避免泄露的关键是拟合操作的数据边界，包含填补、缩放、特征选择和目标编码等步骤。
+
+易错点与边界：此处大数只是帮助观察泄露，并不表示均值泄露必然提高某个具体模型的分数；时间依赖任务不能随意随机打散。
+
+改变条件再想一想：验证集均值和训练集差很多时，应该用验证集重新拟合缩放器吗？
+
+自测参考：评估阶段不应为获得更好分数这样做；先检查分布漂移，并在明确的数据更新协议下重新训练。
 
 参考资料（不朗读）：[S028 · scikit-learn — 预处理](https://scikit-learn.org/stable/modules/preprocessing.html)；[S029 · scikit-learn — 缺失值处理](https://scikit-learn.org/stable/modules/impute.html)；[S030 · scikit-learn — 特征选择](https://scikit-learn.org/stable/modules/feature_selection.html)；[S031 · scikit-learn — 交叉验证](https://scikit-learn.org/stable/modules/cross_validation.html)；[S032 · imbalanced-learn — Over-sampling](https://imbalanced-learn.org/stable/over_sampling.html)
 
@@ -1218,6 +1318,26 @@ Extra Trees 在切分点选择上引入更强随机性，常能更快构建多�
 
 面试口述：随机森林在样本和每次分裂的候选特征上引入随机性，训练许多不太相似的树，再综合预测。它主要通过降低方差提高稳定性，常用于表格分类与回归；代价是模型体积、预测成本和有限的外推能力。
 
+<a id="chapter-27-section-08"></a>
+
+### 案例 23：随机森林：相关性决定投票能帮多少
+
+场景与输入：五棵分类树对同一邮件投票 [1,1,0,1,0]。正类表示垃圾邮件。
+
+手算第 1 步：硬投票得到 3 比 2，最终类别为 1。每棵树若都来自完全相同的数据和特征，错误可能高度一致。
+
+手算第 2 步：Bootstrap 对训练样本有放回采样；每个划分再随机选择候选特征，使树之间产生差异。
+
+手算第 3 步：若五棵树在同一类邮件上都犯相同错误，增加投票数量不会自动修正这种系统性偏差。
+
+结果与解释：集成既需要单棵模型有预测能力，也受错误相关性影响。真实随机森林分类器还可平均叶节点概率，不等同于本例硬投票。
+
+易错点与边界：不能把 3/5 直接解释为经过校准的真实概率；OOB 评估也不能替代所有任务下的独立测试。
+
+改变条件再想一想：所有树都输出 0，但真实为 1，增添一百棵完全相同的树有用吗？
+
+自测参考：没有，复制相同错误不会带来新的信息。
+
 参考资料（不朗读）：[S043 · scikit-learn — 决策树](https://scikit-learn.org/stable/modules/tree.html)；[S038 · scikit-learn — 集成学习](https://scikit-learn.org/stable/modules/ensemble.html)
 
 
@@ -1400,7 +1520,27 @@ GMM 用多个高斯成分的混合表达数据分布。一个点可以以不同�
 
 Silhouette 比较一个点与自身群组和附近其他群组的距离，提供内部结构评价。有已知参考标签时，还可用 ARI、NMI 等比较划分。不过群组是否对业务有用，不能只看一个内部高分。聚类得到的是某种表示和假设下的组织方式，不保证发现唯一真实类别。
 
-参考资料（不朗读）：[S024 · scikit-learn — 聚类](https://scikit-learn.org/stable/modules/clustering.html)；[S051 · scikit-learn — 高斯混合](https://scikit-learn.org/stable/modules/mixture.html)
+<a id="chapter-31-section-09"></a>
+
+### 案例 16：K-means：分配与均值更新
+
+场景与输入：六个二维点为 (0,0)、(0,2)、(2,0)、(7,7)、(7,9)、(9,7)，取 K=2，初始中心为 (0,0)、(2,0)。
+
+手算第 1 步：按欧氏距离把每个点分给最近中心，距离相同取较小中心编号。初始中心都在左下，并没有覆盖两团。
+
+手算第 2 步：用各簇点的均值替换中心，再按新中心重新分配，重复两步。每一步都检查簇内平方误差 SSE。
+
+手算第 3 步：最终分成左右两团，中心为 (2/3,2/3) 与 (23/3,23/3)，SSE=32/3。
+
+结果与解释：在这个例子中，Lloyd 交替步骤找到明显分组；每次分配或均值更新不会增加该目标，但不保证全局最优。
+
+易错点与边界：K 是预先指定的；演示遇到空簇时保留旧中心，这只是显式教学策略，实际库的处理可能不同。尺度会影响欧氏距离。
+
+改变条件再想一想：把第二坐标都乘以 100，会保持同样的距离含义吗？
+
+自测参考：不会，第二坐标将主导距离；应根据任务决定是否标准化以及怎样处理单位。
+
+参考资料（不朗读）：[S024 · scikit-learn — 聚类](https://scikit-learn.org/stable/modules/clustering.html)；[S051 · scikit-learn — 高斯混合](https://scikit-learn.org/stable/modules/mixture.html)；[S176 · scikit-learn — KMeans：Lloyd 更新与局部最优](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html)
 
 
 ---
@@ -1757,6 +1897,26 @@ ROC 曲线比较不同阈值下的真阳性率和假阳性率，AUC 汇总排序
 
 同一数据上，把所有邮件都判为正常，也能得到百分之九十的准确率，却一封垃圾邮件都找不回来。这个例子说明指标选择要对应任务。阈值需要在验证数据上结合误报、漏报成本选择；不能在测试集上挑出最好的阈值，再把同一分数称为独立测试效果。
 
+<a id="chapter-38-section-09"></a>
+
+### 案例 14：阈值：重新计算混淆矩阵
+
+场景与输入：分数 [.95,.8,.7,.6,.4,.3,.2,.05]，真实标签 [1,0,1,0,1,0,0,0]。规定分数大于等于阈值即预测为正。
+
+手算第 1 步：阈值 0.5 时，前四条预测为正，其中两条真阳性、两条假阳性。其余有一条假阴性、三条真阴性。
+
+手算第 2 步：Precision=2/(2+2)=0.5，Recall=2/(2+1)=2/3，F1=4/(4+2+1)=4/7，Accuracy=5/8。
+
+手算第 3 步：把阈值降至 0.4，第三条真实正样本也被找出：TP=3、FP=2、FN=0、TN=3。
+
+结果与解释：降低阈值会扩大预测正集合，召回率不会下降，精确率则不保证单调。分数本身在演示中没有变化。
+
+易错点与边界：没有预测正样本时，Precision 分母为 0；演示显示“未定义”，不悄悄把它解释成 100%。业务需要明确约定。
+
+改变条件再想一想：阈值为 1，准确率与召回率分别是多少？
+
+自测参考：全预测为负，准确率 5/8，召回率 0，Precision 未定义。
+
 参考资料（不朗读）：[S062 · scikit-learn — 评价指标](https://scikit-learn.org/stable/modules/model_evaluation.html)；[S063 · scikit-learn — 概率校准](https://scikit-learn.org/stable/modules/calibration.html)；[S031 · scikit-learn — 交叉验证](https://scikit-learn.org/stable/modules/cross_validation.html)；[S064 · scikit-learn — 置换重要性](https://scikit-learn.org/stable/modules/permutation_importance.html)；[S065 · SHAP — Documentation](https://shap.readthedocs.io/en/latest/)
 
 
@@ -1906,6 +2066,26 @@ Huber 在误差较小时像平方误差，在误差很大时更接近绝对误�
 
 互斥多分类使用类别编号目标时，CrossEntropyLoss 通常接收批量大小乘类别数的原始分数，目标是形状为批量大小的长整型类别编号。它也支持与输出同形状的浮点类别分布目标，但需要满足有效分布要求。二分类同样能建模成两个互斥 logits 配合交叉熵；一个 logit 配合 BCE 只是另一种常用参数化。接口形状还会随分割等任务增加空间维度，不能把这里的普通分类示例当成唯一合法形式。
 
+<a id="chapter-41-section-09"></a>
+
+### 案例 12：BCE：同样判错，损失差多少
+
+场景与输入：真实标签 y=1；模型给正类概率 p。阈值固定为 0.5，比较 p=0.49 与 p=0.01。
+
+手算第 1 步：y=1 时，BCE=-ln(p)。p=0.49 得到约 0.71335；p=0.01 得到约 4.60517。
+
+手算第 2 步：两次硬分类都为负类，但后者给真实类别的概率更低，损失约为前者的 6.46 倍。
+
+手算第 3 步：切换 y=0 时，损失改为 -ln(1-p)；同一个 0.01 此时是正确且较自信的预测。
+
+结果与解释：损失衡量概率预测，不等于 0/1 错误数。演示概率限制在 (0,1)，端点的对数发散另行讨论。
+
+易错点与边界：BCEWithLogitsLoss 输入是原始 logit；不要对它的输入再先做 Sigmoid。演示显示概率和对应 logit，计算的是等价的单样本 BCE。
+
+改变条件再想一想：p=0.5 时，两个标签的损失一样吗？
+
+自测参考：一样，均为 ln(2)≈0.69315。
+
 参考资料（不朗读）：[S025 · PyTorch — torch.nn.BCEWithLogitsLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html)；[S072 · PyTorch — torch.nn.BCELoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.BCELoss.html)；[S026 · PyTorch — torch.nn.CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html)；[S073 · PyTorch — torch.nn.MSELoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.MSELoss.html)；[S074 · PyTorch — torch.nn.HuberLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.HuberLoss.html)；[S023 · scikit-learn — 线性模型](https://scikit-learn.org/stable/modules/linear_model.html)
 
 
@@ -2019,6 +2199,26 @@ One-cycle 让学习率在一次训练中先升后降，并可能联动动量。W
 暂时只看没有动量、没有权重衰减的 SGD。假设某个参数为二，当前梯度为零点四，学习率为零点一。这一步把参数减去零点一乘零点四，得到一点九六。如果学习率改成零点零一，同样梯度下得到一点九九六。梯度为负时，减去负值会让参数增大。这里是在展示更新规则，不是在说所有权重都应越来越小。
 
 Adam 等优化器会加入历史统计，因此不能把这个数值计算原样套到所有优化器上。调度日志也要标明记录的是当前更新使用的学习率，还是调度后下一步将使用的值，避免把图表平移一格后误判设置。
+
+<a id="chapter-43-section-08"></a>
+
+### 案例 13：学习率：收敛、震荡与发散
+
+场景与输入：简化目标 L(θ)=θ²/2，梯度为 θ，初始 θ=4，每步使用固定学习率 η。
+
+手算第 1 步：更新为 θ下一步=(1-η)θ。η=0.1 时，4→3.6→3.24，缓慢靠近 0。
+
+手算第 2 步：η=1.8 时，4→-3.2→2.56，符号交替但绝对值缩小，仍会收敛。
+
+手算第 3 步：η=2.2 时，4→-4.8→5.76，符号交替且绝对值增大，发生发散。
+
+结果与解释：在这个曲率恰为 1 的二次函数上，0<η<2 收敛；η=2 保持等幅震荡，η=1 一步到 0。
+
+易错点与边界：区间 (0,2) 不是所有神经网络的安全学习率范围；一般目标的曲率、噪声和优化器都会改变稳定条件。
+
+改变条件再想一想：目标改成 L=5θ²/2，固定学习率的稳定范围怎么变？
+
+自测参考：梯度为 5θ，更新系数为 1-5η；要求其绝对值小于 1，所以 0<η<0.4。
 
 参考资料（不朗读）：[S070 · PyTorch — 优化器](https://docs.pytorch.org/docs/stable/optim.html)；[S078 · PyTorch — 学习率调度](https://docs.pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate)；[S079 · PyTorch — torch.optim.lr_scheduler.OneCycleLR](https://docs.pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.OneCycleLR.html)；[S080 · PyTorch — torch.optim.lr_scheduler.ReduceLROnPlateau](https://docs.pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.ReduceLROnPlateau.html)；[S069 · PyTorch — Optimizing Model Parameters](https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html)
 
@@ -2136,6 +2336,26 @@ L-BFGS 用有限历史信息近似曲率，属于拟牛顿优化，常见于中�
 
 EMA，对模型权重作指数滑动平均，试图获得比单个训练瞬间更平稳的权重。SWA，随机权重平均，汇总一段训练中的权重。SAM，锐度感知最小化，关注参数附近受扰动后的损失，而不只优化一个精确位置。它们不是同一种操作，且可能增加计算或调参工作。权重平均与模型集成也不同：前者平均参数，后者组合预测，并不总能互相替代。
 
+<a id="chapter-45-section-08"></a>
+
+### 案例 24：Weight decay 与学习率衰减：两个不同的旋钮
+
+场景与输入：用简化的解耦更新 θ下一步=(1-ηλ)θ-ηg 表示参数收缩与梯度更新，取 θ=2、η=0.1、λ=0.01、g=0.4。
+
+手算第 1 步：收缩系数为 0.999，收缩后的参数为 1.998。
+
+手算第 2 步：梯度项为 0.04，更新得到 1.958；λ=0 时同一步为 1.96。
+
+手算第 3 步：若下一步把学习率降至 0.01，这是改变 η 的 schedule；λ 仍是参数收缩强度设置。
+
+结果与解释：Weight decay 是参数更新中的收缩机制；learning-rate decay 是 η 随时间的变化规则。示例两者数值作用也有关联，因为收缩含 ηλ。
+
+易错点与边界：上式的 g 是用于更新的方向；真实 AdamW 的梯度方向经过动量与二阶矩调整，不可直接等同于原始梯度。
+
+改变条件再想一想：当前 g=0 时，设置 weight decay 会不会更新参数？
+
+自测参考：会，只要 ηλ 非零且该参数适用衰减，本式仍执行 θ←(1-ηλ)θ。
+
 参考资料（不朗读）：[S070 · PyTorch — 优化器](https://docs.pytorch.org/docs/stable/optim.html)；[S084 · Decoupled Weight Decay Regularization](https://arxiv.org/abs/1711.05101)；[S023 · scikit-learn — 线性模型](https://scikit-learn.org/stable/modules/linear_model.html)；[S085 · PyTorch — 权重平均](https://docs.pytorch.org/docs/stable/optim.html#weight-averaging-swa-and-ema)；[S086 · Sharpness-Aware Minimization for Efficiently Improving Generalization](https://arxiv.org/abs/2010.01412)
 
 
@@ -2250,6 +2470,26 @@ Activation checkpointing 不保存全部中间激活，而在反向传播时重�
 
 混合精度检测到非有限梯度时，缩放器可能跳过实际参数更新。按参数更新次数管理的学习率调度和日志，应与实际更新保持一致，不能只数循环执行了几次。具体调用顺序应以使用的框架与训练封装为准。
 
+<a id="chapter-47-section-09"></a>
+
+### 案例 25：两种 checkpoint：恢复状态与重算激活
+
+场景与输入：网络有四段，每段需保存约 100 MB 中间激活。机器可能中断，也可能训练显存不足。
+
+手算第 1 步：为中断恢复而保存 checkpoint：需要模型、优化器、调度器、训练步数，必要时还包括随机状态和数据进度。它主要写到持久存储。
+
+手算第 2 步：Activation checkpointing：只保留选定边界的激活，在反向时重新执行某些前向计算，以计算时间换激活显存。
+
+手算第 3 步：假设保留两段边界能减少部分中间保存量，但还要计入边界、输入、临时张量与其他状态，不能简单承诺显存精确减半。
+
+结果与解释：磁盘快照解决恢复问题；激活重计算解决训练时部分内存开销。两个机制可以同时使用。
+
+易错点与边界：只保存模型权重通常不能精确续训；激活 checkpoint 不会自动保存一个可恢复的训练任务。
+
+改变条件再想一想：优化器状态很大，开启激活 checkpoint 就能把它省掉吗？
+
+自测参考：不能；它针对中间激活，优化器状态需采用另外的存储或分片方案。
+
 参考资料（不朗读）：[S083 · PyTorch — 混合精度与梯度累积](https://docs.pytorch.org/docs/stable/notes/amp_examples.html)；[S088 · PyTorch — 参数初始化](https://docs.pytorch.org/docs/stable/nn.init.html)；[S089 · PyTorch — torch.nn.utils.clip_grad_norm_](https://docs.pytorch.org/docs/stable/generated/torch.nn.utils.clip_grad_norm_.html)；[S090 · PyTorch — 激活检查点](https://docs.pytorch.org/docs/stable/checkpoint.html)；[S081 · PyTorch — 自动求导机制](https://docs.pytorch.org/docs/stable/notes/autograd.html)
 
 
@@ -2277,7 +2517,7 @@ Graph Neural Network，图神经网络，让节点沿着图中的边交换信息
 
 讲到这里，你已经能够解释为什么“深度学习”不是只有一种模型。CNN 利用空间局部性；RNN 强调顺序状态；Transformer 强调动态的信息关联；GNN 利用图结构；不同设计体现了不同任务的归纳偏置。
 
-参考资料（不朗读）：[S091 · Attention Is All You Need](https://arxiv.org/abs/1706.03762)；[S092 · Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)；[S093 · Mamba: Linear-Time Sequence Modeling with Selective State Spaces](https://arxiv.org/abs/2312.00752)；[S094 · Learning Transferable Visual Models From Natural Language Supervision](https://arxiv.org/abs/2103.00020)
+参考资料（不朗读）：[S091 · Attention Is All You Need](https://arxiv.org/abs/1706.03762)；[S092 · Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)；[S093 · Mamba: Linear-Time Sequence Modeling with Selective State Spaces](https://arxiv.org/abs/2312.00752)；[S094 · Learning Transferable Visual Models From Natural Language Supervision](https://arxiv.org/abs/2103.00020)；[S174 · PyTorch 2.14 — Conv2d：二维互相关](https://docs.pytorch.org/docs/2.14/generated/torch.nn.Conv2d.html)
 
 
 ---
@@ -2330,7 +2570,27 @@ U-Net 先压缩提取语义，再上采样恢复位置，并把早期细节特�
 
 YOLO 系列以高效检测为重要目标，Faster R-CNN 代表候选区域再精细分类的经典两阶段路线。DETR 把检测看成集合预测，用匹配目标处理预测与真实物体的对应，原始路线不依赖传统 NMS。SAM 关注可提示的图像分割，不等于自动完成全部类别识别。模型系列内部会变化，本讲比较设计路线，不把某个版本的配置当成永久定义。
 
-参考资料（不朗读）：[S092 · Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)；[S095 · U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597)；[S096 · End-to-End Object Detection with Transformers](https://arxiv.org/abs/2005.12872)；[S097 · Segment Anything](https://arxiv.org/abs/2304.02643)；[S098 · Torchvision — Models and Pre-trained Weights](https://docs.pytorch.org/vision/stable/models.html)
+<a id="chapter-49-section-08"></a>
+
+### 案例 20：卷积窗口：一次输出来自哪些像素
+
+场景与输入：输入为 3×3 矩阵 [[1,2,3],[4,5,6],[7,8,9]]，核为 [[1,0],[0,1]]，步长 1，无填充，偏置为 0。
+
+手算第 1 步：左上窗口 [[1,2],[4,5]] 与核逐项相乘求和：1×1+2×0+4×0+5×1=6。
+
+手算第 2 步：窗口向右移动一格，得到 2+6=8；换到下一行两个窗口，分别得到 4+8=12、5+9=14。
+
+手算第 3 步：输出空间尺寸为 (3-2)/1+1=2，所以输出是 2×2。演示用同一个核滑动共享权重。
+
+结果与解释：输出 [[6,8],[12,14]]。这里使用深度学习库常见的不翻转卷积核的互相关约定。
+
+易错点与边界：数学卷积常涉及核翻转；不能在不说明约定时混用。通道、填充、膨胀和多个核在此例中省略。
+
+改变条件再想一想：核改为 [[1,-1],[1,-1]] 会得到什么？
+
+自测参考：四个位置均为 -2，因为每个窗口计算左列和减去右列和。
+
+参考资料（不朗读）：[S092 · Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)；[S095 · U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597)；[S096 · End-to-End Object Detection with Transformers](https://arxiv.org/abs/2005.12872)；[S097 · Segment Anything](https://arxiv.org/abs/2304.02643)；[S098 · Torchvision — Models and Pre-trained Weights](https://docs.pytorch.org/vision/stable/models.html)；[S174 · PyTorch 2.14 — Conv2d：二维互相关](https://docs.pytorch.org/docs/2.14/generated/torch.nn.Conv2d.html)
 
 
 ---
@@ -2435,7 +2695,7 @@ Prompt，是提供给模型的输入和指令。System Instruction、User Messag
 
 关键理解是：LLM 的语言能力主要来自大规模数据驱动的训练，其生成过程仍受到上下文、训练目标和采样策略影响。它既不是简单的关键词搜索引擎，也不等于一个天然可靠的知识数据库。
 
-参考资料（不朗读）：[S091 · Attention Is All You Need](https://arxiv.org/abs/1706.03762)；[S102 · Hugging Face — Tokenizer Summary](https://huggingface.co/docs/transformers/tokenizer_summary)；[S103 · Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)
+参考资料（不朗读）：[S091 · Attention Is All You Need](https://arxiv.org/abs/1706.03762)；[S102 · Hugging Face — Tokenizer Summary](https://huggingface.co/docs/transformers/tokenizer_summary)；[S103 · Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)；[S175 · PyTorch 2.14 — Scaled Dot Product Attention](https://docs.pytorch.org/docs/2.14/generated/torch.nn.functional.scaled_dot_product_attention.html)
 
 
 ---
@@ -2494,7 +2754,27 @@ Causal mask 防止预测当前位置时读取未来答案。Padding mask 排除�
 
 MoE 在部分层设置多个专家子网络，由 router 为 token 选择其中一部分。总参数量与每次激活参数量因此不同。Load balancing 避免大量 token 挤向同一专家，让资源空闲或超载。专家是训练中形成的功能分工，不一定能清楚命名为数学专家、医学专家。省激活计算不等于省全部存储和通信，推理仍需考虑模型权重放在哪里。
 
-参考资料（不朗读）：[S091 · Attention Is All You Need](https://arxiv.org/abs/1706.03762)；[S102 · Hugging Face — Tokenizer Summary](https://huggingface.co/docs/transformers/tokenizer_summary)；[S104 · RoFormer: Enhanced Transformer with Rotary Position Embedding](https://arxiv.org/abs/2104.09864)；[S105 · GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints](https://arxiv.org/abs/2305.13245)；[S103 · Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)
+<a id="chapter-53-section-09"></a>
+
+### 案例 15：注意力：分数、归一化与加权求和
+
+场景与输入：查询 q=[1,0]，三个键为 [1,0]、[0,1]、[1,1]，值为 [2,0]、[0,2]、[1,1]。键维度为 2。
+
+手算第 1 步：点积为 [1,0,1]，除以 √2 得到约 [.707,0,.707]。演示温度默认 1。
+
+手算第 2 步：Softmax 先减去最大分数再取指数，得到权重约 [.4011,.1978,.4011]，总和为 1。
+
+手算第 3 步：按权重加权值向量，输出约 [1.2033,.7967]。屏蔽第三个键后，它的权重为 0，其他权重重新归一化。
+
+结果与解释：注意力输出是值的加权组合；权重由查询和键的匹配决定。温度降低会使这组非相等分数的权重更集中。
+
+易错点与边界：演示只展示单个查询、单头、无 dropout 的缩放点积注意力；额外温度旋钮是教学设置。完全屏蔽所有键需要另外定义行为。
+
+改变条件再想一想：两个键的分数相同，权重是否一定相同？
+
+自测参考：在同一查询、相同掩码条件下，它们的 softmax 权重相同；对应值向量仍可以不同。
+
+参考资料（不朗读）：[S091 · Attention Is All You Need](https://arxiv.org/abs/1706.03762)；[S102 · Hugging Face — Tokenizer Summary](https://huggingface.co/docs/transformers/tokenizer_summary)；[S104 · RoFormer: Enhanced Transformer with Rotary Position Embedding](https://arxiv.org/abs/2104.09864)；[S105 · GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints](https://arxiv.org/abs/2305.13245)；[S103 · Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)；[S175 · PyTorch 2.14 — Scaled Dot Product Attention](https://docs.pytorch.org/docs/2.14/generated/torch.nn.functional.scaled_dot_product_attention.html)
 
 
 ---
@@ -2709,6 +2989,26 @@ PTQ 是训练后量化，QAT 在训练时考虑量化影响。GPTQ、AWQ 是低�
 
 张量并行拆开同一层的大计算，流水线并行把不同层放到不同设备，数据并行用模型副本处理不同数据。ZeRO 或 FSDP 等训练方案分摊参数、梯度、优化器状态中的相应部分，减少复制开销。通信、流水线空泡和负载不均可能抵消加速。模型能放下与跑得快是两个不同目标。
 
+<a id="chapter-58-section-08"></a>
+
+### 案例 29：KV cache：复用的是哪些计算
+
+场景与输入：自回归解码已有 4 个 token，现在生成第 5 个。前缀各层的 Key 与 Value 可在先前步骤保存。
+
+手算第 1 步：缓存让第 5 步复用前 4 个 token 的 K、V，不必在每步重复做它们的同类投影。
+
+手算第 2 步：新 token 的 Query 仍需与可见前缀 Key 比较，再对 Value 加权，前缀更长时这部分工作仍增长。
+
+手算第 3 步：假设每个 token 存 2 组、每组 d 个数值、每数值 b 字节，L 层、T 个 token、批量 B 的简化内存为 2BLTdb。
+
+结果与解释：例如 B=1、L=2、T=4、d=8、b=2 时为 256 字节；这里 d 是每层合计缓存的 KV 宽度。
+
+易错点与边界：真实 GQA/MQA、量化、分页和框架元数据会改变内存；KV cache 与 FlashAttention 优化的对象不同。
+
+改变条件再想一想：长度翻倍，按这个简化缓存公式会怎样？
+
+自测参考：缓存大小翻倍；不能据此声称整个推理时间也恰好翻倍。
+
 参考资料（不朗读）：[S117 · FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135)；[S118 · Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180)；[S119 · Fast Inference from Transformers via Speculative Decoding](https://arxiv.org/abs/2211.17192)；[S120 · GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323)；[S121 · AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration](https://arxiv.org/abs/2306.00978)；[S101 · PyTorch — Distributed Overview](https://docs.pytorch.org/tutorials/beginner/dist_overview.html)
 
 
@@ -2738,7 +3038,7 @@ Agent Evaluation，智能体评测，不能只看最终回答，还要看任务�
 
 要牢牢记住三个区别。LLM 是提供语言与推理能力的模型。RAG 是为它提供外部知识的系统方法。Agent 是让模型能够通过工具和流程执行任务的系统设计。三者可以结合，但不是一回事。
 
-参考资料（不朗读）：[S122 · Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)；[S123 · ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)；[S124 · Model Context Protocol — Introduction](https://modelcontextprotocol.io/docs/getting-started/intro)；[S125 · OWASP — Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/)
+参考资料（不朗读）：[S122 · Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)；[S123 · ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)；[S124 · Model Context Protocol — Introduction](https://modelcontextprotocol.io/docs/getting-started/intro)；[S125 · OWASP — Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/)；[S177 · Cormack, Clarke, Buettcher — Reciprocal Rank Fusion](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf)
 
 
 ---
@@ -2791,7 +3091,27 @@ IVF 先把向量分成粗区域，查询时只搜索若干相关区域。PQ，�
 
 查询改写把含糊请求变成更适合检索的表达。HyDE 先生成假设性文档，再用它帮助语义检索；生成文档不是证据。Multi-hop 依据第一轮结果继续检索，解决需要拼接多个来源的问题。评价要分别看召回是否找到证据、重排是否把它放前面、回答是否忠实引用。RAG 不是只看最终一句话听起来合理就算成功。
 
-参考资料（不朗读）：[S010 · Manning, Raghavan, Schütze — Introduction to Information Retrieval](https://nlp.stanford.edu/IR-book/html/htmledition/irbook.html)；[S008 · Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs](https://arxiv.org/abs/1603.09320)；[S126 · Faiss — Indexes and search](https://github.com/facebookresearch/faiss/wiki/Faiss-indexes)；[S127 · Cormack et al. — Reciprocal rank fusion](https://dl.acm.org/doi/10.1145/1571941.1572114)；[S128 · SPLADE: Sparse Lexical and Expansion Model for First Stage Ranking](https://arxiv.org/abs/2107.05720)；[S129 · ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT](https://arxiv.org/abs/2004.12832)；[S122 · Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)
+<a id="chapter-60-section-08"></a>
+
+### 案例 17：RRF：融合排名而非直接相加原始分数
+
+场景与输入：关键词检索排名 A、B、C；向量检索排名 C、B、D。每个文档在一个列表中贡献 1/(k+rank)，rank 从 1 开始。
+
+手算第 1 步：取 k=60，A 得 1/61，D 得 1/63；B 得 2/62。
+
+手算第 2 步：C 得 1/63+1/61，约 0.032266；B 约 0.032258，因此 C 略高于 B。
+
+手算第 3 步：合并所有出现过的文档后排序；没有出现在某列表的文档，在该列表贡献为 0。
+
+结果与解释：结果为 C、B、A、D。它融合的是排名信息，避免把尺度不同的 BM25 原始分数与相似度直接相加。
+
+易错点与边界：RRF 分数不是概率；重复文档应先在每个检索列表中去重。k 的作用不能等同于返回条数。
+
+改变条件再想一想：只保留一个检索列表会怎样？
+
+自测参考：融合排序保持该列表的排名顺序，因为 1/(k+rank) 随 rank 变大而减小。
+
+参考资料（不朗读）：[S010 · Manning, Raghavan, Schütze — Introduction to Information Retrieval](https://nlp.stanford.edu/IR-book/html/htmledition/irbook.html)；[S008 · Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs](https://arxiv.org/abs/1603.09320)；[S126 · Faiss — Indexes and search](https://github.com/facebookresearch/faiss/wiki/Faiss-indexes)；[S127 · Cormack et al. — Reciprocal rank fusion](https://dl.acm.org/doi/10.1145/1571941.1572114)；[S128 · SPLADE: Sparse Lexical and Expansion Model for First Stage Ranking](https://arxiv.org/abs/2107.05720)；[S129 · ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT](https://arxiv.org/abs/2004.12832)；[S122 · Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)；[S177 · Cormack, Clarke, Buettcher — Reciprocal Rank Fusion](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf)
 
 
 ---
@@ -2987,6 +3307,26 @@ ASR 将声音转为文字，可以使用 CTC、encoder-decoder 或 transducer �
 
 点云用三维点及附加属性表示场景。NeRF 通过学习空间与视角相关的辐射场渲染新视角。三维高斯泼溅用一组可优化的空间高斯基元高效表示与渲染场景。它们解决三维表示和视角合成，不等于已经掌握物体怎样受力运动。静态重建模型、可交互世界模型和机器人控制模型是三个不同层次。
 
+<a id="chapter-64-section-08"></a>
+
+### 案例 28：跨模态表征：余弦相似度不是事实核验
+
+场景与输入：将图像向量设为 [1,0]，两个文本向量为 [2,0] 和 [1,1]，仅演示向量比较。
+
+手算第 1 步：图像与第一段文本的余弦为 2/(1×2)=1；第二段为 1/√2≈0.707。
+
+手算第 2 步：归一化后，第一文本为 [1,0]，第二文本约为 [.707,.707]；点积就等于余弦。
+
+手算第 3 步：第一文本长度变成 [20,0] 仍得余弦 1，说明度量忽略向量的正比例长度变化。
+
+结果与解释：共享表征可把跨模态检索写成向量邻近问题；这个人造向量例子没有训练或验证真实图文模型。
+
+易错点与边界：相似度不是正确性或概率；零向量的余弦未定义，否定、数量与细粒度空间关系还可能被模型误判。
+
+改变条件再想一想：文本向量为 [-1,0] 时，余弦是多少？
+
+自测参考：-1，表示方向相反；语义上如何解释仍取决于模型学到的空间。
+
 参考资料（不朗读）：[S139 · Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/abs/1301.3781)；[S094 · Learning Transferable Visual Models From Natural Language Supervision](https://arxiv.org/abs/2103.00020)；[S035 · Emerging Properties in Self-Supervised Vision Transformers](https://arxiv.org/abs/2104.14294)；[S140 · Masked Autoencoders Are Scalable Vision Learners](https://arxiv.org/abs/2111.06377)；[S077 · PyTorch — torch.nn.CTCLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CTCLoss.html)；[S141 · NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis](https://arxiv.org/abs/2003.08934)；[S142 · 3D Gaussian Splatting for Real-Time Radiance Field Rendering](https://arxiv.org/abs/2308.04079)
 
 
@@ -3074,6 +3414,26 @@ DQN 用神经网络近似 Q 值。Replay buffer 保存经验并打乱抽样重�
 ### Double DQN、Dueling、Prioritized Replay、Distributional RL【认识】
 
 Double DQN 将动作选择与价值评价适当分离，缓解最大值估计偏高。Dueling 架构拆开状态价值与动作优势。优先经验回放更常抽到有信息的经验，并注意采样偏差。分布式回报建模的 distributional RL 学习回报分布，而不只学习均值；这里的 distributional 不是多机分布式训练。Rainbow 组合若干 DQN 改进，便于认识这些方法可以叠加。
+
+<a id="chapter-66-section-09"></a>
+
+### 案例 18：Q-learning：终止状态不再自举
+
+场景与输入：当前 Q(s,a)=2，奖励 r=1，下一状态最大 Q 为 4，折扣 γ=0.9，步长 α=0.5。
+
+手算第 1 步：非终止转移的目标为 r+γ max Q=1+0.9×4=4.6。
+
+手算第 2 步：TD 误差为 4.6-2=2.6，更新 Q=2+0.5×2.6=3.3。
+
+手算第 3 步：若这一步到达真正终止状态，目标只为 r=1，更新变成 2+0.5×(1-2)=1.5。
+
+结果与解释：同样的观测奖励，是否终止会改变学习目标。只演示一次表格 Q-learning 更新，不代表完整策略已经学好。
+
+易错点与边界：环境真正终止与时间上限截断需要区分；是否自举应根据任务和接口语义决定。Q-learning 使用下一状态最大值，SARSA 使用实际下一动作的值。
+
+改变条件再想一想：把 α 改为 1，非终止时更新到哪里？
+
+自测参考：直接更新到本次目标 4.6；这并不表示目标估计本身没有噪声。
 
 参考资料（不朗读）：[S002 · OpenAI Spinning Up — Key Concepts in RL](https://spinningup.openai.com/en/latest/spinningup/rl_intro.html)；[S144 · Playing Atari with Deep Reinforcement Learning](https://arxiv.org/abs/1312.5602)；[S145 · Deep Reinforcement Learning with Double Q-learning](https://arxiv.org/abs/1509.06461)；[S146 · Rainbow: Combining Improvements in Deep Reinforcement Learning](https://arxiv.org/abs/1710.02298)
 
@@ -3417,6 +3777,26 @@ Genie 类研究尝试生成可交互环境，让动作或控制影响随后观�
 ### Compounding Error、Model Exploitation 与评价【重点】
 
 误差累积是短期小偏差在长轨迹中越来越大。Model exploitation 是规划或策略找到模型错误的漏洞，在想象里得高分，现实里失败。评价应同时看不同时间跨度的预测、动作条件敏感性、不确定性以及最终控制成功率。低像素误差、低表征误差与高任务回报并不完全等价。最关键的问题是：这个模型对实际决策有多大帮助？
+
+<a id="chapter-73-section-09"></a>
+
+### 案例 19：世界模型：预测偏差与反馈修正
+
+场景与输入：一维位置 x，目标为 5。真实系统 x下一步=x+u+风，预测模型忽略风。动作限制在 [-1,1]，初始位置为 0。
+
+手算第 1 步：固定动作策略每次 u=1；若风=-0.3，每次实际只移动 0.7，预测与观测逐渐不同。
+
+手算第 2 步：反馈策略每步重新观察，取 u=clip(5-x,-1,1)。靠近目标时，动作随误差缩小。
+
+手算第 3 步：风=-0.3 时，反馈会停在约 4.7，仍有稳态偏差；固定动作会继续越过目标。
+
+结果与解释：闭环反馈能改变累积误差，但一个不含风补偿的比例策略不能消除所有偏差。演示同步列出预测与实际的下一位置。
+
+易错点与边界：这不是完整 MPC；没有优化多步动作序列，也没有训练世界模型。用简化动态仅说明预测、观测、反馈之间的关系。
+
+改变条件再想一想：若风为 0，反馈策略到达 5 后会怎样？
+
+自测参考：动作变为 0，位置保持 5；固定动作策略仍会每次前进 1。
 
 参考资料（不朗读）：[S004 · Mastering Diverse Domains through World Models](https://arxiv.org/abs/2301.04104)；[S165 · Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model](https://arxiv.org/abs/1911.08265)；[S168 · TD-MPC2: Scalable, Robust World Models for Continuous Control](https://arxiv.org/abs/2310.16828)；[S166 · V-JEPA 2: Self-Supervised Video Models Enable Understanding, Prediction and Planning](https://arxiv.org/abs/2506.09985)；[S167 · Genie: Generative Interactive Environments](https://arxiv.org/abs/2402.15391)
 
@@ -4220,6 +4600,26 @@ Genie 类研究尝试生成可交互环境，让动作或控制影响随后观�
 
 第 128 题，最长连续序列。核心思路：对去重集合，只从没有前驱的数开始扫描连续区间。 时间：期望 O(n)；辅助空间：O(n)。易错点：外层也要去重，避免重复起点多次长扫描。
 
+<a id="chapter-81-section-06"></a>
+
+### 案例 01：哈希配对：先查再存
+
+场景与输入：数组 [4,1,5,3]，目标和 8。需要返回两个不同位置。哈希表保存已经读过的值及其下标。
+
+手算第 1 步：下标 0 的值是 4，需要另一个 4；表中没有，随后写入 4→0。下标 1 的值是 1，需要 7，也没有。
+
+手算第 2 步：下标 2 的值是 5，需要 3；查询失败后写入 5→2。
+
+手算第 3 步：下标 3 的值是 3，需要 5；命中下标 2，得到位置 (2,3)。每一步只查询当前位置之前的元素。
+
+结果与解释：5+3=8，返回零基下标 [2,3]。哈希查找按期望常数时间计算，整体期望 O(n)，辅助空间 O(n)。
+
+易错点与边界：先把当前位置写入再查询，可能把同一元素使用两次。重复值要区分值和位置。
+
+改变条件再想一想：输入 [3,3]、目标 6，为什么两个相同数可以使用？
+
+自测参考：第一次查询时没有 3，随后保存位置 0；第二次命中位置 0，两个位置不同。
+
 参考资料（不朗读）：[S169 · LeetCode — 热题 100 官方学习计划（2026-10-16 核对）](https://leetcode.cn/studyplan/top-100-liked/)
 
 
@@ -4279,6 +4679,26 @@ Genie 类研究尝试生成可交互环境，让动作或控制影响随后观�
 
 第 42 题，接雨水。核心思路：维护左右最大边界，从较低边界侧累计可确定的水量。 时间：O(n)；辅助空间：O(1)。易错点：不能只看全局最高柱或相邻柱。
 
+<a id="chapter-82-section-07"></a>
+
+### 案例 02：双指针：为什么移动短板
+
+场景与输入：高度 [2,7,4,6,3]。两条线与横轴形成容器，面积是宽度乘较短高度。
+
+手算第 1 步：左右端点为 (0,4)，面积 4×2=8。保持左端高度 2 而把右端左移，宽度变小且短板不可能超过 2。
+
+手算第 2 步：所以排除左端 0，得到 (1,4)，面积 3×3=9；这次右端更短，排除右端。
+
+手算第 3 步：来到 (1,3)，面积 2×6=12。随后继续移动较短侧，直至相遇，记录遍历中的最大值。
+
+结果与解释：最大面积 12，端点 (1,3)。每个指针只向内移动，时间 O(n)，辅助空间 O(1)。
+
+易错点与边界：移动规则依赖面积的短板上界；不能把这种规则直接搬到任意两个元素的最优化问题。
+
+改变条件再想一想：两端一样高时移动哪边？
+
+自测参考：可以移动任一边；保留另一边时，更窄的容器也无法超过当前短板形成的上界。
+
 参考资料（不朗读）：[S169 · LeetCode — 热题 100 官方学习计划（2026-10-16 核对）](https://leetcode.cn/studyplan/top-100-liked/)
 
 
@@ -4325,6 +4745,26 @@ Genie 类研究尝试生成可交互环境，让动作或控制影响随后观�
 第 3 题，无重复字符的最长子串。核心思路：右端扩张，出现重复时收缩到合法，再更新最长长度。 时间：O(n)；辅助空间：O(min(n,σ))。易错点：左端不能倒退；子串必须连续。
 
 第 438 题，找到字符串中所有字母异位词。核心思路：固定长度窗口维护字符频次，与模式串比较。 时间：O(n+m)，固定字母表；辅助空间：O(σ)，另计输出。易错点：重复字符按次数比较；模式串更长时无答案。
+
+<a id="chapter-83-section-06"></a>
+
+### 案例 03：滑动窗口：重复字符出现时逐步收缩
+
+场景与输入：字符串 abcaad，求不含重复字符的最长连续子串。维护区间 [left,right] 的字符集合。
+
+手算第 1 步：读入 a、b、c，窗口 abc 长度 3。读入下一个 a 前，它已在集合中，移除左端 a 并把 left 推进到 1。
+
+手算第 2 步：窗口变成 bca。下一个 a 再次重复；依次移除 b、c、a，直到旧 a 被移走，再加入新 a。
+
+手算第 3 步：最后读入 d，当前窗口 ad 长度 2；历史最佳仍为 3。每个字符最多加入、移除各一次。
+
+结果与解释：答案为 3，可取 abc 或 bca。时间 O(n)，集合空间 O(min(n,字符集大小))。
+
+易错点与边界：只把 left 增加一次无法保证窗口合法；最长子串要求连续，不能跳过中间字符。
+
+改变条件再想一想：字符串 aaaa 的答案是什么？
+
+自测参考：1。每次新的 a 到来，都必须移走窗口中的旧 a。
 
 参考资料（不朗读）：[S169 · LeetCode — 热题 100 官方学习计划（2026-10-16 核对）](https://leetcode.cn/studyplan/top-100-liked/)
 
@@ -4378,6 +4818,26 @@ Genie 类研究尝试生成可交互环境，让动作或控制影响随后观�
 第 239 题，滑动窗口最大值。核心思路：单调递减双端队列存下标，先处理过期与被支配候选。 时间：摊还 O(n)；辅助空间：O(k)。易错点：队列必须支持高效头部删除，且能判断过期。
 
 第 76 题，最小覆盖子串。核心思路：维护需求频次，覆盖成立时收缩并记录最短窗口。 时间：O(n+m)；辅助空间：O(σ)。易错点：需求含重复字符；满足数的语义必须固定。
+
+<a id="chapter-84-section-06"></a>
+
+### 案例 04：前缀和：负数为什么不妨碍计数
+
+场景与输入：数组 [1,-1,1]，统计和为 1 的连续子数组。令前缀和 s，历史频次表起始为 {0:1}。
+
+手算第 1 步：第一项后 s=1，查询 s-1=0，找到 1 个前缀，累计 1，再记录前缀 1。
+
+手算第 2 步：第二项后 s=0，查询 -1，找到 0 个，再把前缀 0 的次数加到 2。
+
+手算第 3 步：第三项后 s=1，查询 0，找到 2 个历史前缀，累计变成 3，再记录当前前缀。
+
+结果与解释：三个区间是位置 [0,0]、[0,2]、[2,2]。时间期望 O(n)，辅助空间 O(n)。
+
+易错点与边界：不能先记录当前前缀再查询，否则目标为 0 时会把长度为零的区间计入。含负数时，区间和不随窗口扩张单调变化。
+
+改变条件再想一想：[0,0,0] 中和为 0 的非空区间有几个？
+
+自测参考：6 个：三个长度 1、两个长度 2、一个长度 3；前缀频次累计得到 1+2+3。
 
 参考资料（不朗读）：[S169 · LeetCode — 热题 100 官方学习计划（2026-10-16 核对）](https://leetcode.cn/studyplan/top-100-liked/)；[S170 · LeetCode 560 — 和为 K 的子数组](https://leetcode.com/problems/subarray-sum-equals-k/)；[S171 · LeetCode 239 — 滑动窗口最大值](https://leetcode.com/problems/sliding-window-maximum/)
 
@@ -4738,6 +5198,46 @@ Trie 沿字符逐层走边，共享相同前缀。插入在末尾设置结束标
 
 第 208 题，实现 Trie (前缀树)。核心思路：字符路径共享前缀，终止标记区分单词与前缀。 时间：单次 O(L)；辅助空间：总 O(插入字符数)，固定字母表。易错点：search 与 startsWith 的结束条件不同。
 
+<a id="chapter-89-section-06"></a>
+
+### 案例 06：BFS：入队即标记与最短路
+
+场景与输入：有向等权图 A→B、A→C、B→D、C→D、D→E，F 是孤立节点。寻找从 A 出发的最少边数。
+
+手算第 1 步：A 距离为 0，出队后将 B、C 标记并入队，距离均为 1。
+
+手算第 2 步：B 出队时发现 D，记录距离 2、父节点 B；C 再遇到 D 时，因为 D 已标记而不重复入队。
+
+手算第 3 步：D 发现 E，距离 3。最终队列为空，F 始终没有距离。沿 E→D→B→A 反转父指针得到路径。
+
+结果与解释：A 到 E 的一条最短路径是 A-B-D-E，长度 3；F 不可达。邻接表时间 O(V+E)，空间 O(V)。
+
+易错点与边界：结论依赖所有边代价相同；一般带权图不能只按层数比较。出队才标记会产生重复入队。
+
+改变条件再想一想：把 A→C 的代价改为 10，仍能用 BFS 保证最低代价吗？
+
+自测参考：不能。BFS 最少边数与最小总代价是两个目标；非负权可考虑 Dijkstra。
+
+<a id="chapter-89-section-07"></a>
+
+### 案例 07：拓扑排序：队列为空与有向环
+
+场景与输入：依赖关系 A→C、B→C、C→D、D→E，F 无依赖。每条边表示前者必须先完成。
+
+手算第 1 步：统计入度，A、B、F 为 0，先放入队列。弹出 A、B 时各把 C 的入度减一，降到 0 才让 C 入队。
+
+手算第 2 步：随后 C 释放 D，D 释放 E。F 虽然孤立，也需要在输出中。
+
+手算第 3 步：如果额外加入 E→C，处理 A、B、F 后队列为空，但 C、D、E 仍未输出，形成有向环。
+
+结果与解释：无环时输出 6 个节点的一种拓扑序；加环后只能输出 3 个节点，判定不存在覆盖全图的拓扑序。时间 O(V+E)。
+
+易错点与边界：拓扑序通常不唯一；有部分节点输出并不表示整个依赖图可执行。
+
+改变条件再想一想：只检查起点的可达子图够不够？
+
+自测参考：不够，另一连通分量也可能有环。必须统计全部 V 个节点的处理数。
+
 参考资料（不朗读）：[S169 · LeetCode — 热题 100 官方学习计划（2026-10-16 核对）](https://leetcode.cn/studyplan/top-100-liked/)
 
 
@@ -4808,6 +5308,26 @@ Trie 沿字符逐层走边，共享相同前缀。插入在末尾设置结束标
 第 131 题，分割回文串。核心思路：预计算回文区间，再回溯枚举合法切分。 时间：O(n²+n·2^n)，上界；辅助空间：O(n²)，不含输出。易错点：每段都要回文，不是整个串回文即可。
 
 第 51 题，N 皇后。核心思路：逐行选择未冲突的列，维护列与两类对角线集合。 时间：O(n·n!+A·n²)，宽松上界；辅助空间：O(n)，不含输出。易错点：A 为答案数；输出棋盘本身有平方大小。
+
+<a id="chapter-90-section-08"></a>
+
+### 案例 09：回溯：选择、递归与撤销
+
+场景与输入：枚举 [1,2,3] 的全排列。path 保存当前路径，used 标记已选位置。
+
+手算第 1 步：先选 1，再选 2、3，得到 [1,2,3]；保存路径的副本。
+
+手算第 2 步：撤销 3，再撤销 2，改选 3、2，得到 [1,3,2]；撤销后继续枚举其他起点。
+
+手算第 3 步：到达深度 3 时保存结果并返回；每一次选择都必须有对应撤销，使兄弟分支看到相同的入口状态。
+
+结果与解释：得到 6 个排列。输出本身占 Θ(n×n!) 空间和时间量级；递归与标记的辅助空间 O(n)，不含输出。
+
+易错点与边界：直接保存可变 path 引用可能使所有结果最终相同。输入含重复值时，位置标记仍会产生相同的值排列，需要另做去重。
+
+改变条件再想一想：空数组的全排列数量是 0 还是 1？
+
+自测参考：按组合约定是 1：包含一个空排列 [[]]，它也是递归的自然终止情形。
 
 参考资料（不朗读）：[S169 · LeetCode — 热题 100 官方学习计划（2026-10-16 核对）](https://leetcode.cn/studyplan/top-100-liked/)
 
@@ -4880,6 +5400,26 @@ Trie 沿字符逐层走边，共享相同前缀。插入在末尾设置结束标
 
 第 4 题，寻找两个正序数组的中位数。核心思路：二分较短数组的切分点，使两侧边界有序。 时间：O(log(min(m,n)+1))；辅助空间：O(1)。易错点：处理空数组一侧、奇偶总长与边界哨兵。
 
+<a id="chapter-91-section-08"></a>
+
+### 案例 10：二分：半开区间与第一个不小于
+
+场景与输入：有序数组 [1,2,2,4,7]，找第一个不小于 2 的位置，区间约定为 [left,right)，初始 [0,5)。
+
+手算第 1 步：中点 2 的值为 2，满足条件，将 right 收到 2，保留更靠左的候选。
+
+手算第 2 步：中点 1 的值仍为 2，将 right 收到 1；中点 0 的值为 1，不满足，将 left 推到 1。
+
+手算第 3 步：left=right=1 时结束。边界位置可以等于数组长度；它是插入位置，不保证目标存在。
+
+结果与解释：目标 2 的 lower bound 为 1；目标 3 的 lower bound 为 3；目标 8 的边界为 5。时间 O(log n)。
+
+易错点与边界：区间不含 right，所以 right 初始可取 n；不能在返回值等于 n 时直接读数组。
+
+改变条件再想一想：求目标 2 的出现次数还缺哪个边界？
+
+自测参考：还需第一个大于 2 的 upper bound，位置 3；次数为 3-1=2。
+
 参考资料（不朗读）：[S169 · LeetCode — 热题 100 官方学习计划（2026-10-16 核对）](https://leetcode.cn/studyplan/top-100-liked/)；[S172 · LeetCode 4 — 寻找两个正序数组的中位数](https://leetcode.com/problems/median-of-two-sorted-arrays/)
 
 
@@ -4939,6 +5479,26 @@ Trie 沿字符逐层走边，共享相同前缀。插入在末尾设置结束标
 
 第 84 题，柱状图中最大的矩形。核心思路：遇到更低柱弹栈，以当前边界和新栈顶结算宽度。 时间：摊还 O(n)；辅助空间：O(n)。易错点：宽度不含左右较矮边界，末尾要结清栈。
 
+<a id="chapter-92-section-07"></a>
+
+### 案例 05：单调栈：弹栈时确定等待天数
+
+场景与输入：温度 [20,24,22,27,21]，求每一天到更暖一天的等待天数。栈里保存尚未找到答案的下标。
+
+手算第 1 步：第 1 天的 24 高于第 0 天的 20，弹出下标 0，答案写为 1。
+
+手算第 2 步：第 2 天的 22 不高于 24，入栈等待。第 3 天的 27 先弹出 2，写入 1；再弹出 1，写入 2。
+
+手算第 3 步：剩余下标 3、4 后面没有更暖的一天，答案保留为 0。
+
+结果与解释：等待天数 [1,2,1,0,0]。每个下标最多入栈、出栈一次，时间 O(n)，辅助空间 O(n)。
+
+易错点与边界：这里寻找严格更暖，温度相同不能结算；保存值而不保存下标就无法算距离。
+
+改变条件再想一想：把温度改成 [20,20,21] 会怎样？
+
+自测参考：结果为 [2,1,0]；第二个 20 不会弹出第一个 20。
+
 参考资料（不朗读）：[S169 · LeetCode — 热题 100 官方学习计划（2026-10-16 核对）](https://leetcode.cn/studyplan/top-100-liked/)
 
 
@@ -4983,6 +5543,26 @@ Trie 沿字符逐层走边，共享相同前缀。插入在末尾设置结束标
 第 347 题，前 K 个高频元素。核心思路：哈希计频，再用大小 k 的堆筛选频率最高的键。 时间：期望 O(n+u log(k+1))；辅助空间：O(u+k)。易错点：u 为不同值数量，比较的是频次而不是数值。
 
 第 295 题，数据流的中位数。核心思路：左右两堆维护大小平衡与跨堆有序，堆顶给出中位数。 时间：插入 O(log n)，查询 O(1)；辅助空间：O(n)。易错点：两堆次序与数量两个不变式缺一不可。
+
+<a id="chapter-93-section-05"></a>
+
+### 案例 30：Top K：用需求解释算法选择
+
+场景与输入：输入 [9,1,7,3,8]，求最大的两个数。先确认是否要求有序、输入能否修改、是否持续接收数据。
+
+手算第 1 步：大小为 2 的最小堆，堆顶保存当前第二大。读完 9、1 后为 {1,9}；读到 7 替换 1，读到 3 忽略，读到 8 替换 7。
+
+手算第 2 步：最终保留 {8,9}，若要求从大到小，还需对这两个结果排序。
+
+手算第 3 步：静态数组也可用快速选择定位分界，平均 O(n)；它会重排数组，结果区间不天然有序，最坏复杂度取决于选主元策略。
+
+结果与解释：堆适合流式维护，时间 O(n log k)、辅助空间 O(k)；快速选择适合可修改的静态数据，选择理由来自约束。
+
+易错点与边界：只说“快速选择比排序快”不完整；需要说明平均与最坏、输出顺序和输入修改要求。
+
+改变条件再想一想：数据持续到来，还要随时返回前 K，优先考虑什么？
+
+自测参考：固定大小堆通常更方便增量维护；也要说明当 k 接近 n 时的成本与返回排序开销。
 
 参考资料（不朗读）：[S169 · LeetCode — 热题 100 官方学习计划（2026-10-16 核对）](https://leetcode.cn/studyplan/top-100-liked/)
 
@@ -5129,6 +5709,26 @@ Trie 沿字符逐层走边，共享相同前缀。插入在末尾设置结束标
 第 416 题，分割等和子集。核心思路：检查半和是否可达，每个数只用一次，容量倒序更新。 时间：O(nS)；辅助空间：O(S)。易错点：S 为目标半和；正序会重复使用本轮元素。
 
 第 32 题，最长有效括号。核心思路：DP 记录当前位置结尾的有效长度，或用下标栈维护断点。 时间：O(n)；辅助空间：O(n)。易错点：连续子串；跨过已有合法段后还需检查配对边界。
+
+<a id="chapter-95-section-10"></a>
+
+### 案例 08：0/1 背包：倒序容量避免重复使用
+
+场景与输入：物品重量 [1,2,5]，每件最多一次，容量 4，问能否恰好装满。布尔 dp[c] 表示已处理物品是否能组成 c。
+
+手算第 1 步：初始化只有 dp[0]=真。处理重量 1 时，容量从 4 向 1 遍历，最终只有 0、1 可达。
+
+手算第 2 步：处理重量 2 时，倒序更新后可达容量为 0、1、2、3；容量 4 读取的是处理该物品之前的 dp[2]，因此仍为假。
+
+手算第 3 步：重量 5 超过容量，不能加入。若改为从小到大遍历，重量 1 会在同一轮反复使用，错误地让所有容量可达。
+
+结果与解释：容量 4 不可达。时间 O(物品数×容量)，辅助空间 O(容量)。这是恰好装满的可达性问题。
+
+易错点与边界：完全背包允许无限使用同类物品，才会采用适合重复使用的正序更新；循环顺序表达了使用次数约束。
+
+改变条件再想一想：把物品改成 [1,2,3] 呢？
+
+自测参考：可以，由 1+3 得到 4；每件仍只用一次。
 
 参考资料（不朗读）：[S169 · LeetCode — 热题 100 官方学习计划（2026-10-16 核对）](https://leetcode.cn/studyplan/top-100-liked/)
 

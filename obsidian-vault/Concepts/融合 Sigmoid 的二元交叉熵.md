@@ -37,3 +37,7 @@ tags: ["concept","area/training"]
 ## 所在路线
 
 - [[Routes/训练流程地图|训练流程地图]]
+
+## 具体案例与可视化
+
+- [[Examples/12 BCE：同样判错，损失差多少|案例 12 · BCE：同样判错，损失差多少]]

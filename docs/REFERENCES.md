@@ -870,3 +870,23 @@
 
 - **S173** [LeetCode 287 — 寻找重复数](https://leetcode.com/problems/find-the-duplicate-number/)
   引用章节：[97](../chapters/97.md)
+
+<a id="source-174"></a>
+
+- **S174** [PyTorch 2.14 — Conv2d：二维互相关](https://docs.pytorch.org/docs/2.14/generated/torch.nn.Conv2d.html)
+  引用章节：[48](../chapters/48.md)、[49](../chapters/49.md)
+
+<a id="source-175"></a>
+
+- **S175** [PyTorch 2.14 — Scaled Dot Product Attention](https://docs.pytorch.org/docs/2.14/generated/torch.nn.functional.scaled_dot_product_attention.html)
+  引用章节：[52](../chapters/52.md)、[53](../chapters/53.md)
+
+<a id="source-176"></a>
+
+- **S176** [scikit-learn — KMeans：Lloyd 更新与局部最优](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html)
+  引用章节：[31](../chapters/31.md)
+
+<a id="source-177"></a>
+
+- **S177** [Cormack, Clarke, Buettcher — Reciprocal Rank Fusion](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf)
+  引用章节：[59](../chapters/59.md)、[60](../chapters/60.md)
