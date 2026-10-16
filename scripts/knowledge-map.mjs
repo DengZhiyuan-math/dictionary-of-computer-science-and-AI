@@ -2,6 +2,8 @@ import {book, glossary, hot100, clean, markdown} from './model.mjs';
 import {areas, extraConcepts, relations, routes} from '../data/knowledge-map.mjs';
 import {examples} from '../data/examples.mjs';
 import {exampleMarkdown} from './examples.mjs';
+import {interviewQuestions,interviewSources} from '../data/interviews.mjs';
+import {questionMarkdown} from './interviews.mjs';
 
 export const slug = text => text.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const github = 'https://github.com/DengZhiyuan-math/dictionary-of-computer-science-and-AI/blob/main/';
@@ -77,11 +79,18 @@ export function makeKnowledgeGraph() {
     for(const key of x.concepts)edge(id,'concept:'+key,'demonstrates','具体案例与自测');
     for(const num of x.chapters)edge(id,'chapter:'+String(num).padStart(2,'0'),'demonstrates','配套章节');
   }
-  return {metadata:{version:book.metadata.version,date:book.metadata.date,title:'CS 与 AI 知识地图',semantics:{contains:'目录归属',explains:'章节解释',prerequisite:'推荐的理解先修',supports:'用于或帮助实现',related:'有解释的关联',contrast:'需要区分',practice:'题目练习',demonstrates:'案例与演示', 'learning-path':'推荐领域衔接','route-step':'专题学习顺序'}},nodes,edges};
+  for(const q of interviewQuestions){
+    const id='interview:'+q.id,source=interviewSources.find(s=>s.id===q.sourceId);
+    add({id,type:'interview',label:`面试 ${String(q.number).padStart(2,'0')} · ${q.title}`,area:'practice',note:`Interviews/${String(q.number).padStart(2,'0')} ${safeName(q.title)}.md`,description:q.prompt,chapters:q.chapters,source:`docs/INTERVIEW_QUESTIONS.md#question-${q.id}`,sourceKind:q.sourceKind,url:source.url});
+    edge('area:practice',id,'contains','来源面试题');
+    for(const key of q.concepts)edge(id,'concept:'+key,'examines','面试题与追问');
+    for(const num of [...new Set([106,...q.chapters])])edge(id,'chapter:'+String(num).padStart(2,'0'),'examines','阅读与推理依据');
+  }
+  return {metadata:{version:book.metadata.version,date:book.metadata.date,title:'CS 与 AI 知识地图',semantics:{contains:'目录归属',explains:'章节解释',prerequisite:'推荐的理解先修',supports:'用于或帮助实现',related:'有解释的关联',contrast:'需要区分',practice:'题目练习',demonstrates:'案例与演示',examines:'来源面试自测', 'learning-path':'推荐领域衔接','route-step':'专题学习顺序'}},nodes,edges};
 }
 
 export const graph = makeKnowledgeGraph();
-graph.stats={areas:areas.length,concepts:graph.nodes.filter(n=>n.type==='concept').length,chapters:book.chapters.length,problems:100,examples:examples.length,demos:examples.filter(x=>x.demo).length,routes:routes.length,nodes:graph.nodes.length,edges:graph.edges.length};
+graph.stats={areas:areas.length,concepts:graph.nodes.filter(n=>n.type==='concept').length,chapters:book.chapters.length,problems:100,interviews:interviewQuestions.length,examples:examples.length,demos:examples.filter(x=>x.demo).length,routes:routes.length,nodes:graph.nodes.length,edges:graph.edges.length};
 const byId = new Map(graph.nodes.map(n=>[n.id,n]));
 const link = id => {const n=byId.get(id);if(!n) throw new Error(`Unknown knowledge node ${id}`);return wiki(n.note,n.label)};
 
@@ -103,6 +112,7 @@ export function buildKnowledgeMap(emit) {
     'Obsidian 的全局图适合发现聚类，局部图适合追踪一到两层关联；按 `path:Concepts`、`path:Areas` 或 `tag:area/training` 筛选可减少章节和题目节点的视觉干扰。导航关系、概念关系与学习路线的含义不同。\n\n'+
     '[GitHub 可点击知识地图]('+github+'docs/KNOWLEDGE_MAP.md) · [Obsidian 双链说明](https://help.obsidian.md/links) · [关系图谱说明](https://help.obsidian.md/plugins/graph)\n';
   home+='\n## 案例与可视化\n\n'+examples.map(x=>`- ${link('example:'+x.id)}${x.demo?' · 交互演示':''}`).join('\n')+'\n';
+  home+='\n## 有来源的面试准备题\n\n公开样题、原站练习与文档派生题分别标注；不代表已核验实际面试问答。\n\n'+interviewQuestions.map(q=>'- '+link('interview:'+q.id)).join('\n')+'\n';
   emit('obsidian-vault/'+root,home);
   for(const a of areas) {
     const concepts=core.filter(n=>n.area===a.id);
@@ -141,6 +151,8 @@ export function buildKnowledgeMap(emit) {
     if(rr.length) text+='\n## 所在路线\n\n'+rr.map(e=>'- '+link(e.from)).join('\n')+'\n';
     const cases=graph.edges.filter(e=>e.type==='demonstrates'&&e.to===n.id);
     if(cases.length)text+='\n## 具体案例与可视化\n\n'+cases.map(e=>'- '+link(e.from)).join('\n')+'\n';
+    const interviews=graph.edges.filter(e=>e.type==='examines'&&e.to===n.id);
+    if(interviews.length)text+='\n## 面试准备题\n\n'+interviews.map(e=>'- '+link(e.from)).join('\n')+'\n';
     emit('obsidian-vault/'+n.note,text);
   }
   for(const c of book.chapters) {
@@ -151,6 +163,8 @@ export function buildKnowledgeMap(emit) {
     if(c.hot100) text+='## 配套练习\n\n'+graph.edges.filter(e=>e.type==='practice'&&e.to===n.id).map(e=>'- '+link(e.from)).join('\n')+'\n\n';
     const cases=graph.edges.filter(e=>e.type==='demonstrates'&&e.to===n.id);
     if(cases.length)text+='## 具体案例与可视化\n\n'+cases.map(e=>'- '+link(e.from)).join('\n')+'\n\n';
+    const interviews=graph.edges.filter(e=>e.type==='examines'&&e.to===n.id);
+    if(interviews.length)text+='## 面试准备题\n\n'+interviews.map(e=>'- '+link(e.from)).join('\n')+'\n\n';
     text+=markdown(c);
     emit('obsidian-vault/'+n.note,text);
   }
@@ -173,6 +187,10 @@ export function buildKnowledgeMap(emit) {
     body=body.replace(/(?: · )+\n/g,'\n');
     const text=front(x.title,'example',x.area)+link('area:'+x.area)+'\n\n'+body+'\n## 关联概念与章节\n\n'+x.concepts.map(k=>'- '+link('concept:'+k)).join('\n')+'\n'+x.chapters.map(n=>'- '+chapterLink(n)).join('\n')+'\n';
     emit('obsidian-vault/'+byId.get('example:'+x.id).note,text);
+  }
+  for(const q of interviewQuestions){
+    const text=front(q.title,'interview','practice')+link('area:practice')+'\n\n'+questionMarkdown(q)+'\n## 关联概念与章节\n\n'+q.concepts.map(k=>'- '+link('concept:'+k)).join('\n')+'\n'+[...new Set([106,...q.chapters])].map(n=>'- '+chapterLink(n)).join('\n')+'\n';
+    emit('obsidian-vault/'+byId.get('interview:'+q.id).note,text);
   }
   const canvasNodes=[{id:'home',type:'file',file:root,x:1100,y:-420,width:420,height:260}];
   const layers=[...new Set(areas.map(a=>a.layer))];
@@ -214,7 +232,7 @@ export function buildKnowledgeMap(emit) {
   doc+='## 笔记库结构与维护\n\n`Areas` 是领域入口，`Concepts` 是概念，`Chapters` 保存原文，`Practice` 对应 100 道 Hot 100，`Routes` 保存专题路线，`Maps` 提供原生 Canvas。按目录或 `area/...` 标签筛选局部图，可以逐层检查关联。\n\n'+
     '地图由 `data/knowledge-map.mjs` 与原讲稿统一生成。新增或调整关系时请注明理由，重新执行构建和校验；不要只修改生成后的双链。原章节编号与内容保持稳定。\n\n'+
     '格式依据：[Obsidian 内部链接](https://help.obsidian.md/links)、[关系图谱](https://help.obsidian.md/plugins/graph)、[JSON Canvas 1.0](https://jsoncanvas.org/spec/1.0/)。\n';
-  doc+='\n## 案例与可视化演示\n\n[完整案例集](EXAMPLES.md) · [离线交互演示](visual-demos.html)\n\n新增 30 个带手算、自测与反例的案例，其中 20 个配有交互演示。Obsidian 的 `Examples` 笔记连接概念和章节，`Demos` 保存完整离线演示。\n';
+  doc+='\n## 案例与可视化演示\n\n[完整案例集](EXAMPLES.md) · [离线交互演示](visual-demos.html)\n\n累计 50 个带手算、自测与反例的案例，其中 26 个配有交互演示。Obsidian 的 `Examples` 笔记连接概念和章节，`Demos` 保存完整离线演示。另有 [36 道来源面试准备题](INTERVIEW_QUESTIONS.md)、[来源核对](INTERVIEW_SOURCES.md) 和 [8 讲算法进阶](ADVANCED_ALGORITHMS.md)，`Interviews` 笔记逐题连接概念、章节及来源。\n';
   emit('docs/KNOWLEDGE_MAP.md',doc);
   emit('data/knowledge-graph.json',JSON.stringify(graph,null,2));
   return graph;

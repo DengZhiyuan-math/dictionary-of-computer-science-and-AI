@@ -4,6 +4,8 @@ import {fileURLToPath} from 'node:url';
 import {hot100} from '../data/hot100.mjs';
 import {examples, exampleParagraphs} from '../data/examples.mjs';
 import {demos} from '../data/demo-engines.mjs';
+import {advancedAlgorithms,algorithmSources} from '../data/advanced-algorithms.mjs';
+import {interviewQuestions,interviewSources} from '../data/interviews.mjs';
 
 export const root = fileURLToPath(new URL('../', import.meta.url));
 export const read = name => fs.readFileSync(path.join(root, name), 'utf8');
@@ -43,6 +45,21 @@ for(const [title,url,chapters] of [
   const id=Math.max(...book.sources.map(s=>s.id))+1;
   book.sources.push({id,title,url});for(const num of chapters)book.chapters[num-1].source_ids.push(id);
 }
+const sourceId=(title,url)=>{
+  const old=book.sources.find(s=>s.url===url);if(old)return old.id;
+  const id=Math.max(...book.sources.map(s=>s.id))+1;book.sources.push({id,title,url});return id;
+};
+const algorithmSourceIds=new Map(algorithmSources.map(s=>[s.key,sourceId(s.title,s.url)]));
+for(const c of advancedAlgorithms){
+  if(book.chapters.length!==c.chapter-1)throw Error('Non-contiguous advanced chapter');
+  book.chapters.push({id:c.chapter-1,num:String(c.chapter),title:c.title,group:'算法进阶与面试推理',new:true,micro:false,quiz:false,focus:true,advanced:true,
+    source_ids:c.sources.map(k=>algorithmSourceIds.get(k)),blocks:c.sections.flatMap(s=>[{kind:'heading',text:s.title},...s.paragraphs.map(text=>({kind:'text',text}))])});
+}
+const sourceKinds={'company-sample':'公司官方公开样题','official-practice':'官方公开练习','documentation-derived':'文档派生原创自测'};
+const questionSourceIds=new Map(interviewSources.map(s=>[s.id,sourceId(s.title,s.url)]));
+book.chapters.push({id:105,num:'106',title:'来源面试题：官方样题、算法练习与技术追问',group:'来源面试题库',new:true,micro:false,quiz:false,focus:true,interview:true,
+ source_ids:[...new Set(questionSourceIds.values())],blocks:[{kind:'text',text:'本讲按来源类型整理面试准备题。公司官方样题不等于已核验实际面试记录；文档派生题为本仓库原创自测。原有九十道口述题继续保留在原章节。'},
+ ...interviewQuestions.flatMap(q=>[{kind:'heading',text:`面试题 ${String(q.number).padStart(2,'0')}：${q.title}`},{kind:'text',text:`来源类型：${sourceKinds[q.sourceKind]}。问题：${q.prompt}【答题停顿】`},...q.outline.map(text=>({kind:'text',text})),{kind:'text',text:`手算输入：${q.example.input}`},...q.example.steps.map(text=>({kind:'text',text})),{kind:'text',text:`结果：${q.example.output}`},{kind:'text',text:`追问：${q.followup.question} 参考：${q.followup.answer}`},{kind:'text',text:`易错点：${q.pitfall}`}]) ]});
 for(const x of examples){
   const c=book.chapters[x.chapters[0]-1];
   c.blocks.push({kind:'heading',text:`案例 ${String(x.number).padStart(2,'0')}：${x.title}`,example:x.id},...exampleParagraphs(x).map(text=>({kind:'text',text,example:x.id})));
@@ -68,6 +85,9 @@ book.stats = {
   glossary_entries: glossary.length,
   worked_examples: examples.length,
   visual_demos: demos.length,
+  advanced_chapters:advancedAlgorithms.length,
+  interview_questions:interviewQuestions.length,
+  interview_source_kinds:Object.fromEntries(Object.keys(sourceKinds).map(k=>[k,interviewQuestions.filter(q=>q.sourceKind===k).length])),
   hot100_chapters: hot100.categories.length,
   hot100_problems: hot100.categories.reduce((sum, c) => sum + c.problems.length, 0),
   groups: Object.fromEntries([...new Set(book.chapters.map(c => c.group))].map(g => [g, book.chapters.filter(c => c.group === g).length]))
@@ -77,10 +97,12 @@ export const refs = c => c.source_ids.map(id => {
   if (!s) throw new Error(`Unknown source ${id} in chapter ${c.num}`);
   return `[S${String(id).padStart(3, '0')} · ${s.title}](${s.url})`;
 }).join('；');
+// Canonical prose is not Obsidian markup: matrices such as [[0,0,0]] must stay literal.
+export const literalMarkdown=text=>text.replaceAll('[[','\\[\\[').replaceAll(']]','\\]\\]');
 export function markdown(c) {
   const headings = new Map(c.toc.map(s => [s.index, s.anchor]));
   return `<a id="chapter-${c.num}"></a>\n\n## 第 ${c.num} 讲｜${c.title}\n\n领域：${c.group} · ${c.new ? '细讲' : '导览 / 复习'}\n\n` +
-    c.blocks.map((b, i) => b.kind === 'heading' ? `<a id="${headings.get(i)}"></a>\n\n### ${b.text}` : b.text).join('\n\n') +
+    c.blocks.map((b, i) => b.kind === 'heading' ? `<a id="${headings.get(i)}"></a>\n\n### ${literalMarkdown(b.text)}` : literalMarkdown(b.text)).join('\n\n') +
     `\n\n参考资料（不朗读）：${refs(c)}\n`;
 }
 export const chapterText = c => `第 ${c.num} 讲。${c.title}。\n\n` + c.blocks.map(b => clean(b.text.replace(/【答题停顿】/g, '（请暂停，先尝试回答。）'))).join('\n\n') + '\n';

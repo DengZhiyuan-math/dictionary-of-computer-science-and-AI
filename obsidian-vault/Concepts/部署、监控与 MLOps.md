@@ -37,3 +37,7 @@ tags: ["concept","area/architectures"]
 ## 所在路线
 
 - [[Routes/LLM 系统地图|LLM 系统地图]]
+
+## 面试准备题
+
+- [[Interviews/26 重试风暴：乘法比指数退避更先要算清|面试 26 · 重试风暴：乘法比指数退避更先要算清]]

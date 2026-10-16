@@ -8,15 +8,18 @@ import {graph} from './knowledge-map.mjs';
 import {areas} from '../data/knowledge-map.mjs';
 import {examples} from '../data/examples.mjs';
 import './check-demos.mjs';
+import './check-expansion.mjs';
+import {advancedAlgorithms} from '../data/advanced-algorithms.mjs';
+import {interviewQuestions} from '../data/interviews.mjs';
 
 const build = spawnSync(process.execPath, ['scripts/build.mjs', '--check'], {cwd: root, encoding: 'utf8'});
 process.stdout.write(build.stdout);
 if (build.status !== 0) { process.stderr.write(build.stderr); process.exit(build.status || 1); }
-assert.equal(book.chapters.length, 97);
+assert.equal(book.chapters.length, 106);
 assert.equal(book.stats.quiz_questions, 90);
 assert.equal(book.stats.training_chapters, 10);
 const hotSections = hot100.categories.reduce((sum,c)=>sum+c.sections.length+1,0);
-assert.equal(book.stats.new_subsections, book.metadata.baseline.detailedSubsections + 6 + hotSections + examples.length);
+assert.equal(book.stats.new_subsections, book.metadata.baseline.detailedSubsections + 6 + hotSections + examples.length + advancedAlgorithms.reduce((n,c)=>n+c.sections.length,0) + interviewQuestions.length);
 assert.equal(book.stats.hot100_chapters,17);
 assert.equal(book.stats.hot100_problems,100);
 const expectedGroups = [[1,49,128],[283,11,15,42],[3,438],[560,239,76],[53,56,189,238,41],[73,54,48,240],[160,206,234,141,142,21,2,19,24,25,138,148,23,146],[94,104,226,101,543,102,108,98,230,199,114,105,437,236,124],[200,994,207,208],[46,78,17,39,22,79,131,51],[35,74,34,33,153,4],[20,155,394,739,84],[215,347,295],[121,55,45,763],[70,118,198,279,322,139,300,152,416,32],[62,64,5,1143,72],[136,169,75,31,287]];
@@ -85,9 +88,10 @@ assert(!html.includes('全部 80 讲'));
 assert(!html.includes('__BOOK_DATA__'));
 
 // Validate the editorial graph independently of its generated navigation.
-assert.equal(graph.stats.areas,14);assert.equal(graph.stats.concepts,131);
-assert.equal(graph.stats.chapters,97);assert.equal(graph.stats.problems,100);
-assert.deepEqual(areas.flatMap(a=>a.chapters).sort((a,b)=>a-b),Array.from({length:97},(_,i)=>i+1));
+assert.equal(graph.stats.areas,14);assert.equal(graph.stats.concepts,147);
+assert.equal(graph.stats.chapters,106);assert.equal(graph.stats.problems,100);
+assert.equal(graph.stats.interviews,36);
+assert.deepEqual(areas.flatMap(a=>a.chapters).sort((a,b)=>a-b),Array.from({length:book.chapters.length},(_,i)=>i+1));
 const graphNodes=new Map(graph.nodes.map(n=>[n.id,n]));
 assert.equal(graphNodes.size,graph.nodes.length);
 assert.equal(new Set(graph.nodes.map(n=>n.note.toLowerCase())).size,graph.nodes.length,'Note filenames must be unique on Windows');

@@ -41,3 +41,7 @@ tags: ["concept","area/training"]
 ## 具体案例与可视化
 
 - [[Examples/12 BCE：同样判错，损失差多少|案例 12 · BCE：同样判错，损失差多少]]
+
+## 面试准备题
+
+- [[Interviews/28 BCE输入审计：先检查logit与shape|面试 28 · BCE输入审计：先检查logit与shape]]

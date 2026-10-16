@@ -1,16 +1,23 @@
 {
-  "chapters": 97,
-  "new_chapters": 69,
-  "new_subsections": 482,
+  "chapters": 106,
+  "new_chapters": 78,
+  "new_subsections": 570,
   "quiz_questions": 90,
   "training_chapters": 10,
-  "body_characters_including_whitespace": 151053,
-  "body_characters_no_whitespace": 142593,
-  "chinese_characters": 99995,
-  "sources": 177,
+  "body_characters_including_whitespace": 180045,
+  "body_characters_no_whitespace": 168952,
+  "chinese_characters": 117992,
+  "sources": 223,
   "glossary_entries": 103,
-  "worked_examples": 30,
-  "visual_demos": 20,
+  "worked_examples": 50,
+  "visual_demos": 26,
+  "advanced_chapters": 8,
+  "interview_questions": 36,
+  "interview_source_kinds": {
+    "company-sample": 3,
+    "official-practice": 16,
+    "documentation-derived": 17
+  },
   "hot100_chapters": 17,
   "hot100_problems": 100,
   "groups": {
@@ -28,6 +35,8 @@
     "强化学习与具身智能": 9,
     "口述练习": 5,
     "复习与表达": 2,
-    "LeetCode Hot 100 算法思想": 17
+    "LeetCode Hot 100 算法思想": 17,
+    "算法进阶与面试推理": 8,
+    "来源面试题库": 1
   }
 }

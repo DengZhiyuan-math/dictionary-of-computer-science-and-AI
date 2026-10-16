@@ -74,7 +74,7 @@ Logit 在神经网络分类讨论中通常指变成概率之前的原始分数�
 
 手算第 1 步：广播从尾轴对齐：[3,1] 与 [1,3] 可广播到 [3,3]。这已经不是三个样本一一对应。
 
-手算第 2 步：例如预测 [[1],[2],[3]] 减标签 [1,2,3]，结果是 [[0,-1,-2],[1,0,-1],[2,1,0]]。
+手算第 2 步：例如预测 \[\[1],[2],[3\]\] 减标签 [1,2,3]，结果是 \[\[0,-1,-2],[1,0,-1],[2,1,0\]\]。
 
 手算第 3 步：若先把标签显式变为 [3,1]，差值为三行零，才符合这里的样本配对意图。
 
@@ -247,6 +247,26 @@ Huber 在误差较小时像平方误差，在误差很大时更接近绝对误�
 改变条件再想一想：p=0.5 时，两个标签的损失一样吗？
 
 自测参考：一样，均为 ln(2)≈0.69315。
+
+<a id="chapter-41-section-10"></a>
+
+### 案例 50：Softmax：先平移再取指数
+
+场景与输入：三个 logits 为 [1000,1001,999]，真实类别是第二类，计算概率与多类交叉熵。
+
+手算第 1 步：直接取指数容易溢出。先减去最大值 1001，得到 [-1,0,-2]，Softmax 结果不变。
+
+手算第 2 步：指数约为 [.367879,1,.135335]，归一化后概率约 [.244728,.665241,.090031]。
+
+手算第 3 步：真实类别交叉熵为 -ln(.665241)≈.407606；一次加常数不改变相对分数，因此也不改变这些概率。
+
+结果与解释：稳定计算依赖代数等价变形，而不是任意截断 logits；训练代码通常使用接收原始分数的交叉熵接口。
+
+易错点与边界：不要对 CrossEntropyLoss 先做 Softmax 再当作 logits 输入；也不要把推理阈值混进损失公式。
+
+改变条件再想一想：全部 logits 再加 500，结果会变吗？
+
+自测参考：数学上不变；稳定实现仍先减最大值，避免中间值无必要地变大。
 
 参考资料（不朗读）：[S025 · PyTorch — torch.nn.BCEWithLogitsLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html)；[S072 · PyTorch — torch.nn.BCELoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.BCELoss.html)；[S026 · PyTorch — torch.nn.CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html)；[S073 · PyTorch — torch.nn.MSELoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.MSELoss.html)；[S074 · PyTorch — torch.nn.HuberLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.HuberLoss.html)；[S023 · scikit-learn — 线性模型](https://scikit-learn.org/stable/modules/linear_model.html)
 
@@ -732,6 +752,26 @@ ROC 曲线比较不同阈值下的真阳性率和假阳性率，AUC 汇总排序
 改变条件再想一想：阈值为 1，准确率与召回率分别是多少？
 
 自测参考：全预测为负，准确率 5/8，召回率 0，Precision 未定义。
+
+<a id="chapter-38-section-10"></a>
+
+### 案例 49：不平衡评估：两个 99% 完全不同
+
+场景与输入：1000 个样本，正类 10 个。模型 TP=5、FP=5、FN=5、TN=985。
+
+手算第 1 步：准确率为 (5+985)/1000=99%，Precision=5/(5+5)=50%，Recall=5/(5+5)=50%。
+
+手算第 2 步：若全部预测为负，TN=990、FN=10，准确率同样是 99%，Recall 却为 0。
+
+手算第 3 步：这两个操作点的准确率相同，但能否发现正类、需要复核多少误报不同；应结合成本与阈值选择。
+
+结果与解释：类别不平衡时，准确率可能掩盖重要差异；单个混淆矩阵不能直接计算完整 ROC AUC 或 PR AUC。
+
+易错点与边界：不要用阈值下的 Precision 取代 PR AUC，也不要从这几个计数推断未给出的完整排名。
+
+改变条件再想一想：只把阈值调高，一定提高 Precision 吗？
+
+自测参考：不一定。预测正集合缩小，Recall 不会提高，但剩余样本中的正类比例可升可降。
 
 参考资料（不朗读）：[S062 · scikit-learn — 评价指标](https://scikit-learn.org/stable/modules/model_evaluation.html)；[S063 · scikit-learn — 概率校准](https://scikit-learn.org/stable/modules/calibration.html)；[S031 · scikit-learn — 交叉验证](https://scikit-learn.org/stable/modules/cross_validation.html)；[S064 · scikit-learn — 置换重要性](https://scikit-learn.org/stable/modules/permutation_importance.html)；[S065 · SHAP — Documentation](https://shap.readthedocs.io/en/latest/)
 

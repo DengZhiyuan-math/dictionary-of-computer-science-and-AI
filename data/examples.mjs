@@ -1,4 +1,5 @@
 // Original worked cases. Numbers are deliberately small enough to check by hand.
+import {moreExamples} from './more-examples.mjs';
 const e=(id,title,area,chapters,concepts,scenario,steps,result,pitfall,question,answer,demo=null)=>({id,title,area,chapters,concepts,scenario,steps,result,pitfall,question,answer,demo});
 export const examples=[
 e('two-sum','哈希配对：先查再存','hot100',[81],['hash-table'],
@@ -151,7 +152,7 @@ e('top-k-interview','Top K：用需求解释算法选择','practice',[93],['heap
 ['大小为 2 的最小堆，堆顶保存当前第二大。读完 9、1 后为 {1,9}；读到 7 替换 1，读到 3 忽略，读到 8 替换 7。','最终保留 {8,9}，若要求从大到小，还需对这两个结果排序。','静态数组也可用快速选择定位分界，平均 O(n)；它会重排数组，结果区间不天然有序，最坏复杂度取决于选主元策略。'],
 '堆适合流式维护，时间 O(n log k)、辅助空间 O(k)；快速选择适合可修改的静态数据，选择理由来自约束。',
 '只说“快速选择比排序快”不完整；需要说明平均与最坏、输出顺序和输入修改要求。','数据持续到来，还要随时返回前 K，优先考虑什么？','固定大小堆通常更方便增量维护；也要说明当 k 接近 n 时的成本与返回排序开销。')
-].map((x,i)=>({...x,number:i+1}));
+,...moreExamples].map((x,i)=>({...x,number:i+1}));
 
 export function exampleParagraphs(x){return [
 `场景与输入：${x.scenario}`,

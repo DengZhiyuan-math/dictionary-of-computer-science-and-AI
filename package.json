@@ -1,6 +1,6 @@
 {
   "name": "dictionary-of-computer-science-and-ai",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "private": true,
   "description": "Chinese-first bilingual computer science and AI learning dictionary with an offline speech reader",
   "type": "module",

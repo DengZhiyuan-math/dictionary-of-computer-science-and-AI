@@ -20,6 +20,12 @@ tags: ["chapter","area/training"]
 ## 具体案例与可视化
 
 - [[Examples/12 BCE：同样判错，损失差多少|案例 12 · BCE：同样判错，损失差多少]]
+- [[Examples/50 Softmax：先平移再取指数|案例 50 · Softmax：先平移再取指数]]
+
+## 面试准备题
+
+- [[Interviews/28 BCE输入审计：先检查logit与shape|面试 28 · BCE输入审计：先检查logit与shape]]
+- [[Interviews/29 交叉熵：互斥类别与多标签的区别|面试 29 · 交叉熵：互斥类别与多标签的区别]]
 
 <a id="chapter-41"></a>
 
@@ -104,5 +110,25 @@ Huber 在误差较小时像平方误差，在误差很大时更接近绝对误�
 改变条件再想一想：p=0.5 时，两个标签的损失一样吗？
 
 自测参考：一样，均为 ln(2)≈0.69315。
+
+<a id="chapter-41-section-10"></a>
+
+### 案例 50：Softmax：先平移再取指数
+
+场景与输入：三个 logits 为 [1000,1001,999]，真实类别是第二类，计算概率与多类交叉熵。
+
+手算第 1 步：直接取指数容易溢出。先减去最大值 1001，得到 [-1,0,-2]，Softmax 结果不变。
+
+手算第 2 步：指数约为 [.367879,1,.135335]，归一化后概率约 [.244728,.665241,.090031]。
+
+手算第 3 步：真实类别交叉熵为 -ln(.665241)≈.407606；一次加常数不改变相对分数，因此也不改变这些概率。
+
+结果与解释：稳定计算依赖代数等价变形，而不是任意截断 logits；训练代码通常使用接收原始分数的交叉熵接口。
+
+易错点与边界：不要对 CrossEntropyLoss 先做 Softmax 再当作 logits 输入；也不要把推理阈值混进损失公式。
+
+改变条件再想一想：全部 logits 再加 500，结果会变吗？
+
+自测参考：数学上不变；稳定实现仍先减最大值，避免中间值无必要地变大。
 
 参考资料（不朗读）：[S025 · PyTorch — torch.nn.BCEWithLogitsLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html)；[S072 · PyTorch — torch.nn.BCELoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.BCELoss.html)；[S026 · PyTorch — torch.nn.CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html)；[S073 · PyTorch — torch.nn.MSELoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.MSELoss.html)；[S074 · PyTorch — torch.nn.HuberLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.HuberLoss.html)；[S023 · scikit-learn — 线性模型](https://scikit-learn.org/stable/modules/linear_model.html)

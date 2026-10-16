@@ -25,7 +25,13 @@ export const demos=[
  {id:'rrf',name:'检索排名融合 RRF',example:'rrf',variants:['两路检索','只有关键词检索'],control:{label:'融合常数 k',min:1,max:80,step:1,value:60}},
  {id:'qlearning',name:'一次 Q-learning 更新',example:'q-update',variants:['非终止转移','真正终止状态'],control:{label:'步长 α',min:0,max:1,step:.05,value:.5}},
  {id:'world',name:'模型预测与位置反馈',example:'world-feedback',variants:['闭环比例反馈','固定动作 u=1'],control:{label:'每步外界扰动',min:-.8,max:.8,step:.1,value:-.3}},
- {id:'conv',name:'卷积核滑动',example:'convolution',variants:['对角核 [[1,0],[0,1]]','差分核 [[1,-1],[1,-1]]']}
+ {id:'conv',name:'卷积核滑动',example:'convolution',variants:['对角核 [[1,0],[0,1]]','差分核 [[1,-1],[1,-1]]']},
+ {id:'dsu',name:'并查集连通分量',example:'dsu-components',variants:['包含成环连接','包含重复边']},
+ {id:'dijkstra',name:'Dijkstra 与过期候选',example:'dijkstra-stale',variants:['从 A 出发','从无法到达其他点的 D 出发']},
+ {id:'fenwick',name:'Fenwick 更新与前缀和',example:'fenwick-prefix',variants:['查询前 5 项','查询前 4 项'],control:{label:'位置 3 的增量',min:-3,max:3,step:1,value:2}},
+ {id:'kmp',name:'KMP 前缀与失配回退',example:'kmp-border',variants:['ababaca / abababaca','aaa / aaaaa（允许重叠）']},
+ {id:'lis',name:'严格 LIS 的结尾状态',example:'lis-boundary',variants:['[3,1,2,2,5,4]','[2,3,1]（结尾表不是路径）']},
+ {id:'split-answer',name:'二分答案与连续分组',example:'split-answer',variants:['[7,2,5,10,8]'],control:{label:'最多分组数 k',min:1,max:5,step:1,value:2}}
 ];
 export function runDemo(id,variant=0,value){
  const spec=demos.find(d=>d.id===id);if(!spec)throw new Error('Unknown demo '+id);
@@ -134,6 +140,36 @@ export function runDemo(id,variant=0,value){
  if(id==='conv'){
   const input=[[1,2,3],[4,5,6],[7,8,9]],kernel=variant?[[1,-1],[1,-1]]:[[1,0],[0,1]],out=[[null,null],[null,null]];
   for(let r=0;r<2;r++)for(let c=0;c<2;c++){const terms=[];let sum=0;for(let i=0;i<2;i++)for(let j=0;j<2;j++){const v=input[r+i][c+j],k=kernel[i][j];sum+=v*k;terms.push(`${v}×${k}`)}out[r][c]=sum;frames.push(frame(`窗口 (${r},${c})：${terms.join(' + ')} = ${sum}。`,{kind:'matrix',input,kernel,output:clone(out),row:r,col:c},[['约定','不翻核的互相关；步长 1，无填充']]))}result=out;
+ }
+ if(id==='dsu'){
+  const parent=[0,1,2,3,4,5],size=parent.map(()=>1);let count=6;const find=x=>{while(x!==parent[x]){parent[x]=parent[parent[x]];x=parent[x]}return x};
+  const snap=msg=>frames.push(frame(msg,table(['节点','父节点','代表元'],parent.map((_,i)=>{const root=find(i);return[i,parent[i],root]})),[['集合数',count]]));snap('每个节点独立。');
+  for(const [a,b]of [[0,1],[2,3],[1,2],variant?[0,1]:[0,3],[4,5]]){let ra=find(a),rb=find(b);if(ra===rb)snap(`连接 (${a},${b})：已同组，不减少集合数。`);else{if(size[ra]<size[rb])[ra,rb]=[rb,ra];parent[rb]=ra;size[ra]+=size[rb];count--;snap(`连接 (${a},${b})：合并两个集合。`)}}result={parent:parent.map((_,i)=>find(i)),count};
+ }
+ if(id==='dijkstra'){
+  const edges=[['A','B',5],['A','C',1],['C','B',1],['B','D',2],['C','D',7]],nodes=['A','B','C','D'],dist=Object.fromEntries(nodes.map(n=>[n,Infinity])),parent={},queue=[[0,variant?'D':'A']];dist[queue[0][1]]=0;
+  const snap=msg=>frames.push(frame(msg,table(['节点','当前距离','前驱'],nodes.map(n=>[n,Number.isFinite(dist[n])?dist[n]:'不可达',parent[n]||'—'])),[['候选（按距离展示）',queue.map(([d,n])=>`${n}:${d}`).join('，')||'空']]));snap('源点入候选；此处用排序短列表展示优先顺序。');
+  while(queue.length){queue.sort((a,b)=>a[0]-b[0]||a[1].localeCompare(b[1]));const [d,u]=queue.shift();if(d!==dist[u]){snap(`弹出 ${u}:${d} 是过期条目，跳过。`);continue}for(const[a,b,w]of edges)if(a===u&&d+w<dist[b]){dist[b]=d+w;parent[b]=u;queue.push([dist[b],b])}snap(`处理 ${u}:${d}，尝试松弛全部出边。`)}result={dist:Object.fromEntries(nodes.map(n=>[n,Number.isFinite(dist[n])?dist[n]:null])),parent};
+ }
+ if(id==='fenwick'){
+  const a=[2,1,3,4,2],tree=[0,2,3,3,10,2],target=variant?4:5;
+  const snap=(msg,active,rows=[])=>frames.push(frame(msg,table(['索引 i','覆盖的一基闭区间','tree[i]'],tree.slice(1).map((v,i)=>[i+1,`${i+2-((i+1)&-(i+1))}…${i+1}`,`${active===i+1?'→ ':''}${v}`])),rows));snap('初始 Fenwick 区间和。',0);
+  a[2]+=p;for(let i=3;i<tree.length;i+=i&-i){tree[i]+=p;snap(`位置 3 加 ${p}：更新 tree[${i}]，再沿 i+lowbit(i) 前进。`,i)}
+  let sum=0;for(let i=target;i>0;i-=i&-i){sum+=tree[i];snap(`查询前 ${target} 项：读取 tree[${i}]，再沿 i−lowbit(i) 后退。`,i,[['累计和',sum]])}result={sum,tree:tree.slice(1),array:a};
+ }
+ if(id==='kmp'){
+  const pattern=variant?'aaa':'ababaca',text=variant?'aaaaa':'abababaca',pi=Array(pattern.length).fill(0),matches=[];let built=0;
+  const snap=(msg,rows=[])=>frames.push(frame(msg,table(['模式下标','字符','π'],[...pattern].map((c,i)=>[i,c,i<=built?pi[i]:'待算'])),rows));
+  for(let i=1;i<pattern.length;i++){let j=pi[i-1];while(j>0&&pattern[i]!==pattern[j]){const old=j;j=pi[j-1];snap(`构造 π[${i}]：边界长度 ${old} 失配，回退到 ${j}。`)}if(pattern[i]===pattern[j])j++;pi[i]=j;built=i;snap(`构造 π[${i}] = ${j}。`)}
+  let j=0;for(let i=0;i<text.length;i++){while(j>0&&text[i]!==pattern[j]){const old=j;j=pi[j-1];snap(`文本位置 ${i} 失配，模式长度 ${old} 回退到 ${j}。`,[['文本',text]])}if(text[i]===pattern[j])j++;if(j===pattern.length){matches.push(i-pattern.length+1);j=pi[j-1]}snap(`读取文本[${i}]=${text[i]}。`,[['文本',text],['继续匹配长度',j],['已匹配起点',matches.join(', ')||'无']])}result={pi,matches};
+ }
+ if(id==='lis'){
+  const a=variant?[2,3,1]:[3,1,2,2,5,4],tails=[];for(let i=0;i<a.length;i++){let l=0,r=tails.length;while(l<r){const m=Math.floor((l+r)/2);if(tails[m]<a[i])l=m+1;else r=m}tails[l]=a[i];frames.push(frame(`读取 a[${i}]=${a[i]}，${l===tails.length-1?'更新末尾候选':'替换结尾候选'}位置 ${l}。`,array([...tails],[l],tails.map((_,j)=>`长度 ${j+1}`)),[['已读输入',a.slice(0,i+1).join(', ')],['最长严格递增长度',tails.length],['注意','结尾表不是恢复出的路径']]))}result={length:tails.length,tails};
+ }
+ if(id==='split-answer'){
+  const a=[7,2,5,10,8],k=Math.round(p);let l=Math.max(...a),r=a.reduce((s,x)=>s+x,0);
+  const groupsFor=limit=>{const groups=[[]];let sum=0;for(const n of a){if(sum+n>limit){groups.push([]);sum=0}groups.at(-1).push(n);sum+=n}return groups};
+  while(l<r){const mid=Math.floor((l+r)/2),groups=groupsFor(mid),ok=groups.length<=k;frames.push(frame(`搜索 [${l},${r}]，尝试上限 ${mid}：需要 ${groups.length} 组，${ok?'可行，缩小右界':'不可行，提高左界'}。`,table(['组','内容','组和'],groups.map((g,i)=>[i+1,g.join('+'),g.reduce((s,n)=>s+n,0)])),[['下一边界',ok?`right=${mid}`:`left=${mid+1}`]]));if(ok)r=mid;else l=mid+1}const groups=groupsFor(l);frames.push(frame(`最早可行上限为 ${l}。`,table(['组','内容','组和'],groups.map((g,i)=>[i+1,g.join('+'),g.reduce((s,n)=>s+n,0)])),[['允许组数',k],['实际组数',groups.length]]));result={limit:l,groups};
  }
  if(!frames.length)throw new Error('Demo has no frames: '+id);
  return {id,variant,value:p,frames,result};

@@ -18,6 +18,10 @@ tags: ["chapter","area/training"]
 
 - [[Examples/24 Weight decay 与学习率衰减：两个不同的旋钮|案例 24 · Weight decay 与学习率衰减：两个不同的旋钮]]
 
+## 面试准备题
+
+- [[Interviews/31 Dropout：缩放守住期望，评估切换行为|面试 31 · Dropout：缩放守住期望，评估切换行为]]
+
 <a id="chapter-46"></a>
 
 ## 第 46 讲｜正则化与归一化：Dropout、BatchNorm、LayerNorm、RMSNorm

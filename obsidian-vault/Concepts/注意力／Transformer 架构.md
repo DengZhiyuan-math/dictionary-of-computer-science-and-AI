@@ -44,3 +44,7 @@ tags: ["concept","area/llm"]
 
 - [[Examples/15 注意力：分数、归一化与加权求和|案例 15 · 注意力：分数、归一化与加权求和]]
 - [[Examples/29 KV cache：复用的是哪些计算|案例 29 · KV cache：复用的是哪些计算]]
+
+## 面试准备题
+
+- [[Interviews/32 注意力mask：先归一化还是先屏蔽|面试 32 · 注意力mask：先归一化还是先屏蔽]]

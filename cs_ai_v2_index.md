@@ -2,9 +2,9 @@
 
 # CS 与 AI：章节及知识点索引
 
-共 97 讲、482 个细讲小节、90 道口述题；正文里的导览段落另行保留。一个小节可比较多个概念，小节数不等于算法数。
+共 106 讲、570 个细讲小节、90 道口述题；正文里的导览段落另行保留。一个小节可比较多个概念，小节数不等于算法数。
 
-[案例与演示](docs/EXAMPLES.md) · [知识地图](docs/KNOWLEDGE_MAP.md) · [按英文查术语](docs/GLOSSARY.md) · [学习路线](docs/LEARNING_PATHS.md) · [训练速查](docs/TRAINING_CHEATSHEET.md) · [Hot 100 的 100 题映射](docs/LEETCODE_HOT100.md)
+[来源面试题](docs/INTERVIEW_QUESTIONS.md) · [算法进阶](docs/ADVANCED_ALGORITHMS.md) · [案例与演示](docs/EXAMPLES.md) · [知识地图](docs/KNOWLEDGE_MAP.md) · [按英文查术语](docs/GLOSSARY.md) · [学习路线](docs/LEARNING_PATHS.md) · [训练速查](docs/TRAINING_CHEATSHEET.md) · [Hot 100 的 100 题映射](docs/LEETCODE_HOT100.md)
 
 ## 快速入口
 
@@ -27,6 +27,8 @@
 - [机器人、VLA 与世界模型：第 69–73 讲](#chapter-69)
 - [口述练习与复习：第 74–80 讲](#chapter-74)
 - [LeetCode Hot 100 算法思想：第 81–97 讲](#chapter-81)
+- [算法进阶：第 98–105 讲](#chapter-98)
+- [来源面试题：第 106–106 讲](#chapter-106)
 
 <a id="chapter-01"></a>
 
@@ -559,6 +561,7 @@ Clustering，聚类，是把相似样本自动分组。K-means，K 均值聚类�
 - [Permutation Importance、SHAP、PDP、ICE【认识】](chapters/38.md#chapter-38-section-07)
 - [混淆矩阵例题：Precision、Recall、F1 各在数什么【重点】](chapters/38.md#chapter-38-section-08)
 - [案例 14：阈值：重新计算混淆矩阵](chapters/38.md#chapter-38-section-09)
+- [案例 49：不平衡评估：两个 99% 完全不同](chapters/38.md#chapter-38-section-10)
 
 <a id="chapter-39"></a>
 
@@ -603,6 +606,7 @@ Deep Learning，深度学习，是通过多层可学习的变换，从数据中�
 - [BCE 数值例题：同样判错，损失为什么不同【重点】](chapters/41.md#chapter-41-section-07)
 - [输入契约：先看任务，再对齐 Shape 与 Dtype【重点精学】](chapters/41.md#chapter-41-section-08)
 - [案例 12：BCE：同样判错，损失差多少](chapters/41.md#chapter-41-section-09)
+- [案例 50：Softmax：先平移再取指数](chapters/41.md#chapter-41-section-10)
 
 <a id="chapter-42"></a>
 
@@ -1496,3 +1500,170 @@ LeetCode Hot 100 算法思想
 - [Next Permutation：最小幅度地增大字典序【重点精学】](chapters/97.md#chapter-97-section-04)
 - [Floyd on Array：把值当成下一条边【重点精学】](chapters/97.md#chapter-97-section-05)
 - [本讲逐题映射：思路、复杂度与易错点【重点】](chapters/97.md#chapter-97-section-06)
+
+<a id="chapter-98"></a>
+
+## 第 98 讲：算法进阶 · 并查集：连通、合并与最小生成树
+
+算法进阶与面试推理
+
+[阅读本讲](chapters/98.md) · [完整讲稿](cs_ai_v2_full.md#chapter-98)
+
+- [Find 与 Union：代表元不是业务标签](chapters/98.md#chapter-98-section-01)
+- [按大小合并与路径压缩的成本](chapters/98.md#chapter-98-section-02)
+- [Kruskal：连通性怎样帮助避开环](chapters/98.md#chapter-98-section-03)
+- [删除、回滚与加权并查集的边界](chapters/98.md#chapter-98-section-04)
+- [案例 31：并查集：重复连接不减少集合数](chapters/98.md#chapter-98-section-05)
+
+<a id="chapter-99"></a>
+
+## 第 99 讲：算法进阶 · 有权最短路：松弛、优先队列与负环
+
+算法进阶与面试推理
+
+[阅读本讲](chapters/99.md) · [完整讲稿](cs_ai_v2_full.md#chapter-99)
+
+- [松弛：距离数组是一组上界](chapters/99.md#chapter-99-section-01)
+- [Dijkstra 与过期堆条目](chapters/99.md#chapter-99-section-02)
+- [0-1 BFS：队列两端代表两层距离](chapters/99.md#chapter-99-section-03)
+- [Bellman-Ford 与负环影响范围](chapters/99.md#chapter-99-section-04)
+- [案例 32：Dijkstra：旧距离为什么还在队列里](chapters/99.md#chapter-99-section-05)
+- [案例 33：0-1 BFS：第一次发现不一定最短](chapters/99.md#chapter-99-section-06)
+- [案例 34：负环：先问它是否可达](chapters/99.md#chapter-99-section-07)
+
+<a id="chapter-100"></a>
+
+## 第 100 讲：算法进阶 · 区间结构：差分、Fenwick 与线段树
+
+算法进阶与面试推理
+
+[阅读本讲](chapters/100.md) · [完整讲稿](cs_ai_v2_full.md#chapter-100)
+
+- [先用操作组合选择结构](chapters/100.md#chapter-100-section-01)
+- [Fenwick：用二进制划分前缀](chapters/100.md#chapter-100-section-02)
+- [线段树：节点保存可以合并的信息](chapters/100.md#chapter-100-section-03)
+- [Lazy propagation 与不合适的运算](chapters/100.md#chapter-100-section-04)
+- [案例 35：Fenwick：查询与更新沿不同方向走](chapters/100.md#chapter-100-section-05)
+- [案例 36：线段树：查询最大值不能做前缀相减](chapters/100.md#chapter-100-section-06)
+- [案例 37：差分：区间结束之后撤销增量](chapters/100.md#chapter-100-section-07)
+
+<a id="chapter-101"></a>
+
+## 第 101 讲：算法进阶 · 字符串匹配：KMP、Trie 与多模式
+
+算法进阶与面试推理
+
+[阅读本讲](chapters/101.md) · [完整讲稿](cs_ai_v2_full.md#chapter-101)
+
+- [前缀函数：失配后还剩多少可复用信息](chapters/101.md#chapter-101-section-01)
+- [KMP：文本指针不后退的单模式搜索](chapters/101.md#chapter-101-section-02)
+- [Trie 与 Aho-Corasick：前缀和后缀各做什么](chapters/101.md#chapter-101-section-03)
+- [滚动哈希：快速比较仍需考虑碰撞](chapters/101.md#chapter-101-section-04)
+- [案例 38：KMP：失配时退到哪个边界](chapters/101.md#chapter-101-section-05)
+- [案例 39：多模式：一个位置可以结束多个词](chapters/101.md#chapter-101-section-06)
+
+<a id="chapter-102"></a>
+
+## 第 102 讲：算法进阶 · 动态规划：前驱、区间与状态压缩
+
+算法进阶与面试推理
+
+[阅读本讲](chapters/102.md) · [完整讲稿](cs_ai_v2_full.md#chapter-102)
+
+- [LIS：最小结尾表不等于最终路径](chapters/102.md#chapter-102-section-01)
+- [带权区间调度：把选择接到兼容前驱](chapters/102.md#chapter-102-section-02)
+- [区间 DP：最后一次划分确定依赖](chapters/102.md#chapter-102-section-03)
+- [状态压缩：集合信息怎样进入状态](chapters/102.md#chapter-102-section-04)
+- [案例 40：LIS：重复值替换而非延长](chapters/102.md#chapter-102-section-05)
+- [案例 41：带权调度：前驱让选择可以相加](chapters/102.md#chapter-102-section-06)
+- [案例 42：状态压缩：还要记住最后停在哪](chapters/102.md#chapter-102-section-07)
+- [案例 43：区间 DP：乘法顺序改变多少运算](chapters/102.md#chapter-102-section-08)
+
+<a id="chapter-103"></a>
+
+## 第 103 讲：算法进阶 · 贪心证明与二分答案
+
+算法进阶与面试推理
+
+[阅读本讲](chapters/103.md) · [完整讲稿](cs_ai_v2_full.md#chapter-103)
+
+- [交换论证：好直觉需要可以替换的最优解](chapters/103.md#chapter-103-section-01)
+- [二分答案：单调的是可行性](chapters/103.md#chapter-103-section-02)
+- [可行性检查：分组贪心的适用前提](chapters/103.md#chapter-103-section-03)
+- [数值搜索与复杂度的表达](chapters/103.md#chapter-103-section-04)
+- [案例 44：二分答案：先检查候选上限](chapters/103.md#chapter-103-section-05)
+- [案例 45：贪心反例：最多任务与最高收益](chapters/103.md#chapter-103-section-06)
+
+<a id="chapter-104"></a>
+
+## 第 104 讲：算法进阶 · 随机与流式：采样、过滤与误差
+
+算法进阶与面试推理
+
+[阅读本讲](chapters/104.md) · [完整讲稿](cs_ai_v2_full.md#chapter-104)
+
+- [蓄水池采样：不知道总长度也能等概率](chapters/104.md#chapter-104-section-01)
+- [随机化快速选择：期望不等于最坏](chapters/104.md#chapter-104-section-02)
+- [Bloom filter：肯定不在与可能在](chapters/104.md#chapter-104-section-03)
+- [近似统计：先说清误差与资源](chapters/104.md#chapter-104-section-04)
+- [案例 46：蓄水池：每个元素最后都有三分之一](chapters/104.md#chapter-104-section-05)
+- [案例 47：Bloom：两个已见元素拼出一个误报](chapters/104.md#chapter-104-section-06)
+
+<a id="chapter-105"></a>
+
+## 第 105 讲：算法进阶 · 面试中的正确性、摊还分析与测试
+
+算法进阶与面试推理
+
+[阅读本讲](chapters/105.md) · [完整讲稿](cs_ai_v2_full.md#chapter-105)
+
+- [四句话建立求解契约](chapters/105.md#chapter-105-section-01)
+- [最坏、期望与摊还分别回答什么](chapters/105.md#chapter-105-section-02)
+- [实现细节会改变复杂度](chapters/105.md#chapter-105-section-03)
+- [用小规模枚举做独立对照](chapters/105.md#chapter-105-section-04)
+- [案例 48：动态数组：昂贵扩容如何摊还](chapters/105.md#chapter-105-section-05)
+
+<a id="chapter-106"></a>
+
+## 第 106 讲：来源面试题：官方样题、算法练习与技术追问
+
+来源面试题库
+
+[阅读本讲](chapters/106.md) · [完整讲稿](cs_ai_v2_full.md#chapter-106)
+
+- [面试题 01：游程编码：统计连续段而非全局频次](chapters/106.md#chapter-106-section-01)
+- [面试题 02：机器人快照：局部邻居不等于一一匹配](chapters/106.md#chapter-106-section-02)
+- [面试题 03：流式第 k 大：只保存必要候选](chapters/106.md#chapter-106-section-03)
+- [面试题 04：带通配符的词典：Trie 与分支搜索](chapters/106.md#chapter-106-section-04)
+- [面试题 05：网络延迟：最短路与不可达](chapters/106.md#chapter-106-section-05)
+- [面试题 06：多路归并：把堆理解为候选前沿](chapters/106.md#chapter-106-section-06)
+- [面试题 07：区间选择：用交换论证解释贪心](chapters/106.md#chapter-106-section-07)
+- [面试题 08：增量判环：并查集解决什么](chapters/106.md#chapter-106-section-08)
+- [面试题 09：KMP：失配后保留已验证的信息](chapters/106.md#chapter-106-section-09)
+- [面试题 10：动态区间和：前缀和为何不够](chapters/106.md#chapter-106-section-10)
+- [面试题 11：零钱最少枚数：反例检验局部最优](chapters/106.md#chapter-106-section-11)
+- [面试题 12：最小体力路径：最短路不只会做加法](chapters/106.md#chapter-106-section-12)
+- [面试题 13：最大异或：高位为何优先](chapters/106.md#chapter-106-section-13)
+- [面试题 14：正数滑窗：先说单调性再说模板](chapters/106.md#chapter-106-section-14)
+- [面试题 15：负数最短子数组：单调队列维护支配关系](chapters/106.md#chapter-106-section-15)
+- [面试题 16：树序列化：数值顺序不能唯一恢复结构](chapters/106.md#chapter-106-section-16)
+- [面试题 17：右侧更小数：离散化后做动态频次](chapters/106.md#chapter-106-section-17)
+- [面试题 18：冷却调度：计数公式的适用范围](chapters/106.md#chapter-106-section-18)
+- [面试题 19：在线书店：从需求推导订单边界](chapters/106.md#chapter-106-section-19)
+- [面试题 20：读已提交：一个事务内两次查询会相同吗](chapters/106.md#chapter-106-section-20)
+- [面试题 21：联合索引：从查询条件推导扫描范围](chapters/106.md#chapter-106-section-21)
+- [面试题 22：死锁：画等待环而非只背四条件](chapters/106.md#chapter-106-section-22)
+- [面试题 23：请求超时：幂等解决的是效果](chapters/106.md#chapter-106-section-23)
+- [面试题 24：HTTP缓存：no-cache并非不存储](chapters/106.md#chapter-106-section-24)
+- [面试题 25：条件变量：通知不是资源预订](chapters/106.md#chapter-106-section-25)
+- [面试题 26：重试风暴：乘法比指数退避更先要算清](chapters/106.md#chapter-106-section-26)
+- [面试题 27：Redis TTL：更新值不一定保留过期时间](chapters/106.md#chapter-106-section-27)
+- [面试题 28：BCE输入审计：先检查logit与shape](chapters/106.md#chapter-106-section-28)
+- [面试题 29：交叉熵：互斥类别与多标签的区别](chapters/106.md#chapter-106-section-29)
+- [面试题 30：梯度累积：不等长微批怎样加权](chapters/106.md#chapter-106-section-30)
+- [面试题 31：Dropout：缩放守住期望，评估切换行为](chapters/106.md#chapter-106-section-31)
+- [面试题 32：注意力mask：先归一化还是先屏蔽](chapters/106.md#chapter-106-section-32)
+- [面试题 33：KV Cache：速度收益换来多少显存](chapters/106.md#chapter-106-section-33)
+- [面试题 34：数据泄露：预处理也会偷看测试集](chapters/106.md#chapter-106-section-34)
+- [面试题 35：阈值与F1：小样本计数先于印象](chapters/106.md#chapter-106-section-35)
+- [面试题 36：概率校准：排得对不代表概率可信](chapters/106.md#chapter-106-section-36)

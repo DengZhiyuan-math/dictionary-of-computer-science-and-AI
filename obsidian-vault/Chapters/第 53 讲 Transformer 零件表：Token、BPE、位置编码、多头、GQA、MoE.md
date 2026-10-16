@@ -15,6 +15,11 @@ tags: ["chapter","area/llm"]
 ## 具体案例与可视化
 
 - [[Examples/15 注意力：分数、归一化与加权求和|案例 15 · 注意力：分数、归一化与加权求和]]
+- [[Examples/50 Softmax：先平移再取指数|案例 50 · Softmax：先平移再取指数]]
+
+## 面试准备题
+
+- [[Interviews/32 注意力mask：先归一化还是先屏蔽|面试 32 · 注意力mask：先归一化还是先屏蔽]]
 
 <a id="chapter-53"></a>
 

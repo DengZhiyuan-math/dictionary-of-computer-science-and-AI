@@ -4,12 +4,12 @@
 
 本页保留原稿全部参考资料，并补充本次训练说明所用文档。各讲结尾列出关联来源。资料来自官方文档、论文、课程或作者项目；列出来源不表示逐条内容均已重新审校。
 
-本次核对日期：2026-10-16；重点核对训练接口、更新顺序及官方 Hot 100 的完整题单与分组。Hot 100 的解法说明为原创整理，逐题链接见专项笔记。PyTorch 的 stable 链接会随版本变化，复现实验请固定环境版本。通识模型示例不代表当前性能排名。
+本次核对日期：2026-10-16；重点核对训练接口、更新顺序、官方 Hot 100 题单，以及算法扩展和面试题来源。面试题核对范围见[来源记录](INTERVIEW_SOURCES.md)。Hot 100 的解法说明为原创整理，逐题链接见专项笔记。PyTorch 的 stable 链接会随版本变化，复现实验请固定环境版本。通识模型示例不代表当前性能排名。
 
 <a id="source-1"></a>
 
 - **S001** [MIT OpenCourseWare — Introduction to Algorithms](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/)
-  引用章节：[01](../chapters/01.md)、[05](../chapters/05.md)、[06](../chapters/06.md)、[07](../chapters/07.md)、[08](../chapters/08.md)、[09](../chapters/09.md)、[10](../chapters/10.md)、[11](../chapters/11.md)、[12](../chapters/12.md)、[13](../chapters/13.md)、[74](../chapters/74.md)、[79](../chapters/79.md)
+  引用章节：[01](../chapters/01.md)、[05](../chapters/05.md)、[06](../chapters/06.md)、[07](../chapters/07.md)、[08](../chapters/08.md)、[09](../chapters/09.md)、[10](../chapters/10.md)、[11](../chapters/11.md)、[12](../chapters/12.md)、[13](../chapters/13.md)、[74](../chapters/74.md)、[79](../chapters/79.md)、[102](../chapters/102.md)、[103](../chapters/103.md)
 
 <a id="source-2"></a>
 
@@ -104,7 +104,7 @@
 <a id="source-20"></a>
 
 - **S020** [AWS Builders Library — Timeouts, retries, and backoff with jitter](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/)
-  引用章节：[17](../chapters/17.md)、[18](../chapters/18.md)、[19](../chapters/19.md)
+  引用章节：[17](../chapters/17.md)、[18](../chapters/18.md)、[19](../chapters/19.md)、[106](../chapters/106.md)
 
 <a id="source-21"></a>
 
@@ -319,7 +319,7 @@
 <a id="source-63"></a>
 
 - **S063** [scikit-learn — 概率校准](https://scikit-learn.org/stable/modules/calibration.html)
-  引用章节：[37](../chapters/37.md)、[38](../chapters/38.md)
+  引用章节：[37](../chapters/37.md)、[38](../chapters/38.md)、[106](../chapters/106.md)
 
 <a id="source-64"></a>
 
@@ -879,7 +879,7 @@
 <a id="source-175"></a>
 
 - **S175** [PyTorch 2.14 — Scaled Dot Product Attention](https://docs.pytorch.org/docs/2.14/generated/torch.nn.functional.scaled_dot_product_attention.html)
-  引用章节：[52](../chapters/52.md)、[53](../chapters/53.md)
+  引用章节：[52](../chapters/52.md)、[53](../chapters/53.md)、[106](../chapters/106.md)
 
 <a id="source-176"></a>
 
@@ -890,3 +890,233 @@
 
 - **S177** [Cormack, Clarke, Buettcher — Reciprocal Rank Fusion](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf)
   引用章节：[59](../chapters/59.md)、[60](../chapters/60.md)
+
+<a id="source-178"></a>
+
+- **S178** [Princeton Algorithms — Union-Find](https://algs4.cs.princeton.edu/15uf/)
+  引用章节：[98](../chapters/98.md)、[105](../chapters/105.md)
+
+<a id="source-179"></a>
+
+- **S179** [MIT 6.006 — Shortest Paths](https://courses.csail.mit.edu/6.006/spring11/lectures/lec14.pdf)
+  引用章节：[99](../chapters/99.md)
+
+<a id="source-180"></a>
+
+- **S180** [MIT 6.006 — Bellman-Ford](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/5edb13fb34cbe7f4cdccc13d131772e7_MIT6_006F11_lec17.pdf)
+  引用章节：[99](../chapters/99.md)
+
+<a id="source-181"></a>
+
+- **S181** [CP-Algorithms — 0-1 BFS](https://cp-algorithms.com/graph/01_bfs.html)
+  引用章节：[99](../chapters/99.md)
+
+<a id="source-182"></a>
+
+- **S182** [CP-Algorithms — Fenwick Tree](https://cp-algorithms.com/data_structures/fenwick.html)
+  引用章节：[100](../chapters/100.md)
+
+<a id="source-183"></a>
+
+- **S183** [CP-Algorithms — Segment Tree](https://cp-algorithms.com/data_structures/segment_tree.html)
+  引用章节：[100](../chapters/100.md)
+
+<a id="source-184"></a>
+
+- **S184** [CP-Algorithms — Prefix Function and KMP](https://cp-algorithms.com/string/prefix-function.html)
+  引用章节：[101](../chapters/101.md)
+
+<a id="source-185"></a>
+
+- **S185** [CP-Algorithms — Aho-Corasick](https://cp-algorithms.com/string/aho_corasick.html)
+  引用章节：[101](../chapters/101.md)
+
+<a id="source-186"></a>
+
+- **S186** [CP-Algorithms — Longest Increasing Subsequence](https://cp-algorithms.com/dynamic_programming/longest_increasing_subsequence.html)
+  引用章节：[102](../chapters/102.md)
+
+<a id="source-187"></a>
+
+- **S187** [CP-Algorithms — Binary Search on the Answer](https://cp-algorithms.com/num_methods/binary_search.html)
+  引用章节：[103](../chapters/103.md)
+
+<a id="source-188"></a>
+
+- **S188** [Google Guava — BloomFilter](https://guava.dev/releases/33.4.8-jre/api/docs/com/google/common/hash/BloomFilter.html)
+  引用章节：[104](../chapters/104.md)
+
+<a id="source-189"></a>
+
+- **S189** [Vitter — Random Sampling with a Reservoir (1985)](https://www.cs.umd.edu/~samir/498/vitter.pdf)
+  引用章节：[104](../chapters/104.md)
+
+<a id="source-190"></a>
+
+- **S190** [MIT 6.006 — Data Structures and Dynamic Arrays](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/resources/mit6_006s20_lec2/)
+  引用章节：[105](../chapters/105.md)
+
+<a id="source-191"></a>
+
+- **S191** [Amazon Coding Sample：官方讲解文字稿](https://cdn.cms.amazon.jobs/46/56/87e44d2d4347a200acf9f50b023f/amazon-coding-sample-transcript.docx)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-192"></a>
+
+- **S192** [SDE Interview Coding Example：官方讲解文字稿](https://cdn.cms.amazon.jobs/df/32/16e9875b4410ae36f65d6a2ddaf0/sde-interview-coding-sample-transcript.docx)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-193"></a>
+
+- **S193** [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-194"></a>
+
+- **S194** [211. Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-195"></a>
+
+- **S195** [743. Network Delay Time](https://leetcode.com/problems/network-delay-time/)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-196"></a>
+
+- **S196** [23. Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-197"></a>
+
+- **S197** [435. Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-198"></a>
+
+- **S198** [684. Redundant Connection](https://leetcode.com/problems/redundant-connection/)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-199"></a>
+
+- **S199** [28. Find the Index of the First Occurrence in a String](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-200"></a>
+
+- **S200** [307. Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable/)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-201"></a>
+
+- **S201** [322. Coin Change](https://leetcode.com/problems/coin-change/)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-202"></a>
+
+- **S202** [1631. Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort/)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-203"></a>
+
+- **S203** [421. Maximum XOR of Two Numbers in an Array](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-204"></a>
+
+- **S204** [209. Minimum Size Subarray Sum](https://leetcode.com/problems/minimum-size-subarray-sum/)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-205"></a>
+
+- **S205** [862. Shortest Subarray with Sum at Least K](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-206"></a>
+
+- **S206** [297. Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-207"></a>
+
+- **S207** [315. Count of Smaller Numbers After Self](https://leetcode.com/problems/count-of-smaller-numbers-after-self/)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-208"></a>
+
+- **S208** [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-209"></a>
+
+- **S209** [Amazon System Design Preparation：官方讲解文字稿](https://cdn.cms.amazon.jobs/c5/ae/aa42c7554e87acfc8090595efd12/amazon-system-design-preparation-transcript.docx)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-210"></a>
+
+- **S210** [PostgreSQL 18：Transaction Isolation](https://www.postgresql.org/docs/18/transaction-iso.html)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-211"></a>
+
+- **S211** [PostgreSQL 18：Multicolumn Indexes](https://www.postgresql.org/docs/18/indexes-multicolumn.html)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-212"></a>
+
+- **S212** [PostgreSQL 18：Explicit Locking](https://www.postgresql.org/docs/18/explicit-locking.html#LOCKING-DEADLOCKS)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-213"></a>
+
+- **S213** [RFC 9110：Idempotent Methods](https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.2)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-214"></a>
+
+- **S214** [RFC 9111：Cache-Control](https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-215"></a>
+
+- **S215** [Python：Condition objects](https://docs.python.org/3/library/threading.html#condition-objects)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-216"></a>
+
+- **S216** [Redis：EXPIRE](https://redis.io/docs/latest/commands/expire/)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-217"></a>
+
+- **S217** [PyTorch 2.14：BCEWithLogitsLoss](https://docs.pytorch.org/docs/2.14/generated/torch.nn.BCEWithLogitsLoss.html)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-218"></a>
+
+- **S218** [PyTorch 2.14：CrossEntropyLoss](https://docs.pytorch.org/docs/2.14/generated/torch.nn.CrossEntropyLoss.html)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-219"></a>
+
+- **S219** [PyTorch 2.14：Gradient accumulation](https://docs.pytorch.org/docs/2.14/notes/amp_examples.html#gradient-accumulation)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-220"></a>
+
+- **S220** [PyTorch 2.14：Dropout](https://docs.pytorch.org/docs/2.14/generated/torch.nn.Dropout.html)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-221"></a>
+
+- **S221** [Transformers：How caching works](https://huggingface.co/docs/transformers/main/cache_explanation)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-222"></a>
+
+- **S222** [scikit-learn：Common pitfalls](https://scikit-learn.org/stable/common_pitfalls.html#data-leakage)
+  引用章节：[106](../chapters/106.md)
+
+<a id="source-223"></a>
+
+- **S223** [scikit-learn：f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html)
+  引用章节：[106](../chapters/106.md)

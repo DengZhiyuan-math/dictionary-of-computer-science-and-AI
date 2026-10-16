@@ -17,6 +17,10 @@ tags: ["chapter","area/llm"]
 
 - [[Examples/29 KV cache：复用的是哪些计算|案例 29 · KV cache：复用的是哪些计算]]
 
+## 面试准备题
+
+- [[Interviews/33 KV Cache：速度收益换来多少显存|面试 33 · KV Cache：速度收益换来多少显存]]
+
 <a id="chapter-58"></a>
 
 ## 第 58 讲｜推理加速算法：KV Cache、FlashAttention、量化、推测解码

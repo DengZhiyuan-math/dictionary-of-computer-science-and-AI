@@ -4,10 +4,10 @@ import {examples} from '../data/examples.mjs';
 import {demos,runDemo} from '../data/demo-engines.mjs';
 import {book,read} from './model.mjs';
 const close=(a,b)=>assert(Math.abs(a-b)<1e-9,`${a} != ${b}`);
-assert.equal(examples.length,30);assert.equal(demos.length,20);
-assert.equal(new Set(examples.map(x=>x.id)).size,30);
-assert.equal(new Set(demos.map(x=>x.id)).size,20);
-assert.equal(book.stats.worked_examples,30);assert.equal(book.stats.visual_demos,20);
+assert.equal(examples.length,50);assert.equal(demos.length,26);
+assert.equal(new Set(examples.map(x=>x.id)).size,50);
+assert.equal(new Set(demos.map(x=>x.id)).size,26);
+assert.equal(book.stats.worked_examples,50);assert.equal(book.stats.visual_demos,26);
 for(const x of examples){
  assert(x.steps.length>=3);assert(x.scenario&&x.result&&x.pitfall&&x.question&&x.answer);
  for(const num of x.chapters)assert(book.chapters[num-1]);
@@ -61,4 +61,4 @@ for(const h of [html,vault]){
  for(const d of demos)assert(h.includes(`id="${d.id}"`));
 }
 assert(!vault.includes('href:`../chapters/'));assert(read('src/player.html').includes("case'examples':"));
-console.log(`Examples passed: 30 worked cases, 20 offline demos, ${runs} scenario/parameter runs, independent enumeration and numerical invariants.`);
+console.log(`Examples passed: ${examples.length} worked cases, ${demos.length} offline demos, ${runs} scenario/parameter runs, independent enumeration and numerical invariants.`);

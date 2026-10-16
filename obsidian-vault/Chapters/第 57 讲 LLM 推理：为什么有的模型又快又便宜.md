@@ -8,6 +8,10 @@ tags: ["chapter","area/llm"]
 
 [[Areas/LLM 训练与推理|LLM 训练与推理]]
 
+## 面试准备题
+
+- [[Interviews/33 KV Cache：速度收益换来多少显存|面试 33 · KV Cache：速度收益换来多少显存]]
+
 <a id="chapter-57"></a>
 
 ## 第 57 讲｜LLM 推理：为什么有的模型又快又便宜

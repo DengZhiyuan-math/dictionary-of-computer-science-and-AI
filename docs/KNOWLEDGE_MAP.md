@@ -2,7 +2,7 @@
 
 # CS 与 AI 知识地图
 
-将 97 讲整理为 **14 个领域、131 个概念词条组、100 道练习与 4 条专题路线**。概念关系经过编辑组织，目录归属与推荐学习次序单独标注。
+将 106 讲整理为 **14 个领域、147 个概念词条组、100 道练习与 4 条专题路线**。概念关系经过编辑组织，目录归属与推荐学习次序单独标注。
 
 [交互知识图](knowledge-map.html) · [Obsidian 笔记库首页](../obsidian-vault/00-知识地图.md) · [下载整套资料](https://github.com/DengZhiyuan-math/dictionary-of-computer-science-and-AI/releases/latest)
 
@@ -39,7 +39,7 @@ flowchart TD
 | 领域 | 核心问题 | 阅读原文 |
 | --- | --- | --- |
 | [计算机系统与软件](#area-systems) | 程序如何在硬件与操作系统上运行？ | [02](../chapters/02.md)、[03](../chapters/03.md)、[04](../chapters/04.md) |
-| [数据结构与算法](#area-algorithms) | 怎样组织数据并减少计算与存储成本？ | [05](../chapters/05.md)、[06](../chapters/06.md)、[07](../chapters/07.md)、[08](../chapters/08.md)、[09](../chapters/09.md)、[10](../chapters/10.md)、[11](../chapters/11.md)、[12](../chapters/12.md)、[13](../chapters/13.md) |
+| [数据结构与算法](#area-algorithms) | 怎样组织数据并减少计算与存储成本？ | [05](../chapters/05.md)、[06](../chapters/06.md)、[07](../chapters/07.md)、[08](../chapters/08.md)、[09](../chapters/09.md)、[10](../chapters/10.md)、[11](../chapters/11.md)、[12](../chapters/12.md)、[13](../chapters/13.md)、[98](../chapters/98.md)、[99](../chapters/99.md)、[100](../chapters/100.md)、[101](../chapters/101.md)、[102](../chapters/102.md)、[103](../chapters/103.md)、[104](../chapters/104.md)、[105](../chapters/105.md) |
 | [数据库、网络与分布式](#area-infrastructure) | 怎样可靠地存储、传输和协同处理数据？ | [14](../chapters/14.md)、[15](../chapters/15.md)、[16](../chapters/16.md)、[17](../chapters/17.md)、[18](../chapters/18.md)、[19](../chapters/19.md)、[20](../chapters/20.md) |
 | [数据、任务与评估](#area-data-evaluation) | 输入和目标是什么，怎样判断模型对新数据有效？ | [21](../chapters/21.md)、[22](../chapters/22.md)、[23](../chapters/23.md)、[24](../chapters/24.md)、[37](../chapters/37.md)、[38](../chapters/38.md)、[39](../chapters/39.md) |
 | [机器学习与统计模型](#area-ml-methods) | 不同数据结构和目标适合哪些模型假设？ | [25](../chapters/25.md)、[26](../chapters/26.md)、[27](../chapters/27.md)、[28](../chapters/28.md)、[29](../chapters/29.md)、[30](../chapters/30.md)、[31](../chapters/31.md)、[32](../chapters/32.md)、[33](../chapters/33.md)、[34](../chapters/34.md)、[35](../chapters/35.md)、[36](../chapters/36.md) |
@@ -50,7 +50,7 @@ flowchart TD
 | [生成模型与多模态](#area-multimodal) | 怎样学习分布与跨模态表示，生成图像、声音或视频？ | [62](../chapters/62.md)、[63](../chapters/63.md)、[64](../chapters/64.md) |
 | [强化学习与模仿](#area-rl) | 怎样根据奖励、经验或示范学习长期决策？ | [65](../chapters/65.md)、[66](../chapters/66.md)、[67](../chapters/67.md)、[68](../chapters/68.md) |
 | [机器人、VLA 与世界模型](#area-embodied) | 怎样从观察与语言走向可反馈的行动与预测？ | [69](../chapters/69.md)、[70](../chapters/70.md)、[71](../chapters/71.md)、[72](../chapters/72.md)、[73](../chapters/73.md) |
-| [口述、复习与表达](#area-practice) | 能否用自己的话解释机制、举例并说出局限？ | [01](../chapters/01.md)、[74](../chapters/74.md)、[75](../chapters/75.md)、[76](../chapters/76.md)、[77](../chapters/77.md)、[78](../chapters/78.md)、[79](../chapters/79.md)、[80](../chapters/80.md) |
+| [口述、复习与表达](#area-practice) | 能否用自己的话解释机制、举例并说出局限？ | [01](../chapters/01.md)、[74](../chapters/74.md)、[75](../chapters/75.md)、[76](../chapters/76.md)、[77](../chapters/77.md)、[78](../chapters/78.md)、[79](../chapters/79.md)、[80](../chapters/80.md)、[106](../chapters/106.md) |
 | [Hot 100 算法实践](#area-hot100) | 怎样从题目约束推导状态、不变式和正确性？ | [81](../chapters/81.md)、[82](../chapters/82.md)、[83](../chapters/83.md)、[84](../chapters/84.md)、[85](../chapters/85.md)、[86](../chapters/86.md)、[87](../chapters/87.md)、[88](../chapters/88.md)、[89](../chapters/89.md)、[90](../chapters/90.md)、[91](../chapters/91.md)、[92](../chapters/92.md)、[93](../chapters/93.md)、[94](../chapters/94.md)、[95](../chapters/95.md)、[96](../chapters/96.md)、[97](../chapters/97.md) |
 
 ## 怎样读关系
@@ -75,7 +75,7 @@ flowchart TD
 
 从操作成本与不变式，走到状态设计和题目练习。
 
-[复杂度与资源成本](../chapters/07.md) → [数组、链表、树与图](../chapters/05.md) → [哈希表](../chapters/05.md) → [循环不变式](../chapters/82.md) → [双指针](../chapters/82.md) → [滑动窗口](../chapters/83.md) → [前缀和](../chapters/84.md) → [单调栈](../chapters/92.md) → [单调双端队列](../chapters/84.md) → [动态规划](../chapters/09.md) → [回溯／剪枝](../chapters/90.md) → [首次不小于／首次大于的边界](../chapters/91.md)
+[复杂度与资源成本](../chapters/07.md) → [数组、链表、树与图](../chapters/05.md) → [哈希表](../chapters/05.md) → [循环不变式](../chapters/82.md) → [双指针](../chapters/82.md) → [滑动窗口](../chapters/83.md) → [前缀和](../chapters/84.md) → [单调栈](../chapters/92.md) → [单调双端队列](../chapters/84.md) → [动态规划](../chapters/09.md) → [回溯／剪枝](../chapters/90.md) → [首次不小于／首次大于的边界](../chapters/91.md) → [并查集](../chapters/98.md) → [零一最短路](../chapters/99.md) → [树状数组](../chapters/100.md) → [线段树与懒标记](../chapters/100.md) → [KMP 与前缀函数](../chapters/101.md) → [多模式自动机](../chapters/101.md) → [最长递增子序列与结尾状态](../chapters/102.md) → [带权区间调度](../chapters/102.md) → [区间动态规划](../chapters/102.md) → [状态压缩动态规划](../chapters/102.md) → [二分答案与可行性](../chapters/103.md) → [蓄水池采样](../chapters/104.md) → [布隆过滤器](../chapters/104.md) → [摊还分析](../chapters/105.md)
 
 ### LLM 系统地图
 
@@ -129,6 +129,22 @@ GPU 的并行计算会影响张量计算、混合精度和训练吞吐。
 | 递归与子问题契约（Recursion） | 定义一个调用解决什么子问题、返回什么结果，以及何时终止，再组织子调用。 | [第 09 讲](../chapters/09.md)、[第 88 讲](../chapters/88.md)、[第 90 讲](../chapters/90.md) |
 | 数组、链表、树与图（Data Structures） | 根据主要操作选择信息的组织方式，理解访问、更新、顺序与连接关系的成本。 | [第 05 讲](../chapters/05.md)、[第 06 讲](../chapters/06.md)、[第 87 讲](../chapters/87.md) |
 | 图、路径与依赖（Graph Algorithms） | 把连接、可达、最短路与先后依赖转成节点、边及相应遍历或优化问题。 | [第 10 讲](../chapters/10.md)、[第 11 讲](../chapters/11.md)、[第 89 讲](../chapters/89.md) |
+| 并查集（Disjoint Set Union） | 用代表元维护互不重叠集合，支持连通判断与合并。 | [第 98 讲](../chapters/98.md) |
+| 零一最短路（0-1 BFS） | 用双端队列处理边权只有 0 与 1 的最短路。 | [第 99 讲](../chapters/99.md) |
+| Bellman-Ford 与负环（Bellman-Ford） | 重复松弛处理负边，并区分源点可达负环的影响。 | [第 99 讲](../chapters/99.md) |
+| 树状数组（Fenwick Tree） | 以二进制分块支持单点加与前缀求和。 | [第 100 讲](../chapters/100.md) |
+| 线段树与懒标记（Segment Tree） | 分层维护可合并的区间摘要，并按需传播区间更新。 | [第 100 讲](../chapters/100.md) |
+| 差分数组（Difference Array） | 用区间端点变化压缩批量区间加，最后以前缀累加还原。 | [第 100 讲](../chapters/100.md) |
+| KMP 与前缀函数（KMP Prefix Function） | 利用已匹配部分的真前后缀在失配后复用比较信息。 | [第 101 讲](../chapters/101.md) |
+| 多模式自动机（Aho-Corasick） | 在前缀树上使用失败链接与输出关系寻找多个模式。 | [第 101 讲](../chapters/101.md) |
+| 最长递增子序列与结尾状态（LIS Tails） | 保存每种长度的最小结尾，以二分更新最长严格递增长度。 | [第 102 讲](../chapters/102.md) |
+| 带权区间调度（Weighted Interval Scheduling） | 按结束时间组织任务，把选择接到兼容前驱的最优收益。 | [第 102 讲](../chapters/102.md) |
+| 区间动态规划（Interval DP） | 用连续区间定义子问题，枚举切分并按长度填表。 | [第 102 讲](../chapters/102.md) |
+| 状态压缩动态规划（Bitmask DP） | 把小规模集合编码进状态，显式保留访问集合与终点。 | [第 102 讲](../chapters/102.md) |
+| 二分答案与可行性（Binary Search on Answer） | 利用候选答案下的单调可行性查找最优边界。 | [第 103 讲](../chapters/103.md) |
+| 蓄水池采样（Reservoir Sampling） | 在未知长度的数据流中使用固定空间进行均匀采样。 | [第 104 讲](../chapters/104.md) |
+| 布隆过滤器（Bloom Filter） | 用位数组与多个哈希位置做允许假阳性的成员过滤。 | [第 104 讲](../chapters/104.md) |
+| 摊还分析（Amortized Analysis） | 通过一串操作的总代价说明每次操作的平均分摊成本。 | [第 105 讲](../chapters/105.md) |
 
 - **有解释的关联**：[复杂度与资源成本](../chapters/07.md) → [数组、链表、树与图](../chapters/05.md)：数据结构决定基本操作成本。
 - **推荐的理解先修**：[数组、链表、树与图](../chapters/05.md) → [哈希表](../chapters/05.md)：先理解按键组织与查询。
@@ -144,6 +160,20 @@ GPU 的并行计算会影响张量计算、混合精度和训练吞吐。
 - **用于或帮助实现**：[图、路径与依赖](../chapters/10.md) → [拓扑排序](../chapters/89.md)：有向依赖用入度组织推进。
 - **有解释的关联**：[哈希表](../chapters/05.md) → [数据库索引](../chapters/15.md)：都是加速查找，结构与查询语义不同。
 - **用于或帮助实现**：[哈希表](../chapters/05.md) → [缓存与复用](../chapters/18.md)：按键定位缓存条目。
+- **推荐的理解先修**：[图、路径与依赖](../chapters/10.md) → [并查集](../chapters/98.md)：先区分连通问题与路径长度。
+- **推荐的理解先修**：[图、路径与依赖](../chapters/10.md) → [零一最短路](../chapters/99.md)：边权集合决定队列规则。
+- **需要区分**：[非负权最短路算法](../chapters/10.md) → [Bellman-Ford 与负环](../chapters/99.md)：非负权的确认规则与允许负边的重复松弛不同。
+- **需要区分**：[广度／深度优先搜索](../chapters/10.md) → [零一最短路](../chapters/99.md)：等权首次发现规则不能直接搬到零一权图。
+- **需要区分**：[树状数组](../chapters/100.md) → [线段树与懒标记](../chapters/100.md)：前缀消去与一般区间摘要的适用运算不同。
+- **有解释的关联**：[KMP 与前缀函数](../chapters/101.md) → [多模式自动机](../chapters/101.md)：失配后复用后缀信息的思想跨越单模式与多模式。
+- **推荐的理解先修**：[动态规划](../chapters/09.md) → [最长递增子序列与结尾状态](../chapters/102.md)：先解释二次 DP，再解释更小结尾的支配关系。
+- **推荐的理解先修**：[动态规划](../chapters/09.md) → [带权区间调度](../chapters/102.md)：用兼容前驱组织带收益选择。
+- **推荐的理解先修**：[动态规划](../chapters/09.md) → [区间动态规划](../chapters/102.md)：从子问题契约定义区间与最后划分。
+- **推荐的理解先修**：[动态规划](../chapters/09.md) → [状态压缩动态规划](../chapters/102.md)：把访问集合加入状态含义。
+- **需要区分**：[贪心与安全选择](../chapters/07.md) → [带权区间调度](../chapters/102.md)：最多任务数与最大收益需要不同论证。
+- **推荐的理解先修**：[复杂度与资源成本](../chapters/07.md) → [摊还分析](../chapters/105.md)：先区分单次成本与一串操作总成本。
+- **用于或帮助实现**：[布隆过滤器](../chapters/104.md) → [缓存与复用](../chapters/18.md)：可在精确查询前过滤肯定未插入的键。
+- **有解释的关联**：[蓄水池采样](../chapters/104.md) → [复杂度与资源成本](../chapters/07.md)：固定空间采样以概率性质换取无需保存全流。
 
 <a id="area-infrastructure"></a>
 
@@ -488,6 +518,10 @@ PPO 可用于策略学习与某些偏好训练；世界模型可提供想象中�
 - **有解释的关联**：[前缀和](../chapters/84.md) → [树上的后序动态规划](../chapters/88.md)：树路径统计限制前缀为当前祖先链。
 - **需要区分**：[首次不小于／首次大于的边界](../chapters/91.md) → [快速选择／前 K 项](../chapters/93.md)：单调边界查找与排名分区不同。
 - **用于或帮助实现**：[堆与优先队列](../chapters/05.md) → [快速选择／前 K 项](../chapters/93.md)：以堆顶维护前 K 项的门槛。
+- **推荐的理解先修**：[前缀和](../chapters/84.md) → [树状数组](../chapters/100.md)：从前缀和扩展到可修改的分块。
+- **有解释的关联**：[前缀和](../chapters/84.md) → [差分数组](../chapters/100.md)：累加与相邻差分互相连接。
+- **推荐的理解先修**：[前缀树](../chapters/12.md) → [多模式自动机](../chapters/101.md)：多模式自动机在前缀树上加入失败与输出关系。
+- **推荐的理解先修**：[首次不小于／首次大于的边界](../chapters/91.md) → [二分答案与可行性](../chapters/103.md)：从有序元素边界推广到单调可行性边界。
 
 ## 笔记库结构与维护
 
@@ -501,4 +535,4 @@ PPO 可用于策略学习与某些偏好训练；世界模型可提供想象中�
 
 [完整案例集](EXAMPLES.md) · [离线交互演示](visual-demos.html)
 
-新增 30 个带手算、自测与反例的案例，其中 20 个配有交互演示。Obsidian 的 `Examples` 笔记连接概念和章节，`Demos` 保存完整离线演示。
+累计 50 个带手算、自测与反例的案例，其中 26 个配有交互演示。Obsidian 的 `Examples` 笔记连接概念和章节，`Demos` 保存完整离线演示。另有 [36 道来源面试准备题](INTERVIEW_QUESTIONS.md)、[来源核对](INTERVIEW_SOURCES.md) 和 [8 讲算法进阶](ADVANCED_ALGORITHMS.md)，`Interviews` 笔记逐题连接概念、章节及来源。

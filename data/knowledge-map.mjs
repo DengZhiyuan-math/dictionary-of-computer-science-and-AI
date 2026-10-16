@@ -1,4 +1,5 @@
-// Editorial structure and relationships. Chapter numbers refer to the stable 97-lesson corpus.
+// Editorial structure and relationships. Existing chapter numbers remain stable.
+import {advancedAlgorithms,advancedConcepts} from './advanced-algorithms.mjs';
 export const areas = [
   {id:'systems',name:'计算机系统与软件',layer:'计算基础',chapters:[2,3,4],question:'程序如何在硬件与操作系统上运行？',summary:'把 CPU、GPU、内存、进程、并发和软件接口接起来，理解计算资源与抽象边界。',next:['algorithms','infrastructure'],bridges:'GPU 的并行计算会影响张量计算、混合精度和训练吞吐。'},
   {id:'algorithms',name:'数据结构与算法',layer:'计算基础',chapters:[5,6,7,8,9,10,11,12,13],question:'怎样组织数据并减少计算与存储成本？',summary:'从数据结构、复杂度与算法设计思想，走到树、图、字符串、搜索和优化。',next:['hot100','ml-methods'],bridges:'树与哈希既是刷题结构，也进入数据库索引、缓存和近邻检索。'},
@@ -156,3 +157,27 @@ export const routes = [
   {id:'llm',name:'LLM 系统地图',summary:'区分模型内部训练推理、外部检索与工具执行。',steps:['tensor-shape-axis','token-embedding','attention-transformer','cross-entropy-nll','sft-lora-qlora','dpo-grpo','kv-cache-flashattention','bm25-hnsw','rag','agent','mlops']},
   {id:'embodied',name:'行动与世界模型地图',summary:'把表征、示范、奖励、控制和预测放在同一行动链里比较。',steps:['multimodal-representation','imitation-learning','bellman','policy-gradient','ppo-sac-td3','motion-planning','pid-mpc','vla','world-model','dreamer-muzero']}
 ];
+areas.find(a=>a.id==='algorithms').chapters.push(...advancedAlgorithms.map(c=>c.chapter));
+areas.find(a=>a.id==='practice').chapters.push(106);
+extraConcepts.push(...advancedConcepts);
+routes.find(r=>r.id==='algorithms').steps.push('disjoint-set-union','zero-one-bfs','fenwick-tree','segment-tree','kmp-prefix-function','aho-corasick','lis-tails','weighted-interval-dp','interval-dp','bitmask-dp','binary-search-answer','reservoir-sampling','bloom-filter','amortized-analysis');
+relations.push(
+ ['graph-algorithms','disjoint-set-union','prerequisite','先区分连通问题与路径长度'],
+ ['graph-algorithms','zero-one-bfs','prerequisite','边权集合决定队列规则'],
+ ['dijkstra','bellman-ford','contrast','非负权的确认规则与允许负边的重复松弛不同'],
+ ['bfs-dfs','zero-one-bfs','contrast','等权首次发现规则不能直接搬到零一权图'],
+ ['prefix-sum','fenwick-tree','prerequisite','从前缀和扩展到可修改的分块'],
+ ['prefix-sum','difference-array','related','累加与相邻差分互相连接'],
+ ['fenwick-tree','segment-tree','contrast','前缀消去与一般区间摘要的适用运算不同'],
+ ['trie','aho-corasick','prerequisite','多模式自动机在前缀树上加入失败与输出关系'],
+ ['kmp-prefix-function','aho-corasick','related','失配后复用后缀信息的思想跨越单模式与多模式'],
+ ['dynamic-programming','lis-tails','prerequisite','先解释二次 DP，再解释更小结尾的支配关系'],
+ ['dynamic-programming','weighted-interval-dp','prerequisite','用兼容前驱组织带收益选择'],
+ ['dynamic-programming','interval-dp','prerequisite','从子问题契约定义区间与最后划分'],
+ ['dynamic-programming','bitmask-dp','prerequisite','把访问集合加入状态含义'],
+ ['lower-bound-upper-bound','binary-search-answer','prerequisite','从有序元素边界推广到单调可行性边界'],
+ ['greedy','weighted-interval-dp','contrast','最多任务数与最大收益需要不同论证'],
+ ['complexity','amortized-analysis','prerequisite','先区分单次成本与一串操作总成本'],
+ ['bloom-filter','cache','supports','可在精确查询前过滤肯定未插入的键'],
+ ['reservoir-sampling','complexity','related','固定空间采样以概率性质换取无需保存全流']
+);

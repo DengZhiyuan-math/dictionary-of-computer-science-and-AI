@@ -11,14 +11,14 @@ export function exampleMarkdown(x,prefix=''){
 export function buildExamples(emit){
  const data=JSON.stringify(examples).replace(/</g,'\\u003c');
  const engine=read('data/demo-engines.mjs').replace(/^export /gm,'');
- let html=read('src/demos.html').replace('__EXAMPLE_DATA__',()=>data).replace('__DEMO_ENGINES__',()=>engine).replace('__DEMO_ANCHORS__',()=>demos.map(d=>`<span id="${d.id}" class="anchor"></span>`).join(''));
+ let html=read('src/demos.html').replaceAll('__EXAMPLE_COUNT__',String(examples.length)).replaceAll('__DEMO_COUNT__',String(demos.length)).replace('__EXAMPLE_DATA__',()=>data).replace('__DEMO_ENGINES__',()=>engine).replace('__DEMO_ANCHORS__',()=>demos.map(d=>`<span id="${d.id}" class="anchor"></span>`).join(''));
  emit('docs/visual-demos.html',html);
  // A vault-only download must also work offline. Resolve navigation outside the vault to GitHub.
  const base='https://github.com/DengZhiyuan-math/dictionary-of-computer-science-and-AI/blob/main/';
  html=html.replaceAll('href="EXAMPLES.md"',`href="${base}docs/EXAMPLES.md"`).replaceAll('href="KNOWLEDGE_MAP.md"','href="../00-知识地图.md"').replaceAll('href="../cs_ai_v2_audiobook.html"',`href="${base}cs_ai_v2_audiobook.html"`).replace('href:`../chapters/${String(num).padStart(2,\'0\')}.md`',`href:\`${base}chapters/\${String(num).padStart(2,'0')}.md\``).replaceAll('EXAMPLES.md#example-',base+'docs/EXAMPLES.md#example-');
  emit('obsidian-vault/Demos/交互演示.html',html);
  let doc='<!-- Generated from data/examples.mjs. -->\n\n# 例子与可视化演示\n\n'+
- '30 个完整案例，其中 20 个配套交互演示。按“场景 → 手算 → 结果 → 易错点 → 改变条件”阅读；计算采用刻意缩小的输入，便于核对每一步。\n\n'+
+ `${examples.length} 个完整案例，其中 ${demos.length} 个配套交互演示。按“场景 → 手算 → 结果 → 易错点 → 改变条件”阅读；计算采用刻意缩小的输入，便于核对每一步。\n\n`+
  '[打开演示文件](visual-demos.html)（下载后在浏览器打开，无外部依赖） · [知识地图](KNOWLEDGE_MAP.md) · [完整索引](../cs_ai_v2_index.md)\n\n'+
  '算法演示可以逐步查看状态；数值演示可调整概率、学习率、阈值、温度或扰动。手算过程同步进入对应章节、TXT、听书播放器和 Obsidian。原 97 讲编号稳定。\n\n'+
  '| 案例 | 阅读 | 交互 |\n| --- | --- | --- |\n'+examples.map(x=>`| ${String(x.number).padStart(2,'0')} | [${x.title}](#example-${x.id}) | ${x.demo?`[演示](visual-demos.html#${x.demo})`:'手算与自测'} |`).join('\n')+'\n\n';

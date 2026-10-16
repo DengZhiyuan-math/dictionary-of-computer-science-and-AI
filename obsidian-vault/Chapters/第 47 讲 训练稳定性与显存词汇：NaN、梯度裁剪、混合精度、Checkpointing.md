@@ -20,6 +20,10 @@ tags: ["chapter","area/training"]
 
 - [[Examples/25 两种 checkpoint：恢复状态与重算激活|案例 25 · 两种 checkpoint：恢复状态与重算激活]]
 
+## 面试准备题
+
+- [[Interviews/30 梯度累积：不等长微批怎样加权|面试 30 · 梯度累积：不等长微批怎样加权]]
+
 <a id="chapter-47"></a>
 
 ## 第 47 讲｜训练稳定性与显存词汇：NaN、梯度裁剪、混合精度、Checkpointing
