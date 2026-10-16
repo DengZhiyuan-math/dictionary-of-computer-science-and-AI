@@ -1,0 +1,17 @@
+第 40 讲。深度学习基础：神经网络怎样训练。
+
+Deep Learning，深度学习，是通过多层可学习的变换，从数据中提取复杂表征。Neural Network，神经网络，由许多带参数的运算单元组织成层。Input Layer 接收输入，Hidden Layers 处理信息，Output Layer 产生预测。MLP，Multi Layer Perceptron，多层感知机，是最基本的前馈神经网络形式。
+
+Activation Function，激活函数，为网络加入非线性。ReLU、GELU 和 Sigmoid 是常见名称。没有足够的非线性，许多层简单线性运算仍然只能表达相对有限的关系。Forward Pass，前向传播，从输入计算预测。Loss Function，损失函数，衡量预测与训练目标之间的差距。
+
+Backpropagation，反向传播，是利用链式法则高效计算各层参数对损失影响的方法。Gradient Descent，梯度下降，根据梯度调整参数以降低损失。SGD，随机梯度下降，通常使用小批量样本估计梯度。Adam 是常见优化器，它结合了梯度的历史统计量，自适应调整更新。Learning Rate，学习率，控制每次更新的幅度，过大可能不稳定，过小可能训练太慢。
+
+Epoch，轮次，通常表示模型遍历一遍训练数据。Batch Size，批量大小，指每次更新或计算使用的样本数。Gradient Accumulation，梯度累积，在不一次放入大量样本的情况下，累计多个小批次的梯度。Gradient Clipping，梯度裁剪，限制过大的梯度，降低不稳定风险。
+
+Normalization，归一化，常用于改善训练稳定性。Batch Normalization 使用批次相关统计量；Layer Normalization 主要在单个样本的特征维度上归一化，是 Transformer 中的常见组件。Residual Connection，残差连接，让信息绕过某些变换直接与后续结果相结合，有助于训练深层网络。Dropout，在训练时随机抑制部分单元或连接，是常见的正则化方法。
+
+Embedding，嵌入表示，指把符号或对象转换为连续向量，让模型在向量空间里处理它们。Representation Learning，表征学习，是让模型自己学到对任务有帮助的内部表示。Transfer Learning，迁移学习，是把一个任务或数据集学到的知识应用到另一个任务；Fine Tuning，微调，是在已有模型基础上继续训练。
+
+GPU 训练经常还涉及 CUDA，英伟达的 GPU 计算平台；Tensor，张量，可以把它理解为多维数组；Mixed Precision，混合精度，使用不同的数值精度兼顾计算效率与稳定性。Distributed Training，分布式训练，在多台设备之间分摊工作。Data Parallelism，数据并行，让不同设备处理不同数据；Model Parallelism，模型并行，把模型拆到不同设备上。
+
+深度学习最大的吸引力是表达能力和自动特征学习，但成本是更强的数据、算力和工程要求。真正理解这一讲，不是会写反向传播公式，而是清楚模型如何用损失反馈来逐步调整内部参数。

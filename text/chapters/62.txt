@@ -1,0 +1,15 @@
+第 62 讲。生成式 AI、多模态、语音与视频模型。
+
+Generative AI，生成式人工智能，不只有 LLM。生成模型还可以生成图像、语音、音乐、视频、三维结构甚至机器人动作。Generative Model，生成模型，试图学习数据分布并产生新的样本。
+
+Autoencoder，自编码器，把输入压缩到内部表示，再尝试还原。VAE，Variational Autoencoder，变分自编码器，在潜在表示中引入概率建模，使生成新样本成为可能。GAN，Generative Adversarial Network，生成对抗网络，让生成器与判别器对抗训练，曾是高质量图像生成的重要路线。
+
+Diffusion Model，扩散模型，是当前生成建模中广泛使用的一类方法。直观想象是先把数据逐渐加上噪声，再训练模型学习如何从噪声中恢复结构；生成时从随机噪声出发逐步构造样本。Latent Diffusion，在较小的潜在表示空间中执行扩散过程，从而节省计算。Stable Diffusion 相关模型曾广泛采用这一路线。
+
+Flow Matching，流匹配，是另一类重要生成建模方法。直观上，它学习怎样把一种简单分布中的样本沿连续变化路径转换为目标数据分布中的样本。它与扩散技术有深刻联系，但训练目标和生成方式可以不同。Rectified Flow 是相关技术路线之一。现代图像、视频与机器人动作生成系统中都能看到这些思想。
+
+Multimodal Model，多模态模型，结合不同信息类型。VLM，Vision Language Model，视觉语言模型，可以输入图片和文字，回答画面问题或根据图片执行文字任务。ASR，Automatic Speech Recognition，自动语音识别，是把语音转换成文字。TTS，Text To Speech，文本转语音，是把文字生成声音。Speech To Speech，语音到语音模型，可以直接在语音形式上完成某些任务。
+
+Text To Image，文生图；Text To Video，文生视频；Image To Video，图生视频，描述输入和输出的模态关系。Image Encoder，图像编码器，提取视觉特征。Audio Token 和 Video Token 是把音视频转换成模型可处理单元的常见方式之一。Cross Attention，交叉注意力，让一组表示根据另一组表示的信息做选择，是多模态模型中常见的信息融合机制。
+
+生成一个看起来真实的视频，不自动意味着模型掌握真实世界的物理规律。生成质量、时间一致性、动作可控制性、因果预测准确性，是不同维度。这一点将直接通向后面世界模型的概念。

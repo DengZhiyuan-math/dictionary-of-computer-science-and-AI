@@ -1,0 +1,28 @@
+{
+  "chapters": 80,
+  "new_chapters": 52,
+  "new_subsections": 349,
+  "quiz_questions": 90,
+  "training_chapters": 10,
+  "body_characters_including_whitespace": 111376,
+  "body_characters_no_whitespace": 105906,
+  "chinese_characters": 73009,
+  "sources": 168,
+  "glossary_entries": 85,
+  "groups": {
+    "计算机系统与软件": 3,
+    "计算机系统补充": 2,
+    "算法与数据结构": 8,
+    "数据库、网络与工程": 3,
+    "数据库与分布式算法": 4,
+    "机器学习导览": 4,
+    "训练微知识点": 9,
+    "机器学习算法": 13,
+    "深度学习导览": 3,
+    "深度学习与生成模型": 5,
+    "LLM 与智能体": 10,
+    "强化学习与具身智能": 9,
+    "口述练习": 5,
+    "复习与表达": 2
+  }
+}

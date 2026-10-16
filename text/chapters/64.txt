@@ -1,0 +1,29 @@
+第 64 讲。多模态与表征：Word2Vec、CLIP、DINO、语音、视频、三维。
+
+Word2Vec、GloVe、FastText、Contextual Embedding
+
+Word2Vec 从词与上下文共现学习向量，GloVe 利用全局共现统计，FastText 加入子词信息，帮助处理词形和未见词。它们的典型词表示相对固定。上下文表示则让同一个词在不同句子中得到不同向量，如“苹果”是水果还是公司。向量靠近表示模型学到的某种相关性，不等于两个词完全同义。
+
+Contrastive Learning、SimCLR、CLIP
+
+SimCLR 将同一图像的不同增强视图视为正配对，学习稳定视觉表示。CLIP 把匹配的图像与文本拉近，并与其他配对区分，得到跨模态空间。它可以用文本类别描述做零样本分类或图文检索，但不是天生会生成长篇回答的聊天模型。训练图文对的质量、负样本以及增强设计都会影响学到的关联。
+
+BYOL、DINO、Masked Autoencoder
+
+BYOL、DINO 等自蒸馏路线让一个分支学习匹配另一个教师分支的表示，配合教师更新和防坍塌设计。它们不是所有情况下都依赖显式负样本。Masked autoencoder 遮掉大部分输入再学习恢复，强调补全结构。学到可用表示不意味着已经会按照语言指令行动；下游接口仍需另外训练。
+
+VLM、Projector、Cross-Attention
+
+视觉语言模型把视觉编码器与语言能力连接起来。Projector 把视觉特征转成语言模型可接收的表示，cross-attention 是另一类信息交互方式。图像分辨率、视觉 token 数和裁剪策略影响小字与细节理解。OCR 是文字识别任务，视觉理解还包括位置、关系和场景，二者不能互相替代。
+
+ASR、CTC、Transducer、Vocoder
+
+ASR 将声音转为文字，可以使用 CTC、encoder-decoder 或 transducer 等路线。Transducer 常用于流式、输入输出长度不同的识别。TTS 将文字转为声音，vocoder 把声学表示还原为波形。Mel spectrogram 是常见时频表示，codec token 则把声音压成离散单元。WER 统计文字识别错误，不能独自评价语气、音色和自然度。
+
+Video Token、Temporal Consistency、Optical Flow
+
+视频不仅多了图片数量，还需要处理时间变化。时间一致性关心同一对象能否持续保持身份、外观与合理运动。光流估计画面中局部视觉运动，可辅助跟踪与视频分析，但摄像机移动和遮挡会影响理解。生成视频看起来连贯，也可能违背真实接触、重力或动作因果，应该区分视觉质量与物理预测。
+
+Point Cloud、NeRF、Gaussian Splatting
+
+点云用三维点及附加属性表示场景。NeRF 通过学习空间与视角相关的辐射场渲染新视角。三维高斯泼溅用一组可优化的空间高斯基元高效表示与渲染场景。它们解决三维表示和视角合成，不等于已经掌握物体怎样受力运动。静态重建模型、可交互世界模型和机器人控制模型是三个不同层次。
