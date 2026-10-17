@@ -1,0 +1,211 @@
+[
+  {
+    "id": "dropbox-streaming-content-hash",
+    "title": "Streaming Content Hash: Keep File Blocks Independent of Read Chunks",
+    "company": "Dropbox",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Dropbox API: Content Hash",
+    "url": "https://docs.dropboxapi.com/dropbox-api/docs/technical-reference/content-hash",
+    "additionalSources": [
+      {
+        "title": "Dropbox's reference content hasher at a pinned commit",
+        "url": "https://github.com/dropbox/dropbox-api-content-hasher/blob/618ff9ea7f58185ac7c0c321ce2a5c3ac41271a1/python/dropbox_content_hasher.py"
+      }
+    ],
+    "sourceNote": "Original preparation exercise using Dropbox's published content_hash algorithm and reference streaming implementation. The compact fixtures and interview framing are local; Dropbox does not identify this as a hiring question.",
+    "prompt": "Compute Dropbox's content_hash from an arbitrarily chunked byte stream. File blocks have exactly B=4,194,304 bytes except for a possible final partial block. Hash each nonempty block with SHA-256, feed its raw 32-byte digest into a second SHA-256 instance, and return the outer digest as lowercase hexadecimal. An empty file contributes no block digests. For compact examples, each input.chunks item {hex,repeat} represents one read chunk formed by repeating the decoded even-length hex string repeat times; repeat is a nonnegative integer. Implement streaming processing without retaining the whole file or every block digest.",
+    "approach": [
+      "Maintain an inner SHA-256 state for the current file block, an outer SHA-256 state, and a byte count within the block. Split incoming read chunks at file-block boundaries, regardless of where the reads end.",
+      "Whenever the inner count reaches B, feed that block's binary digest to the outer state and reset the inner state and count. At end of input, feed one additional inner digest only if the count is positive.",
+      "The outer state has received exactly the digest sequence for completed file blocks; the inner state represents exactly the unfinished suffix. This invariant makes the result independent of transport chunk sizes. Finalize the outer state and hex-encode only that result."
+    ],
+    "complexity": "O(N+K) time for N expanded input bytes and K read chunks. Auxiliary hashing state is O(1), excluding the current supplied chunk and standard-library internals; neither a B-byte block buffer nor a list of block digests is required.",
+    "pitfalls": [
+      "A read chunk is not a file block. Hashing each read separately changes the result.",
+      "Concatenate binary digests, not their 64-character hexadecimal representations. Even a one-block file is hashed twice.",
+      "Do not append a hash of an empty block for an empty file or after an exact multiple of B bytes. This content checksum does not authenticate who supplied the file."
+    ],
+    "followUp": "If block hashes are computed in parallel, how would you preserve their file order while bounding the number of completed hashes waiting for earlier blocks?",
+    "answer": "For the three bytes abc, the result is SHA256(the 32-byte SHA256 digest of abc), yielding 4f8b42c22dd3729b519ba6f68d2da7cc5b2d606d05daed5ad5128cc03e6c6358. For an empty file, the outer state hashes an empty byte sequence directly.",
+    "topics": ["cryptographic-hash", "loop-invariant", "complexity"],
+    "chapters": [12, 13, 105],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {"chunks": []},
+        "output": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "explanation": "No block digest is emitted. The answer is SHA-256 of the empty byte sequence."
+      },
+      {
+        "input": {"chunks": [{"hex": "616263", "repeat": 1}]},
+        "output": "4f8b42c22dd3729b519ba6f68d2da7cc5b2d606d05daed5ad5128cc03e6c6358",
+        "explanation": "One partial block contains the ASCII bytes abc. Its binary digest is the input to the outer hash."
+      },
+      {
+        "input": {"chunks": [{"hex": "61", "repeat": 1}, {"hex": "6263", "repeat": 1}]},
+        "output": "4f8b42c22dd3729b519ba6f68d2da7cc5b2d606d05daed5ad5128cc03e6c6358",
+        "explanation": "The same abc bytes arrive in two reads. Read boundaries do not affect the content hash."
+      },
+      {
+        "input": {"chunks": [{"hex": "61", "repeat": 4194304}]},
+        "output": "907a506cf5e706bda5c7a29b43c9c65d8344bd2fa2f22339b359c214812af5a1",
+        "explanation": "Exactly one full block of ASCII a bytes contributes one inner digest, with no trailing empty block."
+      },
+      {
+        "input": {"chunks": [{"hex": "61", "repeat": 4194303}, {"hex": "6162", "repeat": 1}]},
+        "output": "565546ad93383e225e7cf808fb4d527a54dec54826a5c34a24c1f19a03c62583",
+        "explanation": "The second read crosses a file-block boundary: its a completes the first block and its b forms the final one-byte block."
+      }
+    ]
+  },
+  {
+    "id": "dropbox-cursor-file-replay",
+    "title": "Incremental File Sync: Replay Ordered Entries and Commit the Cursor",
+    "company": "Dropbox",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Dropbox API: List Folder replay rules",
+    "url": "https://docs.dropboxapi.com/dropbox-api/api-reference/user-endpoints/files/list-folder",
+    "additionalSources": [
+      {
+        "title": "Dropbox API: Detecting Changes and folder cursors",
+        "url": "https://docs.dropboxapi.com/dropbox-api/docs/detecting-changes"
+      }
+    ],
+    "sourceNote": "Original preparation exercise based on the ordered recursive-list replay rules and folder cursors. The file-only cache, compact events, atomic local checkpoint, and injected crash are teaching assumptions; this is not a published Dropbox hiring question or a complete sync client.",
+    "prompt": "Maintain a file-only cache mapping canonical lowercase ASCII paths to opaque revision strings. Paths start with / and contain nonempty slash-separated components, with no trailing slash, dot components, or root entry. Initial files form a valid tree. Each supplied page contains an opaque output cursor, ordered entries, and commit. A file entry ['file',path,rev] removes any cached file at that path and below it, then stores rev. A folder entry ['folder',path] removes a file at that exact path while preserving descendants. A delete entry ['delete',path] removes the exact path and all descendants, or does nothing if absent. Assume every upsert has folder-valued parents; folder topology is otherwise omitted. Apply pages and entries in order. Atomically publish each page's cache changes and cursor when commit=true, including empty pages. If commit=false, simulate a crash just before that publication: discard that page and stop processing. Return the last committed {cursor,files}.",
+    "approach": [
+      "Keep the committed cache and cursor together. For a simple in-memory reference, copy the file map at the start of each page and apply entries to that working map.",
+      "For file and delete entries, scan keys and remove q when q equals path or starts with path followed by /. For a folder entry, remove only the exact cached file; its child files stay. Process later entries against the updated working map.",
+      "If the page commits, replace the committed pair with its working map and output cursor. Otherwise return the previous pair. A real local database can perform both writes in one transaction; publishing a cursor before its changes can permanently skip those changes after restart.",
+      "The invariant after each commit is that the cached files equal the ordered replay through that cursor. Cursors are opaque tokens, and an empty change page can still supply a newer token."
+    ],
+    "complexity": "For the map-scan reference, expected O(E F L + P F) time and O(F) auxiliary map space, where E is the number of processed entries, P the number of processed pages, F=max(1, peak cached file count), and L is the maximum path length, at least one. The bound includes string prefix tests and per-page map copies, assuming constant-cost revision references and expected constant-time map operations.",
+    "pitfalls": [
+      "A raw prefix /a also matches /ab. Only equality or the prefix /a/ identifies descendants of /a.",
+      "A folder metadata update preserves children; replacing a folder with a file removes them. Reordering entries can therefore change the result.",
+      "This model covers atomic local metadata updates. External downloads, cursor reset errors, sharing metadata, and concurrent workers need separate recovery rules."
+    ],
+    "followUp": "How would a path-component trie reduce subtree-deletion work, and how could a database transaction or persistent trie publish the new cache and cursor together?",
+    "answer": "Deleting /a removes /a/x but leaves /ab/y. If a later page crashes before its atomic checkpoint, neither that page's file edits nor its output cursor becomes visible; restarting uses the previous cursor.",
+    "topics": ["hash-table", "trie", "transaction-acid", "idempotency", "loop-invariant"],
+    "chapters": [6, 14, 16, 89],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {
+          "initialCursor": "c0",
+          "initialFiles": {"/a/x": "r1", "/ab/y": "r2"},
+          "pages": [{"cursor": "c1", "entries": [["delete", "/a"], ["delete", "/missing"]], "commit": true}]
+        },
+        "output": {"cursor": "c1", "files": {"/ab/y": "r2"}},
+        "explanation": "Deletion respects component boundaries, and deleting a missing path is harmless."
+      },
+      {
+        "input": {
+          "initialCursor": "c0",
+          "initialFiles": {"/docs/a": "r1", "/docs2": "r2"},
+          "pages": [{"cursor": "c1", "entries": [["file", "/docs", "r3"], ["folder", "/docs"], ["file", "/docs/new", "r4"]], "commit": true}]
+        },
+        "output": {"cursor": "c1", "files": {"/docs2": "r2", "/docs/new": "r4"}},
+        "explanation": "The file replacement removes /docs/a. The following folder entry removes the file /docs, then a new child can be stored."
+      },
+      {
+        "input": {
+          "initialCursor": "c0",
+          "initialFiles": {"/old": "r0"},
+          "pages": [
+            {"cursor": "c1", "entries": [["file", "/a", "r1"]], "commit": true},
+            {"cursor": "c2", "entries": [["delete", "/old"], ["file", "/b", "r2"]], "commit": false},
+            {"cursor": "c3", "entries": [["delete", "/a"]], "commit": true}
+          ]
+        },
+        "output": {"cursor": "c1", "files": {"/old": "r0", "/a": "r1"}},
+        "explanation": "The second page is rolled back, and processing stops before the third page."
+      },
+      {
+        "input": {
+          "initialCursor": "c0",
+          "initialFiles": {"/d/a": "r1"},
+          "pages": [
+            {"cursor": "c1", "entries": [["folder", "/d"]], "commit": true},
+            {"cursor": "c2", "entries": [], "commit": true}
+          ]
+        },
+        "output": {"cursor": "c2", "files": {"/d/a": "r1"}},
+        "explanation": "A folder update retains its child. The empty committed page still advances the opaque cursor."
+      },
+      {
+        "input": {
+          "initialCursor": "c0",
+          "initialFiles": {"/a/old": "r0"},
+          "pages": [
+            {"cursor": "c1", "entries": [["delete", "/a"], ["file", "/a/new", "r1"]], "commit": true},
+            {"cursor": "c1", "entries": [["delete", "/a"], ["file", "/a/new", "r1"]], "commit": true}
+          ]
+        },
+        "output": {"cursor": "c1", "files": {"/a/new": "r1"}},
+        "explanation": "Replaying this complete replacement page has the same final effect. The cursor is treated as an opaque token, not a numeric sequence."
+      }
+    ]
+  },
+  {
+    "id": "dropbox-pattern-segmentation",
+    "title": "Pattern Segmentation: Minimize the Cost of Non-overlapping Matches",
+    "company": "Dropbox",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Dropbox Tech: zxcvbn minimum-entropy search, 2012",
+    "url": "https://dropbox.tech/security/zxcvbn-realistic-password-strength-estimation",
+    "additionalSources": [
+      {
+        "title": "Dropbox zxcvbn's later sequence scoring at a pinned commit",
+        "url": "https://github.com/dropbox/zxcvbn/blob/67c4ece9efc40c9d0a1d7d995b2b22a91be500c2/src/scoring.coffee"
+      }
+    ],
+    "sourceNote": "Original algorithm exercise inspired by the 2012 zxcvbn post's minimum-cost pattern search. All integer costs and examples are artificial. Current zxcvbn uses a richer guesses model; this additive exercise is neither a current strength estimator nor a Dropbox hiring-question claim.",
+    "prompt": "A synthetic ASCII string has length n. Candidate matches are supplied as half-open intervals [start,end) with an artificial nonnegative integer cost, where 0 <= start < end <= n. Each uncovered character costs fallbackCost, also a nonnegative integer. Select any pairwise non-overlapping matches and pay fallbackCost for every uncovered position. Return the minimum total cost. Matches may overlap or share endpoints, and duplicate matches are allowed. Pattern discovery and password-security estimation are outside this exercise; only the supplied intervals and costs matter.",
+    "approach": [
+      "Bucket the m candidate intervals by their end position. Define dp[j] as the minimum cost to cover the first j characters; initialize dp[0]=0.",
+      "For j from 1 through n, first set dp[j]=dp[j-1]+fallbackCost. For every interval [i,j) ending at j, also consider dp[i]+cost. Store the minimum of those candidates.",
+      "Every valid coverage ends either with one fallback character or with a chosen interval ending at j. Its preceding coverage ends at j-1 or i respectively, so those cases are exhaustive and never overlap the final piece. Equivalently, compute a shortest path through a DAG of prefix positions and forward interval edges. Return dp[n]; n=0 returns zero.",
+      "If an actual partition is required, save a predecessor for each chosen transition and backtrack from n. The numeric optimum alone needs no tie-breaking policy."
+    ],
+    "complexity": "O(n+m) time and O(n+m) auxiliary space for end buckets and prefix costs, assuming the supplied integer costs and their sums fit the chosen exact integer representation. Pattern enumeration is not included.",
+    "pitfalls": [
+      "Choosing the cheapest match first can block a better pair of non-overlapping matches. The objective is the cost of the complete coverage.",
+      "Half-open intervals can meet at an endpoint without overlapping. A match [i,j) combines with dp[i], not dp[i-1].",
+      "Scanning all m intervals at each position takes O(nm); bucketing each interval once gives O(n+m). The artificial cost has no calibrated interpretation as entropy or attack time."
+    ],
+    "followUp": "How would the state change if the score also included a penalty depending on the total number of selected pieces, so that each interval could no longer be scored independently?",
+    "answer": "For length six and fallbackCost=5, [0,4) at cost 1 looks attractive but leaves two fallback characters, totaling 11. Choosing [0,3) and [3,6) at cost 3 each instead costs 6. Prefix dynamic programming compares both complete coverages.",
+    "topics": ["dynamic-programming", "weighted-interval-dp", "graph-algorithms", "loop-invariant"],
+    "chapters": [9, 10, 95, 102],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {"length": 6, "fallbackCost": 5, "matches": [{"start": 0, "end": 4, "cost": 1}, {"start": 0, "end": 3, "cost": 3}, {"start": 3, "end": 6, "cost": 3}]},
+        "output": 6,
+        "explanation": "The two adjacent three-character matches beat the individually cheapest match plus two fallback characters."
+      },
+      {
+        "input": {"length": 5, "fallbackCost": 4, "matches": [{"start": 1, "end": 4, "cost": 2}, {"start": 0, "end": 3, "cost": 8}]},
+        "output": 10,
+        "explanation": "Pay four for each uncovered endpoint and two for the middle match: 4+2+4=10."
+      },
+      {
+        "input": {"length": 4, "fallbackCost": 3, "matches": [{"start": 0, "end": 2, "cost": 0}, {"start": 2, "end": 4, "cost": 0}, {"start": 0, "end": 4, "cost": 1}]},
+        "output": 0,
+        "explanation": "Two zero-cost intervals share an endpoint and cover all positions without overlapping."
+      },
+      {
+        "input": {"length": 3, "fallbackCost": 2, "matches": [{"start": 0, "end": 3, "cost": 99}, {"start": 0, "end": 3, "cost": 99}]},
+        "output": 6,
+        "explanation": "All matches may be skipped. Three fallback characters cost less than either duplicate match."
+      },
+      {
+        "input": {"length": 0, "fallbackCost": 7, "matches": []},
+        "output": 0,
+        "explanation": "The empty string needs no pieces."
+      }
+    ]
+  }
+]

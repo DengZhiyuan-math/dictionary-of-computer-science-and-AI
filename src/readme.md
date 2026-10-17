@@ -2,9 +2,15 @@
 
 **计算机科学与 AI 中英知识词典：读得懂、查得到、讲得清。**
 
-A Chinese-first, bilingual learning dictionary covering computer science, algorithms, machine learning, deep learning, LLMs, reinforcement learning, VLA, and world models. Includes {{CHAPTERS}} lessons, a complete LeetCode Hot 100 pattern map, a searchable glossary, worked examples, 36 source-labeled interview preparation questions, 90 original oral questions, and a browser speech reader.
+A Chinese-first, bilingual learning dictionary covering computer science, algorithms, machine learning, deep learning, LLMs, reinforcement learning, VLA, and world models. Includes {{CHAPTERS}} lessons, a complete LeetCode Hot 100 pattern map, a searchable glossary, worked examples, 100 source-labeled interview preparation questions across the original and English collections, 90 original oral questions, and a browser speech reader.
 
 **v{{VERSION}} · 2026-10-16** · {{CHAPTERS}} 讲 · {{SUBSECTIONS}} 个细讲小节 · 90 道口述题 · {{GLOSSARY}} 个核心词条组 · {{SOURCES}} 条参考资料
+
+## English interview additions
+
+[64 English preparation questions](docs/en/INTERVIEW_QUESTIONS.md) · [Complete English knowledge map](docs/en/KNOWLEDGE_MAP.md) · [Sources and validation](docs/en/README.md) · [Live English dictionary](https://zhiyuan-deng.pages.dev/dictionary/)
+
+The supplement adds 64 questions and 174 worked examples from 15 organizations. It includes reasoning, complexity, related concepts, and source provenance. The original bank has 36 questions, for 100 across both collections. Official samples, public practice, and documentation-derived exercises are labeled separately; publication does not establish use in current hiring.
 
 ## 从这里开始
 

@@ -1,0 +1,242 @@
+[
+  {
+    "id": "microsoft-token-bucket",
+    "title": "Token Bucket: Preserve Fractional Credit Between Requests",
+    "company": "Microsoft",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Microsoft Azure Architecture Center: Throttling pattern",
+    "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/throttling",
+    "prompt": "Implement one client's token bucket. Capacity C=3, refill rate r=2 tokens/second, and initial balance C. Each request costs one token. Evaluate arrivals at [0,0,0,0,0.25,0.5,1] seconds in that order; rejected requests consume nothing.",
+    "approach": [
+      "Before each decision, set balance=min(C, balance+r*(now-last)) and last=now. Use a monotonic clock and retain fractional tokens.",
+      "Accept exactly when balance>=1, then subtract one. Serialize refill and subtraction when requests share a bucket.",
+      "A per-process bucket does not enforce one global quota across replicas. Choose an explicit coordination or quota-allocation policy."
+    ],
+    "complexity": "O(1) work per arrival and O(K) state for K active client buckets, excluding distributed coordination.",
+    "pitfalls": ["Rounding 0.5 tokens down loses valid refill credit.", "An idle bucket cannot accumulate beyond C."],
+    "followUp": "How would you expire inactive buckets without resetting an active client's quota?",
+    "answer": "Accept, accept, accept, reject, reject, accept, accept; final balance 0.",
+    "topics": ["token-bucket", "network"],
+    "chapters": [18, 19],
+    "checked": "2026-10-17",
+    "examples": [
+      {"input": "C=3, r=2; times=[0,0,0,0,0.25,0.5,1]", "output": "[true,true,true,false,false,true,true]", "explanation": "The rejected request at 0.25 leaves 0.5 tokens; another 0.5 token arrives by 0.5."}
+    ]
+  },
+  {
+    "id": "microsoft-circuit-breaker",
+    "title": "Circuit Breaker: Recovery Needs a Bounded Probe",
+    "company": "Microsoft",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Microsoft Azure Architecture Center: Circuit Breaker pattern",
+    "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker",
+    "prompt": "Model a sequential breaker, initially closed. Two consecutive failures open it for five seconds. The first request after that delay is the only half-open probe; success closes it and clears the counter. Evaluate requests at t=0,1,2,6,7 with downstream outcomes failure,failure,unused,success,failure.",
+    "approach": [
+      "Closed requests call the dependency. Count failures and clear the counter on success; the second failure records an open-until deadline.",
+      "Open requests before that deadline fail locally. Once the delay expires, permit a probe instead of releasing all waiting traffic.",
+      "A successful probe restores normal calls. A failed probe starts a new open interval. Concurrent implementations must reserve the probe atomically."
+    ],
+    "complexity": "O(1) bookkeeping per request and O(1) state per protected dependency for this policy.",
+    "pitfalls": ["Open-state rejections are not additional downstream failures.", "The threshold and reset policy here are exercise assumptions."],
+    "followUp": "How would a rolling failure-rate policy differ from consecutive failures?",
+    "answer": "Calls occur at 0,1,6,7; t=2 is rejected locally. Final state: closed, failure counter 1.",
+    "topics": ["circuit-breaker", "network"],
+    "chapters": [18, 19],
+    "checked": "2026-10-17",
+    "examples": [
+      {"input": "times=[0,1,2,6,7]", "output": "[call,call,reject,probe,call]", "explanation": "The failure at t=1 sets the deadline to t=6."}
+    ]
+  },
+  {
+    "id": "microsoft-etag-concurrency",
+    "title": "ETags: Reject a Lost Update Before Overwriting Data",
+    "company": "Microsoft",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Microsoft Azure Cosmos DB: Database transactions and optimistic concurrency control",
+    "url": "https://learn.microsoft.com/en-us/azure/cosmos-db/database-transactions-optimistic-concurrency",
+    "prompt": "In a single-write-region Cosmos DB account, clients A and B both read count=10 with ETag e0. A replaces it with 11 using If-Match:e0 and succeeds. B then tries the same replacement with If-Match:e0. What happens, and how can both increments be retained?",
+    "approach": [
+      "Treat the ETag as an opaque version identifier. The server checks the supplied version together with the write.",
+      "A's successful update changes the version. B's stale precondition fails with HTTP 412 instead of replacing the newer item.",
+      "B must reread count=11 and its new ETag, recompute 12, and conditionally replace again. Bound conflict retries."
+    ],
+    "complexity": "O(1) requests per attempt; conflicts require further attempts. Item transfer cost depends on size.",
+    "pitfalls": ["A fresh ETag alone does not repair B's stale payload.", "Multi-region writes require conflict-resolution rules."],
+    "followUp": "When would an atomic increment be preferable to read-modify-replace?",
+    "answer": "B initially receives 412; after rereading and recomputing, both increments yield count=12.",
+    "topics": ["optimistic-concurrency", "transaction-acid"],
+    "chapters": [14, 16, 19],
+    "checked": "2026-10-17",
+    "examples": [
+      {"input": "10/e0; A writes 11/e0; B writes 11/e0", "output": "A succeeds; B gets 412; recomputed retry writes 12", "explanation": "A stale write cannot silently overwrite A's version."}
+    ]
+  },
+  {
+    "id": "amazon-consistent-hashing",
+    "title": "Consistent Hashing: Trace Exactly Which Keys Move",
+    "company": "Amazon",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "AWS Well-Architected: Consistent hashing",
+    "url": "https://docs.aws.amazon.com/wellarchitected/latest/reducing-scope-of-impact-with-cell-based-architecture/consistent-hashing.html",
+    "prompt": "A ring has positions [0,100). Nodes A,B,C occupy 0,40,80. Assign a key to the first node clockwise at or after its hash, wrapping at 100. For hashes [10,30,70,90], compute owners before and after adding D at 20. Ignore replication.",
+    "approach": [
+      "Keep token positions sorted. Find the first position >= the hash with lower_bound; wrap to index zero when absent.",
+      "Adding D transfers the interval (0,20] from B to D. Other ownership intervals keep their previous owners.",
+      "More virtual tokens can improve balance, but one very hot key remains indivisible under this simple placement rule."
+    ],
+    "complexity": "O(log V) lookup and O(V) routing state for V sorted virtual-token positions; an array insertion may cost O(V).",
+    "pitfalls": ["Changing hash modulo the number of servers can remap unrelated keys.", "Stable placement does not guarantee equal traffic."],
+    "followUp": "How would replication choose distinct physical nodes when virtual tokens repeat owners?",
+    "answer": "[B,B,C,A] becomes [D,B,C,A]; only hash 10 moves.",
+    "topics": ["consistent-hashing", "replication-sharding", "lower-bound-upper-bound"],
+    "chapters": [6, 19],
+    "checked": "2026-10-17",
+    "examples": [
+      {"input": "tokens={0:A,40:B,80:C}; add 20:D; hashes=[10,30,70,90]", "output": "before=[B,B,C,A]; after=[D,B,C,A]", "explanation": "Clockwise lookup wraps hash 90 to A at position 0."}
+    ]
+  },
+  {
+    "id": "amazon-conditional-inventory",
+    "title": "Conditional Inventory: An Atomic Check Prevents Overselling",
+    "company": "Amazon",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Amazon DynamoDB: Condition expression examples",
+    "url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.ConditionExpressions.html",
+    "prompt": "One DynamoDB item in a single region has stock=5. Two clients each want four units. Design a single-item update preventing negative stock, and determine both outcomes. Each client submits once and receives a definite response.",
+    "approach": [
+      "Submit UpdateItem with SET stock = stock - :q and ConditionExpression stock >= :q, where :q=4.",
+      "The condition and update are evaluated as one conditional write. One request reduces 5 to 1; the other fails its condition.",
+      "A separate read followed by an unconditional write is insufficient: both readers could observe five and accept their orders."
+    ],
+    "complexity": "O(1) API operations per attempt for one item; service latency and capacity costs depend on item size and contention.",
+    "pitfalls": ["This stock condition does not make retries idempotent.", "Multiple-item reservations need an explicit transaction or compensation design."],
+    "followUp": "With stock=10, how can a lost response followed by a retry deduct eight units for one four-unit order?",
+    "answer": "Exactly one request succeeds; final stock is 1. Which client wins is unspecified.",
+    "topics": ["optimistic-concurrency", "transaction-acid", "idempotency"],
+    "chapters": [14, 16, 19],
+    "checked": "2026-10-17",
+    "examples": [
+      {"input": "stock=5; requests=[4,4]", "output": "one success, one conditional failure; stock=1", "explanation": "The second atomic check observes insufficient remaining stock."}
+    ]
+  },
+  {
+    "id": "amazon-fifo-message-groups",
+    "title": "FIFO Groups: Ordering and Concurrency Have Different Boundaries",
+    "company": "Amazon",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Amazon SQS: FIFO queue delivery logic",
+    "url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues-understanding-logic.html",
+    "prompt": "Messages A1,A2 share one SQS FIFO group; B1,B2 share another. Each pair was sent in that order. Assume serial handling within each group, independent groups, and no retries. How many complete processing interleavings respect these constraints?",
+    "approach": [
+      "Require A1 before A2 and B1 before B2. No cross-group ordering follows from those guarantees.",
+      "Choose the two positions occupied by A's messages: binomial(4,2)=6. B's messages fill the remaining positions in order.",
+      "Use a business entity, such as an order ID, as the group boundary when its events require ordering. A single global group limits concurrency."
+    ],
+    "complexity": "Counting two groups of lengths a,b uses binomial(a+b,a); enumerating all L valid interleavings costs O((a+b)*L) output work.",
+    "pitfalls": ["A received batch can contain several messages from one group; process their effects in order.", "Delivery order alone does not serialize arbitrary asynchronous handlers."],
+    "followUp": "What changes if processing exceeds the visibility timeout?",
+    "answer": "Six constraint-valid interleavings. SQS does not promise that every such schedule will occur.",
+    "topics": ["message-ordering", "concurrency-parallelism"],
+    "chapters": [19, 20],
+    "checked": "2026-10-17",
+    "examples": [
+      {"input": "A1<A2; B1<B2", "output": "6; [A1,B1,B2,A2] is valid", "explanation": "[A2,A1,B1,B2] violates A's order."}
+    ]
+  },
+  {
+    "id": "nvidia-memory-coalescing",
+    "title": "GPU Coalescing: Count Memory Segments, Not Just Loads",
+    "company": "NVIDIA",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "NVIDIA CUDA C++ Best Practices Guide: Coalesced access to global memory",
+    "url": "https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#coalesced-access-to-global-memory",
+    "prompt": "Use NVIDIA's 32-byte transaction model for compute capability >=6.0. A warp has 32 active lanes, each loading one four-byte word. With base aligned to 32 bytes, compare lane i addresses base+4*i, base+4*(i+1), and base+32*i. Ignore cache reuse.",
+    "approach": [
+      "Count distinct aligned 32-byte segments touched by the requested words. All three patterns request 128 useful bytes.",
+      "The aligned contiguous pattern touches four segments. Shifting by one word crosses a fifth; stride eight words touches 32 segments.",
+      "Their segment-byte totals are 128,160,1024. This model explains wasted transfer capacity; it does not predict a measured runtime ratio."
+    ],
+    "complexity": "N loads remain O(N) work; their segment traffic depends on layout. Here one fixed-size warp touches 4,5,32 segments.",
+    "pitfalls": ["Transaction rules depend on architecture.", "Cache reuse can change observed memory traffic."],
+    "followUp": "How can tiling make a matrix transpose coalesce both reads and writes?",
+    "answer": "4,5,32 segments; useful-byte fractions are 1,0.8,0.125.",
+    "topics": ["gpu-parallel-algorithms", "cpu-gpu"],
+    "chapters": [2, 47],
+    "checked": "2026-10-17",
+    "examples": [
+      {"input": "32 lanes; addresses 4*i,4*(i+1),32*i", "output": "segments=[4,5,32]", "explanation": "Shifted words occupy bytes 4..131, crossing segments 0..4."}
+    ]
+  },
+  {
+    "id": "nvidia-parallel-scan",
+    "title": "Parallel Scan: Linear Work With Logarithmic Dependency Depth",
+    "company": "NVIDIA",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "NVIDIA GPU Gems 3, Chapter 39: Parallel Prefix Sum (Scan) with CUDA",
+    "url": "https://developer.nvidia.com/gpugems/gpugems3/part-vi-gpu-computing/chapter-39-parallel-prefix-sum-scan-cuda",
+    "prompt": "Compute the exclusive integer sum scan of [2,0,3,1,0,4,2,1]. Describe an algorithm with O(n) total work and O(log n) dependency depth, assuming enough processors. How does scan assign stable output positions for filtering?",
+    "approach": [
+      "An exclusive output at index i sums inputs strictly before i. The first output is the addition identity, zero.",
+      "Build partial sums with a tree up-sweep, replace the root with zero, then propagate prefix offsets in a down-sweep.",
+      "For stable filtering, scan zero/one keep flags. Every kept element writes to its exclusive prefix count, preserving input order."
+    ],
+    "complexity": "For n power-of-two inputs, Blelloch scan uses 2*(n-1) additions, O(log n) depth, and O(n) storage; pad arbitrary lengths with zeros.",
+    "pitfalls": ["Inclusive and exclusive outputs differ by one position.", "Dependency depth is not GPU wall time; synchronize dependent stages."],
+    "followUp": "How would you scan block totals when the array exceeds one block?",
+    "answer": "[0,2,2,5,6,6,10,12]; total=13; an eight-leaf tree uses 14 additions.",
+    "topics": ["gpu-parallel-algorithms", "prefix-sum"],
+    "chapters": [2, 7, 84],
+    "checked": "2026-10-17",
+    "examples": [
+      {"input": "[2,0,3,1,0,4,2,1]", "output": "[0,2,2,5,6,6,10,12]", "explanation": "Output index 6 sums the first six inputs: 10."}
+    ]
+  },
+  {
+    "id": "nvidia-warp-reduction",
+    "title": "Warp Reduction: Participation Masks Are Part of Correctness",
+    "company": "NVIDIA",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "NVIDIA Technical Blog: Using CUDA Warp-Level Primitives",
+    "url": "https://developer.nvidia.com/blog/using-cuda-warp-level-primitives/",
+    "prompt": "All 32 lanes of a CUDA warp participate. Lane i starts with integer i. Using __shfl_down_sync with offsets 16,8,4,2,1, what sum ends in lane 0? How can the same full-warp computation sum only input positions 0..19 safely?",
+    "approach": [
+      "Each synchronized shuffle exchanges registers between participating lanes. The offset-halving tree accumulates every input into lane 0 after five stages.",
+      "For twenty inputs, keep all 32 lanes participating and initialize lanes 20..31 to zero. Zero is the sum's identity.",
+      "Use a full mask only because every named lane executes each primitive. A mask declares participants; it does not provide values for absent source lanes."
+    ],
+    "complexity": "For W=32 lanes, log2(W)=5 shuffle stages and O(1) registers per lane. A whole-grid reduction needs additional coordination.",
+    "pitfalls": ["Other lanes do not all contain the final total.", "Legacy implicit warp lockstep is not a safe synchronization rule."],
+    "followUp": "Why can changing a floating-point reduction tree change its rounded result?",
+    "answer": "sum(0..31)=496; zero-padding input positions 0..19 gives 190.",
+    "topics": ["gpu-parallel-algorithms", "concurrency-parallelism"],
+    "chapters": [2, 7, 47],
+    "checked": "2026-10-17",
+    "examples": [
+      {"input": "values[i]=i for i=0..31", "output": "lane0=496", "explanation": "31*32/2=496; twenty values instead sum to 19*20/2=190."}
+    ]
+  },
+  {
+    "id": "meta-cache-lease",
+    "title": "Cache Leases: Reject a Delayed Fill After Invalidation",
+    "company": "Meta",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Facebook engineers, NSDI 2013: Scaling Memcache at Facebook, Section 3.2.1",
+    "url": "https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final170_update.pdf",
+    "prompt": "Reader A obtains lease 7 on a cache miss, reads database value 0, and pauses. B commits value 1, then invalidates the cache and lease. A tries to cache 0 with token 7. Compare unconditional and lease-checked filling.",
+    "approach": [
+      "Updating the database before deleting the cache does not stop an older reader from filling afterward.",
+      "Bind refill permission to the key. Deletion invalidates token 7, so A's delayed conditional fill fails.",
+      "A later reader can fetch value 1 under a valid token. Closing this race does not establish global serializability."
+    ],
+    "complexity": "O(1) expected hash-table work per operation; lease metadata scales with tracked keys. Database access costs extra.",
+    "pitfalls": ["Lease validation and filling must be atomic.", "A TTL alone cannot detect this race."],
+    "followUp": "How can limiting lease grants reduce simultaneous database fetches?",
+    "answer": "Unconditional filling stores stale 0; lease validation rejects A, leaving the entry absent.",
+    "topics": ["cache-coherence", "cache", "optimistic-concurrency"],
+    "chapters": [18, 19],
+    "checked": "2026-10-17",
+    "examples": [
+      {"input": "grant 7; read 0; commit 1; invalidate 7; fill(0,7)", "output": "fill rejected; database=1; cache absent", "explanation": "Deletion revokes A's earlier refill permission."}
+    ]
+  }
+]

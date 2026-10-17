@@ -56,3 +56,9 @@ node scripts/check.mjs
 - 修改正文后检查训练选编、词典与速查页是否仍然一致。
 
 提交勘误时请注明章节、小节、原说法、建议改法及依据。仓库尚未指定再利用许可证；外部来源保留各自权利。
+
+## English interview supplement
+
+Edit the JSON batches and knowledge definitions in `data/english/`, then run `node scripts/build.mjs` and `node scripts/check.mjs`. The manifest records the imported personal-site revision and the original dictionary baseline. Generated GitHub-readable pages are under `docs/en/`; research notes under `docs/en/sources/` retain the reviewed source claims and limits. Paths mentioned in those historical notes refer to the pinned personal-site source.
+
+The English supplement has 64 questions. It does not renumber or replace the original 36-question bank or its chapter references. Preserve source labels, worked inputs, explanations, complexity assumptions, and links between questions and concepts. The independent offline suites compare the teaching algorithms with separate reference models; they do not query company services or establish current interview use.

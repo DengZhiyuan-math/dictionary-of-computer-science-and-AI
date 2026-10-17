@@ -1,0 +1,72 @@
+{
+  "language": "en",
+  "sourceRepository": "https://github.com/DengZhiyuan-math/personal_website",
+  "sourceRevision": "712e22faf590e1eb44df2da355d4ce9074511e5e",
+  "baseDictionaryRevision": "af1103f0bd3f152d48a9d445c2756025059d1df3",
+  "reviewedAt": "2026-10-17",
+  "batches": [
+    {
+      "file": "interviews-google.json",
+      "title": "Google: Algorithm Practice and Systems Reasoning"
+    },
+    {
+      "file": "interviews-companies.json",
+      "title": "Big Tech: Distributed Systems and GPU Interview Foundations"
+    },
+    {
+      "file": "interviews-google-algorithms.json",
+      "title": "Google: Public Algorithm Practice II"
+    },
+    {
+      "file": "interviews-meta-algorithms.json",
+      "title": "Meta Hacker Cup: Public Algorithm Practice"
+    },
+    {
+      "file": "interviews-company-samples.json",
+      "title": "Asana and Slack: Public Interview Preparation"
+    },
+    {
+      "file": "interviews-public-challenges.json",
+      "title": "Cloudflare and LinkedIn Learning: Public Engineering Practice"
+    },
+    {
+      "file": "interviews-apple.json",
+      "title": "Apple: Algorithms and Systems from Official Documentation"
+    },
+    {
+      "file": "interviews-uber.json",
+      "title": "Uber: Graphs and Resource Allocation from Official Engineering Sources"
+    },
+    {
+      "file": "interviews-netflix.json",
+      "title": "Netflix: APIs, Encoding, and Concurrency from Official Engineering Sources"
+    },
+    {
+      "file": "interviews-airbnb.json",
+      "title": "Airbnb: Algorithms and Data Systems from Official Sources"
+    },
+    {
+      "file": "interviews-stripe.json",
+      "title": "Stripe: API State and Exact Data Processing from Official Sources"
+    },
+    {
+      "file": "interviews-dropbox.json",
+      "title": "Dropbox: File Algorithms and Synchronization from Official Sources"
+    }
+  ],
+  "knowledgeMap": "knowledge-map.json",
+  "sourceNotes": [
+    "dictionary-interviews-airbnb.md",
+    "dictionary-interviews-apple.md",
+    "dictionary-interviews-companies.md",
+    "dictionary-interviews-company-samples.md",
+    "dictionary-interviews-dropbox.md",
+    "dictionary-interviews-google-algorithms.md",
+    "dictionary-interviews-google.md",
+    "dictionary-interviews-meta-algorithms.md",
+    "dictionary-interviews-netflix.md",
+    "dictionary-interviews-public-challenges.md",
+    "dictionary-interviews-stripe.md",
+    "dictionary-interviews-uber.md"
+  ]
+}

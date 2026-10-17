@@ -9,6 +9,11 @@ import {areas} from '../data/knowledge-map.mjs';
 import {examples} from '../data/examples.mjs';
 import './check-demos.mjs';
 import './check-expansion.mjs';
+import './check-english-interviews.mjs';
+import './check-english-algorithms.mjs';
+import './check-english-company-practice.mjs';
+import './check-english-apple-uber-netflix.mjs';
+import './check-english-airbnb-stripe-dropbox.mjs';
 import {advancedAlgorithms} from '../data/advanced-algorithms.mjs';
 import {interviewQuestions} from '../data/interviews.mjs';
 
@@ -67,7 +72,10 @@ function anchors(text) {
 const failures=[];
 let linkCount=0;
 for(const file of walk(root).filter(p=>p.endsWith('.md'))) {
-  const content=fs.readFileSync(file,'utf8');
+  // Code examples and inline formulas do not contain Markdown links.
+  const content=fs.readFileSync(file,'utf8')
+    .replace(/^```[^\n]*\n[\s\S]*?^```[ \t]*$/gm,'')
+    .replace(/`[^`\n]+`/g,'');
   for(const m of content.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)) {
     const href=m[1]; if(/^(?:https?:|mailto:)/.test(href)) continue;
     linkCount++;

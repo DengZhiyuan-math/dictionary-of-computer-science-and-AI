@@ -1,0 +1,233 @@
+[
+  {
+    "id": "google-metal-harvest",
+    "title": "Metal Harvest: Cover Time Intervals from the First Uncovered Point",
+    "company": "Google",
+    "sourceKind": "official-practice",
+    "sourceTitle": "Google Kick Start 2020, Round F — Metal Harvest",
+    "url": "https://github.com/google/coding-competitions-archive/blob/87385db7dbd81b281225412b8ad496334536d016/kickstart/2020/round_f/metal_harvest/problem_statement/problem.html",
+    "prompt": "Cover every point in disjoint half-open intervals [S, E), supplied in arbitrary order. Each deployment lasts at most K > 0 consecutive time units, including idle gaps. Minimize deployments. All endpoints and K are positive integers.",
+    "approach": [
+      "Sort intervals by start. Maintain the exclusive endpoint t covered by the last deployment; initially t = 0.",
+      "For [S, E), let u = max(S, t). If u < E, add q = ceil((E − u)/K) deployments and set t = u + qK; otherwise add none.",
+      "Starting at the earliest uncovered point reaches at least as far right as any deployment covering that point. Repeating this exchange proves optimality; retain unused coverage across gaps."
+    ],
+    "complexity": "O(n log(n + 1)) time including sorting, then O(n) scanning; O(n) space for a sorted copy. Already sorted input permits O(n) time and O(1) auxiliary space.",
+    "pitfalls": [
+      "Do not reset coverage at each interval or count idle gaps as additional deployments.",
+      "E is excluded. Use integer ceiling division and a sufficiently wide endpoint type."
+    ],
+    "followUp": "Return deployment start times without iterating over each time unit; discuss output-sensitive cost.",
+    "answer": "With K = 6, intervals [2, 4), [6, 8), [9, 10) need 2 deployments, starting at 2 and 9.",
+    "topics": ["greedy", "loop-invariant", "complexity"],
+    "chapters": [94, 103, 105],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {"intervals": [[9, 10], [2, 4], [6, 8]], "K": 6},
+        "output": 2,
+        "explanation": "The first deployment covers [2, 8), including the idle gap; one more covers [9, 10)."
+      },
+      {
+        "input": {"intervals": [[1, 4], [6, 9]], "K": 2},
+        "output": 4,
+        "explanation": "Deploy at 1, 3, 6, and 8. Coverage ending at 5 cannot reach the next interval."
+      }
+    ]
+  },
+  {
+    "id": "google-slides",
+    "title": "Slides!: Encode an Exact Path Count in a DAG",
+    "company": "Google",
+    "sourceKind": "official-practice",
+    "sourceTitle": "Google Code Jam 2016, Round 1C — Slides!",
+    "url": "https://github.com/google/coding-competitions-archive/blob/87385db7dbd81b281225412b8ad496334536d016/codejam/2016/round_1c/slides/problem_statement/problem.html",
+    "prompt": "For B vertices labeled 1 through B, construct directed edges with exactly M finite routes from 1 to B, or report impossibility. No self-loops, parallel edges, or outgoing edges from B are allowed. Assume 2 ≤ B ≤ 50 and M ≥ 1.",
+    "approach": [
+      "A cycle on a source-to-target route creates infinitely many routes. Remove irrelevant cycles and use a DAG. Its maximum route count is 2^(B − 2), one for each subset of intermediate vertices.",
+      "Add every increasing edge i → j among vertices 2 through B. Vertex i < B then has 2^(B − i − 1) routes to B.",
+      "For M below the maximum, connect 1 to vertex B − 1 − k for each set bit k of M. At the maximum, connect 1 to every later vertex, including B. Reject larger M."
+    ],
+    "complexity": "O(B²) time and O(B²) space for the output adjacency matrix; O(B) additional counting state. Counts need sufficiently wide integers; parse large M exactly before comparing.",
+    "pitfalls": [
+      "The maximum case needs the direct edge 1 → B; binary digits on intermediate vertices alone give one route too few.",
+      "Count routes by reverse topological DP, not by enumerating exponentially many paths."
+    ],
+    "followUp": "Validate an arbitrary proposed graph, including a reachable cycle that can reach B.",
+    "answer": "For B = 5 and M = 5, source edges to vertices 2 and 4 contribute 4 + 1 routes.",
+    "topics": ["topological-sort", "graph-algorithms", "dynamic-programming"],
+    "chapters": [89, 95, 105],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {"B": 5, "M": 5},
+        "output": {"possible": true, "adjacency": ["01010", "00111", "00011", "00001", "00000"]},
+        "explanation": "Reverse DP gives route counts [5, 4, 2, 1, 1]; the terminal count represents one empty suffix."
+      },
+      {
+        "input": {"B": 2, "M": 1},
+        "output": {"possible": true, "adjacency": ["01", "00"]},
+        "explanation": "There are no intermediate vertices; the direct edge is the single route."
+      },
+      {
+        "input": {"B": 5, "M": 9},
+        "output": {"possible": false},
+        "explanation": "Five vertices allow at most 2³ = 8 finite routes."
+      }
+    ]
+  },
+  {
+    "id": "google-alien-piano",
+    "title": "Alien Piano: Preserve Adjacent Comparisons with Four DP States",
+    "company": "Google",
+    "sourceKind": "official-practice",
+    "sourceTitle": "Google Kick Start 2020, Round D — Alien Piano",
+    "url": "https://github.com/google/coding-competitions-archive/blob/87385db7dbd81b281225412b8ad496334536d016/kickstart/2020/round_d/alien_piano/problem_statement/problem.html",
+    "prompt": "Assign each note in a nonempty pitch sequence to one of four ordered keys. An adjacent increase, decrease, or equality should retain the same comparison between assigned keys. Minimize adjacent pairs that violate this rule. The first key is unrestricted.",
+    "approach": [
+      "Let dp[k] be the minimum violations for the processed prefix ending on key k, where k ∈ {1, 2, 3, 4}. Initialize all four costs to zero for the first note.",
+      "For each later note, compute next[k] = min_j(dp[j] + penalty(j, k)); penalty is zero exactly when sign(k − j) matches the adjacent input comparison, and one otherwise.",
+      "Replace the previous row only after calculating all new states. Return the minimum final cost; the last key contains all information needed by the next transition."
+    ],
+    "complexity": "O(16n) = O(n) time and O(4) = O(1) auxiliary space for n notes. Recovering a key sequence requires O(n) predecessor storage.",
+    "pitfalls": [
+      "Repeated adjacent pitches require equal keys to avoid a violation.",
+      "Equal pitches separated by other notes do not require a globally fixed key mapping."
+    ],
+    "followUp": "Generalize to m ordered keys and derive prefix/suffix minima to improve O(nm²) transitions.",
+    "answer": "Nine strictly increasing notes need 2 violations: keys [1, 2, 3, 4, 1, 2, 3, 4, 1] attain the bound.",
+    "topics": ["dynamic-programming", "loop-invariant", "complexity"],
+    "chapters": [95, 102, 105],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        "output": 2,
+        "explanation": "Each strictly increasing run uses at most four keys, so one violation cannot accommodate nine notes."
+      },
+      {
+        "input": [2, 2, 1, 3, 3],
+        "output": 0,
+        "explanation": "Keys [2, 2, 1, 2, 2] preserve every comparison."
+      },
+      {
+        "input": [5],
+        "output": 0,
+        "explanation": "A single note has no adjacent rule to violate."
+      }
+    ]
+  },
+  {
+    "id": "google-moons-umbrellas",
+    "title": "Moons and Umbrellas: Keep Both End States When Costs Can Be Negative",
+    "company": "Google",
+    "sourceKind": "official-practice",
+    "sourceTitle": "Google Code Jam 2021, Qualification Round — Moons and Umbrellas",
+    "url": "https://github.com/google/coding-competitions-archive/blob/87385db7dbd81b281225412b8ad496334536d016/codejam/2021/qualification_round/moons_and_umbrellas/problem_statement/problem.html",
+    "prompt": "Replace every ? in a nonempty string over {C, J, ?} by C or J. Each adjacent CJ costs X and each JC costs Y; equal neighbors cost zero. Minimize total cost, including the official extra-credit case where costs may be negative.",
+    "approach": [
+      "Keep C and J as the minimum prefix costs ending in each letter. For the first position, an allowed letter costs zero and a forbidden letter has cost +∞.",
+      "For each later position, compute C′ = min(C, J + Y) and J′ = min(J, C + X), then set disallowed final letters to +∞.",
+      "Update both states simultaneously and return min(C, J). Every completion belongs to one predecessor state, so the recurrence remains valid with negative costs."
+    ],
+    "complexity": "O(n) time and O(1) auxiliary space for n characters; O(n) predecessor space if reconstructing a completion.",
+    "pitfalls": [
+      "Deleting question marks or avoiding extra switches is unsafe when a transition has negative cost.",
+      "X prices C → J; Y prices J → C. Do not swap them."
+    ],
+    "followUp": "Return one optimal completion and handle ties consistently.",
+    "answer": "With X = −2, Y = −3, and S = ???? the minimum is −8, attained by JCJC.",
+    "topics": ["dynamic-programming", "loop-invariant"],
+    "chapters": [95, 96, 105],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {"X": -2, "Y": -3, "S": "????"},
+        "output": -8,
+        "explanation": "JCJC costs −3 − 2 − 3 = −8; introducing switches is beneficial."
+      },
+      {
+        "input": {"X": 2, "Y": 3, "S": "C??J"},
+        "output": 2,
+        "explanation": "CCCJ adds only the required C → J transition."
+      },
+      {
+        "input": {"X": -2, "Y": -3, "S": "C"},
+        "output": 0,
+        "explanation": "Negative transition costs still cannot create a pair in a one-character string."
+      }
+    ]
+  },
+  {
+    "id": "google-bundling",
+    "title": "Bundling: Form String Groups at the Deepest Shared Prefix",
+    "company": "Google",
+    "sourceKind": "official-practice",
+    "sourceTitle": "Google Kick Start 2020, Round A — Bundling",
+    "url": "https://github.com/google/coding-competitions-archive/blob/87385db7dbd81b281225412b8ad496334536d016/kickstart/2020/round_a/bundling/problem_statement/problem.html",
+    "prompt": "Partition N nonempty uppercase string occurrences into groups of exactly K, where 2 ≤ K ≤ N and K divides N. A group's score is its longest shared prefix length. Maximize total score. Duplicate strings remain separate occurrences.",
+    "approach": [
+      "Insert all occurrences into a trie, recording terminal multiplicities. Traverse children before parents.",
+      "At depth d, combine terminal occurrences with ungrouped child remainders. If their count is r, form floor(r/K) groups, add d × floor(r/K), and pass r mod K upward.",
+      "Deep groups cannot gain by moving upward. Equivalently, each nonempty prefix contributes floor(c/K), where c is its occurrence count; bottom-up grouping attains these prefix bounds simultaneously."
+    ],
+    "complexity": "O(L) time and O(L) space for total input length L over the fixed 26-letter alphabet. An iterative postorder avoids recursion depth proportional to the longest string.",
+    "pitfalls": [
+      "Count string endings at internal trie nodes, not only leaves.",
+      "Do not deduplicate repeated strings or score leftover occurrences before they form a full group."
+    ],
+    "followUp": "Recover the actual groups while retaining the same score bound.",
+    "answer": "ALPHA with ALPINE scores 3; BETA with BET scores 3. The maximum total for K = 2 is 6.",
+    "topics": ["trie", "postorder-dp", "greedy"],
+    "chapters": [88, 89, 101],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {"strings": ["ALPHA", "ALPINE", "BETA", "BET"], "K": 2},
+        "output": 6,
+        "explanation": "The two groups share ALP and BET respectively."
+      },
+      {
+        "input": {"strings": ["A", "A", "AB", "AC"], "K": 2},
+        "output": 2,
+        "explanation": "All four share A, but no second-letter prefix contains two occurrences. Two groups each score 1."
+      }
+    ]
+  },
+  {
+    "id": "google-candies",
+    "title": "Candies: Separate Alternating Signs from Range-relative Weights",
+    "company": "Google",
+    "sourceKind": "official-practice",
+    "sourceTitle": "Google Kick Start 2020, Round C — Candies",
+    "url": "https://github.com/google/coding-competitions-archive/blob/87385db7dbd81b281225412b8ad496334536d016/kickstart/2020/round_c/candies/problem_statement/problem.html",
+    "prompt": "Maintain a positive integer array under point assignments. A 1-based inclusive query [l, r] has score Σ(i=l..r) (−1)^(i−l) A[i](i−l+1). Return the sum of all query scores; no queries means zero. Examples also show each score.",
+    "approach": [
+      "Define b[i] = (−1)^(i−1) A[i] and w[i] = i b[i]. Maintain their sums in two Fenwick trees, or two segment trees.",
+      "Let B and W be their range sums over [l, r]. The score is (−1)^(l−1) × (W − (l−1)B), separating index weight from the query's left endpoint.",
+      "For assignment A[p] = v, compute δ = v − old A[p]. Add (−1)^(p−1)δ and p(−1)^(p−1)δ to the corresponding trees, then accumulate query results."
+    ],
+    "complexity": "O((n + q) log(n + 1)) time using repeated Fenwick insertion, O(n) space; a linear tree build improves initialization to O(n), giving O(n + q log(n + 1)).",
+    "pitfalls": [
+      "An even left endpoint reverses the sign; test l > 1 and single-element ranges.",
+      "An update is an assignment, not an increment. Use wide signed arithmetic for weighted sums and the final total."
+    ],
+    "followUp": "Derive the formula for quadratic position weights and identify the extra maintained sums.",
+    "answer": "Starting with [4, 1, 7, 3], query [2, 4], assign A[3] = 2, then query [1, 4] and [3, 3]. Scores are −4, −4, and 2; total −6.",
+    "topics": ["fenwick-tree", "segment-tree", "prefix-sum"],
+    "chapters": [85, 100],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {"values": [4, 1, 7, 3], "operations": [["Q", 2, 4], ["U", 3, 2], ["Q", 1, 4], ["Q", 3, 3]]},
+        "output": {"queryScores": [-4, -4, 2], "total": -6},
+        "explanation": "The first score is 1 − 2×7 + 3×3; the updated full range scores 4 − 2×1 + 3×2 − 4×3."
+      },
+      {
+        "input": {"values": [5], "operations": [["U", 1, 7]]},
+        "output": {"queryScores": [], "total": 0},
+        "explanation": "Assignments alone contribute nothing to the query total."
+      }
+    ]
+  }
+]

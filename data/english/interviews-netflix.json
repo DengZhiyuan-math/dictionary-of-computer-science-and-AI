@@ -1,0 +1,402 @@
+[
+  {
+    "id": "netflix-fieldmask-normalization",
+    "title": "Field Masks: Remove Redundant Paths Before Fetching",
+    "company": "Netflix",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Netflix TechBlog: Practical API Design, Part 1 — Protobuf FieldMask",
+    "url": "https://netflixtechblog.com/practical-api-design-at-netflix-part-1-using-protobuf-fieldmask-35cfdc606518",
+    "sourceNote": "Original exercise based on Netflix engineering documentation, not a published interview question. All paths are assumed schema-valid; no repeated fields or wildcards are included. An explicitly present empty mask selects nothing here; an absent mask is outside this contract.",
+    "prompt": "Normalize an explicitly present field mask. Each dot-separated path segment matches [a-z_][a-z0-9_]*. Remove duplicates and any path covered by a selected ancestor. Return the remaining paths and their distinct top-level fields, both sorted lexicographically. Selecting schedule includes schedule.date, but does not include schedule_dates.",
+    "approach": [
+      "Insert paths into a trie keyed by whole field-name segments. A terminal node selects its entire subtree, so stop when an existing terminal is reached.",
+      "When a new path ends, mark that node terminal and discard its descendants. This handles parents that arrive after children; dots, not raw character prefixes, determine ancestry.",
+      "Enumerate terminal paths, sort them, and extract distinct first segments. Use these top-level selections to decide which dependent services are needed before fetching their data."
+    ],
+    "complexity": "Expected O(C + K log K · L) time with hashed trie children, where C is total input characters, K output paths, and L maximum path length; O(C) auxiliary space including trie and output.",
+    "pitfalls": [
+      "A raw prefix test incorrectly treats schedule_dates as a child of schedule.",
+      "Filtering the response after fetching every field does not avoid remote calls."
+    ],
+    "followUp": "How would descriptor validation reject an unknown field or a repeated field in a nonfinal path position?",
+    "answer": "The first example reduces to [schedule,scripts,title], so only those three top-level fields are requested. A later parent removes an earlier descendant.",
+    "topics": [
+      "trie",
+      "canonical-key",
+      "api"
+    ],
+    "chapters": [
+      4,
+      6,
+      12,
+      19
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {
+          "paths": [
+            "title",
+            "schedule.last_updated.email",
+            "schedule",
+            "scripts",
+            "title"
+          ]
+        },
+        "output": {
+          "paths": [
+            "schedule",
+            "scripts",
+            "title"
+          ],
+          "topLevelFields": [
+            "schedule",
+            "scripts",
+            "title"
+          ]
+        },
+        "explanation": "The parent schedule covers its nested email field; title repeats."
+      },
+      {
+        "input": {
+          "paths": [
+            "schedule_dates.start",
+            "schedule.date",
+            "schedule_dates",
+            "schedule"
+          ]
+        },
+        "output": {
+          "paths": [
+            "schedule",
+            "schedule_dates"
+          ],
+          "topLevelFields": [
+            "schedule",
+            "schedule_dates"
+          ]
+        },
+        "explanation": "The underscore keeps schedule_dates separate from schedule."
+      },
+      {
+        "input": {
+          "paths": [
+            "a.b",
+            "a.b.c",
+            "a.bc",
+            "b.a"
+          ]
+        },
+        "output": {
+          "paths": [
+            "a.b",
+            "a.bc",
+            "b.a"
+          ],
+          "topLevelFields": [
+            "a",
+            "b"
+          ]
+        },
+        "explanation": "a.b covers a.b.c but not its sibling a.bc."
+      },
+      {
+        "input": {
+          "paths": []
+        },
+        "output": {
+          "paths": [],
+          "topLevelFields": []
+        },
+        "explanation": "This contract receives a present empty mask, rather than an absent mask."
+      }
+    ],
+    "additionalSources": [
+      {
+        "title": "Official Protobuf FieldMaskUtil canonical normalization contract",
+        "url": "https://protobuf.dev/reference/java/api-docs/com/google/protobuf/util/FieldMaskUtil"
+      }
+    ]
+  },
+  {
+    "id": "netflix-shot-budget",
+    "title": "Shot Encoding: Choose One Representation per Byte Budget",
+    "company": "Netflix",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Netflix TechBlog: Dynamic Optimizer — A Perceptual Video Encoding Optimization Framework",
+    "url": "https://netflixtechblog.com/dynamic-optimizer-a-perceptual-video-encoding-optimization-framework-e19f1e3a277f",
+    "sourceNote": "Original discrete optimization exercise inspired by Netflix shot-based encoding; not a published interview question or a reproduction of its production optimizer. Integer byte costs and additive synthetic quality scores are local assumptions, not measured VMAF values.",
+    "prompt": "Each shot has candidate encodes with positive integer byte costs and nonnegative integer quality scores. Choose exactly one candidate per shot, keeping total bytes at most a nonnegative integer budget B. Return the maximum total quality, or null if no complete selection fits. A shot with no candidates is infeasible; zero shots have total quality zero.",
+    "approach": [
+      "Let dp[b] be the best quality using exactly b bytes after the processed shots. Initialize dp[0]=0 and all other states to negative infinity.",
+      "For each shot, create a fresh next array. For every reachable b and each candidate (c,q), update next[b+c]=max(next[b+c],dp[b]+q) when b+c<=B. Then replace dp with next.",
+      "Take the maximum reachable value over all costs at most B. A transition chooses one candidate from the current shot; separate arrays prevent selecting that shot twice or skipping it."
+    ],
+    "complexity": "O((B+1) · (1+n+sum_i k_i)) time for n shots with k_i candidates in shot i, and O(B+1) auxiliary space. This is pseudopolynomial in the numeric budget, not polynomial in its bit length.",
+    "pitfalls": [
+      "Updating one array in place can reuse a shot. Initializing every state to zero can silently skip mandatory shots.",
+      "A greedy quality-per-extra-byte upgrade can lose to an indivisible, larger upgrade."
+    ],
+    "followUp": "How would you reconstruct selected encodes, or handle a budget too large for a dense array?",
+    "answer": "The first example reaches quality 17 with costs 4+3+1=8. In the second, choose costs 1+4 for quality 7; choosing the best-ratio first-shot upgrade leaves quality only 5.",
+    "topics": [
+      "dynamic-programming",
+      "0-1-knapsack-unbounded-knapsack",
+      "complexity"
+    ],
+    "chapters": [
+      7,
+      9,
+      12
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {
+          "budget": 8,
+          "shots": [
+            [
+              {
+                "bytes": 2,
+                "quality": 3
+              },
+              {
+                "bytes": 4,
+                "quality": 8
+              }
+            ],
+            [
+              {
+                "bytes": 2,
+                "quality": 4
+              },
+              {
+                "bytes": 3,
+                "quality": 7
+              }
+            ],
+            [
+              {
+                "bytes": 1,
+                "quality": 2
+              },
+              {
+                "bytes": 3,
+                "quality": 6
+              }
+            ]
+          ]
+        },
+        "output": 17,
+        "explanation": "Choose the second, second, and first candidates. No feasible complete selection has higher quality."
+      },
+      {
+        "input": {
+          "budget": 5,
+          "shots": [
+            [
+              {
+                "bytes": 1,
+                "quality": 0
+              },
+              {
+                "bytes": 3,
+                "quality": 5
+              }
+            ],
+            [
+              {
+                "bytes": 1,
+                "quality": 0
+              },
+              {
+                "bytes": 4,
+                "quality": 7
+              }
+            ]
+          ]
+        },
+        "output": 7,
+        "explanation": "Choose costs 1 and 4. Upgrading the first shot uses the available budget less effectively despite a better local ratio."
+      },
+      {
+        "input": {
+          "budget": 2,
+          "shots": [
+            [
+              {
+                "bytes": 2,
+                "quality": 4
+              }
+            ],
+            [
+              {
+                "bytes": 1,
+                "quality": 3
+              }
+            ]
+          ]
+        },
+        "output": null,
+        "explanation": "The minimum complete cost is three bytes."
+      },
+      {
+        "input": {
+          "budget": 0,
+          "shots": []
+        },
+        "output": 0,
+        "explanation": "The empty selection is feasible."
+      }
+    ]
+  },
+  {
+    "id": "netflix-vegas-limit",
+    "title": "Adaptive Concurrency: Trace a Vegas Limit Update",
+    "company": "Netflix",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Netflix concurrency-limits: VegasLimit core update",
+    "url": "https://github.com/Netflix/concurrency-limits/blob/78a74b9878d38c4c048b0304ce12a162ab7b7222/concurrency-limits-core/src/main/java/com/netflix/concurrency/limits/limit/VegasLimit.java",
+    "sourceNote": "Original exercise based on the pinned Netflix implementation, not a published interview question. Trace only its core update: baseline RTT is already initialized, no probe or baseline reset occurs, smoothing is one, and the explicitly configured thresholds and step functions replace defaults.",
+    "prompt": "Return the limit after each sample. Start with integer limit L in [1,20], fixed baseline RTT R0=100 ms, maximum 20, and integer sample RTT R>=R0. Use the exact arithmetic model q=ceil(L(1-R0/R)). Use threshold=1, alpha=3, beta=6, increase(L)=L+1, decrease(L)=L-1. Each sample supplies R, a nonnegative integer inflight count, and boolean didDrop.",
+    "approach": [
+      "Evaluate each sample against the previous limit. A drop decreases L by one first, even when demand is low. Otherwise, if 2*inflight<L, keep L unchanged.",
+      "For other samples, q<=1 adds six; otherwise q<3 adds one; q>6 subtracts one; all remaining queue estimates keep L unchanged. Equality at alpha or beta therefore holds the limit.",
+      "Clamp a changed limit to [1,20]. Apply each completed update before processing the next sample. With smoothing one and integer step functions, no fractional limit remains."
+    ],
+    "complexity": "O(n) time for n samples with O(1) running state; returning every updated limit takes O(n) output space.",
+    "pitfalls": [
+      "The queue estimate is not an observed queue length. Concurrency differs from requests per second.",
+      "IEEE floating-point rounding near an integer can affect ceil. This exercise uses exact arithmetic rather than claiming identical Java results for every fraction."
+    ],
+    "followUp": "What changes when smoothing is fractional, or a new minimum RTT causes an early return?",
+    "answer": "The six-sample trace produces [9,9,8,8,7,13]. The fourth sample is demand-limited; the fifth still backs off because a drop takes precedence.",
+    "topics": [
+      "adaptive-concurrency",
+      "concurrency-parallelism",
+      "network",
+      "loop-invariant"
+    ],
+    "chapters": [
+      18,
+      19
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {
+          "initialLimit": 8,
+          "minRttMs": 100,
+          "maxLimit": 20,
+          "samples": [
+            {
+              "rttMs": 125,
+              "inflight": 8,
+              "didDrop": false
+            },
+            {
+              "rttMs": 180,
+              "inflight": 9,
+              "didDrop": false
+            },
+            {
+              "rttMs": 450,
+              "inflight": 9,
+              "didDrop": false
+            },
+            {
+              "rttMs": 100,
+              "inflight": 3,
+              "didDrop": false
+            },
+            {
+              "rttMs": 100,
+              "inflight": 3,
+              "didDrop": true
+            },
+            {
+              "rttMs": 100,
+              "inflight": 7,
+              "didDrop": false
+            }
+          ]
+        },
+        "output": [
+          9,
+          9,
+          8,
+          8,
+          7,
+          13
+        ],
+        "explanation": "Small queue, middle band, high queue, low demand, drop, and aggressive growth respectively."
+      },
+      {
+        "input": {
+          "initialLimit": 8,
+          "minRttMs": 100,
+          "maxLimit": 20,
+          "samples": [
+            {
+              "rttMs": 160,
+              "inflight": 8,
+              "didDrop": false
+            },
+            {
+              "rttMs": 400,
+              "inflight": 8,
+              "didDrop": false
+            }
+          ]
+        },
+        "output": [
+          8,
+          8
+        ],
+        "explanation": "Queue estimates equal alpha=3 and beta=6; both boundaries hold."
+      },
+      {
+        "input": {
+          "initialLimit": 18,
+          "minRttMs": 100,
+          "maxLimit": 20,
+          "samples": [
+            {
+              "rttMs": 100,
+              "inflight": 18,
+              "didDrop": false
+            }
+          ]
+        },
+        "output": [
+          20
+        ],
+        "explanation": "Aggressive growth would reach 24, so the maximum clamps it to 20."
+      },
+      {
+        "input": {
+          "initialLimit": 1,
+          "minRttMs": 100,
+          "maxLimit": 20,
+          "samples": [
+            {
+              "rttMs": 100,
+              "inflight": 0,
+              "didDrop": true
+            }
+          ]
+        },
+        "output": [
+          1
+        ],
+        "explanation": "A drop cannot reduce the limit below one."
+      }
+    ],
+    "additionalSources": [
+      {
+        "title": "Netflix concurrency-limits overview and enforcement strategies",
+        "url": "https://github.com/Netflix/concurrency-limits/blob/78a74b9878d38c4c048b0304ce12a162ab7b7222/README.md"
+      }
+    ]
+  }
+]

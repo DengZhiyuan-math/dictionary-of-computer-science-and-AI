@@ -1,0 +1,489 @@
+[
+  {
+    "id": "google-workout",
+    "title": "Workout: Binary Search a Feasible Maximum Gap",
+    "company": "Google",
+    "sourceKind": "official-practice",
+    "sourceTitle": "Google Kick Start 2020, Round A — Workout",
+    "url": "https://github.com/google/coding-competitions-archive/blob/87385db7dbd81b281225412b8ad496334536d016/kickstart/2020/round_a/workout/problem_statement/problem.html",
+    "prompt": "Given at least two strictly increasing positive integers and insertion budget K ≥ 0, insert at most K integers while keeping strict order. Minimize the largest adjacent difference. This official contest task is used here for interview preparation.",
+    "approach": [
+      "For a proposed positive maximum gap D, an original gap g needs ceil(g/D) − 1 insertions, equivalently floor((g − 1)/D).",
+      "Add this count across gaps. The target is feasible exactly when the sum is at most K; larger D cannot require more insertions.",
+      "Binary-search the first feasible integer in [1, G], where G is the original maximum gap. Construct insertions only if requested."
+    ],
+    "complexity": "O(n log(G + 1)) time and O(1) auxiliary space with indexed input; n is the number of original values and G their maximum adjacent gap. The bound includes the initial scan when G = 1.",
+    "pitfalls": [
+      "Repeatedly halving the current largest gap can be suboptimal.",
+      "Use integer division and a sufficiently wide count."
+    ],
+    "followUp": "Construct a sequence attaining the minimum; handle K = 0.",
+    "answer": "For [2, 12] and K = 2, the minimum is 4, attained by [2, 5, 8, 12].",
+    "topics": [
+      "binary-search-answer",
+      "greedy",
+      "loop-invariant"
+    ],
+    "chapters": [
+      9,
+      91,
+      103
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {
+          "values": [
+            2,
+            12
+          ],
+          "K": 2
+        },
+        "output": 4,
+        "explanation": "D = 3 needs 3 insertions; D = 4 needs 2."
+      },
+      {
+        "input": {
+          "values": [
+            1,
+            4,
+            10
+          ],
+          "K": 0
+        },
+        "output": 6,
+        "explanation": "Without insertions, the original largest gap remains."
+      }
+    ]
+  },
+  {
+    "id": "google-append-sort",
+    "title": "Append Sort: Preserve Prefixes with the Smallest Extension",
+    "company": "Google",
+    "sourceKind": "official-practice",
+    "sourceTitle": "Google Code Jam 2021, Round 1A — Append Sort",
+    "url": "https://github.com/google/coding-competitions-archive/blob/87385db7dbd81b281225412b8ad496334536d016/codejam/2021/round_1a/append_sort/problem_statement/problem.html",
+    "prompt": "Keep positive decimal integers in their original order. You may append digits to each integer. Make the resulting sequence strictly increasing with the fewest appended digits. Use strings to avoid overflow.",
+    "approach": [
+      "Process left to right, extending each value to the smallest integer greater than the previous result. A smaller result never makes later extensions harder.",
+      "If the current value already exceeds the previous result, keep it. Otherwise let k be their length difference and compare extensions with k zeroes and k nines.",
+      "Use the zero extension if it exceeds the previous result. If the nine extension cannot, append k + 1 zeroes. Otherwise increment the previous result; its prefix remains the current value."
+    ],
+    "complexity": "O(S) time and O(L) working space excluding stored results; S is total constructed digit count and L the maximum constructed length.",
+    "pitfalls": [
+      "Equal adjacent values require an extension.",
+      "An all-nine suffix may force another digit."
+    ],
+    "followUp": "Prove the greedy choice by replacing any larger feasible current result.",
+    "answer": "[120, 12, 12] becomes [120, 121, 122] with 2 appended digits.",
+    "topics": [
+      "greedy",
+      "loop-invariant",
+      "complexity"
+    ],
+    "chapters": [
+      7,
+      12,
+      94
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": [
+          120,
+          12,
+          12
+        ],
+        "output": {
+          "appendedDigits": 2,
+          "values": [
+            "120",
+            "121",
+            "122"
+          ]
+        },
+        "explanation": "Increment matching suffixes."
+      },
+      {
+        "input": [
+          19,
+          1,
+          1
+        ],
+        "output": {
+          "appendedDigits": 4,
+          "values": [
+            "19",
+            "100",
+            "101"
+          ]
+        },
+        "explanation": "The first extension must exceed 19."
+      }
+    ]
+  },
+  {
+    "id": "google-chain-reactions",
+    "title": "Chain Reactions: Carry One Unfinished Path Through a Tree",
+    "company": "Google",
+    "sourceKind": "official-practice",
+    "sourceTitle": "Google Code Jam 2022, Qualification Round — Chain Reactions",
+    "url": "https://github.com/google/coding-competitions-archive/blob/87385db7dbd81b281225412b8ad496334536d016/codejam/2022/qualification_round/chain_reactions/problem_statement/problem.html",
+    "prompt": "Node i has positive value F[i] and parent P[i] < i, or 0 for none. Trigger every leaf once, in a chosen order. Each trigger walks toward the root until an already triggered node. Its reward is the maximum newly triggered value. Maximize total reward.",
+    "approach": [
+      "Process children before parents. Store carry r[v], one unfinished path reward, and finalized subtotal b[v]. A leaf has r[v] = F[v] and b[v] = 0.",
+      "For an internal node, set m = min r[c] over children c. Then r[v] = max(F[v], m) and b[v] = sum(b[c] + r[c]) − m.",
+      "Let the smallest child carry absorb the parent, preserving larger rewards separately. Sum b[v] + r[v] over roots."
+    ],
+    "complexity": "O(n) time and O(n) space for n nodes.",
+    "pitfalls": [
+      "Do not add a shared ancestor to every leaf path.",
+      "A deep chain can overflow recursive call stacks."
+    ],
+    "followUp": "Recover a maximizing leaf order.",
+    "answer": "F = [20, 7, 9, 12], P = [0, 1, 1, 2] gives 32 by triggering leaf 3 before leaf 4.",
+    "topics": [
+      "postorder-dp",
+      "dynamic-programming",
+      "greedy"
+    ],
+    "chapters": [
+      9,
+      88,
+      95
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {
+          "F": [
+            20,
+            7,
+            9,
+            12
+          ],
+          "P": [
+            0,
+            1,
+            1,
+            2
+          ]
+        },
+        "output": 32,
+        "explanation": "The two chains earn 20 and 12."
+      },
+      {
+        "input": {
+          "F": [
+            5,
+            2,
+            8
+          ],
+          "P": [
+            0,
+            1,
+            2
+          ]
+        },
+        "output": 8,
+        "explanation": "One leaf triggers the entire chain."
+      }
+    ]
+  },
+  {
+    "id": "google-double-or-one-thing",
+    "title": "Double or One Thing: Compare the Next Different Character",
+    "company": "Google",
+    "sourceKind": "official-practice",
+    "sourceTitle": "Google Code Jam 2022, Round 1A — Double or One Thing",
+    "url": "https://github.com/google/coding-competitions-archive/blob/87385db7dbd81b281225412b8ad496334536d016/codejam/2022/round_1a/double_or_one_thing/problem_statement/problem.html",
+    "prompt": "Each occurrence in an uppercase string may be emitted once or twice, preserving order. Return the lexicographically smallest obtainable string. A proper prefix sorts before its extension.",
+    "approach": [
+      "Scan maximal runs of equal characters. Compare each run's letter with the next different letter.",
+      "Double the entire run when the next letter is larger. The extra smaller letters improve the first differing position.",
+      "Keep a run unchanged when the next letter is smaller, or when no later different letter exists. In the final case, extra copies only extend a prefix."
+    ],
+    "complexity": "O(n) time and O(n) output space for n input characters; output length is at most 2n.",
+    "pitfalls": [
+      "Looking only one position ahead fails inside equal-letter runs.",
+      "The last run must remain unchanged."
+    ],
+    "followUp": "Check the rule by enumerating all 2^n emission choices for small n.",
+    "answer": "AABC becomes AAAABBC; CBA remains CBA.",
+    "topics": [
+      "greedy",
+      "two-pointers",
+      "loop-invariant"
+    ],
+    "chapters": [
+      7,
+      12,
+      94
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": "AABC",
+        "output": "AAAABBC",
+        "explanation": "Double both As and B before larger letters."
+      },
+      {
+        "input": "CBA",
+        "output": "CBA",
+        "explanation": "Every next different letter is smaller."
+      },
+      {
+        "input": "AAA",
+        "output": "AAA",
+        "explanation": "The shortest all-A string sorts first."
+      }
+    ]
+  },
+  {
+    "id": "google-mapreduce-mean",
+    "title": "MapReduce Combiners: A Mean Needs Both Sum and Count",
+    "company": "Google",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Google Research — MapReduce: Simplified Data Processing on Large Clusters, section 4.3",
+    "url": "https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/",
+    "prompt": "Original exercise based on Google's MapReduce paper: compute one key's mean across unequal worker partitions. Why is averaging worker means incorrect, and what summary can safely be combined? Assume each input occurrence contributes exactly once.",
+    "approach": [
+      "Represent each value x by (x, 1). Each worker accumulates (sum, count).",
+      "Merge summaries componentwise: (s1, c1) + (s2, c2) = (s1 + s2, c1 + c2). This operation is associative and commutative in exact arithmetic.",
+      "Divide only after the final merge. Counts preserve the unequal partition weights. An empty total has no defined mean."
+    ],
+    "complexity": "For one key, O(n) arithmetic work and O(w) summary pairs transferred for n values on w workers; O(1) streaming state per worker.",
+    "pitfalls": [
+      "A scalar mean is not a sufficient merge state.",
+      "Floating-point addition is not exactly associative."
+    ],
+    "followUp": "How would you summarize variance without retaining every value?",
+    "answer": "Partitions [2, 4] and [12] give mean 18/3 = 6; averaging their means gives 7.5.",
+    "topics": [
+      "mapreduce-combiners",
+      "replication-sharding",
+      "concurrency-parallelism"
+    ],
+    "chapters": [
+      2,
+      19,
+      20
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": [
+          [
+            2,
+            4
+          ],
+          [
+            12
+          ]
+        ],
+        "output": {
+          "sum": 18,
+          "count": 3,
+          "mean": 6
+        },
+        "explanation": "Merge (6, 2) and (12, 1)."
+      },
+      {
+        "input": [
+          [],
+          [
+            8,
+            10
+          ]
+        ],
+        "output": {
+          "sum": 18,
+          "count": 2,
+          "mean": 9
+        },
+        "explanation": "An empty partition contributes (0, 0)."
+      }
+    ]
+  },
+  {
+    "id": "google-spanner-order",
+    "title": "Spanner: Serializability Versus Observable Commit Order",
+    "company": "Google",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Google Cloud — Spanner: TrueTime and external consistency",
+    "url": "https://docs.cloud.google.com/spanner/docs/true-time-external-consistency",
+    "prompt": "Original exercise based on Spanner documentation: initially x = y = 0. T1 writes x = 1 and completes before T2 begins; T2 writes y = 1. With external consistency, which states can one consistent snapshot observe? Could plain serializability permit a different order?",
+    "approach": [
+      "External consistency combines a serial transaction order with real-time precedence. Therefore T1 precedes T2.",
+      "Snapshot states at successive points are (0, 0), (1, 0), and (1, 1). The state (0, 1) would put T2 before the completed T1.",
+      "Serializability alone may reorder these independent writes. Separate reads need not constitute one snapshot; specify the read mode."
+    ],
+    "complexity": "O(t) time to enumerate snapshot states for a supplied order of t constant-size transactions; this is a reasoning model, not a Spanner latency bound.",
+    "pitfalls": [
+      "Do not equate every serial schedule with real-time order.",
+      "A historical snapshot may precede both commits."
+    ],
+    "followUp": "What must a strong read started after T2 completes observe?",
+    "answer": "One consistent snapshot cannot contain T2's write while excluding T1's; a strong read after both commits sees (1, 1).",
+    "topics": [
+      "external-consistency",
+      "transaction-acid",
+      "consensus"
+    ],
+    "chapters": [
+      14,
+      16,
+      19,
+      20
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {
+          "initial": [
+            0,
+            0
+          ],
+          "orderedWrites": [
+            [
+              "x",
+              1
+            ],
+            [
+              "y",
+              1
+            ]
+          ]
+        },
+        "output": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "explanation": "These are prefixes of the required serial order."
+      }
+    ]
+  },
+  {
+    "id": "google-error-budget",
+    "title": "SLO Error Budgets: Count Eligible Requests Before Converting to Time",
+    "company": "Google",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Google SRE Workbook — Implementing SLOs",
+    "url": "https://sre.google/workbook/implementing-slos/",
+    "prompt": "Original exercise based on Google's SRE Workbook: an observation window contains 4,000,000 eligible requests and 1,500 bad requests. The success-ratio SLO is 99.95%. Compute observed availability, allowed bad requests, budget consumed, and budget remaining.",
+    "approach": [
+      "Define eligible and good events first. For N eligible requests and B bad ones, availability is 1 − B/N.",
+      "For target fraction S, the error budget is E = N(1 − S). Consumption is B/E when E > 0; remaining budget is E − B.",
+      "Compare the request ratio with its target. This request-based SLI cannot be converted into outage minutes without additional traffic assumptions."
+    ],
+    "complexity": "O(r) time to classify r request records, or O(1) arithmetic from supplied counters; O(1) counter state.",
+    "pitfalls": [
+      "99.95% is 0.9995, not 0.995.",
+      "Changing eligibility changes the denominator and the SLO meaning."
+    ],
+    "followUp": "How should failed requests that never reach the application enter the SLI?",
+    "answer": "Availability is 99.9625%; 2,000 bad requests are allowed, 75% of the budget is consumed, and 500 remain.",
+    "topics": [
+      "slo-error-budget",
+      "mlops",
+      "network"
+    ],
+    "chapters": [
+      19,
+      51
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {
+          "eligible": 4000000,
+          "bad": 1500,
+          "target": 0.9995
+        },
+        "output": {
+          "availability": 0.999625,
+          "allowedBad": 2000,
+          "consumedFraction": 0.75,
+          "remainingBad": 500
+        },
+        "explanation": "Use exact decimal arithmetic or tolerate floating-point rounding."
+      }
+    ]
+  },
+  {
+    "id": "google-embedding-ranking",
+    "title": "Embedding Retrieval: Norms Can Change the Winning Candidate",
+    "company": "Google",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Google for Developers — Candidate generation overview",
+    "url": "https://developers.google.com/machine-learning/recommendation/overview/candidate-generation",
+    "prompt": "Original exercise based on Google's recommendation course: for query q = (1, 0) and candidates a = (2, 2), b = (1, 0), rank candidates by dot product, cosine similarity, and squared Euclidean distance. Explain what changes after unit normalization.",
+    "approach": [
+      "Dot product is q·x = sum(q_i x_i). Cosine is (q·x)/(||q|| ||x||), defined only for nonzero vectors.",
+      "Squared distance is ||q − x||². Higher dot product or cosine wins; lower distance wins. Compute each measure before comparing rankings.",
+      "For unit vectors, ||q − x||² = 2 − 2(q·x), so all three rankings agree. Without normalization, vector norms can change rankings."
+    ],
+    "complexity": "O(md) time for exhaustive scoring of m candidates in d dimensions; O(d) query storage and O(1) additional state for streaming scores.",
+    "pitfalls": [
+      "Cosine is undefined for a zero vector.",
+      "A large norm alone does not prove that an item is popular or relevant."
+    ],
+    "followUp": "When could retaining norm information help recommendation?",
+    "answer": "Dot product selects a; cosine and distance select b. Normalizing both query and candidates aligns the rankings.",
+    "topics": [
+      "token-embedding",
+      "rag",
+      "multimodal-representation"
+    ],
+    "chapters": [
+      35,
+      52,
+      60,
+      64
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {
+          "q": [
+            1,
+            0
+          ],
+          "a": [
+            2,
+            2
+          ],
+          "b": [
+            1,
+            0
+          ]
+        },
+        "output": {
+          "dot": {
+            "a": 2,
+            "b": 1
+          },
+          "cosine": {
+            "a": 0.7071067811865475,
+            "b": 1
+          },
+          "squaredDistance": {
+            "a": 5,
+            "b": 0
+          }
+        },
+        "explanation": "Candidate a has the larger norm; b exactly matches q."
+      }
+    ]
+  }
+]

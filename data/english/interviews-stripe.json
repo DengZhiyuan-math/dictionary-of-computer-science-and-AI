@@ -1,0 +1,249 @@
+[
+  {
+    "id": "stripe-v1-idempotency-cache",
+    "title": "API v1 Idempotency: Cache Executed Errors and Prune Explicitly",
+    "company": "Stripe",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Stripe API: Idempotent requests, API v1 semantics",
+    "url": "https://docs.stripe.com/api/idempotent_requests",
+    "sourceNote": "Original preparation exercise derived from Stripe's API v1 idempotency documentation, not a published Stripe hiring question. API v2 has different retry semantics. The event format, response tokens, explicit pruning schedule, and fixed-size parameter fingerprints are local assumptions.",
+    "prompt": "Simulate API v1 POST retries in a single sequential trace. Events have nondecreasing integer times at, measured in seconds. A request supplies key, an exact fixed-size parameter fingerprint params, and a hypothetical result with phase validation, conflict, or executed, plus status and body. If the key is retained, ignore that result: identical params replay the cached response; different params return only {action:mismatch}. For an absent key, validation and conflict return an uncached response. An executed result, including a 500 response, starts an endpoint execution and caches params, status, body, and at. Only an explicit prune event removes records whose age is at least 86400 seconds. Return request responses, the execution count, and retained keys in cache insertion order. Prune produces no response. Treat keys, fingerprints, and response tokens as fixed-size values. There are no overlapping requests; conflict is a supplied pre-execution outcome.",
+    "approach": [
+      "Use a hash map from key to saved parameters, response, and insertion time. Check an existing entry before inspecting the hypothetical new result. A cached 500 must replay just like a cached success.",
+      "For a new key, return validation or conflict errors without storing an entry. Only phase executed increments the execution counter and appends a cache entry. A parameter mismatch neither executes nor replaces the old entry.",
+      "Keep insertion records in a deque. Times never decrease, so a prune removes an expired prefix while at-insertedAt>=86400. A key older than 24 hours still replays until an explicit prune actually removes it. Each inserted record enters and leaves the deque at most once."
+    ],
+    "complexity": "Expected O(E) total time for E events with expected constant-time hashing and constant-time deque operations; pruning is amortized over insertions. O(K) live state for K retained keys, plus O(R) output for R requests under the fixed-size value model.",
+    "pitfalls": [
+      "An executed 500 can be cached. Retrying with the same key does not necessarily rerun the endpoint or produce a successful response.",
+      "The 24-hour age makes a key eligible for removal; this exercise removes it only at a prune event.",
+      "Changing the key can start another operation. This cache provides no business-level deduplication across different keys, and its rules describe API v1 only."
+    ],
+    "followUp": "If insertion times were not monotone, how would an expiry heap replace the deque, and what would that do to complexity?",
+    "answer": "The main trace executes twice. Its first execution returns 500 and remains the replayed result before pruning. The record is retained at age 86399, removed at age 86400, and then the reused key can execute again.",
+    "topics": ["idempotency", "cache", "hash-table", "amortized-analysis", "loop-invariant"],
+    "chapters": [4, 5, 18, 19],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {"events": [
+          {"at": 0, "op": "request", "key": "K", "params": "A", "result": {"phase": "validation", "status": 400, "body": "invalid"}},
+          {"at": 1, "op": "request", "key": "K", "params": "A", "result": {"phase": "executed", "status": 500, "body": "unknown"}},
+          {"at": 2, "op": "request", "key": "K", "params": "A", "result": {"phase": "executed", "status": 200, "body": "ignored"}},
+          {"at": 3, "op": "request", "key": "K", "params": "B", "result": {"phase": "executed", "status": 200, "body": "ignored"}},
+          {"at": 86400, "op": "prune"},
+          {"at": 86400, "op": "request", "key": "K", "params": "A", "result": {"phase": "executed", "status": 200, "body": "ignored"}},
+          {"at": 86401, "op": "prune"},
+          {"at": 86402, "op": "request", "key": "K", "params": "A", "result": {"phase": "executed", "status": 200, "body": "second"}}
+        ]},
+        "output": {"responses": [
+          {"action": "uncached", "status": 400, "body": "invalid"},
+          {"action": "executed", "status": 500, "body": "unknown"},
+          {"action": "replayed", "status": 500, "body": "unknown"},
+          {"action": "mismatch"},
+          {"action": "replayed", "status": 500, "body": "unknown"},
+          {"action": "executed", "status": 200, "body": "second"}
+        ], "executions": 2, "retainedKeys": ["K"]},
+        "explanation": "Validation leaves no record. The executed error is retained at age 86399 and removed exactly at age 86400. Its later replacement is a new execution."
+      },
+      {
+        "input": {"events": [
+          {"at": 0, "op": "request", "key": "A", "params": "P", "result": {"phase": "conflict", "status": 409, "body": "busy"}},
+          {"at": 1, "op": "request", "key": "A", "params": "P", "result": {"phase": "executed", "status": 201, "body": "first"}},
+          {"at": 2, "op": "request", "key": "B", "params": "P", "result": {"phase": "executed", "status": 201, "body": "second"}}
+        ]},
+        "output": {"responses": [
+          {"action": "uncached", "status": 409, "body": "busy"},
+          {"action": "executed", "status": 201, "body": "first"},
+          {"action": "executed", "status": 201, "body": "second"}
+        ], "executions": 2, "retainedKeys": ["A", "B"]},
+        "explanation": "A pre-execution conflict is retryable without a saved result. Distinct keys do not deduplicate identical parameters. The supplied status and body are local trace values."
+      },
+      {
+        "input": {"events": [
+          {"at": 0, "op": "request", "key": "z", "params": "P", "result": {"phase": "executed", "status": 200, "body": "old-z"}},
+          {"at": 1, "op": "request", "key": "a", "params": "P", "result": {"phase": "executed", "status": 200, "body": "a"}},
+          {"at": 2, "op": "request", "key": "z", "params": "P", "result": {"phase": "executed", "status": 200, "body": "ignored"}},
+          {"at": 86400, "op": "prune"},
+          {"at": 86400, "op": "request", "key": "z", "params": "P", "result": {"phase": "executed", "status": 200, "body": "new-z"}}
+        ]},
+        "output": {"responses": [
+          {"action": "executed", "status": 200, "body": "old-z"},
+          {"action": "executed", "status": 200, "body": "a"},
+          {"action": "replayed", "status": 200, "body": "old-z"},
+          {"action": "executed", "status": 200, "body": "new-z"}
+        ], "executions": 3, "retainedKeys": ["a", "z"]},
+        "explanation": "Replaying z does not refresh its insertion time. After z expires and is inserted again, a precedes it in retention order."
+      },
+      {
+        "input": {"events": []},
+        "output": {"responses": [], "executions": 0, "retainedKeys": []},
+        "explanation": "An empty trace creates no cache entries or responses."
+      }
+    ]
+  },
+  {
+    "id": "stripe-webhook-one-shot-effect",
+    "title": "Webhook Delivery: Separate Event Identity from a One-shot Business Effect",
+    "company": "Stripe",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Stripe Webhooks: Event ordering and duplicate events",
+    "url": "https://docs.stripe.com/webhooks",
+    "sourceNote": "Original preparation exercise based on Stripe's duplicate-delivery and ordering guidance, not a published Stripe hiring question. The one-fulfillment-per-invoice rule and atomic local commit model are exercise assumptions; deduplicating every recurring update by object ID and type would be incorrect.",
+    "prompt": "Process a local sequence of authenticated, valid webhook deliveries. Each contains id, type (invoice.created or invoice.paid), objectId (an invoice ID), and commit. Repeated event IDs always have the same type and objectId. Maintain committed event IDs and one local fulfillment effect per (invoice.paid,objectId). If an event ID is already committed, return duplicate-delivery and ignore commit. Otherwise, commit=false rolls back every local change and returns rolled-back. A successful invoice.created returns recorded and only records the event ID. A successful invoice.paid returns fulfilled if its effect is new, otherwise duplicate-effect; either records the event ID. Return per-delivery actions, invoice IDs in first successful fulfillment order, and event IDs in first commit order. A later invoice.created must not undo fulfillment. There are no refunds, partial payments, external calls, or real database operations.",
+    "approach": [
+      "Use one set for delivery identity and another set for the one-shot effect key. Event-ID deduplication alone cannot collapse two different Event objects representing the same one-shot effect.",
+      "In a database implementation, enforce uniqueness and commit the deduplication records together with the local business write. The trace's commit=false means that neither the event marker nor the fulfillment survives.",
+      "Only invoice.paid can add the fulfillment effect. Record created events independently instead of overwriting a paid state with an older snapshot. The effect set grows monotonically, so delivery order cannot undo an already committed fulfillment."
+    ],
+    "complexity": "Expected O(E) time for E deliveries with fixed-size identifiers and expected constant-time set operations. O(U+F) retained state for U committed event IDs and F fulfilled invoices, plus O(E) action output.",
+    "pitfalls": [
+      "Do not use event.created timestamps as unique identifiers or as a guaranteed delivery order.",
+      "Object ID plus event type is appropriate here because the effect is explicitly one-shot. Recurring invoice.updated events can represent different legitimate changes.",
+      "A local transaction cannot atomically commit an unrelated external API side effect. An outbox or an idempotent downstream operation requires a separate design."
+    ],
+    "followUp": "How would a transactional outbox preserve a pending external fulfillment instruction across crashes, and where would downstream deduplication occur?",
+    "answer": "In the main trace, the rolled-back first delivery can retry successfully. Replaying its event ID is duplicate-delivery; a different paid-event ID for the same invoice is duplicate-effect. The later created event records its identity without reversing fulfillment.",
+    "topics": ["idempotency", "canonical-key", "transaction-acid", "message-ordering", "hash-table"],
+    "chapters": [5, 14, 16, 19, 20],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {"events": [
+          {"id": "e1", "type": "invoice.paid", "objectId": "A", "commit": false},
+          {"id": "e1", "type": "invoice.paid", "objectId": "A", "commit": true},
+          {"id": "e1", "type": "invoice.paid", "objectId": "A", "commit": true},
+          {"id": "e2", "type": "invoice.paid", "objectId": "A", "commit": true},
+          {"id": "e3", "type": "invoice.created", "objectId": "A", "commit": true},
+          {"id": "e4", "type": "invoice.paid", "objectId": "B", "commit": true}
+        ]},
+        "output": {"actions": ["rolled-back", "fulfilled", "duplicate-delivery", "duplicate-effect", "recorded", "fulfilled"], "fulfilled": ["A", "B"], "processedEventIds": ["e1", "e2", "e3", "e4"]},
+        "explanation": "Both delivery identity and effect identity are needed. Only committed new paid effects add a fulfillment."
+      },
+      {
+        "input": {"events": [
+          {"id": "paid", "type": "invoice.paid", "objectId": "X", "commit": true},
+          {"id": "created", "type": "invoice.created", "objectId": "X", "commit": true},
+          {"id": "paid", "type": "invoice.paid", "objectId": "X", "commit": false}
+        ]},
+        "output": {"actions": ["fulfilled", "recorded", "duplicate-delivery"], "fulfilled": ["X"], "processedEventIds": ["paid", "created"]},
+        "explanation": "Out-of-order creation does not remove the effect. A committed event-ID match short-circuits before the hypothetical failed commit."
+      },
+      {
+        "input": {"events": [
+          {"id": "a", "type": "invoice.created", "objectId": "X", "commit": false},
+          {"id": "a", "type": "invoice.created", "objectId": "X", "commit": true},
+          {"id": "b", "type": "invoice.created", "objectId": "X", "commit": true}
+        ]},
+        "output": {"actions": ["rolled-back", "recorded", "recorded"], "fulfilled": [], "processedEventIds": ["a", "b"]},
+        "explanation": "Creation events do not reserve a paid-effect key, and a rollback does not reserve an event ID."
+      },
+      {
+        "input": {"events": []},
+        "output": {"actions": [], "fulfilled": [], "processedEventIds": []},
+        "explanation": "No deliveries imply no committed markers or effects."
+      }
+    ]
+  },
+  {
+    "id": "stripe-currency-amount-parser",
+    "title": "Currency Encoding: Parse Exact Minor Units Before Checking Payout Increments",
+    "company": "Stripe",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Stripe: Supported currencies and special cases",
+    "url": "https://docs.stripe.com/currencies",
+    "sourceNote": "Original preparation exercise based on Stripe's documented minor-unit and special-currency encoding rules, not a published Stripe hiring question. The parser grammar and error precedence are local. This is an offline encoding model; it does not validate account eligibility, balances, payment-method support, or minimum and maximum transaction amounts.",
+    "prompt": "Encode each row's major-unit amount string for currency usd, jpy, isk, huf, or twd and operation charge or manual-payout. The grammar is one or more ASCII digits, optionally followed by a dot and one or more ASCII digits; signs, spaces, exponent notation, and an empty fraction are invalid. Use scale 0 for JPY and scale 2 for the other four currencies. Extra fractional digits are permitted only when all discarded digits are zero. ISK encodings must be divisible by 100 for either operation. HUF and TWD manual-payout encodings must also be divisible by 100; their charges permit hundredths. Return {ok:true,minor:canonicalUnsignedDecimalString}, or {ok:false,reason:...}. Check errors in order: syntax, precision, currency-increment for ISK, payout-increment for HUF/TWD manual payouts. Zero is valid in this encoding exercise. Never round or convert the input through binary floating point.",
+    "approach": [
+      "Validate the ASCII grammar and split the integer and fractional digit strings. Select the currency's API scale; currency display precision and API storage scale need not coincide.",
+      "Reject a nonzero digit beyond that scale. Otherwise truncate only excess zeros, pad the fraction to the scale, concatenate it with the integer digits, and strip leading zeros while retaining one zero.",
+      "Check the required increment on the exact minor-unit representation. ISK uses a two-decimal representation but requires whole major units. HUF and TWD use two-decimal charges while their manual payouts require whole major units. String suffix checks suffice for divisibility by 100."
+    ],
+    "complexity": "O(D+N) time for N rows containing D amount characters in total, with a string-based implementation. O(M) temporary space for the longest M-character row, plus output size; no fixed-width integer range is assumed.",
+    "pitfalls": [
+      "Multiplying a floating-point number by 100 can introduce a rounding error before integer conversion.",
+      "Do not encode an ISK amount using JPY's scale: whole major units do not imply identical API representations.",
+      "Do not round a fractional HUF or TWD payout down silently. Reject its increment, and leave any separate balance or payout decision to the caller."
+    ],
+    "followUp": "How would you add a currency with a three-decimal API scale while preserving exact parsing, explicit increment rules, and error precedence?",
+    "answer": "10.45 HUF encodes as 1045 for a charge but fails the whole-unit manual-payout increment. 5 ISK encodes as 500, while 5 JPY encodes as 5. A USD input of 0.2900 encodes exactly as 29.",
+    "topics": ["exact-decimal-arithmetic", "api", "data-structures", "loop-invariant"],
+    "chapters": [4, 5, 12, 19],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {"rows": [
+          {"currency": "usd", "operation": "charge", "amount": "0.2900"},
+          {"currency": "jpy", "operation": "charge", "amount": "5"},
+          {"currency": "isk", "operation": "charge", "amount": "5"},
+          {"currency": "huf", "operation": "charge", "amount": "10.45"},
+          {"currency": "huf", "operation": "manual-payout", "amount": "10.45"},
+          {"currency": "twd", "operation": "manual-payout", "amount": "800.00"}
+        ]},
+        "output": [
+          {"ok": true, "minor": "29"},
+          {"ok": true, "minor": "5"},
+          {"ok": true, "minor": "500"},
+          {"ok": true, "minor": "1045"},
+          {"ok": false, "reason": "payout-increment"},
+          {"ok": true, "minor": "80000"}
+        ],
+        "explanation": "The same major-unit amount can have different API scales. Operation-specific payout increments are checked after exact encoding."
+      },
+      {
+        "input": {"rows": [
+          {"currency": "usd", "operation": "charge", "amount": "1.001"},
+          {"currency": "jpy", "operation": "charge", "amount": "1.20"},
+          {"currency": "isk", "operation": "charge", "amount": "5.20"},
+          {"currency": "twd", "operation": "manual-payout", "amount": "8.001"},
+          {"currency": "twd", "operation": "manual-payout", "amount": "8.01"}
+        ]},
+        "output": [
+          {"ok": false, "reason": "precision"},
+          {"ok": false, "reason": "precision"},
+          {"ok": false, "reason": "currency-increment"},
+          {"ok": false, "reason": "precision"},
+          {"ok": false, "reason": "payout-increment"}
+        ],
+        "explanation": "Excess nonzero precision fails before any increment check. ISK 5.20 fits scale 2 but violates the required increment of 100."
+      },
+      {
+        "input": {"rows": [
+          {"currency": "usd", "operation": "charge", "amount": "1."},
+          {"currency": "usd", "operation": "charge", "amount": " 1.00"},
+          {"currency": "usd", "operation": "charge", "amount": "-1.00"},
+          {"currency": "usd", "operation": "charge", "amount": "1e2"},
+          {"currency": "usd", "operation": "charge", "amount": ""}
+        ]},
+        "output": [
+          {"ok": false, "reason": "syntax"},
+          {"ok": false, "reason": "syntax"},
+          {"ok": false, "reason": "syntax"},
+          {"ok": false, "reason": "syntax"},
+          {"ok": false, "reason": "syntax"}
+        ],
+        "explanation": "The local parser requires an exact unsigned decimal string and never trims or interprets alternate number syntax."
+      },
+      {
+        "input": {"rows": [
+          {"currency": "usd", "operation": "charge", "amount": "0001.2000"},
+          {"currency": "jpy", "operation": "charge", "amount": "0005.000"},
+          {"currency": "isk", "operation": "manual-payout", "amount": "0.000"},
+          {"currency": "usd", "operation": "charge", "amount": "9007199254740993.01"}
+        ]},
+        "output": [
+          {"ok": true, "minor": "120"},
+          {"ok": true, "minor": "5"},
+          {"ok": true, "minor": "0"},
+          {"ok": true, "minor": "900719925474099301"}
+        ],
+        "explanation": "Leading and redundant fractional zeros are harmless. The large value tests exact representation only; it is not a claim that Stripe accepts that transaction amount."
+      },
+      {
+        "input": {"rows": []},
+        "output": [],
+        "explanation": "An empty batch has no encodings or errors."
+      }
+    ]
+  }
+]

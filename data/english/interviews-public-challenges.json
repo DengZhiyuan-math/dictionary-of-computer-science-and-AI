@@ -1,0 +1,552 @@
+[
+  {
+    "id": "cloudflare-variant-routing",
+    "title": "A/B Routing: Fetch One Variant and Preserve the Assignment",
+    "company": "Cloudflare",
+    "sourceKind": "company-sample",
+    "sourceTitle": "Cloudflare 2020 internship application: full-stack assignment",
+    "url": "https://github.com/cloudflare-internship-2020/internship-application-fullstack/blob/2d8f78217091122ce4897a98bbb49eebe39ddb5d/README.md",
+    "prompt": "Fetch an API containing variant URLs, choose one uniformly, and return that page. Preserve the choice in a cookie. For deterministic practice, variants are [A,B], new clients draw U=[0.1,0.8,0.49] in [0,1), and the first client returns with cookie A. Which pages are fetched?",
+    "approach": [
+      "Parse the nonempty list. Without a valid assignment, choose index floor(U*k) for k URLs.",
+      "Fetch only the selected page. Store its stable variant identifier in a cookie and reuse it while valid.",
+      "Each index occupies an interval of length 1/k. Uniform sampling does not guarantee equal short-run counts."
+    ],
+    "complexity": "O(B) parsing/storage for B URL-list bytes; one selected-page fetch. Stream the page.",
+    "pitfalls": [
+      "Fetching every page wastes bandwidth.",
+      "Treat removed or invalid cookie values as unassigned."
+    ],
+    "followUp": "What if the variant list changes?",
+    "answer": "The new clients fetch [A,B,A]. The returning first client fetches A without another random draw.",
+    "chapters": [
+      17,
+      18,
+      19
+    ],
+    "topics": [
+      "network",
+      "api",
+      "cache"
+    ],
+    "checked": "2026-10-17",
+    "sourceNote": "Historical public hiring assignment; this trace covers routing and cookie persistence, not its full deployment task.",
+    "examples": [
+      {
+        "input": {
+          "variants": [
+            "A",
+            "B"
+          ],
+          "newClientDraws": [
+            0.1,
+            0.8,
+            0.49
+          ],
+          "returningCookie": "A"
+        },
+        "output": {
+          "newClients": [
+            "A",
+            "B",
+            "A"
+          ],
+          "returningClient": "A"
+        },
+        "explanation": "U<0.5 selects A; otherwise B."
+      },
+      {
+        "input": {
+          "variants": [
+            "A",
+            "B"
+          ],
+          "newClientDraws": [
+            0,
+            0.5,
+            0.999
+          ]
+        },
+        "output": {
+          "newClients": [
+            "A",
+            "B",
+            "B"
+          ]
+        },
+        "explanation": "0.5 selects index one."
+      }
+    ],
+    "additionalSources": [
+      {
+        "title": "Official retrospective linking the 2020 assignment",
+        "url": "https://blog.cloudflare.com/lessons-from-the-2020-intern-assignment/"
+      }
+    ]
+  },
+  {
+    "id": "cloudflare-icmp-probes",
+    "title": "Ping Accounting: Match Replies and Exclude Duplicates",
+    "company": "Cloudflare",
+    "sourceKind": "company-sample",
+    "sourceTitle": "Cloudflare 2020 internship application: systems ping assignment",
+    "url": "https://github.com/cloudflare-internship-2020/internship-application-systems/blob/de7f22f3b1bb0dd09f9046d2df890af3ca3faa2d/README.md",
+    "prompt": "Build ping accounting for probes 1,2,3 sent at 0,10,20 ms. Replies are (1,8),(3,35),(1,40),(2,90). Accept only the first matching reply arriving less than 50 ms after sending. Report at 100 ms.",
+    "approach": [
+      "Record unique probe identities and monotonic send times; reject replies not matching this run.",
+      "Ignore duplicates and expired replies. For each accepted reply, RTT=receive_time-send_time.",
+      "At the cutoff, loss=(sent-accepted)/sent. Compute RTT statistics from accepted replies only."
+    ],
+    "complexity": "Expected O(S+R) bookkeeping and O(S) storage for S sends and R replies.",
+    "pitfalls": [
+      "Counting duplicates can produce negative loss.",
+      "No accepted replies means RTT statistics are undefined."
+    ],
+    "followUp": "How would you prevent an old reply matching a reused sequence number?",
+    "answer": "Two replies count: RTTs 8 and 15 ms; mean 11.5 ms; loss 1/3.",
+    "chapters": [
+      17,
+      18,
+      105
+    ],
+    "topics": [
+      "network",
+      "hash-table",
+      "loop-invariant"
+    ],
+    "checked": "2026-10-17",
+    "sourceNote": "Historical hiring task: implement an ICMP ping CLI. Fixed events, deadlines, and late-reply policy are teaching assumptions, not network measurements.",
+    "examples": [
+      {
+        "input": {
+          "sends": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              10
+            ],
+            [
+              3,
+              20
+            ]
+          ],
+          "replies": [
+            [
+              1,
+              8
+            ],
+            [
+              3,
+              35
+            ],
+            [
+              1,
+              40
+            ],
+            [
+              2,
+              90
+            ]
+          ],
+          "deadlineMs": 50,
+          "cutoffMs": 100
+        },
+        "output": {
+          "received": 2,
+          "lost": 1,
+          "rttMs": [
+            8,
+            15
+          ],
+          "meanRttMs": 11.5
+        },
+        "explanation": "Probe 1 repeats; probe 2 arrives late."
+      },
+      {
+        "input": {
+          "sends": [
+            [
+              1,
+              0
+            ]
+          ],
+          "replies": [
+            [
+              1,
+              50
+            ]
+          ],
+          "deadlineMs": 50,
+          "cutoffMs": 100
+        },
+        "output": {
+          "received": 0,
+          "lost": 1,
+          "rttMs": [],
+          "meanRttMs": null
+        },
+        "explanation": "The deadline is exclusive."
+      }
+    ],
+    "additionalSources": [
+      {
+        "title": "Official retrospective linking the 2020 assignment",
+        "url": "https://blog.cloudflare.com/lessons-from-the-2020-intern-assignment/"
+      }
+    ]
+  },
+  {
+    "id": "linkedin-knight-moves",
+    "title": "Horseplay: Enumerate Legal Knight Moves",
+    "company": "LinkedIn Learning",
+    "sourceKind": "official-practice",
+    "sourceTitle": "LinkedIn Learning C++ Code Challenges: Challenge 6, Horseplay",
+    "url": "https://github.com/LinkedInLearning/cpp-code-challenges-3096958/blob/ac918634ae590f86aee7d9983df1eae2a591eeae/src/06/Challenge/ch6_horseplay.cpp",
+    "prompt": "Given a valid chess square from a1 through h8, return all squares reachable by one knight move. Ignore other pieces. Sort the result lexicographically for this exercise.",
+    "approach": [
+      "Decode file and rank as coordinates in [0,7].",
+      "Generate offsets (±1,±2) and (±2,±1), covering all eight moves.",
+      "Keep coordinates inside the board, encode them as squares, and sort. Every legal move has exactly one generated offset."
+    ],
+    "complexity": "O(1) time and auxiliary space on a fixed 8-by-8 board; at most eight outputs.",
+    "pitfalls": [
+      "A knight can jump over intervening pieces.",
+      "Reject destinations outside the board before encoding them."
+    ],
+    "followUp": "How would BFS find the fewest moves between two squares when some destinations are blocked?",
+    "answer": "From a1 the destinations are [b3,c2]; from d4 there are eight.",
+    "chapters": [
+      7,
+      10,
+      89
+    ],
+    "topics": [
+      "graph-algorithms",
+      "bfs-dfs",
+      "loop-invariant"
+    ],
+    "checked": "2026-10-17",
+    "sourceNote": "Official educational practice published by LinkedIn Learning; not evidence of a LinkedIn hiring question. Output sorting is a local convention.",
+    "examples": [
+      {
+        "input": {
+          "square": "a1"
+        },
+        "output": [
+          "b3",
+          "c2"
+        ],
+        "explanation": "Six offsets leave the board."
+      },
+      {
+        "input": {
+          "square": "d4"
+        },
+        "output": [
+          "b3",
+          "b5",
+          "c2",
+          "c6",
+          "e2",
+          "e6",
+          "f3",
+          "f5"
+        ],
+        "explanation": "All eight offsets remain inside the board."
+      },
+      {
+        "input": {
+          "square": "h8"
+        },
+        "output": [
+          "f7",
+          "g6"
+        ],
+        "explanation": "The opposite corner also has two legal moves."
+      }
+    ],
+    "additionalSources": [
+      {
+        "title": "LinkedIn Learning course publisher and instructor",
+        "url": "https://github.com/LinkedInLearning/cpp-code-challenges-3096958/blob/ac918634ae590f86aee7d9983df1eae2a591eeae/README.md"
+      }
+    ]
+  },
+  {
+    "id": "linkedin-ipv4-validation",
+    "title": "IPv4 Validation: Parse Every Octet Completely",
+    "company": "LinkedIn Learning",
+    "sourceKind": "official-practice",
+    "sourceTitle": "LinkedIn Learning C++ Code Challenges: Challenge 8, IP Address Validation",
+    "url": "https://github.com/LinkedInLearning/cpp-code-challenges-3096958/blob/ac918634ae590f86aee7d9983df1eae2a591eeae/src/08/Challenge/ch8_ip_address.cpp",
+    "prompt": "Validate dotted-decimal IPv4 text: exactly four nonempty ASCII digit fields, each 0..255. For this exercise, forbid whitespace, signs, and leading zeros except the field 0. Consume the entire input.",
+    "approach": [
+      "Scan characters and delimiters while tracking field count, length, first digit, and numeric value.",
+      "Require one to three digits, value 0..255, and the leading-zero rule.",
+      "Accept only after validating the final field and counting exactly four fields. A valid numeric prefix is insufficient."
+    ],
+    "complexity": "O(n) time for n input characters with O(1) auxiliary state; valid inputs have at most 15 characters.",
+    "pitfalls": [
+      "A trailing dot creates an empty field.",
+      "Permissive integer conversion may accept signs or ignore trailing text."
+    ],
+    "followUp": "Why does IPv6 require a different grammar?",
+    "answer": "192.0.2.7 is valid; 01.2.3.4 and 256.2.3.4 are invalid under these rules.",
+    "chapters": [
+      4,
+      12,
+      17
+    ],
+    "topics": [
+      "network",
+      "loop-invariant",
+      "data-structures"
+    ],
+    "checked": "2026-10-17",
+    "sourceNote": "Official educational practice, not a LinkedIn interview claim. The source specifies decimal fields 0..255; strict syntax and leading-zero rules are explicit local assumptions.",
+    "examples": [
+      {
+        "input": {
+          "address": "192.0.2.7"
+        },
+        "output": true,
+        "explanation": "All four fields satisfy the rules."
+      },
+      {
+        "input": {
+          "address": "01.2.3.4"
+        },
+        "output": false,
+        "explanation": "Leading zero."
+      },
+      {
+        "input": {
+          "address": "256.2.3.4"
+        },
+        "output": false,
+        "explanation": "Octet too large."
+      },
+      {
+        "input": {
+          "address": "1.2.3.4."
+        },
+        "output": false,
+        "explanation": "Extra empty field."
+      }
+    ],
+    "additionalSources": [
+      {
+        "title": "LinkedIn Learning course publisher and instructor",
+        "url": "https://github.com/LinkedInLearning/cpp-code-challenges-3096958/blob/ac918634ae590f86aee7d9983df1eae2a591eeae/README.md"
+      }
+    ]
+  },
+  {
+    "id": "linkedin-first-related-pair",
+    "title": "Finding Relatives: Stop at the First Repeated Surname",
+    "company": "LinkedIn Learning",
+    "sourceKind": "official-practice",
+    "sourceTitle": "LinkedIn Learning C++ Code Challenges: Challenge 11, Finding Relatives",
+    "url": "https://github.com/LinkedInLearning/cpp-code-challenges-3096958/blob/ac918634ae590f86aee7d9983df1eae2a591eeae/src/11/Challenge/ch11_relatives.cpp",
+    "prompt": "Read comma-separated GivenName Surname records, with one space per record. Compare surnames case-sensitively. Scan left to right; at the first repeated surname, return its earliest full name and the current name. Otherwise return null.",
+    "approach": [
+      "Parse in input order; the first completed duplicate wins.",
+      "Maintain a hash map from each surname to its first full name. Check for an existing entry before inserting.",
+      "The map retains each surname's earliest name, so the first successful lookup gives the required pair."
+    ],
+    "complexity": "Expected O(B) time and O(B) storage for B input characters using string hashing; output may occur before EOF.",
+    "pitfalls": [
+      "A shared surname is not proof of kinship.",
+      "General CSV needs quoting rules beyond this restricted grammar."
+    ],
+    "followUp": "What is the output cost of returning every matching pair?",
+    "answer": "Ava Chen,Bo Diaz,Cy Chen,Di Diaz returns [Ava Chen,Cy Chen].",
+    "chapters": [
+      5,
+      6,
+      12,
+      81
+    ],
+    "topics": [
+      "hash-table",
+      "canonical-key",
+      "loop-invariant"
+    ],
+    "checked": "2026-10-17",
+    "sourceNote": "Official educational practice, not LinkedIn hiring evidence. Ordering, case sensitivity, and null results are explicit exercise conventions.",
+    "examples": [
+      {
+        "input": {
+          "records": "Ava Chen,Bo Diaz,Cy Chen,Di Diaz"
+        },
+        "output": [
+          "Ava Chen",
+          "Cy Chen"
+        ],
+        "explanation": "Chen repeats first."
+      },
+      {
+        "input": {
+          "records": "Ava Chen,Bo Diaz,Cy Fox"
+        },
+        "output": null,
+        "explanation": "Distinct surnames."
+      },
+      {
+        "input": {
+          "records": "Ava Chen,Bo chen"
+        },
+        "output": null,
+        "explanation": "Case-sensitive comparison."
+      }
+    ],
+    "additionalSources": [
+      {
+        "title": "LinkedIn Learning course publisher and instructor",
+        "url": "https://github.com/LinkedInLearning/cpp-code-challenges-3096958/blob/ac918634ae590f86aee7d9983df1eae2a591eeae/README.md"
+      }
+    ]
+  },
+  {
+    "id": "linkedin-toroidal-life",
+    "title": "Game of Life: Update a Wrapping Grid Simultaneously",
+    "company": "LinkedIn Learning",
+    "sourceKind": "official-practice",
+    "sourceTitle": "LinkedIn Learning C++ Code Challenges: Challenge 13, Conway's Game of Life",
+    "url": "https://github.com/LinkedInLearning/cpp-code-challenges-3096958/blob/ac918634ae590f86aee7d9983df1eae2a591eeae/src/13/Challenge/ch13_life.cpp",
+    "prompt": "Compute one simultaneous generation on a wrapping 10-by-10 grid. A live cell survives with two or three live neighbors; a dead cell becomes live with exactly three. Input/output lists contain live [row,column] cells; sort outputs lexicographically.",
+    "approach": [
+      "For every cell, count its eight neighbors in the old grid.",
+      "Wrap each neighbor coordinate as (coordinate+offset+10) mod 10, avoiding negative remainders.",
+      "Write results into a second grid, then swap. Read only old states when counting."
+    ],
+    "complexity": "O(HW) time and O(HW) auxiliary space per H-by-W generation.",
+    "pitfalls": [
+      "Updating cells immediately changes later neighbor counts.",
+      "Wrapping differs from permanently dead borders."
+    ],
+    "followUp": "How can two bits per cell retain old and new states in one grid?",
+    "answer": "The wrapping horizontal blinker becomes [[0,0],[1,0],[9,0]].",
+    "chapters": [
+      7,
+      86,
+      105
+    ],
+    "topics": [
+      "in-place-marking",
+      "loop-invariant",
+      "data-structures"
+    ],
+    "checked": "2026-10-17",
+    "sourceNote": "Official LinkedIn Learning educational practice, not a LinkedIn hiring question. The public prompt specifies the wrapping board; examples are original.",
+    "examples": [
+      {
+        "input": {
+          "size": [
+            10,
+            10
+          ],
+          "live": [
+            [
+              0,
+              9
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        "output": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            9,
+            0
+          ]
+        ],
+        "explanation": "A wrapping blinker rotates."
+      },
+      {
+        "input": {
+          "size": [
+            10,
+            10
+          ],
+          "live": [
+            [
+              5,
+              5
+            ]
+          ]
+        },
+        "output": [],
+        "explanation": "No live neighbors."
+      },
+      {
+        "input": {
+          "size": [
+            10,
+            10
+          ],
+          "live": [
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              4
+            ],
+            [
+              5,
+              5
+            ]
+          ]
+        },
+        "output": [
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            5,
+            5
+          ]
+        ],
+        "explanation": "A stable block."
+      }
+    ],
+    "additionalSources": [
+      {
+        "title": "LinkedIn Learning course publisher and instructor",
+        "url": "https://github.com/LinkedInLearning/cpp-code-challenges-3096958/blob/ac918634ae590f86aee7d9983df1eae2a591eeae/README.md"
+      }
+    ]
+  }
+]

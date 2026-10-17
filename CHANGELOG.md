@@ -1,5 +1,12 @@
 # 更新记录
 
+## English interview supplement · 2026-10-17
+
+- Publish 64 English additions with 174 worked examples, reasoning, complexity, pitfalls, and source provenance from 15 organizations. Together with the original 36-question bank, the collections contain 100 preparation questions.
+- Add a complete English map of 14 areas and 169 concepts, with links between questions, concept explanations, and background chapters.
+- Preserve the distinction between 6 official public company samples, 25 official practice problems, and 33 documentation-derived exercises in the English supplement. These labels do not establish current hiring use.
+- Import the reviewed content from personal-site commit `712e22faf590e1eb44df2da355d4ce9074511e5e`; add repeatable Markdown generation, source notes, link checks, and independent offline algorithm checks.
+
 ## 2.5.0 · 2026-10-16
 
 - 新增 36 道有来源的面试准备题：3 道公司官方公开样题、16 道算法原站练习、17 道官方文档派生原创自测；逐题标注来源范围，不宣称未经核验的实际面试记录。

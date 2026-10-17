@@ -1,0 +1,683 @@
+[
+  {
+    "id": "asana-growing-hedges",
+    "title": "Growing Hedges: Simultaneous Grid Updates and Undirected Pair Counts",
+    "company": "Asana",
+    "sourceKind": "company-sample",
+    "sourceTitle": "Asana 101 Technical Interview Guide: Growing Hedges",
+    "url": "https://docs.google.com/document/d/1wVUna6BgzBm8l8iMgrbcKAToSNAUe2c6o65D8kR5i8U/edit",
+    "sourceNote": "Public sample linked from Asana's Engineering Interview Guide; examples below are independently authored.",
+    "prompt": "Simulate Y years on a nonempty rectangular binary garden. Eight-neighbor adjacency includes diagonals. Each year, an empty cell with any hedge neighbor becomes occupied; an occupied cell becomes empty only if all eight neighbors exist and are occupied. Other cells retain their state. Return the final number of unordered adjacent hedge pairs. Y is nonnegative.",
+    "approach": [
+      "Read one complete old grid and write a separate new grid for each year. Count only neighbors inside the rectangle; a boundary hedge cannot have eight neighbors.",
+      "After Y updates, scan each occupied cell with only four forward offsets: right, down-left, down, and down-right. Count an edge when its other endpoint is occupied.",
+      "Each year's new state depends only on the previous state. Each unordered adjacent pair has exactly one forward orientation, so the final scan counts it once."
+    ],
+    "complexity": "O((Y + 1)RC) time for R rows and C columns, including the final count; O(RC) auxiliary space for the next grid. The eight-neighbor stencil has constant size.",
+    "pitfalls": [
+      "Writing into the grid being read makes one year depend on traversal order.",
+      "A boundary cell is never surrounded on eight sides. Do not count both orientations of an adjacent pair."
+    ],
+    "followUp": "How would you skip repeated global states for an extremely large Y, and what extra memory would that require?",
+    "answer": "A full 3 × 3 garden has 20 adjacent pairs. After one year the center becomes empty and 12 pairs remain; after two years the center regrows and the count returns to 20.",
+    "topics": [
+      "loop-invariant",
+      "data-structures",
+      "complexity"
+    ],
+    "chapters": [
+      5,
+      86,
+      105
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {
+          "garden": [
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "years": 1
+        },
+        "output": 12,
+        "explanation": "Only the center loses sunlight; the boundary ring contains 12 unordered eight-neighbor edges."
+      },
+      {
+        "input": {
+          "garden": [
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "years": 2
+        },
+        "output": 20,
+        "explanation": "The empty center has hedge neighbors in year two and regrows. The surrounding cells remain occupied."
+      },
+      {
+        "input": {
+          "garden": [
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "years": 0
+        },
+        "output": 0,
+        "explanation": "Zero years means no growth. A single hedge makes no pair."
+      }
+    ],
+    "additionalSources": [
+      {
+        "title": "Asana Engineering Interview Guide linking the public sample document",
+        "url": "https://asana.com/eng/interview-guide"
+      }
+    ]
+  },
+  {
+    "id": "asana-reorganize-string",
+    "title": "Reorganize String: Reserve Even Slots for the Most Frequent Character",
+    "company": "Asana",
+    "sourceKind": "official-practice",
+    "sourceTitle": "Asana-recommended practice: LeetCode 767, Reorganize String",
+    "url": "https://leetcode.com/problems/reorganize-string/",
+    "sourceNote": "Explicitly recommended in Asana's public Asana 101 guide, under Min/Max Heaps; this is practice, not evidence of a live interview question.",
+    "prompt": "Reorder a nonempty lowercase English string so adjacent characters differ. Return any valid permutation, or the empty string if none exists.",
+    "approach": [
+      "Count frequencies. Let n be the length and f the largest count. If f > ceil(n/2), return the empty string: the other n − f characters cannot separate all copies.",
+      "Write a character with count f into positions 0, 2, 4, and so on. Continue placing the remaining characters into unused even positions, then odd positions.",
+      "Copies of the largest group are separated by construction. Every remaining group fits the available alternating slots because its count is no larger than f; at the even-to-odd wrap, the two parts of a group do not become neighbors."
+    ],
+    "complexity": "O(n + σ) time with σ = 26; O(n + σ) space including the output array, or O(σ) auxiliary space when the output is excluded. A max-heap alternative takes O(n log(σ + 1)) time.",
+    "pitfalls": [
+      "The maximum count may equal ceil(n/2); that boundary is feasible.",
+      "Validate the output's full character multiset as well as unequal neighbors. More than one answer can be correct."
+    ],
+    "followUp": "What changes if equal characters must be at least d positions apart, rather than merely nonadjacent?",
+    "answer": "For aaabbc, ababac is valid. For bbbbac, four copies of b exceed ceil(6/2), so no arrangement exists.",
+    "topics": [
+      "greedy",
+      "heap",
+      "hash-table"
+    ],
+    "chapters": [
+      93,
+      94,
+      103
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": "aaabbc",
+        "output": "ababac",
+        "explanation": "The output preserves three a's, two b's, and one c, with no equal adjacent pair."
+      },
+      {
+        "input": "bbbbac",
+        "output": "",
+        "explanation": "Only two other characters are available to separate four b's; three separators would be needed."
+      },
+      {
+        "input": "z",
+        "output": "z",
+        "explanation": "A one-character string has no adjacent pair."
+      }
+    ],
+    "additionalSources": [
+      {
+        "title": "Asana official interview practice recommendations",
+        "url": "https://docs.google.com/document/d/1wVUna6BgzBm8l8iMgrbcKAToSNAUe2c6o65D8kR5i8U/edit"
+      },
+      {
+        "title": "Asana Engineering Interview Guide linking the public practice document",
+        "url": "https://asana.com/eng/interview-guide"
+      }
+    ]
+  },
+  {
+    "id": "asana-k-smallest-pairs",
+    "title": "K Smallest Pair Sums: Merge Sorted Rows Without Materializing the Product",
+    "company": "Asana",
+    "sourceKind": "official-practice",
+    "sourceTitle": "Asana-recommended practice: LeetCode 373, Find K Pairs with Smallest Sums",
+    "url": "https://leetcode.com/problems/find-k-pairs-with-smallest-sums/",
+    "sourceNote": "Explicitly recommended in Asana's public Asana 101 guide, under Min/Max Heaps; this is practice, not evidence of a live interview question.",
+    "prompt": "Two nonempty integer arrays A and B are sorted in nondecreasing order. Return k index-distinct pairs with the smallest sums, where 1 ≤ k ≤ |A||B|. Equal values at different indices remain different pairs. Ties may be resolved arbitrarily.",
+    "approach": [
+      "For a fixed i, sums A[i] + B[j] form a sorted row as j increases. Keep a min-heap of the next unreported candidate from each active row.",
+      "Seed (i, 0) for 0 ≤ i < min(|A|, k). After popping (i, j), output its values and push (i, j + 1) when that column exists.",
+      "An omitted row starts no earlier than the first k row heads, so there are already k pairs no larger than its minimum; it cannot be needed to produce some valid k-pair answer. The heap minimum is the smallest remaining active candidate."
+    ],
+    "complexity": "Let h = min(|A|, k). Heap construction plus k removals costs O(h + k log(h + 1)) time; O(h) auxiliary space and O(k) output space. No |A| × |B| table is required.",
+    "pitfalls": [
+      "Do not deduplicate equal-valued pairs: their source indices can differ.",
+      "This proof requires both input arrays to be sorted. Use a wide enough type for the sum."
+    ],
+    "followUp": "How can swapping the roles of A and B reduce heap memory, while restoring output pairs to their original order?",
+    "answer": "For A = [−3, 1, 4], B = [−2, 2], k = 4, one answer is [[−3, −2], [−3, 2], [1, −2], [4, −2]], with sums −5, −1, −1, 2.",
+    "topics": [
+      "heap",
+      "loop-invariant",
+      "complexity"
+    ],
+    "chapters": [
+      8,
+      87,
+      93
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {
+          "A": [
+            -3,
+            1,
+            4
+          ],
+          "B": [
+            -2,
+            2
+          ],
+          "k": 4
+        },
+        "output": [
+          [
+            -3,
+            -2
+          ],
+          [
+            -3,
+            2
+          ],
+          [
+            1,
+            -2
+          ],
+          [
+            4,
+            -2
+          ]
+        ],
+        "explanation": "The next unselected pair has sum 3, so the four displayed sums are minimal."
+      },
+      {
+        "input": {
+          "A": [
+            0,
+            0
+          ],
+          "B": [
+            1,
+            1
+          ],
+          "k": 3
+        },
+        "output": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "explanation": "There are four index-distinct pairs even though their values coincide; any three are valid."
+      }
+    ],
+    "additionalSources": [
+      {
+        "title": "Asana official interview practice recommendations",
+        "url": "https://docs.google.com/document/d/1wVUna6BgzBm8l8iMgrbcKAToSNAUe2c6o65D8kR5i8U/edit"
+      },
+      {
+        "title": "Asana Engineering Interview Guide linking the public practice document",
+        "url": "https://asana.com/eng/interview-guide"
+      }
+    ]
+  },
+  {
+    "id": "asana-randomized-set",
+    "title": "Randomized Set: Swap with the Last Element Before Deleting",
+    "company": "Asana",
+    "sourceKind": "official-practice",
+    "sourceTitle": "Asana-recommended practice: LeetCode 380, Insert Delete GetRandom O(1)",
+    "url": "https://leetcode.com/problems/insert-delete-getrandom-o1/",
+    "sourceNote": "Explicitly recommended in Asana's public Asana 101 guide, under Hash Tables; this is practice, not evidence of a live interview question.",
+    "prompt": "Maintain a set of integers with insert, remove, and uniform getRandom, all in average O(1) time. Insert/remove return whether membership changed. getRandom is called only when the set is nonempty.",
+    "approach": [
+      "Keep a dense values array and a hash map from value to its current array index. Insert a new value by appending it and recording its index.",
+      "To remove the value at i, move the final array value to i, update that value's map entry, pop the array, and delete the removed value's map entry. This also handles removing the final element itself.",
+      "Sample an unbiased uniform integer index from 0 through size − 1. The array contains each set member exactly once, so each member is selected with probability 1/size."
+    ],
+    "complexity": "Expected amortized O(1) time per operation using expected constant-time hashing, amortized dynamic-array append, and a constant-cost bounded random-index primitive; O(n) storage for n members. This is not a worst-case bound for every hash operation.",
+    "pitfalls": [
+      "Deleting from the middle of a dense array without swapping shifts later elements and costs O(n).",
+      "Sampling a random hash bucket can bias the result. The source guarantees a nonempty set for getRandom."
+    ],
+    "followUp": "How would allowing duplicate values change the index map and the meaning of uniform sampling?",
+    "answer": "Insert 4 and 7, then remove 4. The last value 7 moves into index 0, and the next getRandom must return 7.",
+    "topics": [
+      "hash-table",
+      "amortized-analysis",
+      "data-structures"
+    ],
+    "chapters": [
+      5,
+      6,
+      104,
+      105
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": [
+          [
+            "insert",
+            4
+          ],
+          [
+            "insert",
+            7
+          ],
+          [
+            "insert",
+            4
+          ],
+          [
+            "remove",
+            4
+          ],
+          [
+            "getRandom"
+          ],
+          [
+            "remove",
+            4
+          ],
+          [
+            "remove",
+            7
+          ]
+        ],
+        "output": [
+          true,
+          true,
+          false,
+          true,
+          7,
+          false,
+          true
+        ],
+        "explanation": "The sole random call sees only 7. Repeated insertion and removal of an absent value report false."
+      },
+      {
+        "input": [
+          [
+            "insert",
+            -2
+          ],
+          [
+            "remove",
+            -2
+          ],
+          [
+            "insert",
+            -2
+          ],
+          [
+            "getRandom"
+          ]
+        ],
+        "output": [
+          true,
+          true,
+          true,
+          -2
+        ],
+        "explanation": "Removing the last element leaves both structures empty; reinsertion restores a valid singleton."
+      }
+    ],
+    "additionalSources": [
+      {
+        "title": "Asana official interview practice recommendations",
+        "url": "https://docs.google.com/document/d/1wVUna6BgzBm8l8iMgrbcKAToSNAUe2c6o65D8kR5i8U/edit"
+      },
+      {
+        "title": "Asana Engineering Interview Guide linking the public practice document",
+        "url": "https://asana.com/eng/interview-guide"
+      }
+    ]
+  },
+  {
+    "id": "slack-longest-movie",
+    "title": "Longest Movie: Return Every Maximum Rather Than an Arbitrary LIMIT 1",
+    "company": "Slack",
+    "sourceKind": "company-sample",
+    "sourceTitle": "Slack backend interview preparation: longest-running movie",
+    "url": "https://github.com/slackhq/backend-interview-prep-questions/blob/33a0b146af19bde1473123e5da0a6803d861c7d3/README.md",
+    "sourceNote": "Official public preparation repository, archived November 2025. Slack explicitly says this dataset is not used during the onsite. Tie handling below is an exercise clarification.",
+    "prompt": "For movies(id, title, runtime), find every film with the largest runtime. IDs are unique and runtimes are nonnegative integers. Return rows ordered by ID; an empty table gives an empty result.",
+    "approach": [
+      "Compute the scalar maximum runtime over movies. A second filter keeps every row whose runtime equals that maximum.",
+      "A complete query is SELECT id, title, runtime FROM movies WHERE runtime = (SELECT MAX(runtime) FROM movies) ORDER BY id; MAX over an empty table is NULL, so no rows qualify.",
+      "Clarify ties before choosing ORDER BY runtime DESC LIMIT 1, which would return only one maximum. An index can change the physical plan without changing the logical result."
+    ],
+    "complexity": "Without a useful index, finding the maximum and filtering take O(n) time; sorting t tied output rows costs O(t log(t + 1)) time and up to O(t) workspace. An in-memory scan can use O(1) auxiliary state before output collection. Actual SQL costs depend on the plan.",
+    "pitfalls": [
+      "GROUP BY title merges different films with the same title.",
+      "The primary key's numeric magnitude has no relationship to runtime."
+    ],
+    "followUp": "Which index supports this query, and how would you verify its use with EXPLAIN QUERY PLAN?",
+    "answer": "Runtimes 95, 130, 130 have two winners. Both tied film IDs must be returned.",
+    "topics": [
+      "sql-aggregation",
+      "index",
+      "complexity",
+      "loop-invariant"
+    ],
+    "chapters": [
+      14,
+      15,
+      16
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {
+          "movies": [
+            [
+              3,
+              "Orbit",
+              130
+            ],
+            [
+              1,
+              "Meadow",
+              95
+            ],
+            [
+              2,
+              "Harbor",
+              130
+            ]
+          ]
+        },
+        "output": [
+          [
+            2,
+            "Harbor",
+            130
+          ],
+          [
+            3,
+            "Orbit",
+            130
+          ]
+        ],
+        "explanation": "The maximum is 130; output order follows IDs, not input order."
+      },
+      {
+        "input": {
+          "movies": []
+        },
+        "output": [],
+        "explanation": "There is no film to return."
+      }
+    ],
+    "additionalSources": [
+      {
+        "title": "Slack sample movie schema",
+        "url": "https://github.com/slackhq/backend-interview-prep-questions/blob/33a0b146af19bde1473123e5da0a6803d861c7d3/movies.sql"
+      }
+    ]
+  },
+  {
+    "id": "slack-most-actors",
+    "title": "Most Actors: Count Distinct Performers and Preserve Films With No Credits",
+    "company": "Slack",
+    "sourceKind": "company-sample",
+    "sourceTitle": "Slack backend interview preparation: movie with the most actors",
+    "url": "https://github.com/slackhq/backend-interview-prep-questions/blob/33a0b146af19bde1473123e5da0a6803d861c7d3/README.md",
+    "sourceNote": "Official public preparation repository, archived November 2025. Distinct-person semantics, zero-credit films, and ties below make the otherwise underspecified prompt precise.",
+    "prompt": "Using movies(id, title) and actors(movie_id, imdb_id), return all films with the largest number of distinct credited people. Actor IDs are nonnull; duplicate credit rows are allowed. Include zero-credit films and resolve ties by returning every winner ordered by movie ID.",
+    "approach": [
+      "Build counts with a left join: SELECT m.id, m.title, COUNT(DISTINCT a.imdb_id) AS actor_count FROM movies AS m LEFT JOIN actors AS a ON a.movie_id = m.id GROUP BY m.id, m.title.",
+      "Store that grouped query in a CTE named counts, then SELECT id, title, actor_count FROM counts WHERE actor_count = (SELECT MAX(actor_count) FROM counts) ORDER BY id.",
+      "COUNT(DISTINCT a.imdb_id) ignores the NULL introduced by an unmatched left join and collapses duplicate credits for the same person. Grouping by the film ID preserves different films with identical titles."
+    ],
+    "complexity": "For n movies and a credit rows, an in-memory hash grouping takes expected O(n + a) time and O(n + a) state, then O(t log(t + 1)) time to order t tied winners. SQLite may use indexes or temporary B-trees for joins, grouping, and DISTINCT; inspect its plan rather than assuming this bound for the engine.",
+    "pitfalls": [
+      "COUNT(*) counts the placeholder left-join row for a movie with no actors; COUNT(a.imdb_id) still counts duplicate credits.",
+      "An inner join removes zero-credit films, which gives the wrong result when every film has zero credits."
+    ],
+    "followUp": "If the schema guarantees one credit per (movie_id, imdb_id), how can you simplify the count and enforce that invariant?",
+    "answer": "If Orbit credits p, p, q and Harbor credits r, s, both films have two distinct people despite Orbit having three credit rows.",
+    "topics": [
+      "sql-aggregation",
+      "hash-table",
+      "index",
+      "complexity"
+    ],
+    "chapters": [
+      14,
+      15,
+      16
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {
+          "movies": [
+            [
+              1,
+              "Orbit"
+            ],
+            [
+              2,
+              "Harbor"
+            ],
+            [
+              3,
+              "Meadow"
+            ]
+          ],
+          "actors": [
+            [
+              1,
+              "p"
+            ],
+            [
+              1,
+              "p"
+            ],
+            [
+              1,
+              "q"
+            ],
+            [
+              2,
+              "r"
+            ],
+            [
+              2,
+              "s"
+            ]
+          ]
+        },
+        "output": [
+          [
+            1,
+            "Orbit",
+            2
+          ],
+          [
+            2,
+            "Harbor",
+            2
+          ]
+        ],
+        "explanation": "Duplicate p contributes once. Meadow remains in the grouped table with count zero."
+      },
+      {
+        "input": {
+          "movies": [
+            [
+              1,
+              "Orbit"
+            ],
+            [
+              2,
+              "Harbor"
+            ]
+          ],
+          "actors": []
+        },
+        "output": [
+          [
+            1,
+            "Orbit",
+            0
+          ],
+          [
+            2,
+            "Harbor",
+            0
+          ]
+        ],
+        "explanation": "Both zero-credit films tie for the maximum."
+      }
+    ],
+    "additionalSources": [
+      {
+        "title": "Slack sample movie schema",
+        "url": "https://github.com/slackhq/backend-interview-prep-questions/blob/33a0b146af19bde1473123e5da0a6803d861c7d3/movies.sql"
+      },
+      {
+        "title": "Slack sample actor schema",
+        "url": "https://github.com/slackhq/backend-interview-prep-questions/blob/33a0b146af19bde1473123e5da0a6803d861c7d3/actors.sql"
+      }
+    ]
+  },
+  {
+    "id": "slack-rating-breakdown",
+    "title": "Rating Breakdown: Group Categories Before Joining One-to-Many Data",
+    "company": "Slack",
+    "sourceKind": "company-sample",
+    "sourceTitle": "Slack backend interview preparation: breakdown of top movies by rating",
+    "url": "https://github.com/slackhq/backend-interview-prep-questions/blob/33a0b146af19bde1473123e5da0a6803d861c7d3/README.md",
+    "sourceNote": "Official public preparation repository. Its rating column contains content certificates; imdb_score is a separate numeric column. Report percentages below are an added clarification.",
+    "prompt": "For movies(id, rating), report each content-rating category's film count and percentage of all rows, ordered by category. Ratings are nonnull category strings; treat categories literally, including N/A. IDs are unique. Return no rows for an empty table; do not interpret rating as the numeric IMDb score.",
+    "approach": [
+      "Group the movies table directly: SELECT rating, COUNT(*) AS movie_count FROM movies GROUP BY rating. No actors join is needed.",
+      "Compute percentage as 100.0 * COUNT(*) / (SELECT COUNT(*) FROM movies), then order by rating. The decimal constant prevents integer division in SQLite.",
+      "Every movie contributes exactly once to one group, so counts sum to the table's row count. A one-to-many actors join would instead weight films by their credit rows."
+    ],
+    "complexity": "A hash aggregation uses expected O(n) counting time and O(g) group state for n movies and g categories; sorting categories costs O(g log(g + 1)). SQLite can choose sorting or index-based aggregation, so confirm its physical plan separately.",
+    "pitfalls": [
+      "The source schema distinguishes rating (a content certificate) from imdb_score (a numeric audience score).",
+      "Do not divide integer counts before converting to a real number or join actors before counting movies."
+    ],
+    "followUp": "How would the denominator and NULL handling change if the report showed only a filtered subset of films?",
+    "answer": "With ratings [PG, R, PG, N/A], report N/A: 1 and 25%, PG: 2 and 50%, R: 1 and 25%.",
+    "topics": [
+      "sql-aggregation",
+      "hash-table",
+      "index",
+      "complexity"
+    ],
+    "chapters": [
+      14,
+      15,
+      16
+    ],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {
+          "movies": [
+            [
+              1,
+              "PG"
+            ],
+            [
+              2,
+              "R"
+            ],
+            [
+              3,
+              "PG"
+            ],
+            [
+              4,
+              "N/A"
+            ]
+          ]
+        },
+        "output": [
+          [
+            "N/A",
+            1,
+            25
+          ],
+          [
+            "PG",
+            2,
+            50
+          ],
+          [
+            "R",
+            1,
+            25
+          ]
+        ],
+        "explanation": "Counts total four and percentages total 100; N/A is a literal category in this schema."
+      },
+      {
+        "input": {
+          "movies": []
+        },
+        "output": [],
+        "explanation": "No grouped rows exist, so no division is evaluated."
+      }
+    ],
+    "additionalSources": [
+      {
+        "title": "Slack sample movie schema",
+        "url": "https://github.com/slackhq/backend-interview-prep-questions/blob/33a0b146af19bde1473123e5da0a6803d861c7d3/movies.sql"
+      }
+    ]
+  }
+]

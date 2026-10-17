@@ -1,0 +1,31 @@
+# Stripe preparation: source evidence and validation
+
+Checked: 2026-10-17. Canonical data: `src/content/dictionary-en/interviews-stripe.json`.
+
+This batch contains three original `documentation-derived` exercises and 13 worked examples. Targeted searches of official Stripe careers, engineering publications, and documentation did not locate a complete public hiring-question statement suitable for this batch. That bounded search does not prove that none exists. Stripe's [Scaling engineering organizations](https://stripe.com/guides/atlas/scaling-eng) describes the Bug Squash interview format, but does not publish a specific bug exercise. No third-party interview guides, recollections, company tags, or leaked take-home assignments supply hiring provenance here.
+
+Every question identifies Stripe as the technical-source publisher and explicitly says that its local exercise is not a published Stripe hiring question. All inputs and outputs are synthetic. No Stripe account, credential, external transaction, webhook endpoint, or API operation is used.
+
+## Primary-source ledger
+
+| Exercise | Official source | Source-supported facts | Local model and evidence boundary |
+| --- | --- | --- | --- |
+| `stripe-v1-idempotency-cache` | [Idempotent requests](https://docs.stripe.com/api/idempotent_requests) | The **API v1** section distinguishes saved executed responses, including 500 errors, from validation and concurrency conflicts before execution. It describes parameter comparison and pruning after at least 24 hours. The same page separately describes API v2. | Sequential events with supplied outcomes, fixed-size exact parameter fingerprints, and explicit pruning only. The deque follows monotone event times. Response tokens and synthetic conflict status are not a claim about a live endpoint's particular error payload. No atomicity across arbitrary business operations is inferred. |
+| `stripe-webhook-one-shot-effect` | [Webhooks: Event ordering and duplicate events](https://docs.stripe.com/webhooks) | Delivery order is not guaranteed. A repeated event ID identifies redelivery; the duplicate guidance also discusses object ID together with event type. Event timestamps do not provide a reliable unique order. | Exactly one local fulfillment per invoice; two allowed event types; all markers and local effects commit or roll back together. The one-shot rule justifies the effect key. It does not generalize to suppressing legitimate recurring update events or provide an atomic transaction with an external service. |
+| `stripe-currency-amount-parser` | [Supported currencies: Specify amounts and special cases](https://docs.stripe.com/currencies) | USD and JPY illustrate different API scales. ISK uses a two-decimal representation restricted to whole major units. HUF and TWD permit hundredths for charges but require manual-payout encodings divisible by 100. | Five currencies only; exact unsigned decimal syntax; declared error precedence; redundant fractional zeros allowed; zero accepted as an encoding. No eligibility, balance, currency conversion, payment-method, transaction-limit, or minimum-amount decision is modeled. |
+
+These documentation pages are current public sources rather than immutable versioned specifications. The review date records what was inspected. In particular, do not silently apply the API v1 response-cache model to API v2.
+
+## Reasoning and independent checks
+
+- **Idempotency cache:** A separate Python model scanned all cache records at each explicit prune instead of using the authored deque. It reproduced all four examples. The cases cover uncached validation and conflict, cached execution failure, parameter mismatch, unchanged insertion time on replay, exact expiry boundaries, reused-key insertion order, different keys with identical parameters, and an empty trace. Expiration is never inferred from elapsed time without a prune event.
+- **One-shot webhook effect:** A separate list-based committed-history model reproduced all four examples. The examples distinguish rollback from a committed duplicate, delivery identity from effect identity, and an out-of-order creation from a new payment effect. The repeated-ID invariant ensures a seen ID cannot arrive with conflicting semantic payloads in this model.
+- **Exact currency parser:** Python `Decimal`, rather than the proposed string-concatenation and suffix method, independently recomputed all five batch examples. The 20 row cases cover valid encodings, trailing and leading zeros, multiple precision failures, ISK's increment, HUF/TWD manual-payout increments, syntax rejection, zero, and an integer beyond JavaScript's safe-number range. The large value tests representation only and is not a Stripe transaction-size claim.
+
+The cache complexity uses expected constant-time hashing and amortizes deque removals over insertions. The webhook complexity uses fixed-size identifiers. The money parser works on decimal strings in linear character time and makes no constant-time assumption for unbounded integers. The integration owner maintains persistent offline cross-batch checks and generated artifacts.
+
+The persistent cross-batch check is `node scripts/check-dictionary-airbnb-stripe-dropbox.mjs`. It verifies all nine Airbnb/Stripe/Dropbox exercises, all 41 published examples, and 23,272 independent comparisons. Stripe checks compare the deque with a full cache scan, webhook sets with committed-event histories, and decimal-string encoding with exact rational `BigInt` arithmetic. Generated cases include repeated pruning, the cached-500 path, whole-unit increment failures, arbitrarily large decimal values, and syntax with a final newline. The checker also verifies Dropbox's published outer-hash vector from its three raw digests without downloading the source image.
+
+## Map links
+
+The cache links to safe retries, cache state, hashing, amortized analysis, and loop invariants. The webhook exercise links to safe retries, canonical effect keys, ACID transactions, message ordering, and hashing. The currency exercise links to the new `exact-decimal-arithmetic` concept plus APIs, data structures, and invariants. Concept definitions and reader/map generation belong to the integration owner.

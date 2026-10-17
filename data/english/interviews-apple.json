@@ -1,0 +1,200 @@
+[
+  {
+    "id": "apple-snapshot-minimum-moves",
+    "title": "Snapshot Reordering: Keep a Longest Increasing Subsequence",
+    "company": "Apple",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Apple Developer: NSDiffableDataSourceSnapshot",
+    "url": "https://developer.apple.com/documentation/uikit/nsdiffabledatasourcesnapshot-swift.struct",
+    "sourceNote": "Original preparation exercise inspired by Apple's ordered snapshots and unique identifiers. The minimum-move model and examples are local; Apple does not claim this is its interview question or UIKit's animation algorithm.",
+    "prompt": "Two one-section snapshots contain exactly the same n distinct identifiers in different orders. One move removes one identifier and reinserts it anywhere. Return the minimum moves needed to transform oldOrder into newOrder. Reject duplicate identifiers or unequal identifier sets; empty snapshots are valid.",
+    "approach": [
+      "Validate both orders and map each identifier to its index in oldOrder. Replace newOrder with those old indices.",
+      "Find the length L of a strictly increasing subsequence using a tails array: replace the first tail greater than or equal to each index, or append if none exists. Binary search performs each update.",
+      "Any unmoved identifiers keep their relative order, so at most L can remain unmoved and at least n-L moves are necessary. Conversely, keep a longest common subsequence fixed and insert all other identifiers in their target positions around it, moving each at most once. Return n-L."
+    ],
+    "complexity": "Expected O(n log n) time and O(n) auxiliary space for validation, index mapping, and LIS tails, assuming constant-cost identifiers and expected constant-time hashing.",
+    "pitfalls": [
+      "Equal labels need not identify the same item. This exercise uses unique stable identifiers.",
+      "Do not count index changes: moving one item can shift many others without moving them separately.",
+      "The proof covers a flat permutation and the specified move operation; insertions, deletions, section changes, and UI animation policies require different contracts."
+    ],
+    "followUp": "How would you recover the identifiers to keep by storing LIS predecessor links?",
+    "answer": "For [A,B,C,D,E] to [B,D,A,E,C], old indices are [1,3,0,4,2]. Keep B,D,E, giving L=3 and two moves: place A after D, then C after E.",
+    "topics": ["lis-tails", "lower-bound-upper-bound", "hash-table", "loop-invariant"],
+    "chapters": [5, 7, 9, 102],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {"oldOrder": ["A", "B", "C", "D", "E"], "newOrder": ["B", "D", "A", "E", "C"]},
+        "output": 2,
+        "explanation": "Old-index sequence [1,3,0,4,2] has LIS length three. The two explicit moves attain the lower bound."
+      },
+      {
+        "input": {"oldOrder": ["a", "b", "c", "d"], "newOrder": ["d", "c", "b", "a"]},
+        "output": 3,
+        "explanation": "Only one identifier can stay in a common subsequence."
+      },
+      {
+        "input": {"oldOrder": ["x", "y"], "newOrder": ["x", "y"]},
+        "output": 0,
+        "explanation": "Every identifier can stay."
+      },
+      {
+        "input": {"oldOrder": [], "newOrder": []},
+        "output": 0,
+        "explanation": "There is nothing to move."
+      }
+    ]
+  },
+  {
+    "id": "apple-actor-single-flight",
+    "title": "Actor Reentrancy: Share In-progress Downloads Before Awaiting",
+    "company": "Apple",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Apple WWDC21: Protect mutable state with Swift actors",
+    "url": "https://developer.apple.com/videos/play/wwdc2021/10133/",
+    "sourceNote": "Original preparation exercise based on Apple's actor reentrancy and image-cache discussion. The event protocol and retry policy are local assumptions, not a published Apple hiring question.",
+    "prompt": "An image-cache actor handles the listed events serially between suspension points. request(id,key) returns a cached value, joins an existing download, or starts one. complete(key,value) resolves all current waiters and caches the value; fail(key,error) rejects all current waiters and removes that download so a later request retries. Start empty. Report download starts, successful results by request ID, errors by request ID, and the final cache. Keys and request IDs are strings; requests have unique IDs. Completion events refer to a pending key. There is no cancellation, eviction, or overlapping replacement download for a key.",
+    "approach": [
+      "Keep separate maps for completed values and in-progress tasks. On a miss, create and register one task synchronously before the first await; later callers await that same task.",
+      "One completion owner updates actor state: success records the value and removes the pending entry; failure removes it without caching an error. All joined callers observe that task's result.",
+      "Actor isolation protects synchronous state access, but suspension permits other calls to run. Merely checking the completed cache before await allows duplicate downloads. The pending-entry invariant ensures at most one active download per key in this model."
+    ],
+    "complexity": "Expected O(E+R) bookkeeping for E events and R requests, excluding networking and payload copying. State is O(K+W) for K cached or pending keys and W pending waiters; retained output adds O(R).",
+    "pitfalls": [
+      "An actor method is not atomic across await.",
+      "Removing only successful tasks retains a failed task forever and prevents retries.",
+      "Cancellation, invalidation, and replacement generations need additional ownership rules; they are outside this trace."
+    ],
+    "followUp": "If invalidation can replace a pending task, how can a generation identifier stop an older completion from deleting or overwriting its replacement?",
+    "answer": "A and B requesting the same uncached key share one download. If it succeeds, a later C uses the cached result. If it fails, A and B receive the error and C starts a new download.",
+    "topics": ["concurrency-parallelism", "cache", "hash-table", "loop-invariant"],
+    "chapters": [3, 18, 19],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {"events": [["request", "A", "photo"], ["request", "B", "photo"], ["complete", "photo", "v1"], ["request", "C", "photo"]]},
+        "output": {"downloads": 1, "results": {"A": "v1", "B": "v1", "C": "v1"}, "errors": {}, "cache": {"photo": "v1"}},
+        "explanation": "B joins A's pending task; C sees its completed value."
+      },
+      {
+        "input": {"events": [["request", "A", "photo"], ["request", "B", "photo"], ["fail", "photo", "offline"], ["request", "C", "photo"], ["complete", "photo", "v2"]]},
+        "output": {"downloads": 2, "results": {"C": "v2"}, "errors": {"A": "offline", "B": "offline"}, "cache": {"photo": "v2"}},
+        "explanation": "Failure is shared, then removed. C retries successfully."
+      },
+      {
+        "input": {"events": [["request", "A", "x"], ["request", "B", "y"], ["complete", "y", "Y"], ["complete", "x", "X"]]},
+        "output": {"downloads": 2, "results": {"B": "Y", "A": "X"}, "errors": {}, "cache": {"y": "Y", "x": "X"}},
+        "explanation": "Different keys have independent pending downloads and can complete in reverse order."
+      }
+    ]
+  },
+  {
+    "id": "apple-grapheme-byte-budget",
+    "title": "UTF-8 Budgets: Truncate Only at Character Boundaries",
+    "company": "Apple",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Apple Developer: Swift String and Unicode representations",
+    "url": "https://developer.apple.com/documentation/swift/string",
+    "sourceNote": "Original preparation exercise based on Swift String's extended grapheme clusters and UTF-8 view. The byte budget, preservation rule, and examples are local; this is not an Apple interview claim.",
+    "prompt": "Given a valid Unicode string and a nonnegative UTF-8 byte budget, return its longest prefix ending at an extended grapheme cluster boundary in the original string whose UTF-8 encoding fits the budget. Preserve the original scalar sequence: do not normalize, replace, or skip characters. Return the prefix and its byte count. A Swift Character is one extended grapheme cluster, which may contain several scalars.",
+    "approach": [
+      "Use the platform's Character boundary iterator rather than splitting raw bytes, UTF-16 units, or Unicode scalars.",
+      "Track the accepted boundary and used bytes. For each complete Character, determine the byte length of its original UTF-8 slice. Accept it only if used+length is within budget; stop at the first one that does not fit.",
+      "Each nonempty cluster has positive byte length. Once the next complete cluster exceeds the remaining budget, every longer prefix also exceeds it. Return the original slice through the last accepted boundary."
+    ],
+    "complexity": "O(B) total byte work and O(1) bookkeeping beyond the platform boundary iterator, for B input UTF-8 bytes under a linear segmentation scan. An owned output needs O(P) bytes for P returned bytes; avoid repeatedly rescanning prefixes.",
+    "pitfalls": [
+      "A byte slice can be invalid UTF-8; a scalar-safe slice can still split a visible Character.",
+      "Canonically equivalent strings can have different byte counts. Normalization changes this exercise's input representation.",
+      "Do not skip a large Character and append later ones: the result must be a prefix."
+    ],
+    "followUp": "How would UTF-16 NSRange offsets differ from Swift Character positions when editing emoji?",
+    "answer": "In A🇵🇷é🙂Z, the cluster byte lengths are [1,8,3,4,1]. A budget of 10 returns A🇵🇷 using nine bytes; a budget of 12 also includes the decomposed accented character.",
+    "topics": ["unicode-graphemes", "loop-invariant", "greedy", "data-structures"],
+    "chapters": [4, 7, 12],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {"text": "A🇵🇷e\u0301🙂Z", "budget": 10},
+        "output": {"prefix": "A🇵🇷", "bytes": 9},
+        "explanation": "The next Character is e plus combining acute, which needs three more bytes."
+      },
+      {
+        "input": {"text": "A🇵🇷e\u0301🙂Z", "budget": 12},
+        "output": {"prefix": "A🇵🇷e\u0301", "bytes": 12},
+        "explanation": "The first three complete Characters fit exactly."
+      },
+      {
+        "input": {"text": "é!", "budget": 2},
+        "output": {"prefix": "é", "bytes": 2},
+        "explanation": "The precomposed accented character uses two UTF-8 bytes."
+      },
+      {
+        "input": {"text": "e\u0301!", "budget": 2},
+        "output": {"prefix": "", "bytes": 0},
+        "explanation": "The canonically equivalent decomposed Character requires three bytes and cannot be split."
+      },
+      {
+        "input": {"text": "🙂", "budget": 0},
+        "output": {"prefix": "", "bytes": 0},
+        "explanation": "A zero budget admits no nonempty Character."
+      },
+      {
+        "input": {"text": "", "budget": 8},
+        "output": {"prefix": "", "bytes": 0},
+        "explanation": "The empty prefix fits every nonnegative budget."
+      }
+    ]
+  },
+  {
+    "id": "apple-combine-demand",
+    "title": "Combine Backpressure: Add Demand and Drop Unrequested Values",
+    "company": "Apple",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Apple Developer: PassthroughSubject",
+    "url": "https://developer.apple.com/documentation/combine/passthroughsubject",
+    "sourceNote": "Original preparation exercise derived from Apple's Combine demand and PassthroughSubject documentation. The sequential trace is a local teaching model, not a published Apple hiring sample.",
+    "prompt": "One attached subscriber starts with zero demand. Events run sequentially with no reentrant sends, cancellation, completion, or buffering operators. request(n) adds n nonnegative credits. send(value,returnedDemand) delivers only when current demand is positive: consume one credit, then add returnedDemand from receive(_:). A dropped value does not call receive(_:) and adds no returned demand. Return delivered values, dropped values, and final demand. All finite credit sums fit the integer range.",
+    "approach": [
+      "Keep a nonnegative outstanding-demand counter. Add request credits to the current counter; they do not replace it.",
+      "At send, if demand is zero, record a drop. Otherwise record a delivery, subtract one, and add the callback's returned demand.",
+      "Maintain demand = explicit requested credits + credits returned by actual deliveries - delivery count. Dropped sends contribute neither consumed nor returned credits."
+    ],
+    "complexity": "O(E) time for E events and O(1) auxiliary bookkeeping with fixed-width counters; recording delivered and dropped values requires O(S) output entries for S sends.",
+    "pitfalls": [
+      "PassthroughSubject does not retain dropped values for a later request.",
+      "A returned demand of zero adds no credit; it does not cancel remaining demand.",
+      "Unlimited demand and chains containing buffering operators need additional states; this model uses only finite demand and one direct subscriber."
+    ],
+    "followUp": "How would a bounded buffer change the handling of a send that arrives with zero downstream demand?",
+    "answer": "After request(2), sends A returning zero, B returning one, and C returning zero are delivered. D is dropped at zero demand. A later request(1) permits E; final demand is zero.",
+    "topics": ["backpressure", "concurrency-parallelism", "loop-invariant"],
+    "chapters": [3, 18, 19],
+    "checked": "2026-10-17",
+    "examples": [
+      {
+        "input": {"events": [["request", 2], ["send", "A", 0], ["send", "B", 1], ["send", "C", 0], ["send", "D", 0], ["request", 1], ["send", "E", 0]]},
+        "output": {"delivered": ["A", "B", "C", "E"], "dropped": ["D"], "demand": 0},
+        "explanation": "Demand after each event is [2,1,1,0,0,1,0]."
+      },
+      {
+        "input": {"events": [["request", 2], ["request", 3], ["send", "A", 0]]},
+        "output": {"delivered": ["A"], "dropped": [], "demand": 4},
+        "explanation": "The two requests add to five; one delivered value consumes one."
+      },
+      {
+        "input": {"events": [["send", "lost", 5], ["request", 1], ["send", "kept", 0]]},
+        "output": {"delivered": ["kept"], "dropped": ["lost"], "demand": 0},
+        "explanation": "The dropped value invokes no callback, so its hypothetical return of five is ignored."
+      }
+    ],
+    "additionalSources": [
+      {
+        "title": "Apple Developer: Processing Published Elements with Subscribers",
+        "url": "https://developer.apple.com/documentation/combine/processing-published-elements-with-subscribers"
+      }
+    ]
+  }
+]
