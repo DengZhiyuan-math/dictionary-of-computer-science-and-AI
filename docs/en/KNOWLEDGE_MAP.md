@@ -2,7 +2,7 @@
 
 # Complete CS and AI Knowledge Map
 
-**14 areas → 169 concepts → 64 English preparation entries.** Start with the complete area overview, then follow a subject or concept link.
+**14 areas → 169 concepts → 100 English preparation entries.** Start with the complete area overview, then follow a subject or concept link.
 
 [English overview](README.md) · [Question index](INTERVIEW_QUESTIONS.md) · [Complete knowledge map](KNOWLEDGE_MAP.md)
 
@@ -365,9 +365,11 @@ Connect seventeen categories and one hundred problems covering hashing, windows,
 
 **Related English questions:**
 
-- [A/B Routing: Fetch One Variant and Preserve the Assignment](questions/cloudflare.md#question-cloudflare-variant-routing)
-- [Field Masks: Remove Redundant Paths Before Fetching](questions/netflix.md#question-netflix-fieldmask-normalization)
-- [Currency Encoding: Parse Exact Minor Units Before Checking Payout Increments](questions/stripe.md#question-stripe-currency-amount-parser)
+- [19 · Online Bookstore: Derive Order Boundaries from Requirements](questions/amazon.md#question-eng-01)
+- [23 · Timed-out Requests: Idempotency Protects the Effect](questions/ietf.md#question-eng-05)
+- [76 · A/B Routing: Fetch One Variant and Preserve the Assignment](questions/cloudflare.md#question-cloudflare-variant-routing)
+- [89 · Field Masks: Remove Redundant Paths Before Fetching](questions/netflix.md#question-netflix-fieldmask-normalization)
+- [97 · Currency Encoding: Parse Exact Minor Units Before Checking Payout Increments](questions/stripe.md#question-stripe-currency-amount-parser)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -396,13 +398,15 @@ Connect seventeen categories and one hundred problems covering hashing, windows,
 
 **Related English questions:**
 
-- [MapReduce Combiners: A Mean Needs Both Sum and Count](questions/google.md#question-google-mapreduce-mean)
-- [FIFO Groups: Ordering and Concurrency Have Different Boundaries](questions/amazon.md#question-amazon-fifo-message-groups)
-- [Warp Reduction: Participation Masks Are Part of Correctness](questions/nvidia.md#question-nvidia-warp-reduction)
-- [Actor Reentrancy: Share In-progress Downloads Before Awaiting](questions/apple.md#question-apple-actor-single-flight)
-- [Combine Backpressure: Add Demand and Drop Unrequested Values](questions/apple.md#question-apple-combine-demand)
-- [Service Dependencies: Find the Critical Path Without Adding Parallel Work](questions/uber.md#question-uber-critical-path)
-- [Adaptive Concurrency: Trace a Vegas Limit Update](questions/netflix.md#question-netflix-vegas-limit)
+- [22 · Deadlocks: Draw the Wait Cycle](questions/postgresql.md#question-eng-04)
+- [25 · Condition Variables: A Notification Does Not Reserve an Item](questions/python.md#question-eng-07)
+- [41 · MapReduce Combiners: A Mean Needs Both Sum and Count](questions/google.md#question-google-mapreduce-mean)
+- [50 · FIFO Groups: Ordering and Concurrency Have Different Boundaries](questions/amazon.md#question-amazon-fifo-message-groups)
+- [53 · Warp Reduction: Participation Masks Are Part of Correctness](questions/nvidia.md#question-nvidia-warp-reduction)
+- [83 · Actor Reentrancy: Share In-progress Downloads Before Awaiting](questions/apple.md#question-apple-actor-single-flight)
+- [85 · Combine Backpressure: Add Demand and Drop Unrequested Values](questions/apple.md#question-apple-combine-demand)
+- [87 · Service Dependencies: Find the Critical Path Without Adding Parallel Work](questions/uber.md#question-uber-critical-path)
+- [91 · Adaptive Concurrency: Trace a Vegas Limit Update](questions/netflix.md#question-netflix-vegas-limit)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -448,7 +452,7 @@ Self-check answer: 1/0.9≈1.11×.
 
 **Related English questions:**
 
-- [GPU Coalescing: Count Memory Segments, Not Just Loads](questions/nvidia.md#question-nvidia-memory-coalescing)
+- [51 · GPU Coalescing: Count Memory Segments, Not Just Loads](questions/nvidia.md#question-nvidia-memory-coalescing)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -476,7 +480,8 @@ Self-check answer: 1/0.9≈1.11×.
 
 **Related English questions:**
 
-- [Fair Resource Allocation: Freeze Satisfied Demands and Refill the Rest](questions/uber.md#question-uber-max-min-allocation)
+- [25 · Condition Variables: A Notification Does Not Reserve an Item](questions/python.md#question-eng-07)
+- [88 · Fair Resource Allocation: Freeze Satisfied Demands and Refill the Rest](questions/uber.md#question-uber-max-min-allocation)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -508,7 +513,7 @@ A PassthroughSubject does not buffer values for later demand. With one subscribe
 
 **Related English questions:**
 
-- [Combine Backpressure: Add Demand and Drop Unrequested Values](questions/apple.md#question-apple-combine-demand)
+- [85 · Combine Backpressure: Add Demand and Drop Unrequested Values](questions/apple.md#question-apple-combine-demand)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -542,7 +547,7 @@ Sort demands, satisfy the smallest cap when it is no greater than the remaining 
 
 **Related English questions:**
 
-- [Fair Resource Allocation: Freeze Satisfied Demands and Refill the Rest](questions/uber.md#question-uber-max-min-allocation)
+- [88 · Fair Resource Allocation: Freeze Satisfied Demands and Refill the Rest](questions/uber.md#question-uber-max-min-allocation)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -574,9 +579,9 @@ A work-efficient exclusive scan has O(n) work and O(log n) dependency depth. A r
 
 **Related English questions:**
 
-- [GPU Coalescing: Count Memory Segments, Not Just Loads](questions/nvidia.md#question-nvidia-memory-coalescing)
-- [Parallel Scan: Linear Work With Logarithmic Dependency Depth](questions/nvidia.md#question-nvidia-parallel-scan)
-- [Warp Reduction: Participation Masks Are Part of Correctness](questions/nvidia.md#question-nvidia-warp-reduction)
+- [51 · GPU Coalescing: Count Memory Segments, Not Just Loads](questions/nvidia.md#question-nvidia-memory-coalescing)
+- [52 · Parallel Scan: Linear Work With Logarithmic Dependency Depth](questions/nvidia.md#question-nvidia-parallel-scan)
+- [53 · Warp Reduction: Participation Masks Are Part of Correctness](questions/nvidia.md#question-nvidia-warp-reduction)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -612,12 +617,12 @@ Breadth-first search uses a queue to explore nodes one step away before those tw
 
 **Related English questions:**
 
-- [Travel Restrictions: Reachability Along a Directed Path](questions/meta.md#question-meta-travel-restrictions)
-- [Consistency, Chapter 2: Shortest Character Conversions](questions/meta.md#question-meta-consistency-two)
-- [Second Second Friend: Preserve Required Vertices in a Graph’s 2-core](questions/meta.md#question-meta-second-second-friend)
-- [Ready, Go, Part 2: Aggregate Groups Sharing One Liberty](questions/meta.md#question-meta-ready-go-two)
-- [Horseplay: Enumerate Legal Knight Moves](questions/linkedin-learning.md#question-linkedin-knight-moves)
-- [Hex-Grid Neighborhoods: Visit Each Cell Once Within k Hops](questions/uber.md#question-uber-hex-neighborhood)
+- [61 · Travel Restrictions: Reachability Along a Directed Path](questions/meta.md#question-meta-travel-restrictions)
+- [63 · Consistency, Chapter 2: Shortest Character Conversions](questions/meta.md#question-meta-consistency-two)
+- [66 · Second Second Friend: Preserve Required Vertices in a Graph’s 2-core](questions/meta.md#question-meta-second-second-friend)
+- [68 · Ready, Go, Part 2: Aggregate Groups Sharing One Liberty](questions/meta.md#question-meta-ready-go-two)
+- [78 · Horseplay: Enumerate Legal Knight Moves](questions/linkedin-learning.md#question-linkedin-knight-moves)
+- [86 · Hex-Grid Neighborhoods: Visit Each Cell Once Within k Hops](questions/uber.md#question-uber-hex-neighborhood)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -647,7 +652,8 @@ Dijkstra's algorithm maintains the best distances discovered so far, repeatedly 
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [05 · Network Delay: Shortest Paths and Unreachable Vertices](questions/leetcode.md#question-algo-05)
+- [12 · Minimum-Effort Paths: Shortest Paths Need Not Add Weights](questions/leetcode.md#question-algo-12)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -683,15 +689,16 @@ Examples include knapsack, longest common subsequence, edit distance, and certai
 
 **Related English questions:**
 
-- [Chain Reactions: Carry One Unfinished Path Through a Tree](questions/google.md#question-google-chain-reactions)
-- [Slides!: Encode an Exact Path Count in a DAG](questions/google.md#question-google-slides)
-- [Alien Piano: Preserve Adjacent Comparisons with Four DP States](questions/google.md#question-google-alien-piano)
-- [Moons and Umbrellas: Keep Both End States When Costs Can Be Negative](questions/google.md#question-google-moons-umbrellas)
-- [Timber: Join Two Sparse Endpoint Dynamic Programs](questions/meta.md#question-meta-timber)
-- [Consistency, Chapter 2: Shortest Character Conversions](questions/meta.md#question-meta-consistency-two)
-- [Service Dependencies: Find the Critical Path Without Adding Parallel Work](questions/uber.md#question-uber-critical-path)
-- [Shot Encoding: Choose One Representation per Byte Budget](questions/netflix.md#question-netflix-shot-budget)
-- [Pattern Segmentation: Minimize the Cost of Non-overlapping Matches](questions/dropbox.md#question-dropbox-pattern-segmentation)
+- [11 · Minimum Coin Count: Test Greedy with a Counterexample](questions/leetcode.md#question-algo-11)
+- [39 · Chain Reactions: Carry One Unfinished Path Through a Tree](questions/google.md#question-google-chain-reactions)
+- [56 · Slides!: Encode an Exact Path Count in a DAG](questions/google.md#question-google-slides)
+- [57 · Alien Piano: Preserve Adjacent Comparisons with Four DP States](questions/google.md#question-google-alien-piano)
+- [58 · Moons and Umbrellas: Keep Both End States When Costs Can Be Negative](questions/google.md#question-google-moons-umbrellas)
+- [62 · Timber: Join Two Sparse Endpoint Dynamic Programs](questions/meta.md#question-meta-timber)
+- [63 · Consistency, Chapter 2: Shortest Character Conversions](questions/meta.md#question-meta-consistency-two)
+- [87 · Service Dependencies: Find the Critical Path Without Adding Parallel Work](questions/uber.md#question-uber-critical-path)
+- [90 · Shot Encoding: Choose One Representation per Byte Budget](questions/netflix.md#question-netflix-shot-budget)
+- [100 · Pattern Segmentation: Minimize the Cost of Non-overlapping Matches](questions/dropbox.md#question-dropbox-pattern-segmentation)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -722,21 +729,21 @@ Examples include knapsack, longest common subsequence, edit distance, and certai
 
 **Related English questions:**
 
-- [Timber: Join Two Sparse Endpoint Dynamic Programs](questions/meta.md#question-meta-timber)
-- [Xs and Os: Count Distinct Winning Move Sets](questions/meta.md#question-meta-xs-and-os)
-- [Ready, Go, Part 2: Aggregate Groups Sharing One Liberty](questions/meta.md#question-meta-ready-go-two)
-- [Reorganize String: Reserve Even Slots for the Most Frequent Character](questions/asana.md#question-asana-reorganize-string)
-- [Randomized Set: Swap with the Last Element Before Deleting](questions/asana.md#question-asana-randomized-set)
-- [Most Actors: Count Distinct Performers and Preserve Films With No Credits](questions/slack.md#question-slack-most-actors)
-- [Rating Breakdown: Group Categories Before Joining One-to-Many Data](questions/slack.md#question-slack-rating-breakdown)
-- [Ping Accounting: Match Replies and Exclude Duplicates](questions/cloudflare.md#question-cloudflare-icmp-probes)
-- [Finding Relatives: Stop at the First Repeated Surname](questions/linkedin-learning.md#question-linkedin-first-related-pair)
-- [Snapshot Reordering: Keep a Longest Increasing Subsequence](questions/apple.md#question-apple-snapshot-minimum-moves)
-- [Actor Reentrancy: Share In-progress Downloads Before Awaiting](questions/apple.md#question-apple-actor-single-flight)
-- [Hex-Grid Neighborhoods: Visit Each Cell Once Within k Hops](questions/uber.md#question-uber-hex-neighborhood)
-- [API v1 Idempotency: Cache Executed Errors and Prune Explicitly](questions/stripe.md#question-stripe-v1-idempotency-cache)
-- [Webhook Delivery: Separate Event Identity from a One-shot Business Effect](questions/stripe.md#question-stripe-webhook-one-shot-effect)
-- [Incremental File Sync: Replay Ordered Entries and Commit the Cursor](questions/dropbox.md#question-dropbox-cursor-file-replay)
+- [62 · Timber: Join Two Sparse Endpoint Dynamic Programs](questions/meta.md#question-meta-timber)
+- [64 · Xs and Os: Count Distinct Winning Move Sets](questions/meta.md#question-meta-xs-and-os)
+- [68 · Ready, Go, Part 2: Aggregate Groups Sharing One Liberty](questions/meta.md#question-meta-ready-go-two)
+- [70 · Reorganize String: Reserve Even Slots for the Most Frequent Character](questions/asana.md#question-asana-reorganize-string)
+- [72 · Randomized Set: Swap with the Last Element Before Deleting](questions/asana.md#question-asana-randomized-set)
+- [74 · Most Actors: Count Distinct Performers and Preserve Films With No Credits](questions/slack.md#question-slack-most-actors)
+- [75 · Rating Breakdown: Group Categories Before Joining One-to-Many Data](questions/slack.md#question-slack-rating-breakdown)
+- [77 · Ping Accounting: Match Replies and Exclude Duplicates](questions/cloudflare.md#question-cloudflare-icmp-probes)
+- [80 · Finding Relatives: Stop at the First Repeated Surname](questions/linkedin-learning.md#question-linkedin-first-related-pair)
+- [82 · Snapshot Reordering: Keep a Longest Increasing Subsequence](questions/apple.md#question-apple-snapshot-minimum-moves)
+- [83 · Actor Reentrancy: Share In-progress Downloads Before Awaiting](questions/apple.md#question-apple-actor-single-flight)
+- [86 · Hex-Grid Neighborhoods: Visit Each Cell Once Within k Hops](questions/uber.md#question-uber-hex-neighborhood)
+- [95 · API v1 Idempotency: Cache Executed Errors and Prune Explicitly](questions/stripe.md#question-stripe-v1-idempotency-cache)
+- [96 · Webhook Delivery: Separate Event Identity from a One-shot Business Effect](questions/stripe.md#question-stripe-webhook-one-shot-effect)
+- [99 · Incremental File Sync: Replay Ordered Entries and Commit the Cursor](questions/dropbox.md#question-dropbox-cursor-file-replay)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -764,16 +771,20 @@ Examples include knapsack, longest common subsequence, edit distance, and certai
 
 **Related English questions:**
 
-- [Workout: Binary Search a Feasible Maximum Gap](questions/google.md#question-google-workout)
-- [Append Sort: Preserve Prefixes with the Smallest Extension](questions/google.md#question-google-append-sort)
-- [Chain Reactions: Carry One Unfinished Path Through a Tree](questions/google.md#question-google-chain-reactions)
-- [Double or One Thing: Compare the Next Different Character](questions/google.md#question-google-double-or-one-thing)
-- [Metal Harvest: Cover Time Intervals from the First Uncovered Point](questions/google.md#question-google-metal-harvest)
-- [Bundling: Form String Groups at the Deepest Shared Prefix](questions/google.md#question-google-bundling)
-- [Reorganize String: Reserve Even Slots for the Most Frequent Character](questions/asana.md#question-asana-reorganize-string)
-- [UTF-8 Budgets: Truncate Only at Character Boundaries](questions/apple.md#question-apple-grapheme-byte-budget)
-- [Fair Resource Allocation: Freeze Satisfied Demands and Refill the Rest](questions/uber.md#question-uber-max-min-allocation)
-- [Diversity Reranking: Update Prefix Distances After Each Selection](questions/airbnb.md#question-airbnb-diversity-greedy)
+- [02 · Robot Snapshots: Local Neighbors Do Not Guarantee a Perfect Matching](questions/amazon.md#question-algo-02)
+- [07 · Interval Selection: Justify Greedy with an Exchange Argument](questions/leetcode.md#question-algo-07)
+- [13 · Maximum XOR: Why the Highest Bit Comes First](questions/leetcode.md#question-algo-13)
+- [18 · Task Cooldowns: Know the Scope of the Counting Formula](questions/leetcode.md#question-algo-18)
+- [37 · Workout: Binary Search a Feasible Maximum Gap](questions/google.md#question-google-workout)
+- [38 · Append Sort: Preserve Prefixes with the Smallest Extension](questions/google.md#question-google-append-sort)
+- [39 · Chain Reactions: Carry One Unfinished Path Through a Tree](questions/google.md#question-google-chain-reactions)
+- [40 · Double or One Thing: Compare the Next Different Character](questions/google.md#question-google-double-or-one-thing)
+- [55 · Metal Harvest: Cover Time Intervals from the First Uncovered Point](questions/google.md#question-google-metal-harvest)
+- [59 · Bundling: Form String Groups at the Deepest Shared Prefix](questions/google.md#question-google-bundling)
+- [70 · Reorganize String: Reserve Even Slots for the Most Frequent Character](questions/asana.md#question-asana-reorganize-string)
+- [84 · UTF-8 Budgets: Truncate Only at Character Boundaries](questions/apple.md#question-apple-grapheme-byte-budget)
+- [88 · Fair Resource Allocation: Freeze Satisfied Demands and Refill the Rest](questions/uber.md#question-uber-max-min-allocation)
+- [93 · Diversity Reranking: Update Prefix Distances After Each Selection](questions/airbnb.md#question-airbnb-diversity-greedy)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -804,20 +815,20 @@ Examples include knapsack, longest common subsequence, edit distance, and certai
 
 **Related English questions:**
 
-- [Append Sort: Preserve Prefixes with the Smallest Extension](questions/google.md#question-google-append-sort)
-- [Metal Harvest: Cover Time Intervals from the First Uncovered Point](questions/google.md#question-google-metal-harvest)
-- [Alien Piano: Preserve Adjacent Comparisons with Four DP States](questions/google.md#question-google-alien-piano)
-- [Weak Typing, Chapter 2: Count Each Forced Switch’s Contribution](questions/meta.md#question-meta-weak-typing-two)
-- [Growing Hedges: Simultaneous Grid Updates and Undirected Pair Counts](questions/asana.md#question-asana-growing-hedges)
-- [K Smallest Pair Sums: Merge Sorted Rows Without Materializing the Product](questions/asana.md#question-asana-k-smallest-pairs)
-- [Longest Movie: Return Every Maximum Rather Than an Arbitrary LIMIT 1](questions/slack.md#question-slack-longest-movie)
-- [Most Actors: Count Distinct Performers and Preserve Films With No Credits](questions/slack.md#question-slack-most-actors)
-- [Rating Breakdown: Group Categories Before Joining One-to-Many Data](questions/slack.md#question-slack-rating-breakdown)
-- [Fair Resource Allocation: Freeze Satisfied Demands and Refill the Rest](questions/uber.md#question-uber-max-min-allocation)
-- [Shot Encoding: Choose One Representation per Byte Budget](questions/netflix.md#question-netflix-shot-budget)
-- [Diversity Reranking: Update Prefix Distances After Each Selection](questions/airbnb.md#question-airbnb-diversity-greedy)
-- [Distributed Variance: Merge Counts, Means, and Centered Squares](questions/airbnb.md#question-airbnb-mergeable-variance)
-- [Streaming Content Hash: Keep File Blocks Independent of Read Chunks](questions/dropbox.md#question-dropbox-streaming-content-hash)
+- [38 · Append Sort: Preserve Prefixes with the Smallest Extension](questions/google.md#question-google-append-sort)
+- [55 · Metal Harvest: Cover Time Intervals from the First Uncovered Point](questions/google.md#question-google-metal-harvest)
+- [57 · Alien Piano: Preserve Adjacent Comparisons with Four DP States](questions/google.md#question-google-alien-piano)
+- [65 · Weak Typing, Chapter 2: Count Each Forced Switch’s Contribution](questions/meta.md#question-meta-weak-typing-two)
+- [69 · Growing Hedges: Simultaneous Grid Updates and Undirected Pair Counts](questions/asana.md#question-asana-growing-hedges)
+- [71 · K Smallest Pair Sums: Merge Sorted Rows Without Materializing the Product](questions/asana.md#question-asana-k-smallest-pairs)
+- [73 · Longest Movie: Return Every Maximum Rather Than an Arbitrary LIMIT 1](questions/slack.md#question-slack-longest-movie)
+- [74 · Most Actors: Count Distinct Performers and Preserve Films With No Credits](questions/slack.md#question-slack-most-actors)
+- [75 · Rating Breakdown: Group Categories Before Joining One-to-Many Data](questions/slack.md#question-slack-rating-breakdown)
+- [88 · Fair Resource Allocation: Freeze Satisfied Demands and Refill the Rest](questions/uber.md#question-uber-max-min-allocation)
+- [90 · Shot Encoding: Choose One Representation per Byte Budget](questions/netflix.md#question-netflix-shot-budget)
+- [93 · Diversity Reranking: Update Prefix Distances After Each Selection](questions/airbnb.md#question-airbnb-diversity-greedy)
+- [94 · Distributed Variance: Merge Counts, Means, and Centered Squares](questions/airbnb.md#question-airbnb-mergeable-variance)
+- [98 · Streaming Content Hash: Keep File Blocks Independent of Read Chunks](questions/dropbox.md#question-dropbox-streaming-content-hash)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -845,7 +856,7 @@ Examples include knapsack, longest common subsequence, edit distance, and certai
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [16 · Binary-Tree Serialization: Values Alone Do Not Encode Structure](questions/leetcode.md#question-algo-16)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -877,13 +888,15 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-- [Xs and Os: Count Distinct Winning Move Sets](questions/meta.md#question-meta-xs-and-os)
-- [Growing Hedges: Simultaneous Grid Updates and Undirected Pair Counts](questions/asana.md#question-asana-growing-hedges)
-- [Randomized Set: Swap with the Last Element Before Deleting](questions/asana.md#question-asana-randomized-set)
-- [IPv4 Validation: Parse Every Octet Completely](questions/linkedin-learning.md#question-linkedin-ipv4-validation)
-- [Game of Life: Update a Wrapping Grid Simultaneously](questions/linkedin-learning.md#question-linkedin-toroidal-life)
-- [UTF-8 Budgets: Truncate Only at Character Boundaries](questions/apple.md#question-apple-grapheme-byte-budget)
-- [Currency Encoding: Parse Exact Minor Units Before Checking Payout Increments](questions/stripe.md#question-stripe-currency-amount-parser)
+- [06 · Merge k Sorted Lists: A Heap of Candidate Frontiers](questions/leetcode.md#question-algo-06)
+- [16 · Binary-Tree Serialization: Values Alone Do Not Encode Structure](questions/leetcode.md#question-algo-16)
+- [64 · Xs and Os: Count Distinct Winning Move Sets](questions/meta.md#question-meta-xs-and-os)
+- [69 · Growing Hedges: Simultaneous Grid Updates and Undirected Pair Counts](questions/asana.md#question-asana-growing-hedges)
+- [72 · Randomized Set: Swap with the Last Element Before Deleting](questions/asana.md#question-asana-randomized-set)
+- [79 · IPv4 Validation: Parse Every Octet Completely](questions/linkedin-learning.md#question-linkedin-ipv4-validation)
+- [81 · Game of Life: Update a Wrapping Grid Simultaneously](questions/linkedin-learning.md#question-linkedin-toroidal-life)
+- [84 · UTF-8 Budgets: Truncate Only at Character Boundaries](questions/apple.md#question-apple-grapheme-byte-budget)
+- [97 · Currency Encoding: Parse Exact Minor Units Before Checking Payout Increments](questions/stripe.md#question-stripe-currency-amount-parser)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -915,14 +928,16 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-- [Slides!: Encode an Exact Path Count in a DAG](questions/google.md#question-google-slides)
-- [Travel Restrictions: Reachability Along a Directed Path](questions/meta.md#question-meta-travel-restrictions)
-- [Second Second Friend: Preserve Required Vertices in a Graph’s 2-core](questions/meta.md#question-meta-second-second-friend)
-- [Ready, Go, Part 2: Aggregate Groups Sharing One Liberty](questions/meta.md#question-meta-ready-go-two)
-- [Horseplay: Enumerate Legal Knight Moves](questions/linkedin-learning.md#question-linkedin-knight-moves)
-- [Hex-Grid Neighborhoods: Visit Each Cell Once Within k Hops](questions/uber.md#question-uber-hex-neighborhood)
-- [Service Dependencies: Find the Critical Path Without Adding Parallel Work](questions/uber.md#question-uber-critical-path)
-- [Pattern Segmentation: Minimize the Cost of Non-overlapping Matches](questions/dropbox.md#question-dropbox-pattern-segmentation)
+- [08 · Incremental Cycle Detection: What Disjoint Sets Can Prove](questions/leetcode.md#question-algo-08)
+- [12 · Minimum-Effort Paths: Shortest Paths Need Not Add Weights](questions/leetcode.md#question-algo-12)
+- [56 · Slides!: Encode an Exact Path Count in a DAG](questions/google.md#question-google-slides)
+- [61 · Travel Restrictions: Reachability Along a Directed Path](questions/meta.md#question-meta-travel-restrictions)
+- [66 · Second Second Friend: Preserve Required Vertices in a Graph’s 2-core](questions/meta.md#question-meta-second-second-friend)
+- [68 · Ready, Go, Part 2: Aggregate Groups Sharing One Liberty](questions/meta.md#question-meta-ready-go-two)
+- [78 · Horseplay: Enumerate Legal Knight Moves](questions/linkedin-learning.md#question-linkedin-knight-moves)
+- [86 · Hex-Grid Neighborhoods: Visit Each Cell Once Within k Hops](questions/uber.md#question-uber-hex-neighborhood)
+- [87 · Service Dependencies: Find the Critical Path Without Adding Parallel Work](questions/uber.md#question-uber-critical-path)
+- [100 · Pattern Segmentation: Minimize the Cost of Non-overlapping Matches](questions/dropbox.md#question-dropbox-pattern-segmentation)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -948,7 +963,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [08 · Incremental Cycle Detection: What Disjoint Sets Can Prove](questions/leetcode.md#question-algo-08)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -974,7 +989,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1000,7 +1015,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1026,7 +1041,9 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-- [Candies: Separate Alternating Signs from Range-relative Weights](questions/google.md#question-google-candies)
+- [10 · Mutable Range Sums: Why Static Prefix Sums Are Insufficient](questions/leetcode.md#question-algo-10)
+- [17 · Count Smaller Values to the Right: Compress Ranks, Then Count](questions/leetcode.md#question-algo-17)
+- [60 · Candies: Separate Alternating Signs from Range-relative Weights](questions/google.md#question-google-candies)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1052,7 +1069,8 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-- [Candies: Separate Alternating Signs from Range-relative Weights](questions/google.md#question-google-candies)
+- [10 · Mutable Range Sums: Why Static Prefix Sums Are Insufficient](questions/leetcode.md#question-algo-10)
+- [60 · Candies: Separate Alternating Signs from Range-relative Weights](questions/google.md#question-google-candies)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1078,7 +1096,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1104,7 +1122,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [09 · KMP: Retain Verified Prefix Information After a Mismatch](questions/leetcode.md#question-algo-09)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1130,7 +1148,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1152,7 +1170,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-- [Snapshot Reordering: Keep a Longest Increasing Subsequence](questions/apple.md#question-apple-snapshot-minimum-moves)
+- [82 · Snapshot Reordering: Keep a Longest Increasing Subsequence](questions/apple.md#question-apple-snapshot-minimum-moves)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1178,7 +1196,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-- [Pattern Segmentation: Minimize the Cost of Non-overlapping Matches](questions/dropbox.md#question-dropbox-pattern-segmentation)
+- [100 · Pattern Segmentation: Minimize the Cost of Non-overlapping Matches](questions/dropbox.md#question-dropbox-pattern-segmentation)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1200,7 +1218,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1222,7 +1240,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1244,7 +1262,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-- [Workout: Binary Search a Feasible Maximum Gap](questions/google.md#question-google-workout)
+- [37 · Workout: Binary Search a Feasible Maximum Gap](questions/google.md#question-google-workout)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1270,7 +1288,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1296,7 +1314,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1318,8 +1336,8 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-- [Randomized Set: Swap with the Last Element Before Deleting](questions/asana.md#question-asana-randomized-set)
-- [API v1 Idempotency: Cache Executed Errors and Prune Explicitly](questions/stripe.md#question-stripe-v1-idempotency-cache)
+- [72 · Randomized Set: Swap with the Last Element Before Deleting](questions/asana.md#question-asana-randomized-set)
+- [95 · API v1 Idempotency: Cache Executed Errors and Prune Explicitly](questions/stripe.md#question-stripe-v1-idempotency-cache)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1349,7 +1367,7 @@ Keep the representation scale separate from the allowed amount quantum. Stripe r
 
 **Related English questions:**
 
-- [Currency Encoding: Parse Exact Minor Units Before Checking Payout Increments](questions/stripe.md#question-stripe-currency-amount-parser)
+- [97 · Currency Encoding: Parse Exact Minor Units Before Checking Payout Increments](questions/stripe.md#question-stripe-currency-amount-parser)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1383,7 +1401,7 @@ Keep one inner hash context, one outer context, and a block-byte counter. Finali
 
 **Related English questions:**
 
-- [Streaming Content Hash: Keep File Blocks Independent of Read Chunks](questions/dropbox.md#question-dropbox-streaming-content-hash)
+- [98 · Streaming Content Hash: Keep File Blocks Independent of Read Chunks](questions/dropbox.md#question-dropbox-streaming-content-hash)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1417,7 +1435,7 @@ For a byte-limited prefix that preserves characters, visit whole grapheme cluste
 
 **Related English questions:**
 
-- [UTF-8 Budgets: Truncate Only at Character Boundaries](questions/apple.md#question-apple-grapheme-byte-budget)
+- [84 · UTF-8 Budgets: Truncate Only at Character Boundaries](questions/apple.md#question-apple-grapheme-byte-budget)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1449,7 +1467,7 @@ Keep k as the outer loop so each stage has a complete intermediate-vertex meanin
 
 **Related English questions:**
 
-- [Consistency, Chapter 2: Shortest Character Conversions](questions/meta.md#question-meta-consistency-two)
+- [63 · Consistency, Chapter 2: Shortest Character Conversions](questions/meta.md#question-meta-consistency-two)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1481,7 +1499,7 @@ Any feasible induced subgraph with minimum degree at least k survives every remo
 
 **Related English questions:**
 
-- [Second Second Friend: Preserve Required Vertices in a Graph’s 2-core](questions/meta.md#question-meta-second-second-friend)
+- [66 · Second Second Friend: Preserve Required Vertices in a Graph’s 2-core](questions/meta.md#question-meta-second-second-friend)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1515,7 +1533,7 @@ Build these moments in O(n) time and evaluate q two-dimensional queries in O(q) 
 
 **Related English questions:**
 
-- [Watering Well, Chapter 1: Replace Pairwise Distances with Moments](questions/meta.md#question-meta-watering-well-one)
+- [67 · Watering Well, Chapter 1: Replace Pairwise Distances with Moments](questions/meta.md#question-meta-watering-well-one)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1550,9 +1568,10 @@ An inverted index maps a word or feature back to documents containing it, suppor
 
 **Related English questions:**
 
-- [Longest Movie: Return Every Maximum Rather Than an Arbitrary LIMIT 1](questions/slack.md#question-slack-longest-movie)
-- [Most Actors: Count Distinct Performers and Preserve Films With No Credits](questions/slack.md#question-slack-most-actors)
-- [Rating Breakdown: Group Categories Before Joining One-to-Many Data](questions/slack.md#question-slack-rating-breakdown)
+- [21 · Composite Indexes: Derive the Scan Range from the Predicate](questions/postgresql.md#question-eng-03)
+- [73 · Longest Movie: Return Every Maximum Rather Than an Arbitrary LIMIT 1](questions/slack.md#question-slack-longest-movie)
+- [74 · Most Actors: Count Distinct Performers and Preserve Films With No Credits](questions/slack.md#question-slack-most-actors)
+- [75 · Rating Breakdown: Group Categories Before Joining One-to-Many Data](questions/slack.md#question-slack-rating-breakdown)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1581,8 +1600,9 @@ An inverted index maps a word or feature back to documents containing it, suppor
 
 **Related English questions:**
 
-- [MapReduce Combiners: A Mean Needs Both Sum and Count](questions/google.md#question-google-mapreduce-mean)
-- [Consistent Hashing: Trace Exactly Which Keys Move](questions/amazon.md#question-amazon-consistent-hashing)
+- [19 · Online Bookstore: Derive Order Boundaries from Requirements](questions/amazon.md#question-eng-01)
+- [41 · MapReduce Combiners: A Mean Needs Both Sum and Count](questions/google.md#question-google-mapreduce-mean)
+- [48 · Consistent Hashing: Trace Exactly Which Keys Move](questions/amazon.md#question-amazon-consistent-hashing)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1610,11 +1630,14 @@ An inverted index maps a word or feature back to documents containing it, suppor
 
 **Related English questions:**
 
-- [Spanner: Serializability Versus Observable Commit Order](questions/google.md#question-google-spanner-order)
-- [ETags: Reject a Lost Update Before Overwriting Data](questions/microsoft.md#question-microsoft-etag-concurrency)
-- [Conditional Inventory: An Atomic Check Prevents Overselling](questions/amazon.md#question-amazon-conditional-inventory)
-- [Webhook Delivery: Separate Event Identity from a One-shot Business Effect](questions/stripe.md#question-stripe-webhook-one-shot-effect)
-- [Incremental File Sync: Replay Ordered Entries and Commit the Cursor](questions/dropbox.md#question-dropbox-cursor-file-replay)
+- [19 · Online Bookstore: Derive Order Boundaries from Requirements](questions/amazon.md#question-eng-01)
+- [20 · Read Committed: Can Two Reads in One Transaction Differ?](questions/postgresql.md#question-eng-02)
+- [22 · Deadlocks: Draw the Wait Cycle](questions/postgresql.md#question-eng-04)
+- [42 · Spanner: Serializability Versus Observable Commit Order](questions/google.md#question-google-spanner-order)
+- [47 · ETags: Reject a Lost Update Before Overwriting Data](questions/microsoft.md#question-microsoft-etag-concurrency)
+- [49 · Conditional Inventory: An Atomic Check Prevents Overselling](questions/amazon.md#question-amazon-conditional-inventory)
+- [96 · Webhook Delivery: Separate Event Identity from a One-shot Business Effect](questions/stripe.md#question-stripe-webhook-one-shot-effect)
+- [99 · Incremental File Sync: Replay Ordered Entries and Commit the Cursor](questions/dropbox.md#question-dropbox-cursor-file-replay)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1642,13 +1665,16 @@ An inverted index maps a word or feature back to documents containing it, suppor
 
 **Related English questions:**
 
-- [SLO Error Budgets: Count Eligible Requests Before Converting to Time](questions/google.md#question-google-error-budget)
-- [Token Bucket: Preserve Fractional Credit Between Requests](questions/microsoft.md#question-microsoft-token-bucket)
-- [Circuit Breaker: Recovery Needs a Bounded Probe](questions/microsoft.md#question-microsoft-circuit-breaker)
-- [A/B Routing: Fetch One Variant and Preserve the Assignment](questions/cloudflare.md#question-cloudflare-variant-routing)
-- [Ping Accounting: Match Replies and Exclude Duplicates](questions/cloudflare.md#question-cloudflare-icmp-probes)
-- [IPv4 Validation: Parse Every Octet Completely](questions/linkedin-learning.md#question-linkedin-ipv4-validation)
-- [Adaptive Concurrency: Trace a Vegas Limit Update](questions/netflix.md#question-netflix-vegas-limit)
+- [23 · Timed-out Requests: Idempotency Protects the Effect](questions/ietf.md#question-eng-05)
+- [24 · HTTP Caching: no-cache Does Not Mean No Storage](questions/ietf.md#question-eng-06)
+- [26 · Retry Storms: Calculate Multiplicative Amplification First](questions/aws.md#question-eng-08)
+- [43 · SLO Error Budgets: Count Eligible Requests Before Converting to Time](questions/google.md#question-google-error-budget)
+- [45 · Token Bucket: Preserve Fractional Credit Between Requests](questions/microsoft.md#question-microsoft-token-bucket)
+- [46 · Circuit Breaker: Recovery Needs a Bounded Probe](questions/microsoft.md#question-microsoft-circuit-breaker)
+- [76 · A/B Routing: Fetch One Variant and Preserve the Assignment](questions/cloudflare.md#question-cloudflare-variant-routing)
+- [77 · Ping Accounting: Match Replies and Exclude Duplicates](questions/cloudflare.md#question-cloudflare-icmp-probes)
+- [79 · IPv4 Validation: Parse Every Octet Completely](questions/linkedin-learning.md#question-linkedin-ipv4-validation)
+- [91 · Adaptive Concurrency: Trace a Vegas Limit Update](questions/netflix.md#question-netflix-vegas-limit)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1679,7 +1705,7 @@ An inverted index maps a word or feature back to documents containing it, suppor
 
 **Related English questions:**
 
-- [Spanner: Serializability Versus Observable Commit Order](questions/google.md#question-google-spanner-order)
+- [42 · Spanner: Serializability Versus Observable Commit Order](questions/google.md#question-google-spanner-order)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1711,10 +1737,12 @@ An inverted index maps a word or feature back to documents containing it, suppor
 
 **Related English questions:**
 
-- [Cache Leases: Reject a Delayed Fill After Invalidation](questions/meta.md#question-meta-cache-lease)
-- [A/B Routing: Fetch One Variant and Preserve the Assignment](questions/cloudflare.md#question-cloudflare-variant-routing)
-- [Actor Reentrancy: Share In-progress Downloads Before Awaiting](questions/apple.md#question-apple-actor-single-flight)
-- [API v1 Idempotency: Cache Executed Errors and Prune Explicitly](questions/stripe.md#question-stripe-v1-idempotency-cache)
+- [24 · HTTP Caching: no-cache Does Not Mean No Storage](questions/ietf.md#question-eng-06)
+- [27 · Redis TTL: Overwriting a Value Can Remove Its Expiration](questions/redis.md#question-eng-09)
+- [54 · Cache Leases: Reject a Delayed Fill After Invalidation](questions/meta.md#question-meta-cache-lease)
+- [76 · A/B Routing: Fetch One Variant and Preserve the Assignment](questions/cloudflare.md#question-cloudflare-variant-routing)
+- [83 · Actor Reentrancy: Share In-progress Downloads Before Awaiting](questions/apple.md#question-apple-actor-single-flight)
+- [95 · API v1 Idempotency: Cache Executed Errors and Prune Explicitly](questions/stripe.md#question-stripe-v1-idempotency-cache)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1748,7 +1776,7 @@ The exercise fixes the baseline and policy to make each transition checkable. Th
 
 **Related English questions:**
 
-- [Adaptive Concurrency: Trace a Vegas Limit Update](questions/netflix.md#question-netflix-vegas-limit)
+- [91 · Adaptive Concurrency: Trace a Vegas Limit Update](questions/netflix.md#question-netflix-vegas-limit)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1782,9 +1810,9 @@ Group by stable identifiers when different entities can share a name. To return 
 
 **Related English questions:**
 
-- [Longest Movie: Return Every Maximum Rather Than an Arbitrary LIMIT 1](questions/slack.md#question-slack-longest-movie)
-- [Most Actors: Count Distinct Performers and Preserve Films With No Credits](questions/slack.md#question-slack-most-actors)
-- [Rating Breakdown: Group Categories Before Joining One-to-Many Data](questions/slack.md#question-slack-rating-breakdown)
+- [73 · Longest Movie: Return Every Maximum Rather Than an Arbitrary LIMIT 1](questions/slack.md#question-slack-longest-movie)
+- [74 · Most Actors: Count Distinct Performers and Preserve Films With No Credits](questions/slack.md#question-slack-most-actors)
+- [75 · Rating Breakdown: Group Categories Before Joining One-to-Many Data](questions/slack.md#question-slack-rating-breakdown)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1820,8 +1848,8 @@ A combiner must preserve results when applied to different groupings, including 
 
 **Related English questions:**
 
-- [MapReduce Combiners: A Mean Needs Both Sum and Count](questions/google.md#question-google-mapreduce-mean)
-- [Distributed Variance: Merge Counts, Means, and Centered Squares](questions/airbnb.md#question-airbnb-mergeable-variance)
+- [41 · MapReduce Combiners: A Mean Needs Both Sum and Count](questions/google.md#question-google-mapreduce-mean)
+- [94 · Distributed Variance: Merge Counts, Means, and Centered Squares](questions/airbnb.md#question-airbnb-mergeable-variance)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1855,7 +1883,7 @@ Population variance is M2/n for n > 0. Averaging shard variances misses variatio
 
 **Related English questions:**
 
-- [Distributed Variance: Merge Counts, Means, and Centered Squares](questions/airbnb.md#question-airbnb-mergeable-variance)
+- [94 · Distributed Variance: Merge Counts, Means, and Centered Squares](questions/airbnb.md#question-airbnb-mergeable-variance)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1889,7 +1917,7 @@ If T1 commits before T2 begins, a consistent snapshot cannot include T2's effect
 
 **Related English questions:**
 
-- [Spanner: Serializability Versus Observable Commit Order](questions/google.md#question-google-spanner-order)
+- [42 · Spanner: Serializability Versus Observable Commit Order](questions/google.md#question-google-spanner-order)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1923,7 +1951,7 @@ Define eligible events, observation window, and measurement location before calc
 
 **Related English questions:**
 
-- [SLO Error Budgets: Count Eligible Requests Before Converting to Time](questions/google.md#question-google-error-budget)
+- [43 · SLO Error Budgets: Count Eligible Requests Before Converting to Time](questions/google.md#question-google-error-budget)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1955,7 +1983,7 @@ Retain fractional credit and update the timestamp on each refill. Shared buckets
 
 **Related English questions:**
 
-- [Token Bucket: Preserve Fractional Credit Between Requests](questions/microsoft.md#question-microsoft-token-bucket)
+- [45 · Token Bucket: Preserve Fractional Credit Between Requests](questions/microsoft.md#question-microsoft-token-bucket)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -1987,7 +2015,7 @@ Choose explicit failure thresholds, observation windows, timeout behavior, and r
 
 **Related English questions:**
 
-- [Circuit Breaker: Recovery Needs a Bounded Probe](questions/microsoft.md#question-microsoft-circuit-breaker)
+- [46 · Circuit Breaker: Recovery Needs a Bounded Probe](questions/microsoft.md#question-microsoft-circuit-breaker)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2021,9 +2049,9 @@ A state predicate can enforce a local invariant directly, such as stock >= reque
 
 **Related English questions:**
 
-- [ETags: Reject a Lost Update Before Overwriting Data](questions/microsoft.md#question-microsoft-etag-concurrency)
-- [Conditional Inventory: An Atomic Check Prevents Overselling](questions/amazon.md#question-amazon-conditional-inventory)
-- [Cache Leases: Reject a Delayed Fill After Invalidation](questions/meta.md#question-meta-cache-lease)
+- [47 · ETags: Reject a Lost Update Before Overwriting Data](questions/microsoft.md#question-microsoft-etag-concurrency)
+- [49 · Conditional Inventory: An Atomic Check Prevents Overselling](questions/amazon.md#question-amazon-conditional-inventory)
+- [54 · Cache Leases: Reject a Delayed Fill After Invalidation](questions/meta.md#question-meta-cache-lease)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2057,10 +2085,10 @@ Bind an idempotency key to the request intent. Coordinate recording that key, ap
 
 **Related English questions:**
 
-- [Conditional Inventory: An Atomic Check Prevents Overselling](questions/amazon.md#question-amazon-conditional-inventory)
-- [API v1 Idempotency: Cache Executed Errors and Prune Explicitly](questions/stripe.md#question-stripe-v1-idempotency-cache)
-- [Webhook Delivery: Separate Event Identity from a One-shot Business Effect](questions/stripe.md#question-stripe-webhook-one-shot-effect)
-- [Incremental File Sync: Replay Ordered Entries and Commit the Cursor](questions/dropbox.md#question-dropbox-cursor-file-replay)
+- [49 · Conditional Inventory: An Atomic Check Prevents Overselling](questions/amazon.md#question-amazon-conditional-inventory)
+- [95 · API v1 Idempotency: Cache Executed Errors and Prune Explicitly](questions/stripe.md#question-stripe-v1-idempotency-cache)
+- [96 · Webhook Delivery: Separate Event Identity from a One-shot Business Effect](questions/stripe.md#question-stripe-webhook-one-shot-effect)
+- [99 · Incremental File Sync: Replay Ordered Entries and Commit the Cursor](questions/dropbox.md#question-dropbox-cursor-file-replay)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2092,8 +2120,8 @@ Choose grouping keys that match the business invariant, then process effects in 
 
 **Related English questions:**
 
-- [FIFO Groups: Ordering and Concurrency Have Different Boundaries](questions/amazon.md#question-amazon-fifo-message-groups)
-- [Webhook Delivery: Separate Event Identity from a One-shot Business Effect](questions/stripe.md#question-stripe-webhook-one-shot-effect)
+- [50 · FIFO Groups: Ordering and Concurrency Have Different Boundaries](questions/amazon.md#question-amazon-fifo-message-groups)
+- [96 · Webhook Delivery: Separate Event Identity from a One-shot Business Effect](questions/stripe.md#question-stripe-webhook-one-shot-effect)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2125,7 +2153,7 @@ Inserting a token transfers the interval from the previous token, exclusive, to 
 
 **Related English questions:**
 
-- [Consistent Hashing: Trace Exactly Which Keys Move](questions/amazon.md#question-amazon-consistent-hashing)
+- [48 · Consistent Hashing: Trace Exactly Which Keys Move](questions/amazon.md#question-amazon-consistent-hashing)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2157,7 +2185,7 @@ Grant a per-key fill token and invalidate it on deletion. Check the token atomic
 
 **Related English questions:**
 
-- [Cache Leases: Reject a Delayed Fill After Invalidation](questions/meta.md#question-meta-cache-lease)
+- [54 · Cache Leases: Reject a Delayed Fill After Invalidation](questions/meta.md#question-meta-cache-lease)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2187,7 +2215,7 @@ Binary classification answers a yes/no question, such as whether an email is spa
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [29 · Cross-Entropy: Mutually Exclusive Classes Are Not Multilabel Targets](questions/pytorch.md#question-ai-02)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2213,7 +2241,7 @@ Dtype is the numeric representation, such as integer or floating point. Device s
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2244,7 +2272,7 @@ Calibration asks whether reported probabilities are trustworthy: among events as
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [36 · Probability Calibration: Correct Ranking Does Not Validate Probabilities](questions/scikit-learn.md#question-ai-09)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2275,7 +2303,7 @@ Cross-validation evaluates stability across repeated data splits. Out-of-fold pr
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [34 · Data Leakage: Preprocessing Can Peek at the Test Set](questions/scikit-learn.md#question-ai-07)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2302,7 +2330,8 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-- [Temporal Feature Joins: Exclude Future Events Before Aggregating](questions/airbnb.md#question-airbnb-point-in-time-window)
+- [34 · Data Leakage: Preprocessing Can Peek at the Test Set](questions/scikit-learn.md#question-ai-07)
+- [92 · Temporal Feature Joins: Exclude Future Events Before Aggregating](questions/airbnb.md#question-airbnb-point-in-time-window)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2334,7 +2363,7 @@ Dtype is the numeric representation, such as integer or floating point. Device s
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2368,7 +2397,7 @@ On the same data, predicting every email as legitimate gives 90% accuracy but fi
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [35 · Thresholds and F1: Count Before Drawing Conclusions](questions/scikit-learn.md#question-ai-08)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2401,7 +2430,7 @@ In neural-network classification, a logit usually means a raw score before conve
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [28 · BCE Input Audit: Check Logits and Tensor Shapes First](questions/pytorch.md#question-ai-01)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2431,7 +2460,7 @@ For multiclass or multilabel tasks, metrics can be calculated separately for eac
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2457,7 +2486,7 @@ Weights and biases are learnable model values; “parameter” is the general ca
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2490,7 +2519,7 @@ On the same data, predicting every email as legitimate gives 90% accuracy but fi
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [35 · Thresholds and F1: Count Before Drawing Conclusions](questions/scikit-learn.md#question-ai-08)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2523,7 +2552,7 @@ On the same data, predicting every email as legitimate gives 90% accuracy but fi
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [35 · Thresholds and F1: Count Before Drawing Conclusions](questions/scikit-learn.md#question-ai-08)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2549,7 +2578,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [36 · Probability Calibration: Correct Ranking Does Not Validate Probabilities](questions/scikit-learn.md#question-ai-09)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2577,7 +2606,7 @@ A sample is one example, such as an order. A feature is information available fo
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2608,7 +2637,7 @@ In neural-network classification, a logit usually means a raw score before conve
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2638,7 +2667,8 @@ In neural-network classification, a logit usually means a raw score before conve
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [29 · Cross-Entropy: Mutually Exclusive Classes Are Not Multilabel Targets](questions/pytorch.md#question-ai-02)
+- [32 · Attention Masks: Mask Before Normalization](questions/pytorch.md#question-ai-05)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2666,7 +2696,8 @@ For now, think of a tensor as a multidimensional array. Its shape gives its size
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [28 · BCE Input Audit: Check Logits and Tensor Shapes First](questions/pytorch.md#question-ai-01)
+- [33 · KV Caches: Estimate Memory and Explain the Growing Decode Cost](questions/hugging-face.md#question-ai-06)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2697,7 +2728,7 @@ A classification threshold must still be chosen after predicting probabilities. 
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [35 · Thresholds and F1: Count Before Drawing Conclusions](questions/scikit-learn.md#question-ai-08)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2724,9 +2755,10 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-- [Temporal Feature Joins: Exclude Future Events Before Aggregating](questions/airbnb.md#question-airbnb-point-in-time-window)
-- [Diversity Reranking: Update Prefix Distances After Each Selection](questions/airbnb.md#question-airbnb-diversity-greedy)
-- [Distributed Variance: Merge Counts, Means, and Centered Squares](questions/airbnb.md#question-airbnb-mergeable-variance)
+- [34 · Data Leakage: Preprocessing Can Peek at the Test Set](questions/scikit-learn.md#question-ai-07)
+- [92 · Temporal Feature Joins: Exclude Future Events Before Aggregating](questions/airbnb.md#question-airbnb-point-in-time-window)
+- [93 · Diversity Reranking: Update Prefix Distances After Each Selection](questions/airbnb.md#question-airbnb-diversity-greedy)
+- [94 · Distributed Variance: Merge Counts, Means, and Centered Squares](questions/airbnb.md#question-airbnb-mergeable-variance)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2756,7 +2788,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2788,7 +2820,7 @@ The learning rate controls each new tree's contribution; tree count controls the
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2818,7 +2850,7 @@ Bootstrap sampling draws training examples with replacement, so some repeat and 
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2848,7 +2880,7 @@ Latent variables are unobserved internal variables used to explain data—for ex
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2878,7 +2910,7 @@ K-means fixes the number of clusters, alternates assignment to the nearest cente
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2908,7 +2940,7 @@ PCA finds linear directions of greatest variation, retaining as much overall var
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2941,7 +2973,7 @@ Regression usually averages tree values; classification may vote or average clas
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2967,7 +2999,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -2991,7 +3023,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3017,7 +3049,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3039,7 +3071,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3065,7 +3097,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3095,7 +3127,7 @@ Activation checkpointing avoids saving every intermediate activation and recompu
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3121,7 +3153,7 @@ AdaGrad scales each parameter’s update using its past gradients. This is usefu
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3152,7 +3184,7 @@ Adam combines a moving average of gradients with statistics of squared gradients
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3182,7 +3214,7 @@ With 1,000 training samples and batches of 100, dropping no samples and updating
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3212,7 +3244,7 @@ Batch normalization uses minibatch statistics to normalize intermediate activati
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3248,7 +3280,7 @@ In multilabel image recognition, the model can separately predict whether an ima
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3278,7 +3310,7 @@ BCELoss expects probabilities as input. BCEWithLogitsLoss accepts raw logits and
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [28 · BCE Input Audit: Check Logits and Tensor Shapes First](questions/pytorch.md#question-ai-01)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3308,7 +3340,7 @@ A checkpoint saves training state. Model weights alone are usually sufficient fo
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3338,7 +3370,7 @@ Metric learning studies similarity in a representation space. Contrastive loss b
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3368,7 +3400,7 @@ Cross-entropy is not an alternative to BCE: BCE is cross-entropy for the binary 
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [29 · Cross-Entropy: Mutually Exclusive Classes Are Not Multilabel Targets](questions/pytorch.md#question-ai-02)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3394,7 +3426,7 @@ CTC, connectionist temporal classification, handles tasks where input frames and
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3420,7 +3452,7 @@ IoU, intersection over union, measures overlap between predicted and ground-trut
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3450,7 +3482,7 @@ Dropout randomly masks activations during training to reduce reliance on particu
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [31 · Dropout: Preserve the Expectation and Switch Evaluation Behavior](questions/pytorch.md#question-ai-04)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3480,7 +3512,7 @@ During training, periodically evaluate on validation data that was not used to f
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3506,7 +3538,7 @@ Focal loss reduces the relative loss contribution of easy, correctly classified 
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3536,7 +3568,7 @@ The forward pass maps inputs to predictions. The loss function compares predicti
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3568,7 +3600,7 @@ The forward pass maps inputs to predictions. The loss function compares predicti
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3598,7 +3630,7 @@ Gradient clipping limits the magnitude of gradients in an update. Norm-based cli
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3630,7 +3662,7 @@ Interview answer: BCE is used for binary probability predictions and strongly pe
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3656,7 +3688,7 @@ Initialization determines the starting point of training. Using the same weights
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3686,7 +3718,7 @@ With 1,000 training samples and batches of 100, dropping no samples and updating
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3712,7 +3744,7 @@ KL divergence measures a discrepancy between probability distributions. It can t
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3748,7 +3780,7 @@ Suppose two runs each train for ten epochs. With a learning rate that is too sma
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3776,7 +3808,7 @@ A loss scores model errors and is what training aims to improve. An objective fu
 
 **Related English questions:**
 
-- [Diversity Reranking: Update Prefix Distances After Each Selection](questions/airbnb.md#question-airbnb-diversity-greedy)
+- [93 · Diversity Reranking: Update Prefix Distances After Each Selection](questions/airbnb.md#question-airbnb-diversity-greedy)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3806,7 +3838,7 @@ When GPU memory cannot fit many samples at once, split them into microbatches, r
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [30 · Gradient Accumulation: Weight Unequal Microbatches Correctly](questions/pytorch.md#question-ai-03)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3836,7 +3868,7 @@ These names denote floating-point formats. Lower precision generally saves memor
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [30 · Gradient Accumulation: Weight Unequal Microbatches Correctly](questions/pytorch.md#question-ai-03)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3866,7 +3898,7 @@ MSE, mean squared error, is common in continuous-value prediction and penalizes 
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3892,7 +3924,7 @@ Loss scaling amplifies the loss in some mixed-precision training so that small g
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3920,7 +3952,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3946,7 +3978,7 @@ A learning-rate scheduler specifies how the learning rate changes. Step decay re
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -3976,7 +4008,7 @@ Full-batch gradient descent uses all training samples to compute an update direc
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4006,7 +4038,7 @@ Training and evaluation modes control the behavior of layers such as Dropout and
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [31 · Dropout: Preserve the Expectation and Switch Evaluation Behavior](questions/pytorch.md#question-ai-04)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4036,7 +4068,7 @@ Warmup first uses a smaller learning rate at the beginning of training, and then
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4066,7 +4098,7 @@ Weight decay discourages excessively large weights. AdamW decouples it from Adam
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4096,7 +4128,7 @@ Some frameworks accumulate new gradients onto existing ones by default, so clear
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4120,7 +4152,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4144,7 +4176,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4168,7 +4200,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4196,7 +4228,8 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-- [SLO Error Budgets: Count Eligible Requests Before Converting to Time](questions/google.md#question-google-error-budget)
+- [26 · Retry Storms: Calculate Multiplicative Amplification First](questions/aws.md#question-eng-08)
+- [43 · SLO Error Budgets: Count Eligible Requests Before Converting to Time](questions/google.md#question-google-error-budget)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4224,7 +4257,7 @@ Intuitively, a query represents what the current position seeks, keys provide ma
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [32 · Attention Masks: Mask Before Normalization](questions/pytorch.md#question-ai-05)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4255,7 +4288,7 @@ DPO directly optimizes relative response preferences from preference data. Its c
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4285,7 +4318,7 @@ The KV cache stores keys and values already computed for processed tokens, avoid
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [33 · KV Caches: Estimate Memory and Explain the Growing Decode Cost](questions/hugging-face.md#question-ai-06)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4315,7 +4348,7 @@ Pretraining learns general patterns from large-scale data. Continued pretraining
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4343,7 +4376,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-- [Embedding Retrieval: Norms Can Change the Winning Candidate](questions/google.md#question-google-embedding-ranking)
+- [44 · Embedding Retrieval: Norms Can Change the Winning Candidate](questions/google.md#question-google-embedding-ranking)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4375,7 +4408,7 @@ A fixed workflow arranges major steps such as retrieval, generation and review i
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4407,7 +4440,7 @@ An inverted index maps a term to documents containing it, avoiding a full docume
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4434,7 +4467,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-- [Embedding Retrieval: Norms Can Change the Winning Candidate](questions/google.md#question-google-embedding-ranking)
+- [44 · Embedding Retrieval: Norms Can Change the Winning Candidate](questions/google.md#question-google-embedding-ranking)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4464,7 +4497,7 @@ A VAE maps observations through an encoder to a probability distribution over la
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4493,7 +4526,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-- [Embedding Retrieval: Norms Can Change the Winning Candidate](questions/google.md#question-google-embedding-ranking)
+- [44 · Embedding Retrieval: Norms Can Change the Winning Candidate](questions/google.md#question-google-embedding-ranking)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4523,7 +4556,7 @@ Offline RL trains on a fixed collection of interactions without gathering new ex
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4554,7 +4587,7 @@ TRPO uses a trust-region approach to constrain policy changes and avoid destroyi
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4584,7 +4617,7 @@ Classic Q-learning uses the estimated value of the best next-state action in its
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4608,7 +4641,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4636,7 +4669,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4664,7 +4697,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4696,7 +4729,7 @@ Dreamer learns a latent world model from real interaction experience, then rolls
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4727,7 +4760,7 @@ PID adjusts control using current error, accumulated error and the rate of error
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4754,7 +4787,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4783,7 +4816,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4809,7 +4842,7 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4837,7 +4870,8 @@ A denomination can be reused, giving an unbounded-knapsack problem. In a one-dim
 
 **Related English questions:**
 
-- [Shot Encoding: Choose One Representation per Byte Budget](questions/netflix.md#question-netflix-shot-budget)
+- [11 · Minimum Coin Count: Test Greedy with a Counterexample](questions/leetcode.md#question-algo-11)
+- [90 · Shot Encoding: Choose One Representation per Byte Budget](questions/netflix.md#question-netflix-shot-budget)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4865,7 +4899,7 @@ Copying the current path is usually required when adding it to an answer. If you
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [04 · Wildcard Word Search: Trie Paths and Branching](questions/leetcode.md#question-algo-04)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4897,10 +4931,10 @@ Keys must be unambiguous. Do not concatenate multiple counts into a number strin
 
 **Related English questions:**
 
-- [Xs and Os: Count Distinct Winning Move Sets](questions/meta.md#question-meta-xs-and-os)
-- [Finding Relatives: Stop at the First Repeated Surname](questions/linkedin-learning.md#question-linkedin-first-related-pair)
-- [Field Masks: Remove Redundant Paths Before Fetching](questions/netflix.md#question-netflix-fieldmask-normalization)
-- [Webhook Delivery: Separate Event Identity from a One-shot Business Effect](questions/stripe.md#question-stripe-webhook-one-shot-effect)
+- [64 · Xs and Os: Count Distinct Winning Move Sets](questions/meta.md#question-meta-xs-and-os)
+- [80 · Finding Relatives: Stop at the First Repeated Surname](questions/linkedin-learning.md#question-linkedin-first-related-pair)
+- [89 · Field Masks: Remove Redundant Paths Before Fetching](questions/netflix.md#question-netflix-fieldmask-normalization)
+- [96 · Webhook Delivery: Separate Event Identity from a One-shot Business Effect](questions/stripe.md#question-stripe-webhook-one-shot-effect)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4926,7 +4960,7 @@ Linked list questions need to distinguish between node identity and node value. 
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4954,7 +4988,7 @@ To test whether a linked list is a palindrome, find a midpoint, reverse the seco
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -4980,7 +5014,7 @@ When setting zero in a matrix, you cannot immediately change the rows and column
 
 **Related English questions:**
 
-- [Game of Life: Update a Wrapping Grid Simultaneously](questions/linkedin-learning.md#question-linkedin-toroidal-life)
+- [81 · Game of Life: Update a Wrapping Grid Simultaneously](questions/linkedin-learning.md#question-linkedin-toroidal-life)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -5012,7 +5046,7 @@ For [-2,3,-1,4], the best sum ending at the final position comes from [3,-1,4]. 
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -5042,34 +5076,37 @@ To preserve nonzero elements in place and in their original order, write them to
 
 **Related English questions:**
 
-- [Workout: Binary Search a Feasible Maximum Gap](questions/google.md#question-google-workout)
-- [Append Sort: Preserve Prefixes with the Smallest Extension](questions/google.md#question-google-append-sort)
-- [Double or One Thing: Compare the Next Different Character](questions/google.md#question-google-double-or-one-thing)
-- [Metal Harvest: Cover Time Intervals from the First Uncovered Point](questions/google.md#question-google-metal-harvest)
-- [Alien Piano: Preserve Adjacent Comparisons with Four DP States](questions/google.md#question-google-alien-piano)
-- [Moons and Umbrellas: Keep Both End States When Costs Can Be Negative](questions/google.md#question-google-moons-umbrellas)
-- [Travel Restrictions: Reachability Along a Directed Path](questions/meta.md#question-meta-travel-restrictions)
-- [Timber: Join Two Sparse Endpoint Dynamic Programs](questions/meta.md#question-meta-timber)
-- [Weak Typing, Chapter 2: Count Each Forced Switch’s Contribution](questions/meta.md#question-meta-weak-typing-two)
-- [Watering Well, Chapter 1: Replace Pairwise Distances with Moments](questions/meta.md#question-meta-watering-well-one)
-- [Growing Hedges: Simultaneous Grid Updates and Undirected Pair Counts](questions/asana.md#question-asana-growing-hedges)
-- [K Smallest Pair Sums: Merge Sorted Rows Without Materializing the Product](questions/asana.md#question-asana-k-smallest-pairs)
-- [Longest Movie: Return Every Maximum Rather Than an Arbitrary LIMIT 1](questions/slack.md#question-slack-longest-movie)
-- [Ping Accounting: Match Replies and Exclude Duplicates](questions/cloudflare.md#question-cloudflare-icmp-probes)
-- [Horseplay: Enumerate Legal Knight Moves](questions/linkedin-learning.md#question-linkedin-knight-moves)
-- [IPv4 Validation: Parse Every Octet Completely](questions/linkedin-learning.md#question-linkedin-ipv4-validation)
-- [Finding Relatives: Stop at the First Repeated Surname](questions/linkedin-learning.md#question-linkedin-first-related-pair)
-- [Game of Life: Update a Wrapping Grid Simultaneously](questions/linkedin-learning.md#question-linkedin-toroidal-life)
-- [Snapshot Reordering: Keep a Longest Increasing Subsequence](questions/apple.md#question-apple-snapshot-minimum-moves)
-- [Actor Reentrancy: Share In-progress Downloads Before Awaiting](questions/apple.md#question-apple-actor-single-flight)
-- [UTF-8 Budgets: Truncate Only at Character Boundaries](questions/apple.md#question-apple-grapheme-byte-budget)
-- [Combine Backpressure: Add Demand and Drop Unrequested Values](questions/apple.md#question-apple-combine-demand)
-- [Adaptive Concurrency: Trace a Vegas Limit Update](questions/netflix.md#question-netflix-vegas-limit)
-- [API v1 Idempotency: Cache Executed Errors and Prune Explicitly](questions/stripe.md#question-stripe-v1-idempotency-cache)
-- [Currency Encoding: Parse Exact Minor Units Before Checking Payout Increments](questions/stripe.md#question-stripe-currency-amount-parser)
-- [Streaming Content Hash: Keep File Blocks Independent of Read Chunks](questions/dropbox.md#question-dropbox-streaming-content-hash)
-- [Incremental File Sync: Replay Ordered Entries and Commit the Cursor](questions/dropbox.md#question-dropbox-cursor-file-replay)
-- [Pattern Segmentation: Minimize the Cost of Non-overlapping Matches](questions/dropbox.md#question-dropbox-pattern-segmentation)
+- [01 · Run-length Encoding: Count Consecutive Runs, Not Global Frequencies](questions/amazon.md#question-algo-01)
+- [07 · Interval Selection: Justify Greedy with an Exchange Argument](questions/leetcode.md#question-algo-07)
+- [09 · KMP: Retain Verified Prefix Information After a Mismatch](questions/leetcode.md#question-algo-09)
+- [37 · Workout: Binary Search a Feasible Maximum Gap](questions/google.md#question-google-workout)
+- [38 · Append Sort: Preserve Prefixes with the Smallest Extension](questions/google.md#question-google-append-sort)
+- [40 · Double or One Thing: Compare the Next Different Character](questions/google.md#question-google-double-or-one-thing)
+- [55 · Metal Harvest: Cover Time Intervals from the First Uncovered Point](questions/google.md#question-google-metal-harvest)
+- [57 · Alien Piano: Preserve Adjacent Comparisons with Four DP States](questions/google.md#question-google-alien-piano)
+- [58 · Moons and Umbrellas: Keep Both End States When Costs Can Be Negative](questions/google.md#question-google-moons-umbrellas)
+- [61 · Travel Restrictions: Reachability Along a Directed Path](questions/meta.md#question-meta-travel-restrictions)
+- [62 · Timber: Join Two Sparse Endpoint Dynamic Programs](questions/meta.md#question-meta-timber)
+- [65 · Weak Typing, Chapter 2: Count Each Forced Switch’s Contribution](questions/meta.md#question-meta-weak-typing-two)
+- [67 · Watering Well, Chapter 1: Replace Pairwise Distances with Moments](questions/meta.md#question-meta-watering-well-one)
+- [69 · Growing Hedges: Simultaneous Grid Updates and Undirected Pair Counts](questions/asana.md#question-asana-growing-hedges)
+- [71 · K Smallest Pair Sums: Merge Sorted Rows Without Materializing the Product](questions/asana.md#question-asana-k-smallest-pairs)
+- [73 · Longest Movie: Return Every Maximum Rather Than an Arbitrary LIMIT 1](questions/slack.md#question-slack-longest-movie)
+- [77 · Ping Accounting: Match Replies and Exclude Duplicates](questions/cloudflare.md#question-cloudflare-icmp-probes)
+- [78 · Horseplay: Enumerate Legal Knight Moves](questions/linkedin-learning.md#question-linkedin-knight-moves)
+- [79 · IPv4 Validation: Parse Every Octet Completely](questions/linkedin-learning.md#question-linkedin-ipv4-validation)
+- [80 · Finding Relatives: Stop at the First Repeated Surname](questions/linkedin-learning.md#question-linkedin-first-related-pair)
+- [81 · Game of Life: Update a Wrapping Grid Simultaneously](questions/linkedin-learning.md#question-linkedin-toroidal-life)
+- [82 · Snapshot Reordering: Keep a Longest Increasing Subsequence](questions/apple.md#question-apple-snapshot-minimum-moves)
+- [83 · Actor Reentrancy: Share In-progress Downloads Before Awaiting](questions/apple.md#question-apple-actor-single-flight)
+- [84 · UTF-8 Budgets: Truncate Only at Character Boundaries](questions/apple.md#question-apple-grapheme-byte-budget)
+- [85 · Combine Backpressure: Add Demand and Drop Unrequested Values](questions/apple.md#question-apple-combine-demand)
+- [91 · Adaptive Concurrency: Trace a Vegas Limit Update](questions/netflix.md#question-netflix-vegas-limit)
+- [95 · API v1 Idempotency: Cache Executed Errors and Prune Explicitly](questions/stripe.md#question-stripe-v1-idempotency-cache)
+- [97 · Currency Encoding: Parse Exact Minor Units Before Checking Payout Increments](questions/stripe.md#question-stripe-currency-amount-parser)
+- [98 · Streaming Content Hash: Keep File Blocks Independent of Read Chunks](questions/dropbox.md#question-dropbox-streaming-content-hash)
+- [99 · Incremental File Sync: Replay Ordered Entries and Commit the Cursor](questions/dropbox.md#question-dropbox-cursor-file-replay)
+- [100 · Pattern Segmentation: Minimize the Cost of Non-overlapping Matches](questions/dropbox.md#question-dropbox-pattern-segmentation)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -5103,8 +5140,10 @@ The invariant must preserve the desired boundary, which may equal the array leng
 
 **Related English questions:**
 
-- [Consistent Hashing: Trace Exactly Which Keys Move](questions/amazon.md#question-amazon-consistent-hashing)
-- [Snapshot Reordering: Keep a Longest Increasing Subsequence](questions/apple.md#question-apple-snapshot-minimum-moves)
+- [17 · Count Smaller Values to the Right: Compress Ranks, Then Count](questions/leetcode.md#question-algo-17)
+- [21 · Composite Indexes: Derive the Scan Range from the Predicate](questions/postgresql.md#question-eng-03)
+- [48 · Consistent Hashing: Trace Exactly Which Keys Move](questions/amazon.md#question-amazon-consistent-hashing)
+- [82 · Snapshot Reordering: Keep a Longest Increasing Subsequence](questions/apple.md#question-apple-snapshot-minimum-moves)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -5137,7 +5176,7 @@ For example, the window sweeps through one, three, and two. When three enters, o
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [15 · Shortest Subarrays with Negative Values: A Dominance Deque](questions/leetcode.md#question-algo-15)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -5167,7 +5206,7 @@ Daily Temperatures maintains a stack of indices with nonincreasing temperatures.
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -5195,7 +5234,7 @@ The earliest arrival conclusion of BFS relies on each propagation edge taking th
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -5227,8 +5266,8 @@ When calculating the maximum path sum, negative subtree contributions are not re
 
 **Related English questions:**
 
-- [Chain Reactions: Carry One Unfinished Path Through a Tree](questions/google.md#question-google-chain-reactions)
-- [Bundling: Form String Groups at the Deepest Shared Prefix](questions/google.md#question-google-bundling)
+- [39 · Chain Reactions: Carry One Unfinished Path Through a Tree](questions/google.md#question-google-chain-reactions)
+- [59 · Bundling: Form String Groups at the Deepest Shared Prefix](questions/google.md#question-google-bundling)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -5264,10 +5303,12 @@ For example, one, negative one, one, the target is one. The three legal interval
 
 **Related English questions:**
 
-- [Parallel Scan: Linear Work With Logarithmic Dependency Depth](questions/nvidia.md#question-nvidia-parallel-scan)
-- [Candies: Separate Alternating Signs from Range-relative Weights](questions/google.md#question-google-candies)
-- [Weak Typing, Chapter 2: Count Each Forced Switch’s Contribution](questions/meta.md#question-meta-weak-typing-two)
-- [Watering Well, Chapter 1: Replace Pairwise Distances with Moments](questions/meta.md#question-meta-watering-well-one)
+- [10 · Mutable Range Sums: Why Static Prefix Sums Are Insufficient](questions/leetcode.md#question-algo-10)
+- [15 · Shortest Subarrays with Negative Values: A Dominance Deque](questions/leetcode.md#question-algo-15)
+- [52 · Parallel Scan: Linear Work With Logarithmic Dependency Depth](questions/nvidia.md#question-nvidia-parallel-scan)
+- [60 · Candies: Separate Alternating Signs from Range-relative Weights](questions/google.md#question-google-candies)
+- [65 · Weak Typing, Chapter 2: Count Each Forced Switch’s Contribution](questions/meta.md#question-meta-weak-typing-two)
+- [67 · Watering Well, Chapter 1: Replace Pairwise Distances with Moments](questions/meta.md#question-meta-watering-well-one)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -5300,7 +5341,7 @@ The heap only guarantees the extreme value at the top of the heap, and does not 
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+- [03 · Streaming kth Largest: Keep Only the Necessary Candidates](questions/leetcode.md#question-algo-03)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -5333,7 +5374,8 @@ For example, on the second b in abba, move left past both the leading a and the 
 
 **Related English questions:**
 
-- [Temporal Feature Joins: Exclude Future Events Before Aggregating](questions/airbnb.md#question-airbnb-point-in-time-window)
+- [14 · Positive-Number Sliding Windows: State the Monotonicity](questions/leetcode.md#question-algo-14)
+- [92 · Temporal Feature Joins: Exclude Future Events Before Aggregating](questions/airbnb.md#question-airbnb-point-in-time-window)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -5365,8 +5407,8 @@ A DFS alternative uses visitation colors. Encountering a vertex that is still on
 
 **Related English questions:**
 
-- [Slides!: Encode an Exact Path Count in a DAG](questions/google.md#question-google-slides)
-- [Service Dependencies: Find the Critical Path Without Adding Parallel Work](questions/uber.md#question-uber-critical-path)
+- [56 · Slides!: Encode an Exact Path Count in a DAG](questions/google.md#question-google-slides)
+- [87 · Service Dependencies: Find the Critical Path Without Adding Parallel Work](questions/uber.md#question-uber-critical-path)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -5398,8 +5440,11 @@ To preserve nonzero elements in place and in their original order, write them to
 
 **Related English questions:**
 
-- [Double or One Thing: Compare the Next Different Character](questions/google.md#question-google-double-or-one-thing)
-- [Temporal Feature Joins: Exclude Future Events Before Aggregating](questions/airbnb.md#question-airbnb-point-in-time-window)
+- [01 · Run-length Encoding: Count Consecutive Runs, Not Global Frequencies](questions/amazon.md#question-algo-01)
+- [02 · Robot Snapshots: Local Neighbors Do Not Guarantee a Perfect Matching](questions/amazon.md#question-algo-02)
+- [14 · Positive-Number Sliding Windows: State the Monotonicity](questions/leetcode.md#question-algo-14)
+- [40 · Double or One Thing: Compare the Next Different Character](questions/google.md#question-google-double-or-one-thing)
+- [92 · Temporal Feature Joins: Exclude Future Events Before Aggregating](questions/airbnb.md#question-airbnb-point-in-time-window)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -5421,7 +5466,7 @@ To preserve nonzero elements in place and in their original order, write them to
 
 **Related English questions:**
 
-No English supplement question is assigned to this concept yet.
+No question in this collection is assigned to this concept yet.
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -5449,8 +5494,12 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-- [Reorganize String: Reserve Even Slots for the Most Frequent Character](questions/asana.md#question-asana-reorganize-string)
-- [K Smallest Pair Sums: Merge Sorted Rows Without Materializing the Product](questions/asana.md#question-asana-k-smallest-pairs)
+- [03 · Streaming kth Largest: Keep Only the Necessary Candidates](questions/leetcode.md#question-algo-03)
+- [05 · Network Delay: Shortest Paths and Unreachable Vertices](questions/leetcode.md#question-algo-05)
+- [06 · Merge k Sorted Lists: A Heap of Candidate Frontiers](questions/leetcode.md#question-algo-06)
+- [18 · Task Cooldowns: Know the Scope of the Counting Formula](questions/leetcode.md#question-algo-18)
+- [70 · Reorganize String: Reserve Even Slots for the Most Frequent Character](questions/asana.md#question-asana-reorganize-string)
+- [71 · K Smallest Pair Sums: Merge Sorted Rows Without Materializing the Product](questions/asana.md#question-asana-k-smallest-pairs)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 
@@ -5476,9 +5525,11 @@ No English supplement question is assigned to this concept yet.
 
 **Related English questions:**
 
-- [Bundling: Form String Groups at the Deepest Shared Prefix](questions/google.md#question-google-bundling)
-- [Field Masks: Remove Redundant Paths Before Fetching](questions/netflix.md#question-netflix-fieldmask-normalization)
-- [Incremental File Sync: Replay Ordered Entries and Commit the Cursor](questions/dropbox.md#question-dropbox-cursor-file-replay)
+- [04 · Wildcard Word Search: Trie Paths and Branching](questions/leetcode.md#question-algo-04)
+- [13 · Maximum XOR: Why the Highest Bit Comes First](questions/leetcode.md#question-algo-13)
+- [59 · Bundling: Form String Groups at the Deepest Shared Prefix](questions/google.md#question-google-bundling)
+- [89 · Field Masks: Remove Redundant Paths Before Fetching](questions/netflix.md#question-netflix-fieldmask-normalization)
+- [99 · Incremental File Sync: Replay Ordered Entries and Commit the Cursor](questions/dropbox.md#question-dropbox-cursor-file-replay)
 
 **Background reading:** Original chapters retain Chinese or bilingual text; paired live lessons are in English.
 

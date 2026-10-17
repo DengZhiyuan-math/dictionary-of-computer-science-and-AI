@@ -2,22 +2,22 @@
 
 **计算机科学与 AI 中英知识词典：读得懂、查得到、讲得清。**
 
-A Chinese-first, bilingual learning dictionary covering computer science, algorithms, machine learning, deep learning, LLMs, reinforcement learning, VLA, and world models. Includes 106 lessons, a complete LeetCode Hot 100 pattern map, a searchable glossary, worked examples, 100 source-labeled interview preparation questions across the original and English collections, 90 original oral questions, and a browser speech reader.
+A Chinese-first, bilingual learning dictionary covering computer science, algorithms, machine learning, deep learning, LLMs, reinforcement learning, VLA, and world models. Includes 106 lessons, a complete LeetCode Hot 100 pattern map, a searchable glossary, worked examples, a unified collection of 100 source-labeled English interview preparation questions, 90 original oral questions, and a browser speech reader.
 
 **v2.5.0 · 2026-10-16** · 106 讲 · 570 个细讲小节 · 90 道口述题 · 103 个核心词条组 · 223 条参考资料
 
-## English interview additions
+## Complete English interview collection
 
-[64 English preparation questions](docs/en/INTERVIEW_QUESTIONS.md) · [Complete English knowledge map](docs/en/KNOWLEDGE_MAP.md) · [Sources and validation](docs/en/README.md) · [Live English dictionary](https://zhiyuan-deng.pages.dev/dictionary/)
+[100 English preparation questions](docs/en/INTERVIEW_QUESTIONS.md) · [Complete English knowledge map](docs/en/KNOWLEDGE_MAP.md) · [Sources and validation](docs/en/README.md) · [Live English dictionary](https://zhiyuan-deng.pages.dev/dictionary/)
 
-The supplement adds 64 questions and 174 worked examples from 15 organizations. It includes reasoning, complexity, related concepts, and source provenance. The original bank has 36 questions, for 100 across both collections. Official samples, public practice, and documentation-derived exercises are labeled separately; publication does not establish use in current hiring.
+All 100 preparation questions are now available in one English collection, with 210 worked examples, reasoning, explicit complexity, answered follow-ups where provided, related concepts, and source provenance. The original 36 questions have been reviewed for terminology, formulas, numerical examples, and algorithmic assumptions. Official samples, public practice, and documentation-derived exercises are labeled separately; publication does not establish use in current hiring.
 
 ## 从这里开始
 
 | 你想做什么 | 入口 |
 | --- | --- |
 | 看整体结构、概念联系和先修顺序 | **[知识地图](docs/KNOWLEDGE_MAP.md)** · [交互图文件](docs/knowledge-map.html) |
-| 用有来源的题目准备面试 | **[36 道面试准备题](docs/INTERVIEW_QUESTIONS.md)** · [来源核对与题目分类](docs/INTERVIEW_SOURCES.md) |
+| 用有来源的题目准备面试 | **[100 English interview questions](docs/en/INTERVIEW_QUESTIONS.md)** · [Sources and validation](docs/en/README.md) |
 | 在 Hot 100 基础上继续学习 | [8 讲算法进阶：并查集、最短路、区间与字符串结构等](docs/ADVANCED_ALGORITHMS.md) |
 | 用小输入手算，再改变条件观察 | **[50 个完整案例](docs/EXAMPLES.md)** · [26 个离线交互演示](docs/visual-demos.html) |
 | 用 Obsidian 双链浏览完整笔记 | [笔记库首页](obsidian-vault/00-知识地图.md)，下载后将 `obsidian-vault` 文件夹作为仓库打开 |
@@ -43,7 +43,7 @@ The supplement adds 64 questions and 174 worked examples from 15 organizations. 
 
 ## 这份笔记怎样解释概念
 
-本轮新增 **36 道带来源的面试准备题**：3 道 Amazon 官方公开样题、16 道算法原站练习、17 道官方文档派生原创自测。每题有答题思路、小输入手算、追问与答案，并连接概念和章节。来源类型逐题标注；本轮没有确认某公司某次真实面试记录，因此不编造“公司真题”、年份或出现频率。
+原版第 106 讲收录 **36 道带来源的面试准备题**：3 道 Amazon 官方公开样题、16 道算法原站练习、17 道官方文档派生原创自测。每题有答题思路、小输入手算、追问与答案，并连接概念和章节。来源类型逐题标注；本轮没有确认某公司某次真实面试记录，因此不编造“公司真题”、年份或出现频率。
 
 第 **98–105 讲**继续展开并查集、有权最短路、Fenwick／线段树、KMP／Aho-Corasick、进阶 DP、二分答案、采样与 Bloom filter、摊还分析。第 **106 讲**是来源面试题选编。播放器增加“算法进阶”和“来源面试题”路线；Obsidian 的 `Interviews` 可沿双链回到原理和例子。
 

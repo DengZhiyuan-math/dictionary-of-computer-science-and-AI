@@ -6,6 +6,10 @@
   "reviewedAt": "2026-10-17",
   "batches": [
     {
+      "file": "interviews-original.json",
+      "title": "Original Collection: Algorithms, Systems, and AI"
+    },
+    {
       "file": "interviews-google.json",
       "title": "Google: Algorithm Practice and Systems Reasoning"
     },
@@ -56,6 +60,8 @@
   ],
   "knowledgeMap": "knowledge-map.json",
   "sourceNotes": [
+    "dictionary-interviews-original-algorithms.md",
+    "dictionary-interviews-original-systems-ai.md",
     "dictionary-interviews-airbnb.md",
     "dictionary-interviews-apple.md",
     "dictionary-interviews-companies.md",

@@ -10,6 +10,8 @@ import {examples} from '../data/examples.mjs';
 import './check-demos.mjs';
 import './check-expansion.mjs';
 import './check-english-interviews.mjs';
+import './check-english-original-algorithms.mjs';
+import './check-english-original-systems-ai.mjs';
 import './check-english-algorithms.mjs';
 import './check-english-company-practice.mjs';
 import './check-english-apple-uber-netflix.mjs';

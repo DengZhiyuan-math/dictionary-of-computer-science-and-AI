@@ -57,8 +57,8 @@ node scripts/check.mjs
 
 提交勘误时请注明章节、小节、原说法、建议改法及依据。仓库尚未指定再利用许可证；外部来源保留各自权利。
 
-## English interview supplement
+## Unified English interview collection
 
-Edit the JSON batches and knowledge definitions in `data/english/`, then run `node scripts/build.mjs` and `node scripts/check.mjs`. The manifest records the imported personal-site revision and the original dictionary baseline. Generated GitHub-readable pages are under `docs/en/`; research notes under `docs/en/sources/` retain the reviewed source claims and limits. Paths mentioned in those historical notes refer to the pinned personal-site source.
+Edit the JSON batches and knowledge definitions in `data/english/`, then run `node scripts/build.mjs` and `node scripts/check.mjs`. The manifest records the imported personal-site revision and the original dictionary baseline. The original 36 translations have a separate content-review date and cite their original source IDs. Generated GitHub-readable pages are under `docs/en/`; research notes under `docs/en/sources/` retain the reviewed source claims and limits. Paths mentioned in those historical notes refer to the pinned personal-site source.
 
-The English supplement has 64 questions. It does not renumber or replace the original 36-question bank or its chapter references. Preserve source labels, worked inputs, explanations, complexity assumptions, and links between questions and concepts. The independent offline suites compare the teaching algorithms with separate reference models; they do not query company services or establish current interview use.
+The English collection contains all 100 questions: the original 36 in `interviews-original.json` followed by 64 later additions. Catalog numbers are 01–100; question IDs, original numbers, source categories, and background chapter references remain traceable. The earlier original-language bank remains an archive. Preserve source labels, worked inputs, explanations, complexity assumptions, and links between questions and concepts. The independent offline suites compare the teaching algorithms with separate reference models; they do not query company services or establish current interview use.

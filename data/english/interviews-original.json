@@ -1,0 +1,1944 @@
+[
+  {
+    "id": "algo-01",
+    "title": "Run-length Encoding: Count Consecutive Runs, Not Global Frequencies",
+    "company": "Amazon",
+    "sourceKind": "company-sample",
+    "sourceTitle": "Amazon Coding Sample: Official Video Transcript",
+    "url": "https://cdn.cms.amazon.jobs/46/56/87e44d2d4347a200acf9f50b023f/amazon-coding-sample-transcript.docx",
+    "sourceNote": "The transcript linked from Amazon Jobs introduces run-length encoding at 2:45. This verifies a public teaching sample, not a record of an actual interview or evidence of the current hiring process.",
+    "prompt": "Encode each consecutive run in a lowercase-letter string as its decimal count followed by its letter, preserving run order. Return an empty string for empty input. Explain how the format must change if input characters can include digits. Treat one lowercase letter as one input symbol.",
+    "approach": [
+      "Maintain the current character and its run length. When a different character arrives, append the completed count-and-letter pair to an output buffer.",
+      "After the scan, flush the final run; handle empty input before initializing a run. Global character frequencies cannot replace run counts.",
+      "With digit characters, define an unambiguous record format, such as an explicit separator between the decimal count and a fixed one-character value, or a structured list of count-character pairs. State the escaping and decoding rules."
+    ],
+    "complexity": "For n input characters and m output characters, `O(n+m)` time with an appendable buffer and `O(m)` output space; `m=O(n)` for this alphabet and format. Apart from the output buffer, retain `O(1)` counters and characters in the word-RAM model. Repeated immutable-string concatenation can cause quadratic copying.",
+    "pitfalls": [
+      "Global counts merge nonadjacent runs. Forgetting the final flush loses the last run.",
+      "Encoding need not shorten the input. Allowing digits without defining record boundaries can make decoding ambiguous."
+    ],
+    "followUp": "If the input arrives in chunks, can you encode each chunk independently and concatenate the results?",
+    "followUpAnswer": "No. A run can cross a chunk boundary: chunks \"bb\" and \"ba\" must encode as \"3b1a\", not \"2b1b1a\". Carry the unfinished final run into the next chunk, or merge adjacent boundary records before finalizing.",
+    "answer": "The first completed run bbb emits 3b; the next a emits 1a. The run cc emits 2c, and the final a is flushed after the loop as 1a. Concatenating these records gives 3b1a2c1a.",
+    "topics": [
+      "loop-invariant",
+      "two-pointers"
+    ],
+    "chapters": [
+      12,
+      81
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 1,
+    "originalSourceId": "amazon-rle",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "s": "bbbacca"
+        },
+        "output": "3b1a2c1a",
+        "explanation": "The first completed run bbb emits 3b; the next a emits 1a. The run cc emits 2c, and the final a is flushed after the loop as 1a. Concatenating these records gives 3b1a2c1a."
+      }
+    ]
+  },
+  {
+    "id": "algo-02",
+    "title": "Robot Snapshots: Local Neighbors Do Not Guarantee a Perfect Matching",
+    "company": "Amazon",
+    "sourceKind": "company-sample",
+    "sourceTitle": "SDE Interview Coding Example: Official Video Transcript",
+    "url": "https://cdn.cms.amazon.jobs/df/32/16e9875b4410ae36f65d6a2ddaf0/sde-interview-coding-sample-transcript.docx",
+    "sourceNote": "From 1:31, the transcript discusses binary robot snapshots, a per-step displacement bound, and per-row count validation; from 6:55, it discusses matching sorted positions. This exercise uses only the stated snapshot constraints and does not infer a continuous-motion collision model.",
+    "prompt": "Given at least one binary row of positive width, with all rows equally wide and representing successive snapshots, validate that each row contains exactly R robots and that every pair of adjacent snapshots admits a one-to-one matching with displacement at most one column. R is a nonnegative integer. Robots are indistinguishable. Judge only discrete snapshots; do not add constraints about collisions during continuous motion. Invalid binary entries, widths, or robot counts fail validation.",
+    "approach": [
+      "Validate binary entries, equal row widths, and exactly R occupied positions in every row. Extract occupied positions in ascending order.",
+      "For each adjacent pair of rows, match positions of the same rank and check that every absolute displacement is at most 1. Preserve the previous row while scanning the next.",
+      "In one dimension, crossed assignments can be uncrossed without increasing the largest matched distance. Thus, if any matching meets the displacement bound, the sorted matching does. Known persistent identities would require a different contract."
+    ],
+    "complexity": "For T rows of width C, `O(T*C)` time to validate and scan the dense grid, and `O(R)` auxiliary position storage for two adjacent rows, excluding the input. Checking already extracted sorted positions takes `O(T*(R+1))`.",
+    "pitfalls": [
+      "A nearby old robot cannot be reused for multiple new positions.",
+      "Do not silently turn the snapshot task into a continuous collision simulation or a problem with known robot identities."
+    ],
+    "followUp": "Why is it insufficient to check that every new position has some old robot nearby?",
+    "followUpAnswer": "With old positions [0,4] and new positions [0,1], both new positions are near old position 0. They cannot both use that robot. Sorted matching requires 4→1, whose displacement is 3, so no valid one-to-one matching exists.",
+    "answer": "Each row contains two occupied positions. Sorted matching gives 0→1 and 3→4, both with displacement 1, so validation succeeds. Replacing the second row by [1,2] also succeeds, since 0→1 and 3→2 both move by 1. Replacing it by [1] fails the robot-count check.",
+    "topics": [
+      "two-pointers",
+      "greedy"
+    ],
+    "chapters": [
+      7,
+      82
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 2,
+    "originalSourceId": "amazon-robots",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "robotCount": 2,
+          "width": 5,
+          "positionsByRow": [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              4
+            ]
+          ]
+        },
+        "output": true,
+        "explanation": "Each row contains two occupied positions. Sorted matching gives 0→1 and 3→4, both with displacement 1, so validation succeeds. Replacing the second row by [1,2] also succeeds, since 0→1 and 3→2 both move by 1. Replacing it by [1] fails the robot-count check."
+      }
+    ]
+  },
+  {
+    "id": "algo-03",
+    "title": "Streaming kth Largest: Keep Only the Necessary Candidates",
+    "company": "LeetCode",
+    "sourceKind": "official-practice",
+    "sourceTitle": "703. Kth Largest Element in a Stream",
+    "url": "https://leetcode.com/problems/kth-largest-element-in-a-stream/",
+    "sourceNote": "The public LeetCode statement verifies the original exercise and its constraints. It does not establish that any company used the problem in hiring. This repository reorganizes the examples and solution; withholding a result before k values arrive is an explicit extension of the exercise.",
+    "prompt": "Scores arrive one at a time. After each arrival, report the kth largest value among all scores seen, counting duplicate occurrences separately. Assume k is a positive integer. Report no value until at least k scores have arrived; use null for that state in the example.",
+    "approach": [
+      "Maintain a min-heap containing at most k values: the k largest occurrences seen so far.",
+      "Insert while the heap has fewer than k elements. Once full, replace the minimum only when the new score is larger than it. A value equal to the minimum does not change the kth-largest result.",
+      "Once the heap contains k elements, its minimum is the required kth-largest value. The full stream need not fit in memory."
+    ],
+    "complexity": "`O(log(k+1))` worst-case time per arrival, `O(1)` to read the answer, and `O(k)` retained heap space. Over n arrivals, `O(n log(k+1))` time. A rejected score requires only `O(1)` comparison work.",
+    "pitfalls": [
+      "The kth largest occurrence is different from the kth distinct value.",
+      "Repeatedly running quickselect on the entire growing stream discards the benefit of incremental maintenance."
+    ],
+    "followUp": "What changes if scores can expire or arbitrary old scores can be deleted?",
+    "followUpAnswer": "A single ordinary heap does not support arbitrary deletion directly. A sliding-window solution may combine heaps with counts and lazy deletion, or use an ordered multiset with deletion. It must also track expiration and keep the correct number of active candidates.",
+    "answer": "After 5, fewer than two scores exist, so there is no report. After 1, the heap contains [1,5] and reports 1. The first 7 replaces 1 and raises the report to 5; the second 7 replaces 5 and raises it to 7.",
+    "topics": [
+      "heap",
+      "quickselect-top-k"
+    ],
+    "chapters": [
+      93
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 3,
+    "originalSourceId": "lc703",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "k": 2,
+          "stream": [
+            5,
+            1,
+            7,
+            7
+          ]
+        },
+        "output": [
+          null,
+          1,
+          5,
+          7
+        ],
+        "explanation": "After 5, fewer than two scores exist, so there is no report. After 1, the heap contains [1,5] and reports 1. The first 7 replaces 1 and raises the report to 5; the second 7 replaces 5 and raises it to 7."
+      }
+    ]
+  },
+  {
+    "id": "algo-04",
+    "title": "Wildcard Word Search: Trie Paths and Branching",
+    "company": "LeetCode",
+    "sourceKind": "official-practice",
+    "sourceTitle": "211. Design Add and Search Words Data Structure",
+    "url": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
+    "sourceNote": "The public LeetCode statement verifies the exercise and its constraints. It does not establish that any company used the problem in hiring. Examples and explanations are independently organized here. This generalized teaching version permits any number of dots; the linked exercise limits wildcard counts in its stated constraints.",
+    "prompt": "Design a structure that inserts lowercase English words and searches patterns. A dot matches exactly one lowercase letter; other pattern characters must match literally. A search succeeds only for a complete stored word. Use a trie with at most 26 children per node.",
+    "approach": [
+      "Store child links and an end-of-word flag in each trie node. Inserting a word follows or creates one edge per character and then marks the final node.",
+      "For search, track the current node and pattern position. A letter follows its matching child; a dot explores all existing children. Return true as soon as a branch matches the full pattern at a word-ending node.",
+      "Reaching a node after consuming the pattern is insufficient unless its end-of-word flag is set. Wildcards can force many branches, so a query is not generally `O(L)`."
+    ],
+    "complexity": "Inserting a word of length L takes `O(L)` time and creates at most `O(L)` nodes. A length-L search costs `O(S_L)`, where `S_L` counts visited trie states and child-edge checks, bounded by `O(min(S,26^L))` for a fixed alphabet and a trie of S nodes; it uses `O(L)` recursive stack space. Persistent trie space is `O(S)`. Without wildcards, search is `O(L)`.",
+    "pitfalls": [
+      "A prefix can exist without being a complete stored word. Check the end-of-word flag.",
+      "Do not omit the cost of wildcard branches or reinterpret a dot as matching an arbitrary-length sequence."
+    ],
+    "followUp": "Can a dot match zero or more letters?",
+    "followUpAnswer": "No. That is a different pattern language requiring different transitions. The dot in this contract consumes exactly one trie edge; do not import regular-expression star semantics.",
+    "answer": "For ca., follow c→a and explore the t and r children; either reaches a stored word. For ca, the search ends at a node without an end-of-word flag, so it fails.",
+    "topics": [
+      "trie",
+      "backtracking-pruning"
+    ],
+    "chapters": [
+      89
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 4,
+    "originalSourceId": "lc211",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "words": [
+            "cat",
+            "car",
+            "dog"
+          ],
+          "patterns": [
+            "ca.",
+            "ca"
+          ]
+        },
+        "output": [
+          true,
+          false
+        ],
+        "explanation": "For ca., follow c→a and explore the t and r children; either reaches a stored word. For ca, the search ends at a node without an end-of-word flag, so it fails."
+      }
+    ]
+  },
+  {
+    "id": "algo-05",
+    "title": "Network Delay: Shortest Paths and Unreachable Vertices",
+    "company": "LeetCode",
+    "sourceKind": "official-practice",
+    "sourceTitle": "743. Network Delay Time",
+    "url": "https://leetcode.com/problems/network-delay-time/",
+    "sourceNote": "The public LeetCode statement verifies the exercise and its constraints. It does not establish that any company used the problem in hiring. The examples and solution are independently organized here. Allowing parallel edges is an explicit generalization beyond the linked statement's unique-edge constraint.",
+    "prompt": "Given a directed graph with nonnegative edge weights and a source vertex, return the earliest time by which every vertex can receive a signal sent from the source. Return -1 if any vertex is unreachable. Assume `V>=1` and that distance sums fit the chosen numeric type. Parallel edges, if allowed, must remain valid input edges.",
+    "approach": [
+      "Set the source distance to 0 and all other distances to infinity. Use a min-priority queue to expand the smallest tentative distance.",
+      "For an edge u→v with weight w, relax when d[u]+w<d[v]. Push improved candidates; when a queue entry is removed, skip it if its distance is stale. Nonnegative weights justify settling the smallest current distance.",
+      "If every distance is finite, return their maximum. This is the latest earliest-arrival time, not the largest single edge weight."
+    ],
+    "complexity": "With adjacency lists and a lazy binary heap, `O(V+E log(E+1))` time and `O(V+E)` space, including graph storage and up to `O(E)` queued candidates. For a simple graph, `log(E+1)=O(log(V+1))`, giving the common `O((V+E)log(V+1))` bound. An indexed heap with decrease-key uses `O(V)` heap space.",
+    "pitfalls": [
+      "Taking the largest edge weight does not compute propagation time.",
+      "Respect edge direction and check unreachable vertices. Dijkstra does not support arbitrary negative edge weights."
+    ],
+    "followUp": "How can the algorithm be simplified if every edge has weight 1?",
+    "followUpAnswer": "Use breadth-first search: distance is the number of edges from the source, so total time is `O(V+E)`. If negative weights are introduced instead, the settled-distance guarantee fails and a suitable shortest-path algorithm with different assumptions is required.",
+    "answer": "C is reached at time 1. Relaxing C→B improves B from 4 to 2. The distances are A:0, C:1, and B:2, so the answer is 2. Adding an isolated vertex D changes the answer to -1.",
+    "topics": [
+      "dijkstra",
+      "heap"
+    ],
+    "chapters": [
+      99,
+      10
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 5,
+    "originalSourceId": "lc743",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "vertices": [
+            "A",
+            "B",
+            "C"
+          ],
+          "edges": [
+            [
+              "A",
+              "B",
+              4
+            ],
+            [
+              "A",
+              "C",
+              1
+            ],
+            [
+              "C",
+              "B",
+              1
+            ]
+          ],
+          "source": "A"
+        },
+        "output": 2,
+        "explanation": "C is reached at time 1. Relaxing C→B improves B from 4 to 2. The distances are A:0, C:1, and B:2, so the answer is 2. Adding an isolated vertex D changes the answer to -1."
+      }
+    ]
+  },
+  {
+    "id": "algo-06",
+    "title": "Merge k Sorted Lists: A Heap of Candidate Frontiers",
+    "company": "LeetCode",
+    "sourceKind": "official-practice",
+    "sourceTitle": "23. Merge k Sorted Lists",
+    "url": "https://leetcode.com/problems/merge-k-sorted-lists/",
+    "sourceNote": "The public LeetCode statement verifies the exercise and its constraints. It does not establish that any company used the problem in hiring. Examples and explanations are independently organized here.",
+    "prompt": "Merge k singly linked lists sorted in nondecreasing order. Explain why the heap needs only the first unconsumed node from each list. Empty lists are allowed. Assume finite acyclic lists with no shared nodes, and state whether output may reuse and relink input nodes.",
+    "approach": [
+      "The first unconsumed node in each sorted list is its smallest remaining value. Therefore the global smallest remaining value is among these frontier nodes.",
+      "Put nonempty list heads in a min-heap. Repeatedly remove the smallest head, append it to the output, and insert its successor if one exists. Preserve the successor before relinking a reused node.",
+      "Use a list index or another tie-breaker if the language cannot directly compare equal-valued node objects. State whether the operation mutates the input or allocates new output nodes."
+    ],
+    "complexity": "For N total nodes, `O(k+N log(k+1))` time including reading the k heads and heap initialization, and `O(k)` auxiliary heap storage. Reusing nodes needs no additional output nodes; copying values into a new list requires `O(N)` output storage.",
+    "pitfalls": [
+      "Loading every node into the heap uses `O(N)` heap space unnecessarily.",
+      "For asynchronous streams, a missing frontier can prevent a globally ordered output even when other values are available."
+    ],
+    "followUp": "If the inputs are k network streams and one has no value available yet, may the merge continue producing output?",
+    "followUpAnswer": "Only if that stream is known to have ended or supplies a lower-bound watermark that excludes smaller future values. Otherwise a late value could be smaller than the visible heap minimum, so global order is not guaranteed.",
+    "answer": "The initial frontier is 1,2,3. Remove 1 and insert its successor 6. Continuing to remove the smallest frontier yields 2,3,5,6, producing [1,2,3,5,6].",
+    "topics": [
+      "heap",
+      "data-structures"
+    ],
+    "chapters": [
+      93,
+      87
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 6,
+    "originalSourceId": "lc23",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "lists": [
+            [
+              1,
+              6
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              3
+            ]
+          ]
+        },
+        "output": [
+          1,
+          2,
+          3,
+          5,
+          6
+        ],
+        "explanation": "The initial frontier is 1,2,3. Remove 1 and insert its successor 6. Continuing to remove the smallest frontier yields 2,3,5,6, producing [1,2,3,5,6]."
+      }
+    ]
+  },
+  {
+    "id": "algo-07",
+    "title": "Interval Selection: Justify Greedy with an Exchange Argument",
+    "company": "LeetCode",
+    "sourceKind": "official-practice",
+    "sourceTitle": "435. Non-overlapping Intervals",
+    "url": "https://leetcode.com/problems/non-overlapping-intervals/",
+    "sourceNote": "The public LeetCode statement verifies the exercise and its constraints. It does not establish that any company used the problem in hiring. Examples and explanations are independently organized here.",
+    "prompt": "Remove as few intervals as possible so that the retained intervals do not overlap. Each interval has start<end, and touching endpoints are allowed: an interval starting at the previous end is compatible. Return the minimum removal count.",
+    "approach": [
+      "Equivalently, retain a maximum-cardinality set of compatible intervals. Sort intervals by nondecreasing end time.",
+      "Keep an interval when its start is at least the end of the last retained interval. Choose the earliest finishing compatible interval to leave the largest remaining time range.",
+      "For the exchange argument, replace the first interval of an optimal schedule by an earliest-finishing interval. This cannot make its later intervals infeasible. Repeat the argument on the remaining compatible intervals."
+    ],
+    "complexity": "For n intervals, `O(n log(n+1))` time for sorting and `O(n)` for the scan. The scan uses `O(1)` auxiliary state; total extra space depends on sorting (`O(n)` for a copied sorted array, or the in-place sort implementation).",
+    "pitfalls": [
+      "Touching endpoints are compatible under this contract.",
+      "Earliest start and earliest finish are different rules. A greedy proof for maximizing count does not prove optimality for maximizing total value."
+    ],
+    "followUp": "If each interval has a reward, does choosing the earliest finish still maximize the total reward?",
+    "followUpAnswer": "No. Maximum cardinality and maximum reward are different objectives. Weighted interval scheduling commonly sorts by end time, finds compatible predecessors with binary search, and uses dynamic programming.",
+    "answer": "Sorting by end gives [1,2],[2,4],[0,5],[4,6]. Keep [1,2], then [2,4], skip [0,5], and keep [4,6]. Three of four intervals remain, so remove one.",
+    "topics": [
+      "greedy",
+      "loop-invariant"
+    ],
+    "chapters": [
+      103,
+      94
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 7,
+    "originalSourceId": "lc435",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "intervals": [
+            [
+              0,
+              5
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              4,
+              6
+            ]
+          ]
+        },
+        "output": 1,
+        "explanation": "Sorting by end gives [1,2],[2,4],[0,5],[4,6]. Keep [1,2], then [2,4], skip [0,5], and keep [4,6]. Three of four intervals remain, so remove one."
+      }
+    ]
+  },
+  {
+    "id": "algo-08",
+    "title": "Incremental Cycle Detection: What Disjoint Sets Can Prove",
+    "company": "LeetCode",
+    "sourceKind": "official-practice",
+    "sourceTitle": "684. Redundant Connection",
+    "url": "https://leetcode.com/problems/redundant-connection/",
+    "sourceNote": "The public LeetCode statement verifies the undirected tree-plus-one-edge exercise. It does not establish that any company used the problem in hiring. Examples and explanations are independently organized here.",
+    "prompt": "An undirected simple graph is a tree with one additional edge. Scan edges in input order and return the edge whose endpoints are already connected when it is examined. Use disjoint-set union and explain why this detects the unique cycle. Assume vertices are known or can be indexed. For the tree-plus-one-edge contract, this is the last input edge on the unique cycle, hence the last removable edge requested by the source exercise.",
+    "approach": [
+      "Start with one set per vertex. find(u) returns the representative of u's current connected component.",
+      "If `find(u)==find(v)`, the new edge closes a cycle; otherwise unite the sets. Use path compression and union by rank or size. Before the final cycle edge is scanned, the other edges on that cycle already connect its endpoints; no earlier cycle edge closes a cycle. Thus the detected edge is the last removable input edge.",
+      "The set representative identifies connectivity, not a physical path in the graph. This reasoning applies to undirected connectivity, not directed reachability."
+    ],
+    "complexity": "For V vertices and E scanned edges, `O(V+E*alpha(V))` amortized time and `O(V)` auxiliary space with path compression and union by rank or size. Here `E=V` for a tree plus one edge. alpha is the inverse Ackermann function.",
+    "pitfalls": [
+      "Ordinary undirected disjoint-set union cannot directly detect arbitrary directed cycles.",
+      "A representative is not a graph path, and standard path-compressed disjoint sets do not support arbitrary edge deletion."
+    ],
+    "followUp": "Can the same disjoint-set structure directly undo arbitrary edge deletions?",
+    "followUpAnswer": "No. Depending on the operation model, consider offline reverse processing, rollback disjoint-set union without ordinary irreversible path compression, or a dynamic-connectivity structure.",
+    "answer": "Unite 1 with 2, then 2 with 3, forming {1,2,3}. Edge [1,3] has equal representatives and closes the cycle. If scanning continues, [3,4] adds vertex 4 to the component.",
+    "topics": [
+      "disjoint-set-union",
+      "graph-algorithms"
+    ],
+    "chapters": [
+      98,
+      11
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 8,
+    "originalSourceId": "lc684",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "edges": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              3,
+              4
+            ]
+          ]
+        },
+        "output": [
+          1,
+          3
+        ],
+        "explanation": "Unite 1 with 2, then 2 with 3, forming {1,2,3}. Edge [1,3] has equal representatives and closes the cycle. If scanning continues, [3,4] adds vertex 4 to the component."
+      }
+    ]
+  },
+  {
+    "id": "algo-09",
+    "title": "KMP: Retain Verified Prefix Information After a Mismatch",
+    "company": "LeetCode",
+    "sourceKind": "official-practice",
+    "sourceTitle": "28. Find the Index of the First Occurrence in a String",
+    "url": "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/",
+    "sourceNote": "The public LeetCode statement verifies the exercise and its constraints. It does not establish that any company used the problem in hiring. Examples and explanations are independently organized here. Empty-pattern handling and the byte/code-point discussion extend the linked exercise's nonempty lowercase-string domain.",
+    "prompt": "Return the zero-based index of the first occurrence of a pattern in a text, or -1 if absent. Return 0 for an empty pattern. Explain how KMP avoids repeating comparisons of overlapping prefixes. Define whether symbols are bytes or Unicode code points; apply the same unit to both strings and the returned index.",
+    "approach": [
+      "Precompute the prefix function pi: `pi[i]` is the length of the longest proper prefix of `pattern[0..i]` that is also its suffix. A proper prefix excludes the entire substring itself.",
+      "Scan the text while tracking a matched pattern length j. On mismatch, set `j=pi[j-1]` while possible; the text position does not move backward. If the current symbols match, increase j.",
+      "When j equals the pattern length, report the start index. The retained prefix is already known to match the relevant text suffix, so it need not be compared again from scratch."
+    ],
+    "complexity": "For n text symbols and m pattern symbols, `O(n+m)` time and `O(m)` prefix-function storage, assuming constant-time symbol access and comparison. Materializing code points from an encoded string may require additional conversion storage.",
+    "pitfalls": [
+      "The longest proper prefix cannot be the entire substring.",
+      "Moving the text pointer backward invalidates the usual KMP invariant and linear-time analysis."
+    ],
+    "followUp": "Can rolling-hash matching completely replace KMP?",
+    "followUpAnswer": "A rolling hash can filter candidate matches, but equal hashes do not provide a deterministic proof of equal text. Verify candidate substrings or explicitly accept and analyze the collision probability. Verification also affects worst-case complexity.",
+    "answer": "The prefix function of aab is [0,1,0]. After matching two a characters, the third text a mismatches the expected b. Fall back to matched length 1, retain one verified a, and then match a followed by b. The first occurrence starts at index 1.",
+    "topics": [
+      "kmp-prefix-function",
+      "loop-invariant"
+    ],
+    "chapters": [
+      101,
+      12
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 9,
+    "originalSourceId": "lc28",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "text": "aaab",
+          "pattern": "aab",
+          "indexBase": 0
+        },
+        "output": 1,
+        "explanation": "The prefix function of aab is [0,1,0]. After matching two a characters, the third text a mismatches the expected b. Fall back to matched length 1, retain one verified a, and then match a followed by b. The first occurrence starts at index 1."
+      }
+    ]
+  },
+  {
+    "id": "algo-10",
+    "title": "Mutable Range Sums: Why Static Prefix Sums Are Insufficient",
+    "company": "LeetCode",
+    "sourceKind": "official-practice",
+    "sourceTitle": "307. Range Sum Query - Mutable",
+    "url": "https://leetcode.com/problems/range-sum-query-mutable/",
+    "sourceNote": "The public LeetCode statement verifies the exercise and its constraints. It does not establish that any company used the problem in hiring. Examples and explanations are independently organized here.",
+    "prompt": "Support interleaved point assignments and inclusive range-sum queries on an integer array. Public indices are zero-based; assume valid indices and sums that fit the chosen integer type. Compare a Fenwick tree with a segment tree.",
+    "approach": [
+      "A static prefix array answers range sums quickly, but assigning one value can change every later prefix. A Fenwick tree stores selected prefix blocks so each operation touches only logarithmically many entries.",
+      "Keep current array values. For assignment `update(i,value)`, compute `delta=value-a[i]`, update a[i], then start at internal index i+1 and add delta while advancing by `lowbit(index)`.",
+      "Implement `prefix(t)` as the sum of the first t array values. Then inclusive `sum(l,r)=prefix(r+1)-prefix(l)`. A segment tree also supports these operations and extends naturally to other aggregates and lazy range updates."
+    ],
+    "complexity": "For n values, each point assignment or range-sum query takes `O(log(n+1))` time and the data structure uses `O(n)` space. Fenwick construction is `O(n)` with a linear build or `O(n log(n+1))` by repeated point insertion; storing current values adds `O(n)` space.",
+    "pitfalls": [
+      "An assignment to 5 is not an increment by 5. Compute the difference from the old value.",
+      "Keep zero-based external indices separate from one-based Fenwick indices; starting an update at internal index 0 would never advance."
+    ],
+    "followUp": "If updates become range assignments, is a single basic Fenwick tree still sufficient?",
+    "followUpAnswer": "Its basic point-update interface is insufficient. A segment tree with lazy propagation can handle range assignment. Define how assignment tags combine, and distinguish range addition from overwriting an entire range.",
+    "answer": "The initial inclusive sum at indices 1..3 is `4+1+3=8`. Assigning index 2 from 1 to 5 adds `delta=4`. The same query then returns `4+5+3=12`.",
+    "topics": [
+      "fenwick-tree",
+      "segment-tree",
+      "prefix-sum"
+    ],
+    "chapters": [
+      100,
+      6
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 10,
+    "originalSourceId": "lc307",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "array": [
+            2,
+            4,
+            1,
+            3
+          ],
+          "operations": [
+            [
+              "sum",
+              1,
+              3
+            ],
+            [
+              "update",
+              2,
+              5
+            ],
+            [
+              "sum",
+              1,
+              3
+            ]
+          ],
+          "indexBase": 0
+        },
+        "output": [
+          8,
+          12
+        ],
+        "explanation": "The initial inclusive sum at indices 1..3 is `4+1+3=8`. Assigning index 2 from 1 to 5 adds `delta=4`. The same query then returns `4+5+3=12`."
+      }
+    ]
+  },
+  {
+    "id": "algo-11",
+    "title": "Minimum Coin Count: Test Greedy with a Counterexample",
+    "company": "LeetCode",
+    "sourceKind": "official-practice",
+    "sourceTitle": "322. Coin Change",
+    "url": "https://leetcode.com/problems/coin-change/",
+    "sourceNote": "The public LeetCode statement verifies the exercise and its constraints. It does not establish that any company used the problem in hiring. Examples and explanations are independently organized here.",
+    "prompt": "Given positive integer coin denominations with unlimited supply and a nonnegative integer amount A, return the smallest number of coins summing to A, or -1 if no representation exists. Assume integer array indices can represent all amounts from 0 through A.",
+    "approach": [
+      "Set `dp[0]=0` and all other states to infinity. For each amount s from 1 through A, set `dp[s]=min(dp[s-c]+1)` over denominations `c<=s` with reachable predecessor states.",
+      "The last coin of any optimal representation has some denomination c. Removing it leaves a representation of s-c, so considering every possible last coin covers all solutions. Increasing s permits repeated use of the same denomination.",
+      "Return -1 when dp[A] is still infinite. This is a pseudopolynomial algorithm because its work depends on the numeric amount rather than only the bit length of A."
+    ],
+    "complexity": "For D denominations, `O(A*D)` time and `O(A)` DP storage, using constant-time integer arithmetic. These are pseudopolynomial bounds in the numeric target; the input encodes A in `O(log(A+1))` bits.",
+    "pitfalls": [
+      "Greedy coin choice may work for specific currency systems but fails for arbitrary denominations.",
+      "Calling `O(A)` polynomial in the input bit length hides the pseudopolynomial dependence."
+    ],
+    "followUp": "What changes if each listed coin may be used at most once?",
+    "followUpAnswer": "That is a 0/1 choice problem. When iterating coins in a one-dimensional DP, process amounts in descending order so the current coin cannot reuse a state updated earlier in the same iteration.",
+    "answer": "Choosing the largest coin first yields 4+1+1, requiring three coins. Dynamic programming also examines dp[3]+1 and finds 3+3, requiring only two.",
+    "topics": [
+      "dynamic-programming",
+      "0-1-knapsack-unbounded-knapsack"
+    ],
+    "chapters": [
+      95,
+      9
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 11,
+    "originalSourceId": "lc322",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "coins": [
+            1,
+            3,
+            4
+          ],
+          "amount": 6
+        },
+        "output": 2,
+        "explanation": "Choosing the largest coin first yields 4+1+1, requiring three coins. Dynamic programming also examines dp[3]+1 and finds 3+3, requiring only two."
+      }
+    ]
+  },
+  {
+    "id": "algo-12",
+    "title": "Minimum-Effort Paths: Shortest Paths Need Not Add Weights",
+    "company": "LeetCode",
+    "sourceKind": "official-practice",
+    "sourceTitle": "1631. Path With Minimum Effort",
+    "url": "https://leetcode.com/problems/path-with-minimum-effort/",
+    "sourceNote": "The public LeetCode statement verifies the exercise and its constraints. It does not establish that any company used the problem in hiring. Examples and explanations are independently organized here.",
+    "prompt": "In a nonempty rectangular height grid, move between orthogonally adjacent cells. A path's effort is the maximum absolute height difference across its steps. Find the minimum effort from the top-left to the bottom-right cell. A one-cell path has effort 0. Assume differences fit the chosen numeric type.",
+    "approach": [
+      "Treat cells as graph vertices and adjacent absolute height differences as edge weights. The objective is a bottleneck value, not a sum.",
+      "Use a Dijkstra-style min-heap, but relax with `candidate=max(d[u],w)`. Replace d[v] only if candidate is smaller. Extending a path cannot decrease its bottleneck, which supports settling the smallest current effort.",
+      "Alternatively, binary-search an allowed threshold and test reachability by BFS. Feasibility is monotone: a path allowed at threshold x remains allowed at every larger threshold."
+    ],
+    "complexity": "For `V=rows*columns` and `O(V)` grid edges, lazy-heap bottleneck Dijkstra takes `O(V log(V+1))` time and `O(V)` auxiliary space. For integer adjacent height differences bounded by Delta, threshold binary search plus BFS takes `O(V log(Delta+2))` time, including the grid scan and the `Delta=0` case, and `O(V)` space.",
+    "pitfalls": [
+      "Using additive relaxation solves a different objective.",
+      "Do not assume that every quantity called a path cost is the sum of its edge weights."
+    ],
+    "followUp": "Why not add all of the height differences along the path?",
+    "followUpAnswer": "The target is the hardest single step, so the recurrence must use max for path extension and min across alternative paths. Minimizing a sum answers a different question.",
+    "answer": "The right-then-down path has differences 3 and 1, so its effort is 3. The down-then-right path has differences 1 and 1, so its effort is 1. The minimum is 1.",
+    "topics": [
+      "dijkstra",
+      "graph-algorithms"
+    ],
+    "chapters": [
+      99,
+      103
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 12,
+    "originalSourceId": "lc1631",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "heights": [
+            [
+              1,
+              4
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        },
+        "output": 1,
+        "explanation": "The right-then-down path has differences 3 and 1, so its effort is 3. The down-then-right path has differences 1 and 1, so its effort is 1. The minimum is 1."
+      }
+    ]
+  },
+  {
+    "id": "algo-13",
+    "title": "Maximum XOR: Why the Highest Bit Comes First",
+    "company": "LeetCode",
+    "sourceKind": "official-practice",
+    "sourceTitle": "421. Maximum XOR of Two Numbers in an Array",
+    "url": "https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/",
+    "sourceNote": "The public LeetCode statement verifies the exercise and its constraints. It does not establish that any company used the problem in hiring. This version makes the nonnegative fixed-width representation explicit; examples and explanations are independently organized here.",
+    "prompt": "Given a nonempty array of nonnegative integers represented in exactly W bits, find `max(nums[i] XOR nums[j])` over `0<=i<=j<n`. The same position is allowed, as in the linked exercise; a singleton therefore returns 0. Equal values at different positions are also allowed. Interpret the result as unsigned, and assume the language can preserve all W bits.",
+    "approach": [
+      "Build a binary trie from the most significant bit to the least significant bit. Insert the array values, then query each value against the trie; using the same position is permitted. Alternatively, start the answer at 0 and query each later value against previously inserted values before inserting it, which also handles a singleton.",
+      "At each queried bit, prefer the opposite-bit child if present; otherwise follow the same-bit child. This maximizes the highest remaining result bit.",
+      "A result bit of value `2^b` exceeds the sum `2^b-1` of all lower bits. Therefore any possible 1 in the highest undecided position outweighs every possible lower-bit improvement."
+    ],
+    "complexity": "For n values of W bits, `O(nW)` time and at most `O(nW)` trie nodes, assuming constant-time bit extraction. With fixed machine-word width, this is linear in n. For arbitrary-precision values, include the cost of the chosen bit operations.",
+    "pitfalls": [
+      "XOR is not integer addition.",
+      "Some languages coerce bitwise operands to signed 32-bit values; use a representation consistent with the stated width and unsigned result."
+    ],
+    "followUp": "Why is it safe to prefer an opposite bit before considering lower bits?",
+    "followUpAnswer": "At bit b, obtaining a 1 contributes `2^b`. All lower bits combined contribute at most `2^b-1`, so they cannot compensate for losing that higher bit.",
+    "answer": "2 XOR 5 is 7 and 2 XOR 9 is 11. The four-bit forms of 5 and 9 are 0101 and 1001; their XOR is 1100, or 12. This is the maximum.",
+    "topics": [
+      "trie",
+      "greedy"
+    ],
+    "chapters": [
+      101,
+      97
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 13,
+    "originalSourceId": "lc421",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "nums": [
+            2,
+            5,
+            9
+          ],
+          "width": 4
+        },
+        "output": 12,
+        "explanation": "2 XOR 5 is 7 and 2 XOR 9 is 11. The four-bit forms of 5 and 9 are 0101 and 1001; their XOR is 1100, or 12. This is the maximum."
+      }
+    ]
+  },
+  {
+    "id": "algo-14",
+    "title": "Positive-Number Sliding Windows: State the Monotonicity",
+    "company": "LeetCode",
+    "sourceKind": "official-practice",
+    "sourceTitle": "209. Minimum Size Subarray Sum",
+    "url": "https://leetcode.com/problems/minimum-size-subarray-sum/",
+    "sourceNote": "The public LeetCode statement verifies the positive-integer subarray exercise. It does not establish that any company used the problem in hiring. Examples and explanations are independently organized here.",
+    "prompt": "Given an array of positive integers and a positive target, find the length of the shortest contiguous subarray whose sum is at least target. Return 0 if none exists. Assume sums fit the chosen numeric type.",
+    "approach": [
+      "Advance the right endpoint and add its value to the running sum. While the sum meets the target, record the current length and remove the leftmost value.",
+      "Positivity makes expanding the right endpoint increase the sum and advancing the left endpoint decrease it. Once a left endpoint has produced its shortest feasible ending position, keeping it for a later end cannot improve its length.",
+      "Each endpoint advances at most n times, so nested loops still produce a linear scan. The positivity assumption is part of the proof."
+    ],
+    "complexity": "`O(n)` time and `O(1)` auxiliary space for n array values, assuming constant-time arithmetic.",
+    "pitfalls": [
+      "A sliding-window template needs the positivity assumption that makes its sum monotone.",
+      "Contiguous-subarray wording alone does not imply that the ordinary two-pointer window works."
+    ],
+    "followUp": "Does the same algorithm work when negative values are allowed?",
+    "followUpAnswer": "No. For [1,-1,3] and target 3, shrinking the first feasible window removes 1 and drops the sum below 3, so the usual loop stops before discovering [3]. Prefix sums with a monotonic deque can handle negative values.",
+    "answer": "When the right endpoint reaches 4, the sum is 7; record length 3, then remove 2, leaving 5. Add the final 2 to get 7, remove 1 to get 6 and record length 2, then remove 4 and become infeasible. The shortest segment is [4,2].",
+    "topics": [
+      "sliding-window",
+      "two-pointers"
+    ],
+    "chapters": [
+      83
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 14,
+    "originalSourceId": "lc209",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "array": [
+            2,
+            1,
+            4,
+            2
+          ],
+          "target": 6
+        },
+        "output": 2,
+        "explanation": "When the right endpoint reaches 4, the sum is 7; record length 3, then remove 2, leaving 5. Add the final 2 to get 7, remove 1 to get 6 and record length 2, then remove 4 and become infeasible. The shortest segment is [4,2]."
+      }
+    ]
+  },
+  {
+    "id": "algo-15",
+    "title": "Shortest Subarrays with Negative Values: A Dominance Deque",
+    "company": "LeetCode",
+    "sourceKind": "official-practice",
+    "sourceTitle": "862. Shortest Subarray with Sum at Least K",
+    "url": "https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/",
+    "sourceNote": "The public LeetCode statement verifies the exercise and its constraints. It does not establish that any company used the problem in hiring. Examples and explanations are independently organized here.",
+    "prompt": "Given an integer array that may contain negative values and a positive integer k, return the length of the shortest nonempty contiguous subarray with sum at least k, or -1 if none exists. Assume prefix sums fit the chosen numeric type.",
+    "approach": [
+      "Define `P[0]=0` and P[j] as the sum of the first j values. A subarray [i,j) has sum `P[j]-P[i]`. Maintain a deque of candidate start indices with strictly increasing prefix values.",
+      "For each j, while `P[j]-P[front]>=k`, update the best length j-front and remove the front. That start cannot produce a shorter answer at a later endpoint.",
+      "Remove back indices with `P[back]>=P[j]`: the newer j has no larger prefix and makes every later interval shorter. Then append j. Compare only earlier starts so the subarray is nonempty."
+    ],
+    "complexity": "`O(n)` time and `O(n)` auxiliary space, including prefix sums and a deque. Each prefix index enters once and leaves at most once. Use a true deque or a head index so removing the front does not shift an array.",
+    "pitfalls": [
+      "The deque stores prefix indices, not raw array values.",
+      "Explain the dominance rule when removing from the back. Efficient deque operations are necessary for the linear-time bound."
+    ],
+    "followUp": "Why discard an older index even when its prefix sum equals the new prefix sum?",
+    "followUpAnswer": "For any future endpoint, both starts give the same subarray sum, but the newer start gives a shorter interval. The older equal-prefix index has no advantage for a shortest-length objective.",
+    "answer": "The prefix array is [0,1,0,3]. At `P[2]=0`, index 2 dominates both earlier candidate starts 1 and 0 because its prefix is no larger and it is later. At `P[3]=3`, starting at index 2 gives a qualifying subarray of length 1.",
+    "topics": [
+      "prefix-sum",
+      "monotonic-deque"
+    ],
+    "chapters": [
+      84
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 15,
+    "originalSourceId": "lc862",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "array": [
+            1,
+            -1,
+            3
+          ],
+          "k": 3
+        },
+        "output": 1,
+        "explanation": "The prefix array is [0,1,0,3]. At `P[2]=0`, index 2 dominates both earlier candidate starts 1 and 0 because its prefix is no larger and it is later. At `P[3]=3`, starting at index 2 gives a qualifying subarray of length 1."
+      }
+    ]
+  },
+  {
+    "id": "algo-16",
+    "title": "Binary-Tree Serialization: Values Alone Do Not Encode Structure",
+    "company": "LeetCode",
+    "sourceKind": "official-practice",
+    "sourceTitle": "297. Serialize and Deserialize Binary Tree",
+    "url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/",
+    "sourceNote": "The public LeetCode statement verifies the round-trip tree-encoding exercise. It does not establish that any company used the problem in hiring. The concrete text protocol and examples are chosen by this repository.",
+    "prompt": "Design a text serializer and deserializer for finite binary trees with integer values. Round-tripping must preserve every value and the left/right structure. Use comma-separated decimal integers in preorder and # for each null child. Treat the empty tree as # and reject malformed or excessively deep input according to an explicit resource policy.",
+    "approach": [
+      "Serialize a node by emitting its value, then its left subtree, then its right subtree. Emit # for every null child, and define the integer and delimiter grammar precisely.",
+      "To deserialize, read the next token: # means null; otherwise parse an integer and recursively read its left and right children. Reject a missing token, invalid integer, or leftover tokens.",
+      "Retain null markers or another sufficient structural encoding. A value sequence without structure is ambiguous. Deep chains may require an iterative parser or explicit depth and input-size limits."
+    ],
+    "complexity": "For n nodes, height h, and B characters in the encoding, serialization and parsing take `O(n+B)` time with linear-time token handling. Output uses `O(B)` space; recursive traversal uses `O(h)` stack space. Deserialization allocates `O(n)` tree nodes and may use `O(B)` token storage if the entire string is split. With bounded-width values, `B=O(n)`.",
+    "pitfalls": [
+      "Omitting null children makes reconstruction ambiguous.",
+      "Reject truncated input and extra tokens. Unbounded recursion can overflow the stack on a long chain or malicious input."
+    ],
+    "followUp": "Is storing only the preorder values [4,2] sufficient?",
+    "followUpAnswer": "No. It can describe a root 4 with left child 2 or a root 4 with right child 2. Null markers or an alternative complete structural encoding are necessary.",
+    "answer": "Preorder emits 4, then 2, then two # tokens for the children of 2, then the final # for the right child of 4. During parsing, restore the two null children of 2 before reading the final marker as the right child of 4. Deserialization reconstructs the original tree.",
+    "topics": [
+      "recursion",
+      "data-structures"
+    ],
+    "chapters": [
+      88
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 16,
+    "originalSourceId": "lc297",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "root": 4,
+          "left": {
+            "root": 2,
+            "left": null,
+            "right": null
+          },
+          "right": null
+        },
+        "output": "4,2,#,#,#",
+        "explanation": "Preorder emits 4, then 2, then two # tokens for the children of 2, then the final # for the right child of 4. During parsing, restore the two null children of 2 before reading the final marker as the right child of 4. Deserialization reconstructs the original tree."
+      }
+    ]
+  },
+  {
+    "id": "algo-17",
+    "title": "Count Smaller Values to the Right: Compress Ranks, Then Count",
+    "company": "LeetCode",
+    "sourceKind": "official-practice",
+    "sourceTitle": "315. Count of Smaller Numbers After Self",
+    "url": "https://leetcode.com/problems/count-of-smaller-numbers-after-self/",
+    "sourceNote": "The public LeetCode statement verifies the exercise and its constraints. It does not establish that any company used the problem in hiring. Examples and explanations are independently organized here.",
+    "prompt": "For each integer array position, return how many values strictly smaller than it occur to its right. Equal values do not count. Assume comparisons are consistent and the output counts fit the chosen integer type.",
+    "approach": [
+      "Sort and deduplicate the values, giving equal values the same one-based rank. Scan the input from right to left.",
+      "The Fenwick tree records frequencies of exactly the already processed suffix. Query the prefix through rank-1, then add one at the current rank.",
+      "Store each answer at its original position. A merge-sort counting solution with original indices is another `O(n log n)` option."
+    ],
+    "complexity": "`O(n log(n+1))` time for coordinate compression and Fenwick operations, and `O(n)` auxiliary space for ranks, frequencies, and output. A Fenwick operation costs `O(log(U+1))` for U distinct values.",
+    "pitfalls": [
+      "Querying through rank counts equal values incorrectly.",
+      "Duplicate values must share a rank, and the maintained set must contain only positions strictly to the right."
+    ],
+    "followUp": "Why query before inserting the current value?",
+    "followUpAnswer": "The data structure should represent exactly the values to the right. Querying rank-1 would exclude the current value even if inserted first, but querying first expresses and preserves the suffix invariant more clearly.",
+    "answer": "Scanning from the right, 1 has no right-hand values and receives 0. Each 2 has exactly one strictly smaller right-hand value, the 1. All three values to the right of 4 are smaller, giving [3,1,1,0].",
+    "topics": [
+      "fenwick-tree",
+      "lower-bound-upper-bound"
+    ],
+    "chapters": [
+      100,
+      85
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 17,
+    "originalSourceId": "lc315",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "array": [
+            4,
+            2,
+            2,
+            1
+          ]
+        },
+        "output": [
+          3,
+          1,
+          1,
+          0
+        ],
+        "explanation": "Scanning from the right, 1 has no right-hand values and receives 0. Each 2 has exactly one strictly smaller right-hand value, the 1. All three values to the right of 4 are smaller, giving [3,1,1,0]."
+      }
+    ]
+  },
+  {
+    "id": "algo-18",
+    "title": "Task Cooldowns: Know the Scope of the Counting Formula",
+    "company": "LeetCode",
+    "sourceKind": "official-practice",
+    "sourceTitle": "621. Task Scheduler",
+    "url": "https://leetcode.com/problems/task-scheduler/",
+    "sourceNote": "The public LeetCode statement verifies the unit-duration task-and-cooldown exercise. It does not establish that any company used the problem in hiring. Examples and explanations are independently organized here.",
+    "prompt": "On one processor, each task takes one time slot. Tasks with the same letter must have at least n intervening time slots, where `n>=0`. Tasks may be freely reordered and idle slots are allowed. Return the minimum total completion time. Assume a fixed uppercase-letter alphabet; return 0 for no tasks.",
+    "approach": [
+      "Count the total tasks N, the largest frequency f, and the number m of task types whose frequency equals f.",
+      "Every schedule needs at least N slots. Cooldown constraints also force at least `(f-1)(n+1)+m` slots. In this unit-duration, freely reorderable model, the answer is `max(N,(f-1)(n+1)+m)`.",
+      "Arrange the most frequent task types as a skeleton and fill gaps with the remaining tasks. If gaps remain, idle; if other tasks fill all gaps, N itself is achievable. Handle empty input separately because f and m would otherwise be undefined."
+    ],
+    "complexity": "For N tasks and an alphabet of size A, `O(N+A)` counting time and `O(A)` auxiliary space. With the fixed 26-letter alphabet, this is `O(N)` time and `O(1)` space. The formula computes a duration; explicitly outputting the schedule takes time proportional to that duration.",
+    "pitfalls": [
+      "Count all m task types tied for maximum frequency.",
+      "This idealized formula is not a general operating-system scheduling algorithm. It assumes unit duration, free reordering, one processor, and a uniform cooldown."
+    ],
+    "followUp": "Does the formula remain valid if task durations differ or tasks have dependencies?",
+    "followUpAnswer": "No. The skeleton argument relies on unit duration, free reordering, and uniform cooldown. Changing any of these conditions requires a new model and possibly a different algorithm or simulation.",
+    "answer": "Here `f=3`, `m=1`, and `N=5`. The lower bound is `max(5,(3-1)*(2+1)+1)=7`. The schedule A,B,idle,A,B,idle,A meets every cooldown and finishes in 7 slots.",
+    "topics": [
+      "greedy",
+      "heap"
+    ],
+    "chapters": [
+      94,
+      93
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 18,
+    "originalSourceId": "lc621",
+    "category": "Algorithms",
+    "examples": [
+      {
+        "input": {
+          "tasks": [
+            "A",
+            "A",
+            "A",
+            "B",
+            "B"
+          ],
+          "cooldown": 2
+        },
+        "output": 7,
+        "explanation": "Here `f=3`, `m=1`, and `N=5`. The lower bound is `max(5,(3-1)*(2+1)+1)=7`. The schedule A,B,idle,A,B,idle,A meets every cooldown and finishes in 7 slots."
+      }
+    ]
+  },
+  {
+    "id": "eng-01",
+    "title": "Online Bookstore: Derive Order Boundaries from Requirements",
+    "company": "Amazon",
+    "sourceKind": "company-sample",
+    "sourceTitle": "Amazon System Design Preparation: Official Video Transcript",
+    "url": "https://cdn.cms.amazon.jobs/c5/ae/aa42c7554e87acfc8090595efd12/amazon-system-design-preparation-transcript.docx",
+    "sourceNote": "The transcript linked from Amazon Jobs explicitly introduces an online-bookstore design sample from 1:11. The scope, concurrent-order example, and failure analysis here are original extensions, not an official standard answer or a verified record of a hiring interview.",
+    "prompt": "Design an online bookstore that supports finding books and purchasing physical copies. Define the scope of checkout and payment, then explain behavior under payment timeouts, concurrent orders, insufficient inventory, and duplicate payment callbacks. State explicit traffic, storage, and consistency assumptions before choosing components.",
+    "approach": [
+      "Clarify peak reads and writes, stock granularity, the external payment provider, and consistency requirements. Separate the catalog, inventory, order, and payment states. Define valid order-state transitions.",
+      "Use a database transaction to couple a conditional stock decrement with order creation. The invariant is `stock>=0`; a failed decrement must not leave a confirmed order. A cache lock cannot replace the durable invariant.",
+      "Payment crosses a service boundary. Use stable operation identifiers, idempotent state transitions, compensation, and reconciliation. Couple the fulfillment transition to a uniquely identified durable outbox event, and make downstream fulfillment idempotent; callback deduplication alone does not guarantee a single shipment. A local transaction cannot atomically include arbitrary remote calls."
+    ],
+    "complexity": "There is no single complexity for an entire service design. Under an indexed relational implementation with a fixed number of rows touched per order and B-tree indexes over M records, index lookup and mutation work is `O(log(M+1))` per touched index, plus durable I/O. An order-status check can use `O(1)` application working state; persistent catalog, stock, order, and event records require storage proportional to their count and payloads. Lock waits, payment latency, and retries require separate workload and failure bounds.",
+    "pitfalls": [
+      "A service diagram does not establish inventory or order invariants.",
+      "Using only a cache lock leaves the durable stock boundary unspecified. Callback deduplication must also protect the fulfillment effect.",
+      "The concurrency and failure scenario is an original extension, not an official Amazon reference answer."
+    ],
+    "followUp": "What if payment has already succeeded when inventory reservation fails?",
+    "followUpAnswer": "Define either a refund path after reservation failure or a reserve-before-payment policy with an expiration and release procedure. Compensation must be replayable and reconciled, with a manual recovery path for unresolved failures.",
+    "answer": "Each order attempts `stock=stock-1 WHERE stock>0` within the same database transaction as order creation. Only one decrement can succeed from `stock=1`; the other request fails without confirming an order. For the successful order, an atomic payment-state transition and unique fulfillment event ensure callback replay does not dispatch another shipment. A failed order cannot become paid merely because a callback was repeated.",
+    "topics": [
+      "api",
+      "transaction-acid",
+      "replication-sharding"
+    ],
+    "chapters": [
+      14,
+      17,
+      19
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 19,
+    "originalSourceId": "amazon-bookstore",
+    "category": "Software Engineering",
+    "examples": [
+      {
+        "input": "One book has stock=1. Two customers order concurrently. The successful order may receive the same payment callback repeatedly.",
+        "output": "At most one copy is sold. Replaying the same successful payment callback does not create a second fulfillment.",
+        "explanation": "Each order attempts `stock=stock-1 WHERE stock>0` within the same database transaction as order creation. Only one decrement can succeed from `stock=1`; the other request fails without confirming an order. For the successful order, an atomic payment-state transition and unique fulfillment event ensure callback replay does not dispatch another shipment. A failed order cannot become paid merely because a callback was repeated."
+      }
+    ]
+  },
+  {
+    "id": "eng-02",
+    "title": "Read Committed: Can Two Reads in One Transaction Differ?",
+    "company": "PostgreSQL",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "PostgreSQL 18: Transaction Isolation",
+    "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+    "sourceNote": "The documentation supports statement-level snapshots at Read Committed and the stated PostgreSQL isolation behavior. This is a documentation-derived self-check, not a published hiring question, and the behavior must not be generalized to every database.",
+    "prompt": "In PostgreSQL at Read Committed isolation, transaction T1 runs two ordinary SELECT statements for the same balance. Between them, T2 updates the balance and commits. Must the two results be equal? Assume the second SELECT starts after the commit, no other writes occur, and neither SELECT requests row locks.",
+    "approach": [
+      "For an ordinary SELECT at PostgreSQL Read Committed, each statement sees a snapshot of committed data as of that statement's start. Merely keeping the same transaction open does not freeze one snapshot for all its statements.",
+      "The second statement can observe T2's newly committed value. The changed result is a nonrepeatable read.",
+      "PostgreSQL Repeatable Read provides a stable transaction snapshot for these reads, but applications must still handle concurrent-update failures. Serializable provides a different, stronger guarantee and can also require transaction retries."
+    ],
+    "complexity": "For this fixed two-read trace, `O(1)` logical operations and `O(1)` client state. The query cost depends on the access plan: a unique B-tree lookup among M rows typically requires `O(log(M+1))` index work plus heap visibility checks, while a sequential scan is `O(M)`. Isolation semantics alone do not determine execution cost or blocking latency.",
+    "pitfalls": [
+      "Do not generalize PostgreSQL-specific behavior to every database.",
+      "Transaction atomicity does not imply serial execution or a single snapshot at every isolation level."
+    ],
+    "followUp": "Does wrapping all statements in BEGIN and COMMIT prevent the changed second result?",
+    "followUpAnswer": "No. Atomicity and isolation are different properties. State the database, isolation level, and any locking reads. BEGIN and COMMIT alone do not turn PostgreSQL Read Committed into Repeatable Read.",
+    "answer": "The first SELECT snapshot sees 10. The second statement starts after T2 commits, so its new Read Committed snapshot sees 15, assuming no other modifications.",
+    "topics": [
+      "transaction-acid"
+    ],
+    "chapters": [
+      14,
+      16
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 20,
+    "originalSourceId": "pg-isolation",
+    "category": "Software Engineering",
+    "examples": [
+      {
+        "input": "Initial balance=10. T1 reads it. T2 changes it to 15 and commits. T1 then starts another ordinary SELECT.",
+        "output": [
+          10,
+          15
+        ],
+        "explanation": "The first SELECT snapshot sees 10. The second statement starts after T2 commits, so its new Read Committed snapshot sees 15, assuming no other modifications."
+      }
+    ]
+  },
+  {
+    "id": "eng-03",
+    "title": "Composite Indexes: Derive the Scan Range from the Predicate",
+    "company": "PostgreSQL",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "PostgreSQL 18: Multicolumn Indexes",
+    "url": "https://www.postgresql.org/docs/18/indexes-multicolumn.html",
+    "sourceNote": "The documentation explains leading-column constraints for multicolumn B-tree indexes and optimization boundaries such as skip scan. It does not support the blanket claim that an index is unusable without a condition on its first column. This is an original documentation-derived exercise.",
+    "prompt": "A PostgreSQL table has a B-tree index on `(tenant_id,created_at)`. Compare a query for one tenant over a time range with a query using only the time range. Explain why missing a leading-column predicate does not by itself prove that the index is unusable. Assume non-null comparable keys for the worked example.",
+    "approach": [
+      "Equality on `tenant_id` followed by a `created_at` range usually identifies a compact contiguous index range. The lexicographic key order groups time values separately for each tenant.",
+      "With only a time condition, many tenant groups may need examination. PostgreSQL may choose a broader index scan, skip scan when favorable, or another plan. The available plans and costs depend on the version and data distribution.",
+      "Check actual selectivity, row count, heap fetches, and EXPLAIN output. An index being used does not prove the query is cheap; indexes also consume storage and add write-maintenance work."
+    ],
+    "complexity": "For N indexed entries and a compact leading-equality range yielding r index entries, a basic B-tree range scan takes `O(log(N+1)+r)` index work, plus heap fetch and visibility costs. Without the tenant predicate, examined entries can be `O(N)`; a skip-scan estimate also depends on the number of tenant groups and distribution. Index storage is `O(N)` entries, with byte size determined by key and row-reference widths.",
+    "pitfalls": [
+      "A missing first-column predicate does not imply that PostgreSQL can never use the index.",
+      "Index access and low total cost are different claims. Account for database version, distribution, and returned rows."
+    ],
+    "followUp": "Can you state that an index is absolutely unusable without a condition on its first column?",
+    "followUpAnswer": "No. PostgreSQL can use different index access strategies, and some distributions support skip scan. Inspect the actual plan and cost rather than treating the leading-prefix guideline as an absolute prohibition.",
+    "answer": "First locate the `tenant=2` key segment, then locate `time>=20` within it. Only (2,30) qualifies. A time-only predicate `time>=20` instead spans multiple tenant segments and returns both (1,20) and (2,30).",
+    "topics": [
+      "index",
+      "lower-bound-upper-bound"
+    ],
+    "chapters": [
+      15
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 21,
+    "originalSourceId": "pg-index",
+    "category": "Software Engineering",
+    "examples": [
+      {
+        "input": {
+          "sortedKeys": [
+            [
+              1,
+              10
+            ],
+            [
+              1,
+              20
+            ],
+            [
+              2,
+              10
+            ],
+            [
+              2,
+              30
+            ]
+          ],
+          "tenant": 2,
+          "minimumTime": 20
+        },
+        "output": [
+          [
+            2,
+            30
+          ]
+        ],
+        "explanation": "First locate the `tenant=2` key segment, then locate `time>=20` within it. Only (2,30) qualifies. A time-only predicate `time>=20` instead spans multiple tenant segments and returns both (1,20) and (2,30)."
+      }
+    ]
+  },
+  {
+    "id": "eng-04",
+    "title": "Deadlocks: Draw the Wait Cycle",
+    "company": "PostgreSQL",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "PostgreSQL 18: Explicit Locking and Deadlocks",
+    "url": "https://www.postgresql.org/docs/18/explicit-locking.html#LOCKING-DEADLOCKS",
+    "sourceNote": "The documentation supports deadlock detection, transaction aborts, and consistent lock ordering. The two-account timeline is an original teaching example, not a published hiring question.",
+    "prompt": "Two PostgreSQL transactions update the same two accounts in opposite order. Explain how a deadlock arises, how the database resolves it, and how the application can reduce recurrence. Assume incompatible row locks and no earlier timeout that aborts the trace.",
+    "approach": [
+      "If T1 holds A and waits for B while T2 holds B and waits for A, their waits form a cycle. A single lock wait without a cycle is not enough to establish a deadlock.",
+      "PostgreSQL detects a deadlock and aborts one transaction. Do not rely on which transaction is selected as the victim. The other transaction can proceed once the conflicting locks are released.",
+      "Acquire resources in a stable global order, keep transactions short, and retry eligible failures with a bounded whole-transaction policy. Re-read and revalidate state after rollback, and prevent repeated external side effects."
+    ],
+    "complexity": "For the fixed two-transaction example, `O(1)` trace state and logical events. In a general wait-for graph with T transaction vertices and W wait edges, a textbook graph traversal detects a cycle in `O(T+W)` time and `O(T+W)` graph storage. This is an algorithmic model, not a claim about PostgreSQL's internal detector implementation or wait duration.",
+    "pitfalls": [
+      "Not every lock wait is a deadlock.",
+      "Random sleeps may change timing but do not prove correctness. Retrying only the final failed statement ignores the aborted transaction state."
+    ],
+    "followUp": "Is retrying only the last failed UPDATE sufficient?",
+    "followUpAnswer": "Usually no. Once the transaction is aborted, roll it back and rerun the whole business transaction, including reads and validation. External effects must be idempotent or otherwise protected against repetition.",
+    "answer": "T1's request for account 5 waits for T2. T2's request for account 2 waits for T1. These two waits form a cycle. The database breaks it by aborting a transaction; the victim is unspecified.",
+    "topics": [
+      "transaction-acid",
+      "concurrency-parallelism"
+    ],
+    "chapters": [
+      3,
+      16
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 22,
+    "originalSourceId": "pg-lock",
+    "category": "Software Engineering",
+    "examples": [
+      {
+        "input": "T1 first locks account 2. T2 first locks account 5. T1 then requests 5; T2 then requests 2.",
+        "output": "PostgreSQL aborts one transaction; after its locks are released, the other can continue.",
+        "explanation": "T1's request for account 5 waits for T2. T2's request for account 2 waits for T1. These two waits form a cycle. The database breaks it by aborting a transaction; the victim is unspecified."
+      }
+    ]
+  },
+  {
+    "id": "eng-05",
+    "title": "Timed-out Requests: Idempotency Protects the Effect",
+    "company": "IETF",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "RFC 9110: Idempotent Methods",
+    "url": "https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.2",
+    "sourceNote": "The standard defines HTTP method idempotency. It does not prescribe storage or atomicity for application-level idempotency keys; that protocol is an explicit design proposed in this original exercise.",
+    "prompt": "A client times out while creating an order with POST and cannot tell whether the server committed it. Design retries that do not create duplicate orders. Define an application-level idempotency key protocol, including concurrent retries, conflicting content, key scope, retention, and crash recovery.",
+    "approach": [
+      "A timeout means the response did not arrive within the deadline. It does not prove that the server failed to execute or commit the operation.",
+      "Persist an idempotency key with a canonical request fingerprint and the durable result. Use a unique constraint to arbitrate concurrent requests. Atomically couple key ownership, order creation, and the recoverable result within the chosen transaction boundary; a separate check-then-insert is racy.",
+      "For the same key and equivalent content, replay the recorded result or expose a defined in-progress state. Reject the same key with conflicting content. Specify tenant or operation scope and retention; guarantees cannot silently extend beyond record expiration. HTTP idempotency concerns intended effects, not byte-identical responses."
+    ],
+    "complexity": "For a normalized request of B bytes and M retained keys, `O(B)` fingerprint work plus `O(log(M+1))` indexed key lookup or insertion with a B-tree, excluding order-business work and durable I/O. Retained key records require `O(M)` metadata plus stored request fingerprints and response payloads. End-to-end waiting and retry counts need separate bounds.",
+    "pitfalls": [
+      "TCP retransmission does not implement business-level deduplication.",
+      "An in-memory lookup followed by an unprotected insert has a race. Key registration without atomic order/result persistence leaves a crash window."
+    ],
+    "followUp": "Does PUT being idempotent mean that every response must contain identical bytes?",
+    "followUpAnswer": "No. Idempotency describes the intended server-side effect of repeating an identical request. Status codes, logs, or timestamps can differ. A business POST idempotency-key protocol must be designed separately.",
+    "answer": "The first successful transaction persists K→order 42 with the canonical request fingerprint and result. The retry encounters the same unique key and matching content, then returns the recorded order 42. A conflicting request under K is rejected instead of creating a second order.",
+    "topics": [
+      "api",
+      "network"
+    ],
+    "chapters": [
+      17,
+      19
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 23,
+    "originalSourceId": "http-idempotent",
+    "category": "Software Engineering",
+    "examples": [
+      {
+        "input": "A client uses key K to create an order priced at 20. The response is lost, so it retries with the same K and equivalent request content.",
+        "output": "Exactly one order is created; the retry identifies the same order 42.",
+        "explanation": "The first successful transaction persists K→order 42 with the canonical request fingerprint and result. The retry encounters the same unique key and matching content, then returns the recorded order 42. A conflicting request under K is rejected instead of creating a second order."
+      }
+    ]
+  },
+  {
+    "id": "eng-06",
+    "title": "HTTP Caching: no-cache Does Not Mean No Storage",
+    "company": "IETF",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "RFC 9111: Cache-Control",
+    "url": "https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2",
+    "sourceNote": "The standard supports the cache semantics of no-cache, no-store, and max-age. These directives do not provide a complete privacy or security guarantee. The conditional-request scenario is an original documentation-derived exercise.",
+    "prompt": "Explain unqualified response directives no-cache and no-store, max-age, and validation with ETag. Assume a conforming HTTP cache and an ordinary cacheable GET response. Describe the role of age, conditional requests, and user-specific shared-cache policy.",
+    "approach": [
+      "Unqualified no-cache allows storage but requires successful validation before reuse. no-store tells caches not to store the relevant request or response; it is not a retroactive global erasure mechanism.",
+      "max-age sets a freshness lifetime. Freshness depends on the response's calculated current age, including relevant headers and elapsed time, rather than only a local stopwatch.",
+      "A cache can send If-None-Match with the stored entity tag. A successful 304 validation lets it update metadata and reuse the stored representation. For user-specific responses, define appropriate Vary and shared-cache rules; Vary alone is not a complete authorization or privacy policy."
+    ],
+    "complexity": "For a cached body of B bytes, storage and full-body transfer require `O(B)` bytes. A successful 304 avoids retransferring that body; metadata processing is `O(H)` for H header bytes, with `O(B)` body storage retained. If an origin computes an ETag by hashing the body, that hashing takes `O(B)` work. Network latency and origin validation cost depend on the implementation.",
+    "pitfalls": [
+      "Translating no-cache as a storage prohibition changes its meaning.",
+      "ETag values require valid quoted syntax, such as \"e1\". Account for identity differences in shared caches.",
+      "no-store does not revoke every previously copied or disclosed representation."
+    ],
+    "followUp": "Can no-store erase all copies that were previously exposed?",
+    "followUpAnswer": "No. It constrains cache handling; it is not a global revocation mechanism for content already propagated or a complete privacy guarantee.",
+    "answer": "The cache sends If-None-Match: \"e1\" instead of immediately reusing V1. If the origin returns a valid 304 Not Modified, the cache updates the response metadata as required and reuses its stored body.",
+    "topics": [
+      "cache",
+      "network"
+    ],
+    "chapters": [
+      17,
+      18
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 24,
+    "originalSourceId": "http-cache",
+    "category": "Software Engineering",
+    "examples": [
+      {
+        "input": "A cache stores body V1 with ETag \"e1\" and response directive no-cache. A later request asks for the same representation.",
+        "output": "The cache validates over the network; a successful 304 lets it reuse V1 without downloading the full body again.",
+        "explanation": "The cache sends If-None-Match: \"e1\" instead of immediately reusing V1. If the origin returns a valid 304 Not Modified, the cache updates the response metadata as required and reuses its stored body."
+      }
+    ]
+  },
+  {
+    "id": "eng-07",
+    "title": "Condition Variables: A Notification Does Not Reserve an Item",
+    "company": "Python",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Python: Condition Objects",
+    "url": "https://docs.python.org/3/library/threading.html#condition-objects",
+    "sourceNote": "The documentation supports protecting a shared predicate with a lock, releasing and reacquiring the lock in wait(), and rechecking the predicate in a loop. This original exercise does not rely on assumptions about the GIL.",
+    "prompt": "Two consumers wait for the same queue. Why must each recheck the nonempty predicate in a while loop while holding the associated lock after Condition.wait() returns? Assume Python-style condition-variable semantics and protect every queue-state change with the same lock.",
+    "approach": [
+      "The shared predicate is protected by the lock. wait() atomically releases the associated lock and begins waiting and reacquires it before returning, so another thread may change the state before this consumer proceeds.",
+      "A notification indicates that the condition may have changed; it does not reserve an item for a particular waiter. A different consumer may acquire the lock first and consume the available item.",
+      "A producer changes the queue under the lock and then notifies. Consumers use a predicate loop or `wait_for()`, and the queue defines a shutdown predicate so a consumer can distinguish temporary emptiness from permanent closure. The argument does not depend on the GIL."
+    ],
+    "complexity": "With a deque, queue insertion, successful removal, and each predicate check take `O(1)` work while holding the lock. Q queued items require `O(Q)` payload storage, plus waiting-thread/runtime state. The number of waits and wall-clock waiting time have no fixed bound without scheduling, production, and shutdown assumptions.",
+    "pitfalls": [
+      "Checking the predicate outside the lock admits races.",
+      "A condition notification is not a counted resource token, and the GIL does not replace the shared-state invariant."
+    ],
+    "followUp": "What can go wrong if while is replaced by if?",
+    "followUpAnswer": "C2 may resume after C1 has already consumed the only item, then attempt to remove from an empty queue. Even if a notification followed a real enqueue, it did not permanently allocate that item to either consumer.",
+    "answer": "C1 acquires the lock first and removes the only item. C2 later reacquires the lock, sees the queue empty again, and must wait rather than assuming that the notification reserved an item.",
+    "topics": [
+      "concurrency-parallelism",
+      "operating-system"
+    ],
+    "chapters": [
+      3,
+      19
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 25,
+    "originalSourceId": "python-condition",
+    "category": "Software Engineering",
+    "examples": [
+      {
+        "input": "The queue is empty. C1 and C2 wait. The producer enqueues one item while holding the lock and notifies both consumers.",
+        "output": "One consumer obtains the item; the other returns to waiting if the queue remains open.",
+        "explanation": "C1 acquires the lock first and removes the only item. C2 later reacquires the lock, sees the queue empty again, and must wait rather than assuming that the notification reserved an item."
+      }
+    ]
+  },
+  {
+    "id": "eng-08",
+    "title": "Retry Storms: Calculate Multiplicative Amplification First",
+    "company": "AWS",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Timeouts, Retries, and Backoff with Jitter",
+    "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/",
+    "sourceNote": "AWS Builders Library supports the engineering motivations for controlling retry amplification, applying backoff, and using jitter. The attempt counts and request volumes here are teaching assumptions, not AWS production parameters or a published hiring question.",
+    "prompt": "A request traverses three nested retrying call layers. Each layer permits at most three total attempts, including its first attempt. Under persistent downstream failure, what is the maximum number of bottom-layer calls triggered by one top-level request? How should retries be controlled? Assume all attempts can run within the example's time budget and no other early-stop rule intervenes.",
+    "approach": [
+      "Nested attempt limits multiply: `3*3*3=27` bottom-layer calls per top-level request. Distinguish three total attempts from three retries after the first attempt.",
+      "Choose an appropriate layer to coordinate retries. Define an end-to-end timeout budget, a bounded attempt count, and which failure classes are eligible. Avoid multiplying independent retry loops through the stack.",
+      "Use backoff and jitter to spread retry timing, together with idempotency, concurrency limits, and a retry budget. Jitter redistributes arrivals; it cannot create downstream capacity."
+    ],
+    "complexity": "For D nested layers with total-attempt caps a[1]..a[D], the bottom-call bound per request is the product of those caps. For N top-level requests it is `N*product(a[i])`; this is a work-amplification bound, not a throughput estimate. A sequential depth-D retry chain can keep `O(D)` control state, while concurrency and queued payloads require separate accounting.",
+    "pitfalls": [
+      "Do not confuse retry count with total attempt count.",
+      "Retrying all errors without a bound can amplify a failing service. A longer timeout alone does not add capacity."
+    ],
+    "followUp": "Why can simply increasing the timeout make the failure worse?",
+    "followUpAnswer": "Longer-held requests and connections increase in-flight load. Choose timeouts from latency distributions and the end-to-end budget, and also bound concurrency and retries.",
+    "answer": "Each top-level request can trigger `3*3*3=27` bottom-layer attempts. With 100 top-level requests and no earlier budget stop, the worst-case total is `100*27=2700` attempts. This is the bound for the stated model, not an AWS capacity parameter.",
+    "topics": [
+      "network",
+      "mlops"
+    ],
+    "chapters": [
+      18,
+      19
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 26,
+    "originalSourceId": "aws-retry",
+    "category": "Software Engineering",
+    "examples": [
+      {
+        "input": {
+          "topLevelRequests": 100,
+          "attemptCapsIncludingFirst": [
+            3,
+            3,
+            3
+          ],
+          "allBottomAttemptsFail": true
+        },
+        "output": 2700,
+        "explanation": "Each top-level request can trigger `3*3*3=27` bottom-layer attempts. With 100 top-level requests and no earlier budget stop, the worst-case total is `100*27=2700` attempts. This is the bound for the stated model, not an AWS capacity parameter."
+      }
+    ]
+  },
+  {
+    "id": "eng-09",
+    "title": "Redis TTL: Overwriting a Value Can Remove Its Expiration",
+    "company": "Redis",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Redis: EXPIRE",
+    "url": "https://redis.io/docs/latest/commands/expire/",
+    "sourceNote": "The documentation supports expiration semantics and the effect of overwriting operations such as SET on an existing TTL. This original exercise is not a complete distributed-lock protocol.",
+    "prompt": "A Redis key has an expiration and is then overwritten with a plain SET. Is the TTL necessarily preserved? Explain explicit KEEPTTL and EX/PX writes, and separate expiry policy from application freshness. For the example, assume the key has not expired before the overwrite and no other client changes it.",
+    "approach": [
+      "A successful plain SET overwrites the value and clears its previous TTL. To retain the existing expiration, explicitly request the supported KEEPTTL behavior.",
+      "To set a new expiration, supply EX or PX in the same SET command. SET followed by a separate EXPIRE leaves a gap if the client crashes between commands.",
+      "TTL controls when cached data expires; a cache hit alone does not prove consistency with its source. A TTL-bearing key also does not by itself constitute a complete distributed-lock protocol."
+    ],
+    "complexity": "Redis documents SET, EXPIRE, and TTL as `O(1)` command operations. Sending or copying a B-byte string still requires `O(B)` payload bytes and associated byte work; retained value storage is `O(B)` plus key/expiry metadata. Expiration timing, network latency, and persistence work are separate from the documented command-operation bound.",
+    "pitfalls": [
+      "Expiration is not an immutable property acquired the first time a TTL is set.",
+      "A successful SET followed by a crashed client before EXPIRE can leave a persistent key. TTL alone does not implement safe distributed locking."
+    ],
+    "followUp": "Why is SET followed by EXPIRE riskier than one write containing the expiration?",
+    "followUpAnswer": "The client can crash between the two commands and leave a key without expiration. A single supported SET with EX/PX avoids that intermediate client-side gap.",
+    "answer": "The first command stores A with a 60-second TTL. The second command overwrites it with B and does not retain or replace the TTL. The key is now persistent, so TTL item returns -1, assuming no other operations.",
+    "topics": [
+      "cache"
+    ],
+    "chapters": [
+      18
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 27,
+    "originalSourceId": "redis-expire",
+    "category": "Software Engineering",
+    "examples": [
+      {
+        "input": "Run SET item A EX 60, then SET item B before the key expires, without KEEPTTL or a new expiration.",
+        "output": {
+          "value": "B",
+          "ttl": -1
+        },
+        "explanation": "The first command stores A with a 60-second TTL. The second command overwrites it with B and does not retain or replace the TTL. The key is now persistent, so TTL item returns -1, assuming no other operations."
+      }
+    ]
+  },
+  {
+    "id": "ai-01",
+    "title": "BCE Input Audit: Check Logits and Tensor Shapes First",
+    "company": "PyTorch",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "PyTorch 2.14: BCEWithLogitsLoss",
+    "url": "https://docs.pytorch.org/docs/2.14/generated/torch.nn.BCEWithLogitsLoss.html",
+    "sourceNote": "The documentation supports raw-logit inputs, a numerically stable fused computation, and per-label binary losses. The example values are independently calculated for this original documentation-derived exercise.",
+    "prompt": "For a binary target `y=1` and model logit `z=0`, explain the inputs expected by PyTorch BCEWithLogitsLoss, compute the loss and derivative with respect to z, and explain why an external sigmoid should not be applied first. Assume one unweighted element, matching input/target shapes, and a floating-point target.",
+    "approach": [
+      "Pass raw logits to BCEWithLogitsLoss. Targets must match the input shape and contain the intended binary probabilities or labels; [B] and [B,1] are not interchangeable by assumption.",
+      "For an unweighted element, `L=max(z,0)-z*y+log(1+exp(-abs(z)))`. At `z=0`, `sigmoid(z)=0.5`, `L=ln(2)`, and `dL/dz=sigmoid(z)-y=-0.5`.",
+      "The fused computation improves numerical stability. Passing sigmoid(z) to this logits interface treats a probability as a new logit and changes both the loss and its gradients."
+    ],
+    "complexity": "For E binary target elements, `O(E)` loss/gradient arithmetic and `O(E)` elementwise training storage under a standard tensor implementation. A reduced scalar loss itself uses `O(1)` output space. The example has `E=1`; model forward/backward work is separate.",
+    "pitfalls": [
+      "Do not apply sigmoid twice by combining an external sigmoid with BCEWithLogitsLoss.",
+      "Check target dtype and exact tensor shape. An unintended broadcast or incompatible shape changes or invalidates the intended task."
+    ],
+    "followUp": "Can this loss be used for multilabel classification?",
+    "followUpAnswer": "Yes. Apply a separate binary target to each label. Mutually exclusive class competition usually uses multiclass cross-entropy instead; multilabel probabilities need not sum to one.",
+    "answer": "`Sigmoid(0)=0.5`. The unweighted loss for `y=1` is `-ln(0.5)=ln(2)`, approximately 0.6931. Its logit derivative is `0.5-1=-0.5`.",
+    "topics": [
+      "bcewithlogitsloss",
+      "logit",
+      "tensor-shape-axis"
+    ],
+    "chapters": [
+      22,
+      41
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 28,
+    "originalSourceId": "torch-bce",
+    "category": "AI and Machine Learning",
+    "examples": [
+      {
+        "input": {
+          "logits": [
+            0
+          ],
+          "targets": [
+            1
+          ],
+          "weighted": false
+        },
+        "output": {
+          "loss": 0.6931471805599453,
+          "gradient": -0.5
+        },
+        "explanation": "`Sigmoid(0)=0.5`. The unweighted loss for `y=1` is `-ln(0.5)=ln(2)`, approximately 0.6931. Its logit derivative is `0.5-1=-0.5`."
+      }
+    ]
+  },
+  {
+    "id": "ai-02",
+    "title": "Cross-Entropy: Mutually Exclusive Classes Are Not Multilabel Targets",
+    "company": "PyTorch",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "PyTorch 2.14: CrossEntropyLoss",
+    "url": "https://docs.pytorch.org/docs/2.14/generated/torch.nn.CrossEntropyLoss.html",
+    "sourceNote": "The documentation supports the cross-entropy interface with logits and class-index targets. This original exercise discusses only ordinary class-index targets, not every supported target or weighting mode.",
+    "prompt": "An example has three mutually exclusive classes, logits [0,0,0], and true class index 2. Explain PyTorch CrossEntropyLoss in ordinary class-index mode and compute the loss. Assume no class weights, ignored targets, or label smoothing; use natural logarithms.",
+    "approach": [
+      "For a batch with C classes, the ordinary input shape is [B,C] and target shape is [B], with integer class indices represented by the appropriate long dtype. Pass raw logits, not precomputed softmax probabilities.",
+      "The per-example loss is `logsumexp(z)-z[y]`, equivalently the negative logarithm of the true class probability. Equal logits give probability 1/3 to each of the three classes.",
+      "Mutually exclusive multiclass targets differ from multilabel targets, where several labels may be true together and their independent binary probabilities should not be forced to sum to one."
+    ],
+    "complexity": "For B examples and C classes, `O(B*C)` loss/gradient arithmetic. Standard tensor training uses `O(B*C)` working or saved tensor storage, though a forward-only reduced loss can stream its reduction with less auxiliary storage. This excludes the model computation.",
+    "pitfalls": [
+      "In class-index mode, floating-point class numbers are not a substitute for integer target indices.",
+      "Applying softmax first and then treating its probabilities as logits changes the objective."
+    ],
+    "followUp": "What happens to the loss if 100 is added to every logit?",
+    "followUpAnswer": "In exact arithmetic it is unchanged because softmax is invariant to a common shift. A stable log-sum-exp implementation subtracts the maximum to avoid exponential overflow; finite-precision results can differ slightly.",
+    "answer": "Softmax gives [1/3,1/3,1/3]. The true class is index 2, so the loss is `-ln(1/3)=ln(3)`, approximately 1.0986.",
+    "topics": [
+      "cross-entropy-nll",
+      "softmax",
+      "binary-multiclass-multilabel"
+    ],
+    "chapters": [
+      41
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 29,
+    "originalSourceId": "torch-ce",
+    "category": "AI and Machine Learning",
+    "examples": [
+      {
+        "input": {
+          "logits": [
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "target": [
+            2
+          ]
+        },
+        "output": 1.0986122886681098,
+        "explanation": "Softmax gives [1/3,1/3,1/3]. The true class is index 2, so the loss is `-ln(1/3)=ln(3)`, approximately 1.0986."
+      }
+    ]
+  },
+  {
+    "id": "ai-03",
+    "title": "Gradient Accumulation: Weight Unequal Microbatches Correctly",
+    "company": "PyTorch",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "PyTorch 2.14: Gradient Accumulation",
+    "url": "https://docs.pytorch.org/docs/2.14/notes/amp_examples.html#gradient-accumulation",
+    "sourceNote": "The documentation supports accumulation over an effective batch and consistent loss-scaling timing. The unequal-microbatch weights are independently derived from the arithmetic mean of per-example losses; the exercise is not a published hiring question.",
+    "prompt": "Two microbatches contain 2 and 1 examples, respectively. Each reports the mean of additive, equally weighted per-example losses. How should their losses be scaled before backward to reproduce the mean over all 3 examples? Assume no cross-example loss coupling; distinguish loss-gradient equivalence from full training-step equivalence.",
+    "approach": [
+      "The desired objective is `(2*L1+L2)/3`. Backpropagate `(2/3)*L1` and `(1/3)*L2` so each example receives weight 1/3.",
+      "Clear gradients at the start of the effective batch, keep them across microbatches, and step the optimizer only after the last one. Do not average unequal microbatch means with equal weights.",
+      "With mixed precision, keep one consistent loss scale across the effective batch and unscale and clip after accumulation. BatchNorm, stochastic behavior, and cross-example operations can prevent exact equivalence to a single large-batch forward pass. Token-level, ignored-target, or weighted reductions require their actual normalization denominator, not automatically the number of examples."
+    ],
+    "complexity": "For N examples split into m microbatches and P parameter-gradient entries, loss weighting adds `O(m)` scalar work; accumulated gradients require `O(P)` storage. Total model work is the sum of microbatch forward/backward costs, with activation memory set mainly by the largest microbatch rather than all N examples. The scalar worked example requires `O(1)` arithmetic and storage.",
+    "pitfalls": [
+      "Calling `zero_grad` after every microbatch erases the accumulated gradient.",
+      "Averaging microbatch means equally overweights smaller microbatches. Applying clipping or optimizer updates separately changes the training step."
+    ],
+    "followUp": "How should the final partial accumulation group be handled?",
+    "followUpAnswer": "Normalize by its actual total number of examples, or accumulate unnormalized loss sums and divide by the correct denominator, then perform its final update. Do not mechanically divide by the originally planned accumulation-step count.",
+    "answer": "The full-batch mean gradient is `(2*3+1*9)/3=5`. An unweighted average of the microbatch means, `(3+9)/2=6`, gives the one-example microbatch too much weight.",
+    "topics": [
+      "microbatch-gradient-accumulation",
+      "mixed-precision-loss-scaling"
+    ],
+    "chapters": [
+      44,
+      47
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 30,
+    "originalSourceId": "torch-accumulation",
+    "category": "AI and Machine Learning",
+    "examples": [
+      {
+        "input": {
+          "microbatchSizes": [
+            2,
+            1
+          ],
+          "meanGradients": [
+            3,
+            9
+          ]
+        },
+        "output": 5,
+        "explanation": "The full-batch mean gradient is `(2*3+1*9)/3=5`. An unweighted average of the microbatch means, `(3+9)/2=6`, gives the one-example microbatch too much weight."
+      }
+    ]
+  },
+  {
+    "id": "ai-04",
+    "title": "Dropout: Preserve the Expectation and Switch Evaluation Behavior",
+    "company": "PyTorch",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "PyTorch 2.14: Dropout",
+    "url": "https://docs.pytorch.org/docs/2.14/generated/torch.nn.Dropout.html",
+    "sourceNote": "The documentation supports random masking and rescaling of retained values during training, and the identity behavior in evaluation mode. The concrete keep mask is a manually chosen teaching example.",
+    "prompt": "In training mode, apply inverted dropout with drop probability `p=0.5` to an activation of 2. What values can be produced, and what happens in evaluation mode? For the vector example, use the supplied keep mask [1,0]; it is a chosen realization, not the expected mask.",
+    "approach": [
+      "For `0<=p<1`, training dropout independently sets a retained activation x to `x/(1-p)` with probability 1-p and otherwise to 0. Thus its expected value remains x.",
+      "At `p=0.5`, activation 2 becomes either 0 or 4, each with probability one half, so its expectation is 2. The `p=1` edge case is handled separately as all-zero training output, not by division by zero.",
+      "In evaluation mode, a Dropout module is an identity mapping. `model.eval()` changes module behavior, while `no_grad()` controls gradient recording; they perform different jobs."
+    ],
+    "complexity": "For E activation elements, `O(E)` work. Standard training stores or regenerates an `O(E)` mask for backward and produces an `O(E)` output; exact memory depends on the implementation. Evaluation is an identity operation and may alias the input without a new allocation.",
+    "pitfalls": [
+      "Retained values must be rescaled in inverted dropout.",
+      "Training/evaluation mode and gradient recording are separate controls. `no_grad()` alone does not disable a module's training dropout."
+    ],
+    "followUp": "Does `no_grad()` automatically disable Dropout during inference?",
+    "followUpAnswer": "No. It does not set the module's training flag to false. Ordinarily call `model.eval()` as well when evaluation behavior is required.",
+    "answer": "The first element is retained and scaled to `2/(1-0.5)=4`. The second is masked to 0. In evaluation mode, both elements pass through unchanged as [2,2].",
+    "topics": [
+      "dropout",
+      "train-eval-no-grad"
+    ],
+    "chapters": [
+      46
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 31,
+    "originalSourceId": "torch-dropout",
+    "category": "AI and Machine Learning",
+    "examples": [
+      {
+        "input": {
+          "activation": [
+            2,
+            2
+          ],
+          "dropProbability": 0.5,
+          "keepMask": [
+            1,
+            0
+          ]
+        },
+        "output": {
+          "training": [
+            4,
+            0
+          ],
+          "evaluation": [
+            2,
+            2
+          ]
+        },
+        "explanation": "The first element is retained and scaled to `2/(1-0.5)=4`. The second is masked to 0. In evaluation mode, both elements pass through unchanged as [2,2]."
+      }
+    ]
+  },
+  {
+    "id": "ai-05",
+    "title": "Attention Masks: Mask Before Normalization",
+    "company": "PyTorch",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "PyTorch 2.14: Scaled Dot Product Attention",
+    "url": "https://docs.pytorch.org/docs/2.14/generated/torch.nn.functional.scaled_dot_product_attention.html",
+    "sourceNote": "The documentation supports scaled dot-product attention and the functional SDPA boolean-mask convention that True permits attention. Other attention APIs can use different mask conventions. The numerical example is independently constructed.",
+    "prompt": "One query has scaled attention scores [0,0,0] for three keys, but the third key is invisible. Compute the attention weights and scalar output for values [2,6,100]. Use PyTorch functional `scaled_dot_product_attention` semantics, where a boolean True permits participation. Assume `dropout_p=0` and at least one visible key.",
+    "approach": [
+      "Before softmax, set disallowed scores to negative infinity. Then normalize only over allowed keys; the scaling factor has already been applied to the supplied scores.",
+      "The masked scores [0,0,-infinity] produce weights [0.5,0.5,0]. Multiplying the values by these weights gives `0.5*2+0.5*6=4`.",
+      "In functional SDPA, True means allowed. Other attention interfaces can use the opposite convention. Explicitly handle or disallow fully masked rows, whose numerical treatment can vary by implementation. Set `dropout_p=0` for deterministic evaluation; the functional call applies its supplied dropout probability."
+    ],
+    "complexity": "For one query with K keys and value dimension `d_v`, masking/softmax takes `O(K)` work and weighted value aggregation takes `O(K*d_v)`, with `O(K)` explicit weight storage and `O(d_v)` output. If scores must first be computed from `d_k`-dimensional queries and keys, add `O(K*d_k)`. Fused attention can avoid explicitly materializing weights.",
+    "pitfalls": [
+      "Do not assume that boolean masks have the same polarity in every attention API.",
+      "Masking only after softmax leaves the weights unnormalized unless they are normalized again. Do not assume universal behavior for fully masked rows."
+    ],
+    "followUp": "Why is applying softmax first and then multiplying by the mask different?",
+    "followUpAnswer": "It gives [1/3,1/3,0], whose sum is 2/3, and the output is 8/3 rather than 4. Renormalizing the remaining positive weights would be needed to recover the masked-softmax result.",
+    "answer": "Masking first gives [0,0,-infinity]. Softmax returns [0.5,0.5,0], so the output is `0.5*2+0.5*6+0*100=4`.",
+    "topics": [
+      "attention-transformer",
+      "softmax"
+    ],
+    "chapters": [
+      53
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 32,
+    "originalSourceId": "torch-attention",
+    "category": "AI and Machine Learning",
+    "examples": [
+      {
+        "input": {
+          "scores": [
+            0,
+            0,
+            0
+          ],
+          "visible": [
+            true,
+            true,
+            false
+          ],
+          "values": [
+            2,
+            6,
+            100
+          ],
+          "dropoutProbability": 0
+        },
+        "output": 4,
+        "explanation": "Masking first gives [0,0,-infinity]. Softmax returns [0.5,0.5,0], so the output is `0.5*2+0.5*6+0*100=4`."
+      }
+    ]
+  },
+  {
+    "id": "ai-06",
+    "title": "KV Caches: Estimate Memory and Explain the Growing Decode Cost",
+    "company": "Hugging Face",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "Transformers: How Caching Works",
+    "url": "https://huggingface.co/docs/transformers/main/cache_explanation",
+    "sourceNote": "The documentation supports retaining earlier keys and values during causal decoding and the growth of cache length. The memory value is an independent estimate from supplied dimensions, excluding implementation overhead; this is not a published hiring question.",
+    "prompt": "For a conventional dense causal-decoding KV cache, derive storage from layer count L, batch size B, KV head count Hkv, cached sequence length T, head dimension `d_h`, and bytes per element s. Explain why caching does not make attention cost per new token constant in T. Assume all layers use these dimensions, unquantized K and V, no sliding window, and no shared-prefix or paging overhead.",
+    "approach": [
+      "Both keys and values are stored, so the element count is `2*L*B*Hkv*T*d_h`. Multiply by s for bytes; divide bytes by `2^30` for GiB. Grouped-query attention uses Hkv for cache storage, not the potentially larger query-head count Hq.",
+      "Cached historical K and V do not need to be recomputed at each step, but the new query still attends to earlier positions. The dense attention work and cache reads grow with T.",
+      "Treat this as base tensor storage. Page allocation, padding, metadata, quantization scales, and other runtime buffers can change actual memory use. Cache reuse also requires compatible prefixes, model state, and positional conventions."
+    ],
+    "complexity": "Base cache storage is `O(L*B*Hkv*T*d_h)` elements. For a new token, dense attention performs `O(L*B*Hq*T*d_h)` arithmetic when query and value head dimensions equal `d_h`, plus projection and feed-forward work that is independent of T for fixed dimensions. A full history scan also creates T-dependent cache traffic; kernel reuse across query heads affects constants.",
+    "pitfalls": [
+      "A KV cache stores intermediate keys and values, not final answers.",
+      "Do not omit the factor of 2 for K and V or use Hq where Hkv is required for storage. Caching does not make dense attention `O(1)` in context length."
+    ],
+    "followUp": "Can a cache be reused unchanged across arbitrary prompts?",
+    "followUpAnswer": "No. Only compatible shared-prefix states may be reusable, with matching model, relevant position encoding, masks, and other cache conditions. Unrelated prompts cannot share arbitrary historical KV tensors.",
+    "answer": "The element count is `2*2*1*2*4*8=256`. FP16 uses 2 bytes per element, so base K/V storage is `256*2=512` bytes. Doubling the cached length doubles this base storage.",
+    "topics": [
+      "kv-cache-flashattention",
+      "tensor-shape-axis"
+    ],
+    "chapters": [
+      57,
+      58
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 33,
+    "originalSourceId": "hf-cache",
+    "category": "AI and Machine Learning",
+    "examples": [
+      {
+        "input": {
+          "layers": 2,
+          "batch": 1,
+          "kvHeads": 2,
+          "sequenceLength": 4,
+          "headDimension": 8,
+          "bytesPerElement": 2
+        },
+        "output": {
+          "elements": 256,
+          "bytes": 512
+        },
+        "explanation": "The element count is `2*2*1*2*4*8=256`. FP16 uses 2 bytes per element, so base K/V storage is `256*2=512` bytes. Doubling the cached length doubles this base storage."
+      }
+    ]
+  },
+  {
+    "id": "ai-07",
+    "title": "Data Leakage: Preprocessing Can Peek at the Test Set",
+    "company": "scikit-learn",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "scikit-learn: Common Pitfalls and Data Leakage",
+    "url": "https://scikit-learn.org/stable/common_pitfalls.html#data-leakage",
+    "sourceNote": "The documentation supports fitting preprocessing only on training data and placing it inside a Pipeline for cross-validation. The numerical scenario is an original teaching example.",
+    "prompt": "Why is it wrong to fit a standardization transform on all data before splitting, even though no labels are used? Explain the correct train/test and cross-validation order. The worked example isolates centering only, using training features [0,2] and test feature [100].",
+    "approach": [
+      "Means, variances, feature-selection rules, and learned transform directions estimate parameters from data. Test-set distribution information must not influence the training pipeline, even if labels are absent.",
+      "Split first, fit preprocessing only on the training portion, and use the learned transform unchanged on validation or test data. For [0,2], the fitted centering mean is 1.",
+      "In cross-validation, put preprocessing and the estimator in one Pipeline so each fold fits preprocessing only on that fold's training subset. For temporal or user-correlated data, choose a split that respects those dependencies."
+    ],
+    "complexity": "For N examples and D dense features, fitting feature-wise means and variances takes `O(N*D)` time and `O(D)` learned statistics; transforming M examples takes `O(M*D)` time and typically `O(M*D)` output storage. Cross-validation repeats fitting on each training fold. Different preprocessing methods, such as PCA, have different costs.",
+    "pitfalls": [
+      "Unsupervised preprocessing can still leak test-distribution information.",
+      "Repeatedly selecting thresholds or other decisions on a validation set does not leave that set equivalent to an untouched final test set."
+    ],
+    "followUp": "Does unsupervised PCA avoid leakage by definition?",
+    "followUpAnswer": "No. Its directions are estimated from data, so PCA must be fitted on the training fold as well. Having no labels does not make the transform independent of the test distribution.",
+    "answer": "The training-only mean is `(0+2)/2=1`, so the held-out value is centered to `100-1=99`. Fitting on all three values gives mean 34 and centers the held-out value to 66; it also changes the training features using test information. The correct fitted mean is 1, not 34.",
+    "topics": [
+      "data-leakage",
+      "cross-validation",
+      "feature-engineering"
+    ],
+    "chapters": [
+      23,
+      37
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 34,
+    "originalSourceId": "sklearn-leakage",
+    "category": "AI and Machine Learning",
+    "examples": [
+      {
+        "input": {
+          "trainingFeatures": [
+            0,
+            2
+          ],
+          "testFeatures": [
+            100
+          ],
+          "operation": "centering only"
+        },
+        "output": {
+          "trainingMean": 1,
+          "testCentered": 99,
+          "leakyMean": 34,
+          "leakyTestCentered": 66
+        },
+        "explanation": "The training-only mean is `(0+2)/2=1`, so the held-out value is centered to `100-1=99`. Fitting on all three values gives mean 34 and centers the held-out value to 66; it also changes the training features using test information. The correct fitted mean is 1, not 34."
+      }
+    ]
+  },
+  {
+    "id": "ai-08",
+    "title": "Thresholds and F1: Count Before Drawing Conclusions",
+    "company": "scikit-learn",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "scikit-learn: f1_score",
+    "url": "https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html",
+    "sourceNote": "The documentation supports the count-based F1 formula and averaging conventions. The threshold example is independently constructed for this original documentation-derived exercise.",
+    "prompt": "For binary labels and scores, predict positive when `score>=threshold`. Compute binary positive-class F1 at thresholds 0.7 and 0.5 for the supplied example. Explain why lowering the threshold does not guarantee higher F1. Use `F1=0` if its count-based denominator is zero, and select thresholds on validation data rather than the final test set.",
+    "approach": [
+      "Count true positives TP, false positives FP, false negatives FN, and true negatives TN. When defined, `precision=TP/(TP+FP)` and `recall=TP/(TP+FN)`.",
+      "The binary F1 score is `2*TP/(2*TP+FP+FN)`, the harmonic mean of precision and recall when both are well-defined. State the zero-denominator convention explicitly; accuracy is a different metric.",
+      "Lowering a threshold increases or preserves the number of predicted positives, but added predictions can be mostly false positives. Choose a threshold using validation data under the intended objective."
+    ],
+    "complexity": "For N scored examples and one fixed threshold, `O(N)` time and `O(1)` counter space. Sorting to evaluate all distinct score thresholds takes `O(N log(N+1))` time with a subsequent `O(N)` sweep; ties must enter together. The two-threshold example is `O(N)`.",
+    "pitfalls": [
+      "F1 is not the arithmetic mean of precision and recall.",
+      "Choosing the threshold on the test set biases the reported evaluation. An improvement at one pair of thresholds does not prove monotonic improvement."
+    ],
+    "followUp": "What happens if the example threshold is lowered all the way to 0?",
+    "followUpAnswer": "Every example is predicted positive: `TP=2`, `FP=2`, `FN=0`. `F1=4/6`, approximately 0.6667, which is lower than 0.8 at threshold 0.5.",
+    "answer": "At threshold 0.7, `TP=1`, `FP=1`, `FN=1`, and `TN=1`, so `F1=2/(2+1+1)=0.5`. At threshold 0.5, `TP=2`, `FP=1`, `FN=0`, and `TN=1`, so `F1=4/(4+1+0)=0.8`. The increase in this example is not a general guarantee.",
+    "topics": [
+      "threshold",
+      "precision",
+      "recall",
+      "f1"
+    ],
+    "chapters": [
+      38
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 35,
+    "originalSourceId": "sklearn-f1",
+    "category": "AI and Machine Learning",
+    "examples": [
+      {
+        "input": {
+          "labels": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "scores": [
+            0.9,
+            0.8,
+            0.6,
+            0.1
+          ],
+          "thresholds": [
+            0.7,
+            0.5
+          ],
+          "comparison": ">="
+        },
+        "output": [
+          0.5,
+          0.8
+        ],
+        "explanation": "At threshold 0.7, `TP=1`, `FP=1`, `FN=1`, and `TN=1`, so `F1=2/(2+1+1)=0.5`. At threshold 0.5, `TP=2`, `FP=1`, `FN=0`, and `TN=1`, so `F1=4/(4+1+0)=0.8`. The increase in this example is not a general guarantee."
+      }
+    ]
+  },
+  {
+    "id": "ai-09",
+    "title": "Probability Calibration: Correct Ranking Does Not Validate Probabilities",
+    "company": "scikit-learn",
+    "sourceKind": "documentation-derived",
+    "sourceTitle": "scikit-learn: Probability Calibration",
+    "url": "https://scikit-learn.org/stable/modules/calibration.html",
+    "sourceNote": "The documentation supports reliability diagrams and probability calibration. Finite-sample frequencies do not prove population calibration or miscalibration. The ranking-and-probability example is independently constructed.",
+    "prompt": "A model ranks examples well but appears to assign probabilities that are too high. Distinguish discrimination from probability calibration and examine scores [0.9,0.8,0.7,0.6] with labels [1,1,0,0]. Treat the four examples as a tiny illustrative group, not evidence sufficient to diagnose population calibration.",
+    "approach": [
+      "Ranking metrics evaluate relative ordering of positive and negative examples. Population calibration asks whether `E[Y|P]=P` almost surely, meaning that predicted probabilities agree with event frequencies at a given prediction level. These are different properties.",
+      "A reliability diagram compares mean predicted probabilities with observed positive fractions in probability bins. Report bin sample sizes and uncertainty; small-bin frequencies can be noisy.",
+      "Fit a calibrator on data independent of the model-fitting data or using an appropriate cross-validation procedure, and evaluate it on held-out data. A small empirical bin gap does not establish population miscalibration."
+    ],
+    "complexity": "For N examples, empirical ROC AUC can be computed by sorting in `O(N log(N+1))` time and `O(N)` typical working storage. Fixed-bin calibration summaries take `O(N+K)` time and `O(K)` counters for K bins, assuming `O(1)` bin assignment. The single-group mean and fraction in the example take `O(N)` time and `O(1)` auxiliary space.",
+    "pitfalls": [
+      "Four examples are insufficient to conclude that the population model is miscalibrated.",
+      "Fitting and evaluating a calibrator on the same training data gives an optimistic assessment. AUC alone does not assess probability reliability."
+    ],
+    "followUp": "What happens to AUC and calibration after a strictly increasing transformation of every score?",
+    "followUpAnswer": "With the same examples and no numerical ties introduced, ranking and ROC AUC remain unchanged. The probability values and their calibration can change substantially. Therefore AUC cannot substitute for calibration evaluation.",
+    "answer": "Both positives rank above both negatives, so the empirical ROC AUC is 1. The mean reported probability is `(0.9+0.8+0.7+0.6)/4=0.75`, while the observed positive fraction is `2/4=0.5`. Their signed empirical group gap is 0.25, illustrating that ranking and probability scale differ without proving population miscalibration.",
+    "topics": [
+      "calibration",
+      "roc-auc-pr-auc"
+    ],
+    "chapters": [
+      38,
+      39
+    ],
+    "checked": "2026-10-16",
+    "contentReviewed": "2026-10-17",
+    "originalNumber": 36,
+    "originalSourceId": "sklearn-calibration",
+    "category": "AI and Machine Learning",
+    "examples": [
+      {
+        "input": {
+          "probabilities": [
+            0.9,
+            0.8,
+            0.7,
+            0.6
+          ],
+          "labels": [
+            1,
+            1,
+            0,
+            0
+          ]
+        },
+        "output": {
+          "auc": 1,
+          "meanProbability": 0.75,
+          "positiveFraction": 0.5,
+          "gap": 0.25
+        },
+        "explanation": "Both positives rank above both negatives, so the empirical ROC AUC is 1. The mean reported probability is `(0.9+0.8+0.7+0.6)/4=0.75`, while the observed positive fraction is `2/4=0.5`. Their signed empirical group gap is 0.25, illustrating that ranking and probability scale differ without proving population miscalibration."
+      }
+    ]
+  }
+]

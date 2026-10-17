@@ -1,5 +1,12 @@
 # 更新记录
 
+## Unified 100-question English collection · 2026-10-17
+
+- Translate and review the original 36 questions, then combine them with the 64 later additions in one English collection with 210 worked examples and catalog numbers 01–100.
+- Preserve original question IDs, source categories, worked examples, answered follow-ups, and concept/chapter links. Add explicit complexity and assumptions to each translated entry.
+- Audit algorithm terminology and formulas against the official problems and documentation. Audit systems and AI semantics, numerical examples, and units against primary technical sources. Save per-question review notes and independent offline checks.
+- Update the question index, organization/source directory, complete concept map, and repository entry points. All 100 entries are readable in English on GitHub.
+
 ## English interview supplement · 2026-10-17
 
 - Publish 64 English additions with 174 worked examples, reasoning, complexity, pitfalls, and source provenance from 15 organizations. Together with the original 36-question bank, the collections contain 100 preparation questions.

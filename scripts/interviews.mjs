@@ -13,6 +13,7 @@ export function questionMarkdown(q){
 }
 export function buildInterviews(emit){
  let text='<!-- Generated from data/interviews.mjs. -->\n\n# 有来源的面试准备题\n\n'+
+ '> **Complete English collection:** [All 100 questions](en/INTERVIEW_QUESTIONS.md), with reviewed terminology, worked examples, complexity, and concept links. This page retains the earlier 36 entries in their original language.\n\n'+
  `共 ${interviewQuestions.length} 题：算法 18、系统与工程 9、机器学习与 AI 9。原有 90 道口述题继续保留。每题另有具体输入、手算、追问答案和易错点。部分原站练习与 Hot 100 重叠，36 按本页整理条目计，不宣称全部是新增独立原题。\n\n`+
  '**来源说明：** 3 道公司官方公开样题、16 道算法原站公开练习、17 道官方文档派生原创自测。本轮没有足够依据确认某公司某次真实面试记录，因此不把这些题统一称作“公司真题”，也不编造公司、年份或出现频次。\n\n'+
  '[来源核对记录](INTERVIEW_SOURCES.md) · [算法进阶](ADVANCED_ALGORITHMS.md) · [更多完整案例](EXAMPLES.md) · [第 106 讲](../chapters/106.md) · [知识地图](KNOWLEDGE_MAP.md)\n\n';
