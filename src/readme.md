@@ -16,6 +16,7 @@ All 100 preparation questions are now available in one English collection, with 
 
 | 你想做什么 | 入口 |
 | --- | --- |
+| 分两层学习概念：先知其然，再知其所以然 | [169 个分层知识点与新增补充](docs/learning-layers/00-learning-index.md) |
 | 看整体结构、概念联系和先修顺序 | **[知识地图](docs/KNOWLEDGE_MAP.md)** · [交互图文件](docs/knowledge-map.html) |
 | 用有来源的题目准备面试 | **[100 English interview questions](docs/en/INTERVIEW_QUESTIONS.md)** · [Sources and validation](docs/en/README.md) |
 | 在 Hot 100 基础上继续学习 | [8 讲算法进阶：并查集、最短路、区间与字符串结构等](docs/ADVANCED_ALGORITHMS.md) |
