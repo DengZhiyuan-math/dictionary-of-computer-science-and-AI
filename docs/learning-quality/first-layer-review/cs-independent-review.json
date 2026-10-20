@@ -1930,18 +1930,31 @@
       "id": "concept:operating-system",
       "file": "cs",
       "status": "independently-reviewed",
-      "findings": "核对进程运行与文件、单核并发及OS保护不阻止授权误操作。",
-      "corrections": [],
+      "findings": "本轮重新逐段阅读操作系统第一层全部正文及新增英文，逐一复核程序/指令/CPU、内存/RAM/SSD、进程/线程/核心、虚拟地址空间、运行/就绪/阻塞、用户态/内核态/系统调用、文件系统/驱动。六步文档实例有单线程、阻塞读取、初始无内存副本及无自动保存的明确条件；没有把系统调用与进程切换、权限检查与应用意图、普通写入成功与持久化混同。独立重算第四题：0—1 ms 为 A，1—4 ms 为 B，4—5 ms 空闲，5—6 ms 为 A，B 在 4 ms 完成、A 在 6 ms 完成，总计算 5 ms。发现第六题“才可能”错误限制调度原因、核心首次出现未解释，两处现已修正；补全单核同一时刻只运行一条线程的示例假设，并将多核同时工作限定为硬件并行的一种情形。八题均可依据正文回答，未发现剩余阻断问题。",
+      "corrections": [
+        "第六题去掉只有请求阻塞才能切换的暗示，明确不阻塞也可因其他调度原因切换，中英一致。",
+        "线程与调度段补 processor core 定义，区分执行实例与硬件计算单元。",
+        "单核时间线题补任一时刻只执行其中一条线程的假设，避免默认排除单核心多硬件线程的能力。",
+        "多核同时工作表述为硬件并行的一种情形，避免当作并行的唯一实现。"
+      ],
       "exerciseCoverage": [
-        "文件与运行",
-        "并发",
-        "保护"
+        "程序文件、运行实例、窗口与进程数量的区别",
+        "进程内存修改与文件保存及崩溃边界",
+        "相同虚拟地址、进程背景、私有内存与共享边界",
+        "逐段计算 0—6 毫秒阻塞等待、就绪工作重叠与 CPU 空闲",
+        "普通计算、函数调用、系统调用及文件访问权限",
+        "用户/内核模式转换与进程/线程上下文切换的区别",
+        "内存隔离、文件权限与应用版本覆盖的保护边界",
+        "写入成功、系统缓冲、进程退出、断电和持久化的区别"
       ],
-      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "englishReview": "本轮逐段对照 learning-quality-operating-system-en.json 的全部对应英文；53 个字符串字段、51 个去重字符串均有对应译文。六步实例、全部八题的条件、毫秒单位、数值和解释完整保留；最终再次复核 processor core、新增调度原因说明、单线程执行假设及 one form of hardware parallelism 的修订译文。术语 operating system、process、thread、address space、user/kernel mode、system call、context switch、main memory、RAM、SSD 和 I/O 准确。",
       "sourceUrls": [
-        "https://pages.cs.wisc.edu/~remzi/OSTEP/"
+        "https://learn.microsoft.com/en-us/windows/win32/procthread/about-processes-and-threads",
+        "https://learn.microsoft.com/en-us/windows-hardware/drivers/gettingstarted/user-mode-and-kernel-mode",
+        "https://man7.org/linux/man-pages/man2/write.2.html",
+        "https://man7.org/linux/man-pages/man7/sched.7.html"
       ],
-      "introSha256": "e47fa74e9d57d9e755d7f4732c5e9248f4b0fa86d110ea7ec72cd6385051bb5f"
+      "introSha256": "9d73fa30b22ecb734edf4e36b42f8a444b18212de4625e3e18b577335de13b16"
     },
     {
       "id": "concept:network",

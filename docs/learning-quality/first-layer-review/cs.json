@@ -2251,20 +2251,32 @@
     "id": "concept:operating-system",
     "status": "rewritten-and-reviewed",
     "issues": [
-      "原文未定义进程与受控服务，资源管理只有清单没有运行过程。"
+      "上一版仍把进程、内存和系统调用压缩成术语清单，未达到既定第一层标准；原有三题答案不充分，缺少过程追踪、数据生命周期及权限辨析。"
     ],
     "changes": [
-      "操作系统是管理计算机硬件资源、为程序提供受控运行环境的软件。它安排哪些程序使用处理器，管理可访问的内存，提供文件与设备操作，并限制程序相互破坏。进程是操作系统管理的一次程序运行及其资源环境；程序代码文件本身不同于正在运行的进程。",
-      "编辑器与下载器同时运行，操作系统可轮流安排处理器，在下载等待网络时让编辑器响应键盘；给两者隔离的内存空间，避免普通写入直接破坏对方；保存文件又由受控接口交给存储设备。看起来同时运行并不证明每个程序独占一个核心。",
-      "隔离不是绝对无漏洞或无共享，权限与共享机制需配置。操作系统也不能自动让所有程序无错误；系统调用是程序请求受控服务的入口。"
+      "重新解释程序、指令、RAM 与长期存储，再给出操作系统的完整定义和适用范围。",
+      "补充进程、地址空间、线程、调度、阻塞、上下文切换、内核、系统调用、文件系统及驱动的中英术语和必要机制。",
+      "增加启动、请求读取、等待切换、恢复编辑、保存和退出的六步完整例子，明确简化条件。",
+      "八道互补练习逐题解释；独立核对 0—6 毫秒时间线，区分模式切换与进程切换、写入返回与持久化。"
     ],
     "exerciseCoverage": [
-      "文件与运行",
-      "并发",
-      "保护"
+      "同一个程序文件与两次运行",
+      "内存里改了，文件是否也改了",
+      "相同地址为什么不是同一份数据",
+      "逐步追踪：等待设备时 CPU 在做什么",
+      "哪些操作需要请求内核服务",
+      "进入内核与换一个进程是同一件事吗",
+      "有内存隔离，为什么还会互相覆盖文件",
+      "写入成功是否已经能抵抗断电"
     ],
     "sourceUrls": [
-      "https://pages.cs.wisc.edu/~remzi/OSTEP/"
+      "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-intro.pdf",
+      "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-intro.pdf",
+      "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-mechanisms.pdf",
+      "https://pages.cs.wisc.edu/~remzi/OSTEP/file-intro.pdf",
+      "https://man7.org/linux/man-pages/man2/syscall.2.html",
+      "https://man7.org/linux/man-pages/man2/write.2.html",
+      "https://man7.org/linux/man-pages/man2/fsync.2.html"
     ]
   },
   {

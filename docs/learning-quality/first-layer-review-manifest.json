@@ -1412,13 +1412,13 @@
       "id": "concept:operating-system",
       "part": "cs",
       "review": "docs/learning-quality/first-layer-review/cs.json",
-      "introductionSha256": "e47fa74e9d57d9e755d7f4732c5e9248f4b0fa86d110ea7ec72cd6385051bb5f",
-      "englishSha256": "7e0c9a34b60b1c5e2c9672145b95cf41debcd62dc507b134cc750122072c4ed0",
+      "introductionSha256": "9d73fa30b22ecb734edf4e36b42f8a444b18212de4625e3e18b577335de13b16",
+      "englishSha256": "34e6afff29d4c5627d919534f8ee0b4bd89af2dec1e631ade8b9ce8e16dc7e8f",
       "secondLayerSha256": "1aa5e332ffd0dfa88701831e0729ce6bca71aeec674e80a7b45af374965def7e",
-      "reviewSha256": "b72f96ba0f955f37bf745f1764eace2cbc4451a4d110421c78b0b18bafcd7490",
+      "reviewSha256": "3bc7a0fde55b0f04aa5516595082d3dc7380f2bcd1d0caa44348d270a7e2f004",
       "independentReview": "docs/learning-quality/first-layer-review/cs-independent-review.json",
-      "independentReviewSha256": "e4cc329eeca9c6008d169eedf6c0690ee0dad9dc9281237fa8579fc2ba131fbb",
-      "exerciseCount": 3
+      "independentReviewSha256": "f4d3e315e33f93ec2731210598996cdf900b3a7cb08f6d4a46f74f4efe4c8f0a",
+      "exerciseCount": 8
     },
     {
       "id": "concept:optimistic-concurrency",
