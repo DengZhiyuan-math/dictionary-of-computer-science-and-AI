@@ -6,26 +6,64 @@
 
 ### 它是什么
 
-Worst-case analysis focuses on the most expensive case among allowed inputs; expectation analysis must explain whether the randomness comes from the algorithm or the input model; amortized analysis allocates the total cost of a series of operations to each operation and does not require random inputs.
+摊还分析把一串操作的总成本分摊，说明偶尔昂贵不代表每次都昂贵。
 
 ### 先看一个例子
 
-Initial capacity is 1 and doubles when full. Append 8 elements, ignoring allocator overhead.
-With geometric capacity growth, a geometric series bounds n appends by O(n) total work, giving O(1) amortized cost per append.
+动态数组初始容量1，满时翻倍，连续追加4项，计写入和旧元素复制。
 
 ### 理解练习
 
-Can old storage be ignored immediately during growth?
+摊还常数代表每次追加最坏也常数吗？
 
 <details><summary>答案与解释</summary>
 
-No. Old and new arrays can coexist during copying. Analyze peak memory and reclamation separately.
+不代表，扩容那次仍需复制很多元素。
 
 </details>
 
 ## 第二层：深入理解 · 知其所以然
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
+
+### 从条件一步步推导
+
+1. 扩容复制量形成1+2+4+…的几何级数，小于最终容量的两倍。
+2. n次普通写入加O(n)复制，总O(n)，因此每次摊还O(1)，不需要随机假设。
+
+### 具体输入与计算步骤
+
+动态数组初始容量1，满时翻倍，连续追加4项，计写入和旧元素复制。
+
+1. 4次写入成本4，第二项扩容复制1，第三项扩容复制2。
+2. 总成本4+1+2=7，平均7/4=1.75个计价操作。
+
+计算结果：总成本4+1+2=7，平均7/4=1.75个计价操作。
+
+### 换到实际问题中应用
+
+选择增长型消息缓存的数组策略。
+
+1. 使用几何扩容减少反复复制，并评估扩容时峰值内存与延迟。
+2. 若严格单次延迟预算不容扩容尖峰，应预分配或分块，而非把摊还界当延迟保证。
+
+应用结论：若严格单次延迟预算不容扩容尖峰，应预分配或分块，而非把摊还界当延迟保证。
+
+### 举一反三：改变条件后的完整解答
+
+继续追加到8项，总成本多少？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 8次写入，加扩容复制1+2+4=7。
+2. 总15，平均15/8=1.875，虽第5项很贵但整串仍线性。
+
+总15，平均15/8=1.875，虽第5项很贵但整串仍线性。
+
+</details>
+
+### 原有解释与进一步例题
+
 
 ### 原理与推演
 
@@ -52,8 +90,8 @@ Initial capacity is 1 and doubles when full. Append 8 elements, ignoring allocat
 
 参考答案：No. Old and new arrays can coexist during copying. Analyze peak memory and reclamation separately.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/resources/mit6_006f11_lec09/)
 
 [返回分层目录](00-learning-index.md)

@@ -6,26 +6,64 @@
 
 ### 它是什么
 
-Breadth-first search uses a queue to explore nodes one step away before those two steps away. When every edge has the same cost, it therefore finds a path with the fewest steps. Depth-first search uses recursion or an explicit stack to follow a path deeply and backtrack when needed. It suits dependency analysis, connectivity structure, and backtracking. Finding a path with DFS does not mean finding a shortest path. Both searches must track visited states to avoid looping indefinitely around cycles.
+广度优先按距离一层层探索；深度优先先沿一条路走到底再返回。
 
 ### 先看一个例子
 
-A directed graph has equal-cost edges A→B, A→C, B→D, C→D and D→E. F is isolated. Find the fewest edges from A.
-One shortest path from A to E is A-B-D-E, of length 3. F is unreachable. With adjacency lists, time is O(V+E) and space is O(V).
+无向图边为A—B、A—C、B—D。
 
 ### 理解练习
 
-If A→C has cost 10, does BFS still guarantee minimum total cost?
+从A到D的无权最短距离是多少？
 
 <details><summary>答案与解释</summary>
 
-No. Minimizing edge count and total cost are different objectives. Dijkstra is an option for nonnegative weights.
+2条边，经B到D。
 
 </details>
 
 ## 第二层：深入理解 · 知其所以然
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
+
+### 从条件一步步推导
+
+1. BFS队列先入先出，先处理距离d的点再发现距离d+1的点。
+2. 首次发现时标记可防重复入队；DFS用栈或递归维护当前探索路径。
+
+### 具体输入与计算步骤
+
+无向图边为A—B、A—C、B—D。
+
+1. BFS从队列[A]开始，取A后队列[B,C]，距离都为1。
+2. 取B发现D并设距离2；全部处理结束，得到A:0、B:1、C:1、D:2。
+
+计算结果：取B发现D并设距离2；全部处理结束，得到A:0、B:1、C:1、D:2。
+
+### 换到实际问题中应用
+
+计算迷宫中从入口到出口的最少步数。
+
+1. 将可走格子视为点、相邻移动视为单位边，BFS保存前驱。
+2. 首次到达出口时沿前驱倒推，得到一条最短路线。
+
+应用结论：首次到达出口时沿前驱倒推，得到一条最短路线。
+
+### 举一反三：改变条件后的完整解答
+
+若A—D权重10、A—B与B—D权重1，BFS还保证最低费用吗？
+
+<details><summary>变式的推演与答案</summary>
+
+1. BFS可能先找到一条边的A—D，但费用10。
+2. 两条边A—B—D费用2更低；非负加权图应使用Dijkstra等方法。
+
+两条边A—B—D费用2更低；非负加权图应使用Dijkstra等方法。
+
+</details>
+
+### 原有解释与进一步例题
+
 
 ### 原理与推演
 
@@ -72,8 +110,9 @@ Directed edges are A→B=1, A→C=0 and C→B=0. Find the minimum cost from A to
 
 - [Multi-source BFS · 等时传播与最近源距离](multi-source-bfs.md)：BFS 的队列和分层原理只保留基础入口；这里补充多起点初始化和传播时间。
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/1208e162775f6f5cedfbb9f2b694ede0_MIT6_006F11_lec13.pdf)
+- [一手资料](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/resources/mit6_006f11_lec14/)
 
 [返回分层目录](00-learning-index.md)

@@ -6,21 +6,19 @@
 
 ### 它是什么
 
-Maximum subarray sum can define the state as "the largest non-empty consecutive sum that must end at the current position". The new element is either connected to the previous interval or starts over; choose the larger value between the two, and then use the global answer to record the maximum value among all end points. The state only needs the previous value, so it can be squeezed into constant extra space.
+Kadane算法逐个读取数组，保存“必须在当前位置结束”的最大连续子数组和。
 
 ### 先看一个例子
 
-例子：数组 (−2,3,−1,4,−5)，记录“必须在当前位置结束”的最大和，依次为 −2、3、2、6、1，全局最大为 6，对应 (3,−1,4)。递推为 end=max(x,end+x)；若要求非空子数组，全负输入也不能返回空集的 0。
+数组[−2,3,−1,4]，要求子数组非空。
 
 ### 理解练习
 
-用自己的话解释：上面的情景为什么是“Kadane’s Algorithm”的例子？请指出定义中的关键条件在情景里如何体现，而不是只复述最后的数值。
+遇负数就应立即清零吗？
 
 <details><summary>答案与解释</summary>
 
-对照定义：Maximum subarray sum can define the state as "the largest non-empty consecutive sum that must end at the current position". The new element is either connected to the previous interval or starts over; choose the larger value between the two, and then use the global answer to record the maximum value among all end points. The state only needs the previous value, so it can be squeezed into constant extra space.
-
-情景依据：例子：数组 (−2,3,−1,4,−5)，记录“必须在当前位置结束”的最大和，依次为 −2、3、2、6、1，全局最大为 6，对应 (3,−1,4)。递推为 end=max(x,end+x)；若要求非空子数组，全负输入也不能返回空集的 0。
+不一定，−1连接3和4，保留可得到6。
 
 </details>
 
@@ -28,17 +26,63 @@ Maximum subarray sum can define the state as "the largest non-empty consecutive 
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
 
+### 从条件一步步推导
+
+1. 以i结束的最优解要么单独a[i]，要么接在前一最优后，end=max(a[i],end+a[i])。
+2. 全局best记录所有end的最大值；非空问题以首元素初始化。
+
+### 具体输入与计算步骤
+
+数组[−2,3,−1,4]，要求子数组非空。
+
+1. end依次为−2、max(3,1)=3、max(−1,2)=2。
+2. 最后max(4,2+4)=6，最优子数组[3,−1,4]。
+
+计算结果：最后max(4,2+4)=6，最优子数组[3,−1,4]。
+
+### 换到实际问题中应用
+
+寻找日收益序列中累计收益最大的连续区间。
+
+1. 遍历时在重新开始子数组处记录起点，best改善时保存区间。
+2. 输出区间和及边界；若是复合收益应先明确不能直接把简单收益求和当精确复利。
+
+应用结论：输出区间和及边界；若是复合收益应先明确不能直接把简单收益求和当精确复利。
+
+### 举一反三：改变条件后的完整解答
+
+全负数组[−5,−2,−7]结果是什么？
+
+<details><summary>变式的推演与答案</summary>
+
+1. end依次−5、−2、−7，best最大为−2。
+2. 非空答案是[−2]，返回0会错误允许空子数组。
+
+非空答案是[−2]，返回0会错误允许空子数组。
+
+</details>
+
+### 原有解释与进一步例题
+
+
 ### 原理与推演
 
+Maximum subarray sum can define the state as "the largest non-empty consecutive sum that must end at the current position". The new element is either connected to the previous interval or starts over; choose the larger value between the two, and then use the global answer to record the maximum value among all end points. The state only needs the previous value, so it can be squeezed into constant extra space.
+
 For [-2,3,-1,4], the best sum ending at the final position comes from [3,-1,4]. If every value is negative, choose the largest negative value. Initializing the answer to zero would incorrectly allow an empty subarray.
+
+
+### 例子
+
+例子：数组 (−2,3,−1,4,−5)，记录“必须在当前位置结束”的最大和，依次为 −2、3、2、6、1，全局最大为 6，对应 (3,−1,4)。递推为 end=max(x,end+x)；若要求非空子数组，全负输入也不能返回空集的 0。
 
 
 ### 适用边界与常见误解
 
 An all-negative array still needs to return a negative number, which cannot be replaced by an empty interval of zero.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://algs4.cs.princeton.edu/home/)
 
 [返回分层目录](00-learning-index.md)

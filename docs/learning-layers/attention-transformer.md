@@ -6,26 +6,64 @@
 
 ### 它是什么
 
-Intuitively, a query represents what the current position seeks, keys provide matching clues at other positions, and values contain the information to aggregate. Attention scores determine aggregation weights after normalization. This is an analogy: queries, keys and values are learned vectors, not human-written questions, catalogs and answers. A high attention weight does not automatically establish interpretable causal importance to the final output.
+注意力让每个位置按相关性汇总其他位置的信息；Transformer用这种机制处理序列。
 
 ### 先看一个例子
 
-Query q=[1,0], keys [1,0], [0,1], [1,1], and values [2,0], [0,2], [1,1]. Key dimension is 2.
-Attention outputs a weighted combination of values; query–key matching determines the weights. Lower temperature concentrates these unequal-score weights more strongly.
+两个候选值为2和6，注意力权重为0.25和0.75。
 
 ### 理解练习
 
-If two keys have equal scores, must they have equal weights?
+权重0.75说明哪个值贡献更大？
 
 <details><summary>答案与解释</summary>
 
-Under the same query and mask conditions, their softmax weights are equal. Their value vectors may still differ.
+值6贡献4.5，大于值2贡献0.5。
 
 </details>
 
 ## 第二层：深入理解 · 知其所以然
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
+
+### 从条件一步步推导
+
+1. 由查询Q与键K的点积得到匹配分数，再除以√d控制尺度。
+2. 对分数做softmax得到和为1的权重，再乘V；因果掩码禁止读取未来位置。
+
+### 具体输入与计算步骤
+
+两个候选值为2和6，注意力权重为0.25和0.75。
+
+1. 设分数为0与ln3，指数为1与3，归一化得到1/4与3/4。
+2. 加权和=(1/4)×2+(3/4)×6=5。
+
+计算结果：加权和=(1/4)×2+(3/4)×6=5。
+
+### 换到实际问题中应用
+
+预测句子下一词，需要综合较远处的主语。
+
+1. 给当前位置构造查询，对已出现的词计算匹配，并屏蔽未来位置。
+2. 汇总上下文后送入输出层，使远处信息无需逐步跨越每个中间词。
+
+应用结论：汇总上下文后送入输出层，使远处信息无需逐步跨越每个中间词。
+
+### 举一反三：改变条件后的完整解答
+
+若第二个位置被掩码，输出变成多少？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 把第二个分数置为负无穷，softmax权重变为1与0。
+2. 输出为1×2+0×6=2，不能再使用被遮挡的6。
+
+输出为1×2+0×6=2，不能再使用被遮挡的6。
+
+</details>
+
+### 原有解释与进一步例题
+
 
 ### 原理与推演
 
@@ -73,8 +111,8 @@ During causal autoregressive decoding, four tokens have already been processed. 
 - [Causal Attention Mask · 金融预测的信息可见范围](https://github.com/DengZhiyuan-math/dictionary-of-quant/blob/main/docs/learning-layers/quant-causal-attention-mask.md)：将通用注意力的访问范围落实到金融预测时点，区分逐位置预测与历史整窗预测。
 - [KV Cache / FlashAttention · 注意力推理的缓存与访存](kv-cache-flashattention.md)：先明确键、值与注意力访问范围，再计算缓存容量或讨论访存优化。
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://arxiv.org/abs/1706.03762)
 
 [返回分层目录](00-learning-index.md)

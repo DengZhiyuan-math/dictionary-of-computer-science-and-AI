@@ -6,27 +6,64 @@
 
 ### 它是什么
 
-Binary classification answers a yes/no question, such as whether an email is spam. Multiclass single-label classification chooses one of several mutually exclusive answers, such as cat, dog, or bird as the main species. Multilabel classification allows several answers simultaneously, such as both cats and dogs in an image. It usually assigns each label a separate probability without requiring them to sum to one. This distinction directly affects the output layer and loss; class count alone cannot determine whether BCE or mutually exclusive categorical cross-entropy is appropriate.
+二分类选两者之一，多分类选多个类别中的一个，多标签允许同时选多个。
 
 ### 先看一个例子
 
-例子：邮件是否垃圾是二分类；把一张图只归为猫、狗、鸟之一是多类单标签；同一图片同时标注“猫”和“室内”是多标签。最后一种允许多个真标签，不能直接强制所有类别概率像单标签 softmax 那样总和为 1。
+图片里同时有猫与狗，用标签向量[1,1,0]表示猫、狗、鸟。
 
 ### 理解练习
 
-用自己的话解释：上面的情景为什么是“Binary / Multiclass / Multilabel”的例子？请指出定义中的关键条件在情景里如何体现，而不是只复述最后的数值。
+这里能用“只能选一个动物”的目标吗？
 
 <details><summary>答案与解释</summary>
 
-对照定义：Binary classification answers a yes/no question, such as whether an email is spam. Multiclass single-label classification chooses one of several mutually exclusive answers, such as cat, dog, or bird as the main species. Multilabel classification allows several answers simultaneously, such as both cats and dogs in an image. It usually assigns each label a separate probability without requiring them to sum to one. This distinction directly affects the output layer and loss; class count alone cannot determine whether BCE or mutually exclusive categorical cross-entropy is appropriate.
-
-情景依据：例子：邮件是否垃圾是二分类；把一张图只归为猫、狗、鸟之一是多类单标签；同一图片同时标注“猫”和“室内”是多标签。最后一种允许多个真标签，不能直接强制所有类别概率像单标签 softmax 那样总和为 1。
+不能，两个标签同时成立，属于多标签问题。
 
 </details>
 
 ## 第二层：深入理解 · 知其所以然
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
+
+### 从条件一步步推导
+
+1. 互斥多分类用概率总和为1的分布描述唯一类别。
+2. 多标签为每个标签建一个独立二元目标，输出总和没有必须为1的要求。
+
+### 具体输入与计算步骤
+
+图片里同时有猫与狗，用标签向量[1,1,0]表示猫、狗、鸟。
+
+1. 概率[0.8,0.7,0.1]用阈值0.5逐项比较，得到[1,1,0]。
+2. 若强制argmax，只留下猫，会漏掉狗这个正确标签。
+
+计算结果：若强制argmax，只留下猫，会漏掉狗这个正确标签。
+
+### 换到实际问题中应用
+
+给文章标注金融、编程、旅行主题。
+
+1. 先确认主题是否可以重叠；允许重叠时使用三个独立输出。
+2. 用逐标签BCE训练并分别验证阈值，输出可为空或多个主题。
+
+应用结论：用逐标签BCE训练并分别验证阈值，输出可为空或多个主题。
+
+### 举一反三：改变条件后的完整解答
+
+若任务改成图片主色只能选红、绿、蓝之一呢？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 标签从集合变成一个类别索引。
+2. 使用3维互斥分布与多类交叉熵，推理取最大概率类别。
+
+使用3维互斥分布与多类交叉熵，推理取最大概率类别。
+
+</details>
+
+### 原有解释与进一步例题
+
 
 ### 原理与推演
 
@@ -42,8 +79,8 @@ Binary classification answers a yes/no question, such as whether an email is spa
 
 Determine the task semantics before selecting outputs and loss.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://scikit-learn.org/stable/modules/multiclass.html)
 
 [返回分层目录](00-learning-index.md)

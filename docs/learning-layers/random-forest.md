@@ -6,21 +6,19 @@
 
 ### 它是什么
 
-Random forests predict with many trees. Classic training gives each tree a different bootstrap sample and limits each split to a random feature subset. This second randomness is crucial: if one strong feature always dominates the top split, trees become similar; limiting candidates lets them explore different rules.
+随机森林训练多棵带随机性的树，再汇总预测，降低单棵树的不稳定。
 
 ### 先看一个例子
 
-if one strong feature always dominates the top split, trees become similar; limiting candidates lets them explore different rules.
+三棵分类树输出[猫,狗,狗]。
 
 ### 理解练习
 
-用自己的话解释：上面的情景为什么是“Random Forest”的例子？请指出定义中的关键条件在情景里如何体现，而不是只复述最后的数值。
+森林每棵树应完全相同吗？
 
 <details><summary>答案与解释</summary>
 
-对照定义：Random forests predict with many trees. Classic training gives each tree a different bootstrap sample and limits each split to a random feature subset. This second randomness is crucial: if one strong feature always dominates the top split, trees become similar; limiting candidates lets them explore different rules.
-
-情景依据：if one strong feature always dominates the top split, trees become similar; limiting candidates lets them explore different rules.
+不应，样本重采样和分裂特征随机性提供差异。
 
 </details>
 
@@ -28,7 +26,48 @@ if one strong feature always dominates the top split, trees become similar; limi
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
 
+### 从条件一步步推导
+
+1. 不同树误差不完全相关时，平均可降低方差。
+2. 树之间过度相关会限制收益，增加棵数不能消除所有偏差。
+
+### 具体输入与计算步骤
+
+三棵分类树输出[猫,狗,狗]。
+
+1. 硬投票中狗2票、猫1票，结果狗。
+2. 若回归输出[2,4,6]，均值(2+4+6)/3=4。
+
+计算结果：若回归输出[2,4,6]，均值(2+4+6)/3=4。
+
+### 换到实际问题中应用
+
+为表格分类构建稳健基线。
+
+1. 调整树数、深度、叶子样本数并使用适当验证切分。
+2. 检查逐类表现与袋外评估，特征重要性需警惕相关特征与高基数偏差。
+
+应用结论：检查逐类表现与袋外评估，特征重要性需警惕相关特征与高基数偏差。
+
+### 举一反三：改变条件后的完整解答
+
+若100棵树总预测相同错误，多数投票能修正吗？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 100票都支持同一错误类别。
+2. 仍然错误，独立性与数据质量比单纯增加树数更重要。
+
+仍然错误，独立性与数据质量比单纯增加树数更重要。
+
+</details>
+
+### 原有解释与进一步例题
+
+
 ### 原理与推演
+
+Random forests predict with many trees. Classic training gives each tree a different bootstrap sample and limits each split to a random feature subset. This second randomness is crucial: if one strong feature always dominates the top split, trees become similar; limiting candidates lets them explore different rules.
 
 Regression usually averages tree values; classification may vote or average class probabilities depending on implementation. Different perspectives reduce a single tree's high variance. They cannot recover information every tree lacks, nor guarantee freedom from overfitting.
 
@@ -57,8 +96,8 @@ Five classification trees vote [1,1,0,1,0] on one email. Positive means spam.
 
 - [Random Forest · 随机森林的金融应用](https://github.com/DengZhiyuan-math/dictionary-of-quant/blob/main/docs/learning-layers/quant-random-forest.md)：保留通用森林原理，补充金融收益目标、相关样本、袋外评价和成本后的比较口径。
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://scikit-learn.org/stable/modules/ensemble.html)
 
 [返回分层目录](00-learning-index.md)

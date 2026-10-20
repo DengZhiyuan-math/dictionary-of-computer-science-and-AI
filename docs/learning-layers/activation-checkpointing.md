@@ -6,26 +6,64 @@
 
 ### 它是什么
 
-Activation checkpointing avoids saving every intermediate activation and recomputes some during backpropagation, trading extra computation for GPU memory. A model checkpoint instead saves model or training state for recovery or deployment. Both use the word checkpoint, but solve different problems. Gradient accumulation, parameter sharding and freezing some parameters can also reduce GPU memory use, each with computational or capability tradeoffs.
+激活重计算是在反向求导时重做部分前向计算，以少存中间结果。
 
 ### 先看一个例子
 
-A network has four segments, each needing about 100 MB of saved intermediate activations. Training may face interruption or insufficient GPU memory.
-Disk snapshots support recovery. Activation recomputation reduces part of training memory use. Both can be used together.
+三层链各产生10 MB中间结果，只保存第一层边界。
 
 ### 理解练习
 
-If optimizer state is large, does activation checkpointing remove it?
+它会减小优化器状态吗？
 
 <details><summary>答案与解释</summary>
 
-No. It targets intermediate activations; optimizer state needs a separate storage or sharding strategy.
+不会，它主要减少保存的激活张量。
 
 </details>
 
 ## 第二层：深入理解 · 知其所以然
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
+
+### 从条件一步步推导
+
+1. 反向求导需要某些前向结果，直接删除会缺少计算依据。
+2. 保存边界输入后可重新运行内部层，恢复这些结果，代价是额外计算。
+
+### 具体输入与计算步骤
+
+三层链各产生10 MB中间结果，只保存第一层边界。
+
+1. 简化模型中原先保存3×10=30 MB激活，改为保存10 MB边界。
+2. 反向阶段重做后两层共2次前向；实际峰值还包括临时张量，不能据此承诺总显存降至三分之一。
+
+计算结果：反向阶段重做后两层共2次前向；实际峰值还包括临时张量，不能据此承诺总显存降至三分之一。
+
+### 换到实际问题中应用
+
+训练长序列时激活占显存大头。
+
+1. 对连续 Transformer 块设置检查点，固定输入并比较梯度与未重计算基准。
+2. 测量峰值显存与每步耗时，确认节省足以抵消重算开销。
+
+应用结论：测量峰值显存与每步耗时，确认节省足以抵消重算开销。
+
+### 举一反三：改变条件后的完整解答
+
+若主要内存是80 MB优化器状态和20 MB激活，激活减半能省多少？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 激活变为10 MB，优化器仍80 MB。
+2. 简化总量从100降至90 MB，仅省10%，应另考虑优化器分片。
+
+简化总量从100降至90 MB，仅省10%，应另考虑优化器分片。
+
+</details>
+
+### 原有解释与进一步例题
+
 
 ### 原理与推演
 
@@ -52,8 +90,8 @@ A network has four segments, each needing about 100 MB of saved intermediate act
 
 参考答案：No. It targets intermediate activations; optimizer state needs a separate storage or sharding strategy.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://docs.pytorch.org/docs/stable/checkpoint.html)
 
 [返回分层目录](00-learning-index.md)

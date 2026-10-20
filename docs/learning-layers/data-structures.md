@@ -6,21 +6,19 @@
 
 ### 它是什么
 
-A data structure organizes values and their relationships so operations have defined costs. Arrays store indexed sequences, linked lists connect nodes, hash tables support key lookup, and trees or graphs represent structured relationships.
+数据结构是组织数据的方式，应按主要查找、更新、排序和连接操作选择。
 
 ### 先看一个例子
 
-If a task repeatedly reads the i-th measurement, an array is a natural fit. If it repeatedly asks whether an identifier has been seen, a hash set avoids scanning the whole sequence for each query. Neither choice is universally faster for every workload.
+有序数组[1,3,5,7]中插入4。
 
 ### 理解练习
 
-用自己的话解释：上面的情景为什么是“Data Structures”的例子？请指出定义中的关键条件在情景里如何体现，而不是只复述最后的数值。
+数组有序就代表插入也只需对数时间吗？
 
 <details><summary>答案与解释</summary>
 
-对照定义：A data structure organizes values and their relationships so operations have defined costs. Arrays store indexed sequences, linked lists connect nodes, hash tables support key lookup, and trees or graphs represent structured relationships.
-
-情景依据：If a task repeatedly reads the i-th measurement, an array is a natural fit. If it repeatedly asks whether an identifier has been seen, a hash set avoids scanning the whole sequence for each query. Neither choice is universally faster for every workload.
+不是，找位置可对数，但移动元素通常线性。
 
 </details>
 
@@ -28,17 +26,66 @@ If a task repeatedly reads the i-th measurement, an array is a natural fit. If i
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
 
+### 从条件一步步推导
+
+1. 结构约束决定各操作代价：数组支持连续下标访问，链表擅长已知位置的链接修改。
+2. 哈希擅长精确查找，树支持有序查询，堆支持极值而非任意排序。
+
+### 具体输入与计算步骤
+
+有序数组[1,3,5,7]中插入4。
+
+1. 4应放下标2，先将7后移，再将5后移，共移动2项。
+2. 写入4后得到[1,3,4,5,7]，总存储增加一个元素。
+
+计算结果：写入4后得到[1,3,4,5,7]，总存储增加一个元素。
+
+### 换到实际问题中应用
+
+实现任务优先级调度。
+
+1. 需要反复取最小截止时间时选最小堆，另用映射定位任务编号。
+2. 明确取消任务的实现，如惰性删除，避免误以为堆能常数时间删任意任务。
+
+应用结论：明确取消任务的实现，如惰性删除，避免误以为堆能常数时间删任意任务。
+
+### 举一反三：改变条件后的完整解答
+
+若只需按ID查找、不关心顺序呢？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 有序数组的维护排序成本可能没有收益。
+2. 哈希表通常更合适，但仍需考虑碰撞、内存与最坏界。
+
+哈希表通常更合适，但仍需考虑碰撞、内存与最坏界。
+
+</details>
+
+### 原有解释与进一步例题
+
+
+### Definition
+
+A data structure organizes values and their relationships so operations have defined costs. Arrays store indexed sequences, linked lists connect nodes, hash tables support key lookup, and trees or graphs represent structured relationships.
+
+
 ### Parameters and mechanism
 
 Choose by operations, not only by element count n. Array indexing is O(1); inserting into its middle can require O(n) moves. Hash-table lookup is expected O(1) under suitable hashing and load assumptions, while worst cases and resizing differ.
+
+
+### Example
+
+If a task repeatedly reads the i-th measurement, an array is a natural fit. If it repeatedly asks whether an identifier has been seen, a hash set avoids scanning the whole sequence for each query. Neither choice is universally faster for every workload.
 
 
 ### 适用边界与常见误解
 
 A data structure supplies operations rather than determining the entire task’s algorithm.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://algs4.cs.princeton.edu/home/)
 
 [返回分层目录](00-learning-index.md)

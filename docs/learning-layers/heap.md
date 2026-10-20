@@ -6,26 +6,64 @@
 
 ### 它是什么
 
-A tree is a hierarchical structure. Each node in a binary tree has at most two children. A binary search tree uses ordering to support search. AVL trees and red-black trees are balanced binary search trees that avoid excessive depth. A heap is another tree-based structure: rather than sorting all elements completely, it makes the minimum or maximum easy to retrieve. A priority queue, often implemented with a heap, schedules the most urgent task.
+堆保证父节点不大于孩子，让最小元素在根部，但内部不是完整排序。
 
 ### 先看一个例子
 
-Find the two largest values in [9,1,7,3,8]. First clarify whether output must be ordered, input may be modified, and data arrives continuously.
-A heap suits streaming updates: time O(n log k), auxiliary space O(k). Quickselect suits mutable static data. The constraints determine the choice.
+最小堆数组[1,3,2]，插入0。
 
 ### 理解练习
 
-Data keeps arriving and Top K must be available at any time. What should be considered first?
+数组[1,3,2]没排序，还是合法堆吗？
 
 <details><summary>答案与解释</summary>
 
-A fixed-size heap is usually convenient for incremental maintenance. Also discuss costs when k is close to n and the overhead of returning sorted results.
+是，父节点1小于两个孩子即可。
 
 </details>
 
 ## 第二层：深入理解 · 知其所以然
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
+
+### 从条件一步步推导
+
+1. 完全二叉树用数组存储，插入末尾后沿父链上浮以恢复堆序。
+2. 高度O(log n)，插入和删除根通常O(log n)，读根O(1)。
+
+### 具体输入与计算步骤
+
+最小堆数组[1,3,2]，插入0。
+
+1. 追加0得[1,3,2,0]，与父3交换成[1,0,2,3]。
+2. 再与根1交换得[0,1,2,3]，共2次上浮交换。
+
+计算结果：再与根1交换得[0,1,2,3]，共2次上浮交换。
+
+### 换到实际问题中应用
+
+维护流式数据中最大的3个数。
+
+1. 保留容量3的小顶堆，新值超过根才替换根。
+2. 根是当前前三名中最小者，若要有序展示再排序这3项。
+
+应用结论：根是当前前三名中最小者，若要有序展示再排序这3项。
+
+### 举一反三：改变条件后的完整解答
+
+若在[1,3,2]中查3能只看根吗？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 根只保证全局最小，不能确定3在哪个子树。
+2. 任意查找最坏O(n)，堆不是搜索树。
+
+任意查找最坏O(n)，堆不是搜索树。
+
+</details>
+
+### 原有解释与进一步例题
+
 
 ### 原理与推演
 
@@ -68,8 +106,8 @@ Directed edges are A→B=5, A→C=1, C→B=1, B→D=2 and C→D=7. Start from A.
 
 参考答案：No. Negative edges may lower a finalized distance. Choose another method according to the constraints.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/resources/mit6_006f11_lec04/)
 
 [返回分层目录](00-learning-index.md)

@@ -6,21 +6,19 @@
 
 ### 它是什么
 
-The learning rate controls the overall step size of optimizer updates. It measures neither how much knowledge has been learned nor how many epochs training has run. Imagine searching for low ground: the update direction tells you where to move, and the learning rate influences how far to move. Optimizers can also use historical gradients to scale individual parameter updates, so the learning rate is not the absolute change applied to every parameter.
+学习率控制沿梯度更新参数时迈多大一步。
 
 ### 先看一个例子
 
-If the stride length is too large, it may cross the favorable area at once, oscillate back and forth, and even cause numerical instability in training. Steps that are too small may result in slow improvement within a given budget. There is no single value that is best for all models, batch sizes, and optimizers. A smaller learning rate does not guarantee that the final generalization will be better, because the training budget, data, and other settings jointly affect the results.
+损失L=θ²/2，θ=2，学习率0.1。
 
 ### 理解练习
 
-用自己的话解释：上面的情景为什么是“Learning Rate”的例子？请指出定义中的关键条件在情景里如何体现，而不是只复述最后的数值。
+学习率越大一定学得越快吗？
 
 <details><summary>答案与解释</summary>
 
-对照定义：The learning rate controls the overall step size of optimizer updates. It measures neither how much knowledge has been learned nor how many epochs training has run. Imagine searching for low ground: the update direction tells you where to move, and the learning rate influences how far to move. Optimizers can also use historical gradients to scale individual parameter updates, so the learning rate is not the absolute change applied to every parameter.
-
-情景依据：If the stride length is too large, it may cross the favorable area at once, oscillate back and forth, and even cause numerical instability in training. Steps that are too small may result in slow improvement within a given budget. There is no single value that is best for all models, batch sizes, and optimizers. A smaller learning rate does not guarantee that the final generalization will be better, because the training budget, data, and other settings jointly affect the results.
+不一定，可能越过低谷甚至发散。
 
 </details>
 
@@ -28,7 +26,50 @@ If the stride length is too large, it may cross the favorable area at once, osci
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
 
+### 从条件一步步推导
+
+1. 梯度为θ，更新θ新=θ−ηθ=(1−η)θ。
+2. 此二次函数中abs(1−η)<1即0<η<2时收敛，实际网络不能直接照搬该界。
+
+### 具体输入与计算步骤
+
+损失L=θ²/2，θ=2，学习率0.1。
+
+1. θ新=2−0.1×2=1.8。
+2. 损失从2降到1.8²/2=1.62。
+
+计算结果：损失从2降到1.8²/2=1.62。
+
+### 换到实际问题中应用
+
+新模型训练初期损失振荡。
+
+1. 固定数据与优化器，比较较小学习率是否降低振荡，并记录梯度尺度。
+2. 用验证表现选计划，不能仅凭前几步训练下降确定最佳学习率。
+
+应用结论：用验证表现选计划，不能仅凭前几步训练下降确定最佳学习率。
+
+### 举一反三：改变条件后的完整解答
+
+若η=3，此例会怎样？
+
+<details><summary>变式的推演与答案</summary>
+
+1. θ新=(1−3)×2=−4。
+2. 损失8大于原2，后续绝对值每步翻倍并发散。
+
+损失8大于原2，后续绝对值每步翻倍并发散。
+
+</details>
+
+### 原有解释与进一步例题
+
+
 ### 原理与推演
+
+The learning rate controls the overall step size of optimizer updates. It measures neither how much knowledge has been learned nor how many epochs training has run. Imagine searching for low ground: the update direction tells you where to move, and the learning rate influences how far to move. Optimizers can also use historical gradients to scale individual parameter updates, so the learning rate is not the absolute change applied to every parameter.
+
+If the stride length is too large, it may cross the favorable area at once, oscillate back and forth, and even cause numerical instability in training. Steps that are too small may result in slow improvement within a given budget. There is no single value that is best for all models, batch sizes, and optimizers. A smaller learning rate does not guarantee that the final generalization will be better, because the training budget, data, and other settings jointly affect the results.
 
 Suppose two runs each train for ten epochs. With a learning rate that is too small, one may learn little in that time, while a suitable learning rate gives the other good validation performance. Equal epoch counts do not imply equal optimization progress. Conversely, unstable loss is not always caused by the learning rate: labels, the loss implementation or numerical precision may also be responsible.
 
@@ -73,8 +114,8 @@ Use the simplified decoupled update θ_next=(1-ηλ)θ-ηg for shrinkage and gra
 
 - [Learning Rate · 金融模型中的学习率选择](https://github.com/DengZhiyuan-math/dictionary-of-quant/blob/main/docs/learning-layers/quant-learning-rate.md)：把一般更新幅度用于收益模型的历史选参，区分训练更新、样本外评价和实际仓位。
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://docs.pytorch.org/docs/stable/optim.html)
 
 [返回分层目录](00-learning-index.md)

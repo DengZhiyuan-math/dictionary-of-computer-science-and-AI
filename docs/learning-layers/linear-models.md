@@ -6,27 +6,69 @@
 
 ### 它是什么
 
-A linear model predicts by adding weighted input features and an intercept. Linear describes dependence on the fitted coefficients; input features may themselves contain nonlinear transformations.
+线性模型把输入特征乘权重后相加，可再通过链接函数变成概率等输出。
 
 ### 先看一个例子
 
-If x is measured in meters, changing it to centimeters requires changing the coefficient accordingly. A fitted relationship predicts association and does not by itself establish causality.
+模型y=2x+1，输入x=3。
 
 ### 理解练习
 
-用自己的话解释：上面的情景为什么是“Linear Models”的例子？请指出定义中的关键条件在情景里如何体现，而不是只复述最后的数值。
+加入x²特征后还可称线性模型吗？
 
 <details><summary>答案与解释</summary>
 
-对照定义：A linear model predicts by adding weighted input features and an intercept. Linear describes dependence on the fitted coefficients; input features may themselves contain nonlinear transformations.
-
-情景依据：If x is measured in meters, changing it to centimeters requires changing the coefficient accordingly. A fitted relationship predicts association and does not by itself establish causality.
+可以，它对待学习权重仍是线性的，但对原始x可非线性。
 
 </details>
 
 ## 第二层：深入理解 · 知其所以然
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
+
+### 从条件一步步推导
+
+1. 预测为wᵀφ(x)+b，φ可包含固定的基函数。
+2. 平方损失对权重求导形成正规方程；实际求解常用数值稳定的分解而非显式求逆。
+
+### 具体输入与计算步骤
+
+模型y=2x+1，输入x=3。
+
+1. x=3时预测2×3+1=7。
+2. 若真实值8，误差7−8=−1，半平方损失0.5，对w梯度−1×3=−3。
+
+计算结果：若真实值8，误差7−8=−1，半平方损失0.5，对w梯度−1×3=−3。
+
+### 换到实际问题中应用
+
+做可解释的房租基线。
+
+1. 按训练数据拟合面积、位置编码与房龄权重，必要时加入正则。
+2. 验证残差模式与外推风险，权重相关不自动证明因果。
+
+应用结论：验证残差模式与外推风险，权重相关不自动证明因果。
+
+### 举一反三：改变条件后的完整解答
+
+若改为逻辑回归分数z=2x+1，x=0时概率多少？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 分数z=1，不直接作为概率。
+2. σ(1)=1/(1+e⁻¹)≈0.7311，说明逻辑回归用于分类概率。
+
+σ(1)=1/(1+e⁻¹)≈0.7311，说明逻辑回归用于分类概率。
+
+</details>
+
+### 原有解释与进一步例题
+
+
+### Definition
+
+A linear model predicts by adding weighted input features and an intercept. Linear describes dependence on the fitted coefficients; input features may themselves contain nonlinear transformations.
+
 
 ### Parameters and mechanism
 
@@ -47,8 +89,8 @@ Logistic regression usually models classification probabilities; “regression�
 - [Neutralization · 金融截面的残差化与暴露约束](https://github.com/DengZhiyuan-math/dictionary-of-quant/blob/main/docs/learning-layers/quant-neutralization.md)：线性回归定义统一保留，金融应用区分特征残差化与最终组合的风险中性。
 - [Ridge Lasso · 金融因子回归的正则化](https://github.com/DengZhiyuan-math/dictionary-of-quant/blob/main/docs/learning-layers/quant-ridge-lasso.md)：把线性模型扩展到相关金融因子的收缩估计，解释目标口径、参数尺度和时间选参。
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://scikit-learn.org/stable/modules/linear_model.html)
 
 [返回分层目录](00-learning-index.md)

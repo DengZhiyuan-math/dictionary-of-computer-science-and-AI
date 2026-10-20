@@ -6,26 +6,64 @@
 
 ### 它是什么
 
-A classification threshold must still be chosen after predicting probabilities. Raising it usually produces fewer positive predictions but may miss more actual positives. The confusion matrix distinguishes true positives, false positives, true negatives and false negatives. Sensitivity usually means recall, or the true positive rate. Specificity measures the proportion of actual negatives correctly excluded. These measure different aspects of performance and should be discussed in terms of missed detections and false alarms.
+阈值把连续分数转成决策，阈值越低通常越容易报正。
 
 ### 先看一个例子
 
-Scores [.95,.8,.7,.6,.4,.3,.2,.05] have true labels [1,0,1,0,1,0,0,0]. Predict positive when the score is at least the threshold.
-Lowering the threshold expands the predicted-positive set. Recall cannot decrease, but precision need not be monotonic. The demo’s scores themselves do not change.
+概率[0.3,0.6,0.8]，真实标签[0,1,0]。
 
 ### 理解练习
 
-At threshold 1, what are the accuracy and recall?
+默认0.5一定最适合业务吗？
 
 <details><summary>答案与解释</summary>
 
-Every prediction is negative: accuracy is 5/8, recall is 0, and precision is undefined.
+不一定，取决于校准、类别比例和误判成本。
 
 </details>
 
 ## 第二层：深入理解 · 知其所以然
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
+
+### 从条件一步步推导
+
+1. 决策规则p≥t为正，改变t会同时改变TP、FP、FN。
+2. 阈值应在验证集按目标约束选择，再锁定用于测试。
+
+### 具体输入与计算步骤
+
+概率[0.3,0.6,0.8]，真实标签[0,1,0]。
+
+1. t=0.5时预测[0,1,1]，TP=1、FP=1、FN=0。
+2. t=0.7时预测[0,0,1]，TP=0、FP=1、FN=1。
+
+计算结果：t=0.7时预测[0,0,1]，TP=0、FP=1、FN=1。
+
+### 换到实际问题中应用
+
+告警系统要求每天最多100条。
+
+1. 在验证数据扫描阈值，评估告警量、精度和召回。
+2. 选择满足容量的工作点，监控分布漂移后容量是否仍满足。
+
+应用结论：选择满足容量的工作点，监控分布漂移后容量是否仍满足。
+
+### 举一反三：改变条件后的完整解答
+
+同一例把t降至0.2会怎样？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 预测全部为正，TP=1、FP=2、FN=0。
+2. 召回1、查准率1/3；降低阈值并不保证整体更好。
+
+召回1、查准率1/3；降低阈值并不保证整体更好。
+
+</details>
+
+### 原有解释与进一步例题
+
 
 ### 原理与推演
 
@@ -52,8 +90,8 @@ Scores [.95,.8,.7,.6,.4,.3,.2,.05] have true labels [1,0,1,0,1,0,0,0]. Predict p
 
 参考答案：Every prediction is negative: accuracy is 5/8, recall is 0, and precision is undefined.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://scikit-learn.org/stable/user_guide.html)
 
 [返回分层目录](00-learning-index.md)

@@ -6,21 +6,19 @@
 
 ### 它是什么
 
-Backtracking expands choices into a search tree: choose, explore recursively, then undo the choice on return. Permutations use a used marker so each element is chosen once. Subsets use an increasing start index so different selection orders do not enumerate the same set repeatedly. Define the state first, then choose used markers, a starting index, or a remaining target.
+回溯逐个尝试选择，不合适就撤销；剪枝提前排除不可能成功的分支。
 
 ### 先看一个例子
 
-If you only save a reference to the same mutable list, undoing it later will change all answers together. Backtracking is not an antonym of dynamic programming; memoization is also possible when different search paths have the same subsequent state.
+从正数1、2、3中选若干个，使和为3。
 
 ### 理解练习
 
-用自己的话解释：上面的情景为什么是“Backtracking / Pruning”的例子？请指出定义中的关键条件在情景里如何体现，而不是只复述最后的数值。
+当前和已为4，还需要继续加正数吗？
 
 <details><summary>答案与解释</summary>
 
-对照定义：Backtracking expands choices into a search tree: choose, explore recursively, then undo the choice on return. Permutations use a used marker so each element is chosen once. Subsets use an increasing start index so different selection orders do not enumerate the same set repeatedly. Define the state first, then choose used markers, a starting index, or a remaining target.
-
-情景依据：If you only save a reference to the same mutable list, undoing it later will change all answers together. Backtracking is not an antonym of dynamic programming; memoization is also possible when different search paths have the same subsequent state.
+不需要，正数只会使和更大，可安全剪枝。
 
 </details>
 
@@ -28,7 +26,48 @@ If you only save a reference to the same mutable list, undoing it later will cha
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
 
+### 从条件一步步推导
+
+1. 状态记录当前位置、当前和与选择列表，每个数有选和不选两条分支。
+2. 加入、递归、撤销保持兄弟分支独立；只有证明后续无解时才剪枝。
+
+### 具体输入与计算步骤
+
+从正数1、2、3中选若干个，使和为3。
+
+1. 先选1再选2得到3，记录{1,2}；撤销后尝试跳过1、2而选3。
+2. 得到两组解{1,2}、{3}；分支1+3=4超过目标，立即停止。
+
+计算结果：得到两组解{1,2}、{3}；分支1+3=4超过目标，立即停止。
+
+### 换到实际问题中应用
+
+安排4门课程到4个时段，部分课程冲突。
+
+1. 逐门分配时段，一旦与已安排课程冲突便撤销。
+2. 优先处理冲突最多的课程，可更早发现不可行分支，同时仍需保留所有合法选择。
+
+应用结论：优先处理冲突最多的课程，可更早发现不可行分支，同时仍需保留所有合法选择。
+
+### 举一反三：改变条件后的完整解答
+
+若候选数含−2，当前和4还能按超目标剪枝吗？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 不能，4+(−2)+1=3仍可能回到目标。
+2. 必须用剩余数可达范围等更强界限判断，不能沿用正数剪枝。
+
+必须用剩余数可达范围等更强界限判断，不能沿用正数剪枝。
+
+</details>
+
+### 原有解释与进一步例题
+
+
 ### 原理与推演
+
+Backtracking expands choices into a search tree: choose, explore recursively, then undo the choice on return. Permutations use a used marker so each element is chosen once. Subsets use an increasing start index so different selection orders do not enumerate the same set repeatedly. Define the state first, then choose used markers, a starting index, or a remaining target.
 
 Copying the current path is usually required when adding it to an answer. If you only save a reference to the same mutable list, undoing it later will change all answers together. Backtracking is not an antonym of dynamic programming; memoization is also possible when different search paths have the same subsequent state.
 
@@ -53,8 +92,8 @@ Enumerate permutations of [1,2,3]. path stores the current sequence; used marks 
 
 参考答案：By combinatorial convention it has 1: the empty permutation, represented by [[]]. This is also the natural recursion base case.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://algs4.cs.princeton.edu/home/)
 
 [返回分层目录](00-learning-index.md)

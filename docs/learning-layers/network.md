@@ -6,21 +6,19 @@
 
 ### 它是什么
 
-Networks enable data transfer between devices. An IP address identifies a communication endpoint. A packet is a unit of network-transmitted data. Routers forward packets toward their destinations. DNS, the Domain Name System, resolves human-readable domain names to relevant network addresses.
+网络请求经过命名解析、连接、传输和应用处理，延迟与吞吐分别描述等多久和传多少。
 
 ### 先看一个例子
 
-例子：浏览器查询服务名得到地址，再建立传输连接并发送 HTTP 请求。一次应用请求可分成多个网络包；某包重传与用户重试完整业务请求不是同一件事。业务重试仍需用操作身份防止重复处理。
+往返延迟20毫秒，传1 MB数据，链路速率10 MB/秒，假设已有连接。
 
 ### 理解练习
 
-用自己的话解释：上面的情景为什么是“Network”的例子？请指出定义中的关键条件在情景里如何体现，而不是只复述最后的数值。
+带宽翻倍会让所有延迟都减半吗？
 
 <details><summary>答案与解释</summary>
 
-对照定义：Networks enable data transfer between devices. An IP address identifies a communication endpoint. A packet is a unit of network-transmitted data. Routers forward packets toward their destinations. DNS, the Domain Name System, resolves human-readable domain names to relevant network addresses.
-
-情景依据：例子：浏览器查询服务名得到地址，再建立传输连接并发送 HTTP 请求。一次应用请求可分成多个网络包；某包重传与用户重试完整业务请求不是同一件事。业务重试仍需用操作身份防止重复处理。
+不会，传播往返与服务处理不随带宽同比缩短。
 
 </details>
 
@@ -28,7 +26,48 @@ Networks enable data transfer between devices. An IP address identifies a commun
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
 
+### 从条件一步步推导
+
+1. 简化总时间为固定等待加数据大小除有效速率。
+2. TCP提供可靠有序字节流，但应用消息边界、超时重试与幂等仍需应用定义。
+
+### 具体输入与计算步骤
+
+往返延迟20毫秒，传1 MB数据，链路速率10 MB/秒，假设已有连接。
+
+1. 传输时间1/10秒=100毫秒。
+2. 加往返约120毫秒，不含拥塞、丢包与服务端处理。
+
+计算结果：加往返约120毫秒，不含拥塞、丢包与服务端处理。
+
+### 换到实际问题中应用
+
+排查网页首次打开慢。
+
+1. 分别测DNS、建连、TLS、首字节与下载，定位占主导阶段。
+2. 按证据使用连接复用、压缩或缓存，避免把服务端慢一律归因带宽。
+
+应用结论：按证据使用连接复用、压缩或缓存，避免把服务端慢一律归因带宽。
+
+### 举一反三：改变条件后的完整解答
+
+带宽升至20 MB/秒，其余不变，总时间多少？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 传输1/20秒=50毫秒。
+2. 总约20+50=70毫秒，是120/70≈1.71倍加速，而非2倍。
+
+总约20+50=70毫秒，是120/70≈1.71倍加速，而非2倍。
+
+</details>
+
+### 原有解释与进一步例题
+
+
 ### 原理与推演
+
+Networks enable data transfer between devices. An IP address identifies a communication endpoint. A packet is a unit of network-transmitted data. Routers forward packets toward their destinations. DNS, the Domain Name System, resolves human-readable domain names to relevant network addresses.
 
 A simplified page request proceeds as follows. The user enters a URL; the device resolves an address through DNS, establishes the necessary network connection and secure session, and sends an HTTP request. The server processes it, perhaps accesses a database, and returns HTML, JSON, or other resources. The browser then loads styles, scripts, and images and renders the page.
 
@@ -37,12 +76,17 @@ Latency measures round-trip waiting or response time; bandwidth is a link's data
 A retry repeats a request after a failure; a timeout prevents indefinite waiting. Exponential backoff increases the wait after successive failures. Adding random jitter helps prevent clients from retrying simultaneously. Idempotency means that repeating an operation has the same final effect as performing it once. Payment services often require idempotency request IDs because clients may retry after network timeouts, but must not charge repeatedly.
 
 
+### 例子
+
+例子：浏览器查询服务名得到地址，再建立传输连接并发送 HTTP 请求。一次应用请求可分成多个网络包；某包重传与用户重试完整业务请求不是同一件事。业务重试仍需用操作身份防止重复处理。
+
+
 ### 适用边界与常见误解
 
 Latency and throughput are different indicators, and service reliability also involves retries and idempotence.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://www.rfc-editor.org/rfc/rfc9293)
 
 [返回分层目录](00-learning-index.md)

@@ -6,26 +6,64 @@
 
 ### 它是什么
 
-In a one-based Fenwick tree, tree[i] stores the sum of an interval of length lowbit(i). In the appropriate integer representation, lowbit(i)=i & (-i) extracts the least significant set bit.
+树状数组把前缀和拆成由最低二进制位决定的区间块，使单点增量和前缀查询都很快。
 
 ### 先看一个例子
 
-Use the one-based array a=[2,1,3,4,2]. The tree stores interval sums, initially tree[1…5]=[2,3,3,10,2].
-A Fenwick update touches only binary interval blocks containing the position. Each query or update path takes at most O(log n) steps.
+账本把每天收入汇成不同长度的小账块，查总额只拼几个块。
 
 ### 理解练习
 
-If the increment at position 3 were -2 instead, what would the sum of the first five elements be?
+前6项为何可拼长度2和4两块？
 
 <details><summary>答案与解释</summary>
 
-10: original total 12 minus 2. The structure supports negative increments too.
+lowbit(6)=2，先取[5,6]，减到4再取[1,4]，两段不重叠且覆盖前缀。
 
 </details>
 
 ## 第二层：深入理解 · 知其所以然
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
+
+### 从条件一步步推导
+
+1. 一基下tree[i]存[i−lowbit(i)+1,i]的和，lowbit(i)=i&−i。
+2. 查询反复减lowbit，更新反复加lowbit，均O(log n)。
+
+### 具体输入与计算步骤
+
+数组[1,2,3,4,5,6]，求前6项和。
+
+1. tree[6]=5+6=11，6−lowbit(6)=4。
+2. tree[4]=1+2+3+4=10，总21。
+
+计算结果：只读两个区间块。
+
+### 换到实际问题中应用
+
+动态统计排名前缀次数。
+
+1. 把值离散化为有序索引，每出现一次在该索引加1。
+2. 查询前缀得到不大于某值的数量，区间用两前缀相减。
+
+应用结论：离散化要保留顺序而非原数值间距。
+
+### 举一反三：改变条件后的完整解答
+
+第3项增加2后，prefix(6)多少？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 更新tree[3]、tree[4]，索引8越界停止。
+2. tree[6]仍11、tree[4]变12。
+
+前缀和23，不能直接把赋值当增量。
+
+</details>
+
+### 原有解释与进一步例题
+
 
 ### 原理与推演
 
@@ -52,8 +90,8 @@ Use the one-based array a=[2,1,3,4,2]. The tree stores interval sums, initially 
 
 参考答案：10: original total 12 minus 2. The structure supports negative increments too.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://atcoder.github.io/ac-library/production/document_en/fenwicktree.html)
 
 [返回分层目录](00-learning-index.md)

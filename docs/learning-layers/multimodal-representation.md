@@ -6,26 +6,69 @@
 
 ### 它是什么
 
-Word2Vec learns vectors from word–context co-occurrence. GloVe uses global co-occurrence statistics, while FastText adds subword information to handle word forms and unseen words. Their typical word representations are context independent. Contextual embeddings instead give a word different vectors in different sentences, such as apple as a fruit versus Apple as a company. Nearby vectors reflect a learned relationship, not necessarily exact synonymy.
+多模态表示把图片、文字、声音等不同形式的信息编码为可比较或可联合处理的向量。
 
 ### 先看一个例子
 
-Use image vector [1,0] and text vectors [2,0] and [1,1] to illustrate vector comparison only.
-Shared representations turn cross-modal retrieval into a nearest-vector problem. These artificial vectors neither train nor validate a real image–text model.
+图片里的猫与文字“猫”形式不同，但模型可学到它们应靠近。
 
 ### 理解练习
 
-What is the cosine for text vector [-1,0]?
+猫图片与文字“猫”形式不同，如何比较？
 
 <details><summary>答案与解释</summary>
 
--1, indicating opposite direction. Semantic interpretation still depends on the learned space.
+分别编码到已对齐向量空间，再用余弦等分数比较，不直接比较原始像素和字符。
 
 </details>
 
 ## 第二层：深入理解 · 知其所以然
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
+
+### 从条件一步步推导
+
+1. 图像编码器g和文本编码器h分别输出向量，并通常归一化。
+2. 用配对样本提高相似度、非配对样本降低相似度；学到的接近不等于完整语义等价。
+
+### 具体输入与计算步骤
+
+图片向量(1,0)，文字猫(0.8,0.6)、狗(0,1)，均为单位向量。
+
+1. 点积即余弦：猫0.8、狗0。
+2. 按最高相似度选猫。
+
+计算结果：0.8是相似分数，不自动等于80%正确概率。
+
+### 换到实际问题中应用
+
+实现文字搜图片。
+
+1. 预先编码图片并建向量索引，查询文字经文本编码器。
+2. 返回近邻并用真实检索任务评估召回及偏差。
+
+应用结论：跨模态对齐质量决定检索效果。
+
+### 举一反三：改变条件后的完整解答
+
+若图片向量变成(0,1)，结果怎样？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 与猫相似0.6，与狗相似1。
+2. 最高分变为狗。
+
+表征或输入变化可改变检索排序，需防止域外过度解释。
+
+</details>
+
+### 原有解释与进一步例题
+
+
+### Word2Vec, GloVe, FastText, Contextual Embedding [Overview]
+
+Word2Vec learns vectors from word–context co-occurrence. GloVe uses global co-occurrence statistics, while FastText adds subword information to handle word forms and unseen words. Their typical word representations are context independent. Contextual embeddings instead give a word different vectors in different sentences, such as apple as a fruit versus Apple as a company. Nearby vectors reflect a learned relationship, not necessarily exact synonymy.
+
 
 ### Contrastive Learning, SimCLR, CLIP [Core]
 
@@ -77,8 +120,8 @@ Use image vector [1,0] and text vectors [2,0] and [1,1] to illustrate vector com
 
 参考答案：-1, indicating opposite direction. Semantic interpretation still depends on the learned space.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://arxiv.org/abs/2103.00020)
 
 [返回分层目录](00-learning-index.md)

@@ -6,21 +6,19 @@
 
 ### 它是什么
 
-If you want to find the kth largest value, you don't have to sort the entire array. Maintain a min-heap with a size of at most k. The top of the heap is the minimum value among the current retainers, which is the elimination threshold. It is worth replacing only if the new value exceeds the threshold. After scanning, the top of the heap will be the kth largest. The frequencies of the top k high-frequency elements are first counted, and then the same selection is made according to the frequency. The ranking object changes from the numerical value to the frequency of the key.
+快速选择用划分只保留包含目标排名的一侧，不必完整排序。
 
 ### 先看一个例子
 
-If you want to find the kth largest value, you don't have to sort the entire array. Maintain a min-heap with a size of at most k. The top of the heap is the minimum value among the current retainers, which is the elimination threshold. It is worth replacing only if the new value exceeds the threshold. After scanning, the top of the heap will be the kth largest. The frequencies of the top k high-frequency elements are first counted, and then the same selection is made according to the frequency. The ranking object changes from the numerical value to the frequency of the key.
+数组[4,1,3,2]，找第2小值。
 
 ### 理解练习
 
-用自己的话解释：上面的情景为什么是“Quickselect / Top K”的例子？请指出定义中的关键条件在情景里如何体现，而不是只复述最后的数值。
+找到前k个元素后它们一定已经有序吗？
 
 <details><summary>答案与解释</summary>
 
-对照定义：If you want to find the kth largest value, you don't have to sort the entire array. Maintain a min-heap with a size of at most k. The top of the heap is the minimum value among the current retainers, which is the elimination threshold. It is worth replacing only if the new value exceeds the threshold. After scanning, the top of the heap will be the kth largest. The frequencies of the top k high-frequency elements are first counted, and then the same selection is made according to the frequency. The ranking object changes from the numerical value to the frequency of the key.
-
-情景依据：If you want to find the kth largest value, you don't have to sort the entire array. Maintain a min-heap with a size of at most k. The top of the heap is the minimum value among the current retainers, which is the elimination threshold. It is worth replacing only if the new value exceeds the threshold. After scanning, the top of the heap will be the kth largest. The frequencies of the top k high-frequency elements are first counted, and then the same selection is made according to the frequency. The ranking object changes from the numerical value to the frequency of the key.
+不一定，选择保证分区关系而非内部顺序。
 
 </details>
 
@@ -28,7 +26,48 @@ If you want to find the kth largest value, you don't have to sort the entire arr
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
 
+### 从条件一步步推导
+
+1. 以枢轴把较小、相等、较大元素分开，根据目标排名决定下一侧。
+2. 随机枢轴通常有期望O(n)，不良划分可退化O(n²)。
+
+### 具体输入与计算步骤
+
+数组[4,1,3,2]，找第2小值。
+
+1. 以3为枢轴得到小侧[1,2]、等侧[3]、大侧[4]。
+2. 第2小位于小侧，再划分得到2，不必排序整个数组。
+
+计算结果：第2小位于小侧，再划分得到2，不必排序整个数组。
+
+### 换到实际问题中应用
+
+取海量分数中的前100名。
+
+1. 用选择划定100名边界，再只排序保留部分以显示排名。
+2. 若流式输入需固定内存，可改用容量100的小顶堆。
+
+应用结论：若流式输入需固定内存，可改用容量100的小顶堆。
+
+### 举一反三：改变条件后的完整解答
+
+若数组[2,2,2,3]找第2小，如何防重复值导致死循环？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 三路划分给出相等区[2,2,2]，覆盖排名1至3。
+2. 目标落在等区，直接返回2，不再递归相同区间。
+
+目标落在等区，直接返回2，不再递归相同区间。
+
+</details>
+
+### 原有解释与进一步例题
+
+
 ### 原理与推演
+
+If you want to find the kth largest value, you don't have to sort the entire array. Maintain a min-heap with a size of at most k. The top of the heap is the minimum value among the current retainers, which is the elimination threshold. It is worth replacing only if the new value exceeds the threshold. After scanning, the top of the heap will be the kth largest. The frequencies of the top k high-frequency elements are first counted, and then the same selection is made according to the frequency. The ranking object changes from the numerical value to the frequency of the key.
 
 The heap only guarantees the extreme value at the top of the heap, and does not guarantee the overall ordering of the internal array. Here, the kth largest number of elements is counted, and repeated values still account for multiple rankings; the top k high-frequency objects are different keys and must be distinguished.
 
@@ -53,8 +92,8 @@ Find the two largest values in [9,1,7,3,8]. First clarify whether output must be
 
 参考答案：A fixed-size heap is usually convenient for incremental maintenance. Also discuss costs when k is close to n and the overhead of returning sorted results.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://algs4.cs.princeton.edu/home/)
 
 [返回分层目录](00-learning-index.md)

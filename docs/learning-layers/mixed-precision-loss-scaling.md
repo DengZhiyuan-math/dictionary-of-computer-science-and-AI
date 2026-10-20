@@ -6,27 +6,64 @@
 
 ### 它是什么
 
-These names denote floating-point formats. Lower precision generally saves memory and can accelerate computation on supported hardware, but the numerical range and resolution differ. BF16 has an exponent range similar to FP32 but lower precision; FP16 has a narrower representable range. Mixed precision uses different formats for different operations, often retaining higher precision for sensitive calculations. It does not simply make all numbers smaller, and does not guarantee equal speedups on every device.
+混合精度用低精度加速合适运算，并保留关键计算的精度；损失缩放防止小梯度下溢。
 
 ### 先看一个例子
 
-例子：一个梯度为 10⁻⁸，在常见 FP16 范围内可能下溢。若损失先乘 1024，梯度也乘同一倍数；反传后再除 1024，才恢复原更新尺度。缩放不能修复中间激活溢出，溢出时还需跳过更新并调整策略。
+真实梯度0.00001，损失缩放系数1024。
 
 ### 理解练习
 
-用自己的话解释：上面的情景为什么是“Mixed Precision / Loss Scaling”的例子？请指出定义中的关键条件在情景里如何体现，而不是只复述最后的数值。
+缩放后的大梯度可以直接更新吗？
 
 <details><summary>答案与解释</summary>
 
-对照定义：These names denote floating-point formats. Lower precision generally saves memory and can accelerate computation on supported hardware, but the numerical range and resolution differ. BF16 has an exponent range similar to FP32 but lower precision; FP16 has a narrower representable range. Mixed precision uses different formats for different operations, often retaining higher precision for sensitive calculations. It does not simply make all numbers smaller, and does not guarantee equal speedups on every device.
-
-情景依据：例子：一个梯度为 10⁻⁸，在常见 FP16 范围内可能下溢。若损失先乘 1024，梯度也乘同一倍数；反传后再除 1024，才恢复原更新尺度。缩放不能修复中间激活溢出，溢出时还需跳过更新并调整策略。
+不行，更新前需反缩放回真实梯度。
 
 </details>
 
 ## 第二层：深入理解 · 知其所以然
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
+
+### 从条件一步步推导
+
+1. 损失乘S会把所有链式梯度也乘S，使小数较易被表示。
+2. 优化器前除回S并检查非有限数，必要时跳过更新并调整尺度。
+
+### 具体输入与计算步骤
+
+真实梯度0.00001，损失缩放系数1024。
+
+1. 缩放梯度0.00001×1024=0.01024。
+2. 反缩放0.01024/1024=0.00001，恢复正确更新幅度。
+
+计算结果：反缩放0.01024/1024=0.00001，恢复正确更新幅度。
+
+### 换到实际问题中应用
+
+在GPU上训练大模型。
+
+1. 用自动混合精度选择算子类型，配合适用的梯度缩放器。
+2. 先反缩放再做梯度裁剪，监控溢出和峰值显存。
+
+应用结论：先反缩放再做梯度裁剪，监控溢出和峰值显存。
+
+### 举一反三：改变条件后的完整解答
+
+若缩放后出现Inf，继续除1024能修好吗？
+
+<details><summary>变式的推演与答案</summary>
+
+1. Inf除以有限数仍为Inf，信息已经丢失。
+2. 跳过该更新、降低尺度并排查数值来源，不能照常应用。
+
+跳过该更新、降低尺度并排查数值来源，不能照常应用。
+
+</details>
+
+### 原有解释与进一步例题
+
 
 ### 原理与推演
 
@@ -42,8 +79,8 @@ These names denote floating-point formats. Lower precision generally saves memor
 
 Unscaling and optimizer updates must occur at the correct accumulation boundaries.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://docs.pytorch.org/docs/stable/amp.html)
 
 [返回分层目录](00-learning-index.md)

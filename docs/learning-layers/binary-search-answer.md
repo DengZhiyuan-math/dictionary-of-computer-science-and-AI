@@ -6,21 +6,19 @@
 
 ### 它是什么
 
-An exchange argument shows that some optimal solution can be transformed into an equally good one beginning with the greedy choice. To maximize the number of compatible unweighted intervals, choose an interval with the earliest finish. Replacing an optimal solution’s first interval with this one leaves at least as much room for later intervals.
+答案二分把优化问题改成“给定阈值能否做到”，前提是可行性随阈值单调。
 
 ### 先看一个例子
 
-suppose you can test whether any solution satisfies it, and feasibility changes monotonically with B. Then search for the boundary between infeasible and feasible candidates.
+装箱容量越大越容易装下，找到刚刚足够的容量而不逐个试。
 
 ### 理解练习
 
-用自己的话解释：上面的情景为什么是“Binary Search on the Answer”的例子？请指出定义中的关键条件在情景里如何体现，而不是只复述最后的数值。
+容量越大越容易装，为什么适合二分？
 
 <details><summary>答案与解释</summary>
 
-对照定义：An exchange argument shows that some optimal solution can be transformed into an equally good one beginning with the greedy choice. To maximize the number of compatible unweighted intervals, choose an interval with the earliest finish. Replacing an optimal solution’s first interval with this one leaves at least as much room for later intervals.
-
-情景依据：suppose you can test whether any solution satisfies it, and feasibility changes monotonically with B. Then search for the boundary between infeasible and feasible candidates.
+可行性一旦成立，对更大容量仍成立，形成单调真假边界。
 
 </details>
 
@@ -28,7 +26,48 @@ suppose you can test whether any solution satisfies it, and feasibility changes 
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
 
+### 从条件一步步推导
+
+1. 维护不可行下界与可行上界，每次检查中点。
+2. 最小可行问题：中点可行缩上界，否则升下界，直到整数边界相邻。
+
+### 具体输入与计算步骤
+
+按顺序包裹[2,3,4]，两天运完，每天容量相同。
+
+1. 容量4需3天；容量5可分[2,3]与[4]，需2天。
+2. 容量越大所需天数不增，故最小容量5。
+
+计算结果：先证明判定单调，再谈二分复杂度。
+
+### 换到实际问题中应用
+
+求任务工期上限。
+
+1. 给定工期用独立判定器检查是否能排完。
+2. 验证极端上下界和整数溢出，以lo+(hi−lo)/2取中点。
+
+应用结论：若判定器本身错，二分再快也无效。
+
+### 举一反三：改变条件后的完整解答
+
+若改为一天运完，最小容量多少？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 必须把2+3+4全部放入一天。
+2. 所需容量9，8不可行。
+
+条件改变后答案为9，单调性仍成立。
+
+</details>
+
+### 原有解释与进一步例题
+
+
 ### Exchange Arguments: Show How to Replace an Optimal Solution’s First Choice
+
+An exchange argument shows that some optimal solution can be transformed into an equally good one beginning with the greedy choice. To maximize the number of compatible unweighted intervals, choose an interval with the earliest finish. Replacing an optimal solution’s first interval with this one leaves at least as much room for later intervals.
 
 Once tasks have different benefits, machines have multiple resource constraints, or preemption methods are allowed to change, the original proof may no longer hold. Giving counterexamples during the interview can better demonstrate your understanding of the goals and constraints than just memorizing a "common greedy rule".
 
@@ -74,8 +113,8 @@ Keep nonnegative tasks [7,2,5,10,8] in order. Split them into at most 2 nonempty
 
 参考答案：32. All tasks must remain together.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://docs.python.org/3/library/bisect.html)
 
 [返回分层目录](00-learning-index.md)

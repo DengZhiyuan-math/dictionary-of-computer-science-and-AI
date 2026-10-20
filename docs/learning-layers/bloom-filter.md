@@ -6,27 +6,64 @@
 
 ### 它是什么
 
-Bloom filter records bits with multiple hash positions. If the query finds that any bit is 0, it can be determined that it has not been inserted; if all are 1, it can only be said that it may exist, because different elements may set these bits together.
+布隆过滤器用位标记快速判断“可能存在”或“肯定不存在”，允许误报但标准插入查询不漏报。
 
 ### 先看一个例子
 
-If the query finds that any bit is 0, it can be determined that it has not been inserted; if all are 1, it can only be said that it may exist, because different elements may set these bits together.
+8个位全为0，两个哈希把A映到1、3，把B映到2、3。
 
 ### 理解练习
 
-用自己的话解释：上面的情景为什么是“Bloom Filter”的例子？请指出定义中的关键条件在情景里如何体现，而不是只复述最后的数值。
+两个查询位都为1就证明插入过吗？
 
 <details><summary>答案与解释</summary>
 
-对照定义：Bloom filter records bits with multiple hash positions. If the query finds that any bit is 0, it can be determined that it has not been inserted; if all are 1, it can only be said that it may exist, because different elements may set these bits together.
-
-情景依据：If the query finds that any bit is 0, it can be determined that it has not been inserted; if all are 1, it can only be said that it may exist, because different elements may set these bits together.
+不能，它们可能分别由别的键置位。
 
 </details>
 
 ## 第二层：深入理解 · 知其所以然
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
+
+### 从条件一步步推导
+
+1. 插入把各哈希位置设1；查询若有一位0，该键不可能按相同规则插入过。
+2. 所有位1只说明未排除，哈希碰撞会误报，仍需查权威数据。
+
+### 具体输入与计算步骤
+
+8个位全为0，两个哈希把A映到1、3，把B映到2、3。
+
+1. 插入A、B后位1、2、3为1，其余0。
+2. 未插入的C若映到1、2，查询仍通过，形成一次误报。
+
+计算结果：未插入的C若映到1、2，查询仍通过，形成一次误报。
+
+### 换到实际问题中应用
+
+减少不存在键对数据库的无效读取。
+
+1. 先查询过滤器，否定时直接返回不存在，肯定时继续查询数据库。
+2. 新增数据同步更新过滤器并明确恢复规则，防止陈旧副本违反无漏报前提。
+
+应用结论：新增数据同步更新过滤器并明确恢复规则，防止陈旧副本违反无漏报前提。
+
+### 举一反三：改变条件后的完整解答
+
+删除A时直接清位1和3安全吗？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 位3也由B使用，清掉后B查询看到0。
+2. 会产生漏报；普通布隆过滤器不能这样删除，应重建或使用计数变体。
+
+会产生漏报；普通布隆过滤器不能这样删除，应重建或使用计数变体。
+
+</details>
+
+### 原有解释与进一步例题
+
 
 ### 原理与推演
 
@@ -53,8 +90,8 @@ Start with 8 zero bits and two hash positions per item. A maps to [1,4], B to [4
 
 参考答案：Bit 0 remains 0. Under standard insertion-only operation with consistent hashes, D was definitely not inserted.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://dl.acm.org/doi/10.1145/362686.362692)
 
 [返回分层目录](00-learning-index.md)

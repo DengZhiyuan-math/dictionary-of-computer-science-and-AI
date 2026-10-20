@@ -6,27 +6,64 @@
 
 ### 它是什么
 
-AdaGrad scales each parameter’s update using its past gradients. This is useful for sparse features, but cumulative statistics can make effective step sizes increasingly small. RMSProp uses moving averages of recent squared gradients to limit that continual decay. These are adaptive step-size methods: parameters can receive different effective update scales. Adaptive does not mean that the learning rate needs no tuning or that validation is unnecessary.
+这两种优化方法按每个参数过去的梯度大小调整步长；AdaGrad累加，RMSProp逐渐忘记旧记录。
 
 ### 先看一个例子
 
-例子：当前梯度为 2，AdaGrad 既有平方梯度和为 5，学习率 0.1，忽略 ε 时本次更新幅度为 0.2/√9≈0.0667。若 RMSProp 的衰减为 0.9、旧均方为 1，则新均方为 0.9×1+0.1×4=1.3。两种方法保存历史的方式不同。
+梯度2，历史平方和5，学习率0.1，忽略极小稳定项。
 
 ### 理解练习
 
-用自己的话解释：上面的情景为什么是“Adagrad / RMSProp”的例子？请指出定义中的关键条件在情景里如何体现，而不是只复述最后的数值。
+自适应意味着不必选择学习率吗？
 
 <details><summary>答案与解释</summary>
 
-对照定义：AdaGrad scales each parameter’s update using its past gradients. This is useful for sparse features, but cumulative statistics can make effective step sizes increasingly small. RMSProp uses moving averages of recent squared gradients to limit that continual decay. These are adaptive step-size methods: parameters can receive different effective update scales. Adaptive does not mean that the learning rate needs no tuning or that validation is unnecessary.
-
-情景依据：例子：当前梯度为 2，AdaGrad 既有平方梯度和为 5，学习率 0.1，忽略 ε 时本次更新幅度为 0.2/√9≈0.0667。若 RMSProp 的衰减为 0.9、旧均方为 1，则新均方为 0.9×1+0.1×4=1.3。两种方法保存历史的方式不同。
+不意味着，学习率仍控制总体更新幅度。
 
 </details>
 
 ## 第二层：深入理解 · 知其所以然
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
+
+### 从条件一步步推导
+
+1. AdaGrad 用 G←G+g²，更新量为 ηg/√G，频繁大梯度使后续步长缩小。
+2. RMSProp 用 v←ρv+(1−ρ)g²，避免平方和永远累增。
+
+### 具体输入与计算步骤
+
+梯度2，历史平方和5，学习率0.1，忽略极小稳定项。
+
+1. AdaGrad 新G=5+2²=9，更新幅度0.1×2/3=0.0667。
+2. RMSProp 若旧v=1、ρ=0.9，则新v=1.3，幅度0.2/√1.3≈0.1754。
+
+计算结果：RMSProp 若旧v=1、ρ=0.9，则新v=1.3，幅度0.2/√1.3≈0.1754。
+
+### 换到实际问题中应用
+
+训练稀疏词特征，常见词更新远多于罕见词。
+
+1. 分别累计每个词参数的平方梯度，再按各自累计值缩放更新。
+2. 常见词的有效步长通常更小；用验证集决定是否优于统一步长。
+
+应用结论：常见词的有效步长通常更小；用验证集决定是否优于统一步长。
+
+### 举一反三：改变条件后的完整解答
+
+AdaGrad 下一次梯度仍为2，更新会怎样？
+
+<details><summary>变式的推演与答案</summary>
+
+1. G从9增到13。
+2. 幅度0.2/√13≈0.0555，小于0.0667。
+
+幅度0.2/√13≈0.0555，小于0.0667。
+
+</details>
+
+### 原有解释与进一步例题
+
 
 ### 原理与推演
 
@@ -42,8 +79,9 @@ AdaGrad scales each parameter’s update using its past gradients. This is usefu
 
 Adaptation still requires setting and validating the learning rate.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://docs.pytorch.org/docs/stable/generated/torch.optim.Adagrad.html)
+- [一手资料](https://docs.pytorch.org/docs/stable/generated/torch.optim.RMSprop.html)
 
 [返回分层目录](00-learning-index.md)

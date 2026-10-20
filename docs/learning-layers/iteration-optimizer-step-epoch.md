@@ -6,27 +6,69 @@
 
 ### 它是什么
 
-An iteration is one defined training-loop cycle; an optimizer step actually updates parameters; an epoch traverses a finite training dataset once. Code and streaming-data conventions must be stated.
+迭代通常指处理一个批次，优化器步指更新一次参数，epoch指完整遍历一次数据。
 
 ### 先看一个例子
 
-if one iteration is one batch. With accumulation over 2 batches, that epoch has 5 optimizer steps. Ten iterations are not ten epochs.
+100样本、每批10、累计2批更新一次。
 
 ### 理解练习
 
-用自己的话解释：上面的情景为什么是“Iteration / Optimizer Step / Epoch”的例子？请指出定义中的关键条件在情景里如何体现，而不是只复述最后的数值。
+10次迭代一定对应10次更新吗？
 
 <details><summary>答案与解释</summary>
 
-对照定义：An iteration is one defined training-loop cycle; an optimizer step actually updates parameters; an epoch traverses a finite training dataset once. Code and streaming-data conventions must be stated.
-
-情景依据：if one iteration is one batch. With accumulation over 2 batches, that epoch has 5 optimizer steps. Ten iterations are not ten epochs.
+不一定，此例只有5次优化器步。
 
 </details>
 
 ## 第二层：深入理解 · 知其所以然
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
+
+### 从条件一步步推导
+
+1. 每轮微批数为ceil(N/b)，是否丢弃尾批会改变计数。
+2. 梯度累计k个微批才更新，调度器若按更新计步就不应每个微批推进。
+
+### 具体输入与计算步骤
+
+100样本、每批10、累计2批更新一次。
+
+1. 一轮100/10=10次迭代。
+2. 累计2次更新，共10/2=5步，训练3轮则30次迭代、15步。
+
+计算结果：累计2次更新，共10/2=5步，训练3轮则30次迭代、15步。
+
+### 换到实际问题中应用
+
+对齐两次训练的学习率计划。
+
+1. 记录样本数、微批大小、累积次数和优化器步数。
+2. 按计划声明的单位触发调度，避免改变批大小后无意改变预热长度。
+
+应用结论：按计划声明的单位触发调度，避免改变批大小后无意改变预热长度。
+
+### 举一反三：改变条件后的完整解答
+
+若100样本改105、不丢尾批，累计2批且尾部也更新呢？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 每轮ceil(105/10)=11次迭代。
+2. 5次完整累计加1次尾更新，共6步；尾组损失缩放需按实际样本数处理。
+
+5次完整累计加1次尾更新，共6步；尾组损失缩放需按实际样本数处理。
+
+</details>
+
+### 原有解释与进一步例题
+
+
+### Definition
+
+An iteration is one defined training-loop cycle; an optimizer step actually updates parameters; an epoch traverses a finite training dataset once. Code and streaming-data conventions must be stated.
+
 
 ### Parameters and mechanism
 
@@ -42,8 +84,8 @@ For 1,000 samples and batches of 100, one epoch has 10 iterations if one iterati
 
 Gradient accumulation or skipped updates means these counts are not interchangeable.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://docs.pytorch.org/docs/stable/optim.html)
 
 [返回分层目录](00-learning-index.md)

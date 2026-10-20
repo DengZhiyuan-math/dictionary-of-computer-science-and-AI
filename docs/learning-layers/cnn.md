@@ -6,20 +6,19 @@
 
 ### 它是什么
 
-Neural architectures encode different design preferences for different data structures. A CNN, or convolutional neural network, uses local convolution kernels to process grid-structured data such as images. It reuses local patterns and has long been important for image recognition, object detection and many other vision tasks. ResNet uses residual connections to make deep networks easier to train.
+卷积网络用小窗口在网格数据上重复同一组权重，学习局部图案并节省参数。
 
 ### 先看一个例子
 
-Input is the 3×3 matrix [[1,2,3],[4,5,6],[7,8,9]], kernel [[1,0],[0,1]], stride 1, no padding and bias 0.
-Output is [[6,8],[12,14]]. This uses the cross-correlation convention common in deep learning libraries, without flipping the kernel.
+像同一只放大镜扫过图片，寻找各处的边缘，而非每个位置单独造检测器。
 
 ### 理解练习
 
-What changes with kernel [[1,-1],[1,-1]]?
+扫描各处边缘为什么能共享一个核？
 
 <details><summary>答案与解释</summary>
 
-All four outputs are -2: each window computes its left-column sum minus its right-column sum.
+相同局部图案可在不同位置出现，重复权重编码这种位置共享假设。
 
 </details>
 
@@ -27,7 +26,48 @@ All four outputs are -2: each window computes its left-column sum minus its righ
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
 
+### 从条件一步步推导
+
+1. 步长1、无填充时，一维长度n、核长k得到n−k+1个输出。
+2. 深度学习常用互相关形式Σwjx(i+j)，权重跨位置共享。
+
+### 具体输入与计算步骤
+
+输入[1,2,4]，核[1,−1]，无偏置。
+
+1. 首窗口1−2=−1。
+2. 次窗口2−4=−2。
+
+计算结果：输出[−1,−2]，刻画局部变化。
+
+### 换到实际问题中应用
+
+检测工业图片边缘。
+
+1. 先以卷积提取局部特征，再由后续层组合成缺陷表示。
+2. 在新批次和不同光照下测试，避免只记拍摄条件。
+
+应用结论：平移共享有帮助，但不保证对旋转或域变化鲁棒。
+
+### 举一反三：改变条件后的完整解答
+
+输入整体加10，当前核输出怎样？
+
+<details><summary>变式的推演与答案</summary>
+
+1. [11,12,14]的窗口差仍−1与−2。
+2. 因为核系数和为0，常数项抵消。
+
+该核对整体亮度平移不敏感，但一般卷积核未必如此。
+
+</details>
+
+### 原有解释与进一步例题
+
+
 ### 原理与推演
+
+Neural architectures encode different design preferences for different data structures. A CNN, or convolutional neural network, uses local convolution kernels to process grid-structured data such as images. It reuses local patterns and has long been important for image recognition, object detection and many other vision tasks. ResNet uses residual connections to make deep networks easier to train.
 
 At this point, you can already explain why "deep learning" is not just one model. CNN utilizes spatial locality; RNN emphasizes sequential states; Transformer emphasizes dynamic information association; GNN utilizes graph structure; different designs reflect the inductive bias of different tasks.
 
@@ -56,8 +96,8 @@ Input is the 3×3 matrix [[1,2,3],[4,5,6],[7,8,9]], kernel [[1,0],[0,1]], stride
 
 - [Temporal Convolution · 金融时间轴上的因果卷积](https://github.com/DengZhiyuan-math/dictionary-of-quant/blob/main/docs/learning-layers/quant-temporal-convolution.md)：把一般卷积用于金融时间轴，明确感受野、扩张、填充和预测时点的信息范围。
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://docs.pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html)
 
 [返回分层目录](00-learning-index.md)

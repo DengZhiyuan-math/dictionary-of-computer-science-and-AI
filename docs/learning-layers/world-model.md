@@ -6,20 +6,19 @@
 
 ### 它是什么
 
-A world model learns a model of the environment: its current state and how that state may change after actions. It need not generate high-resolution images or be a natural language model. It can predict future scenes at pixel level, or predict compressed internal states or representations.
+世界模型学习动作如何改变环境，并预测结果，供规划或想象训练使用。
 
 ### 先看一个例子
 
-One-dimensional position x starts at 0 and targets 5. The real system follows x_next=x+u+wind, while the predictor ignores wind. Actions are restricted to [-1,1].
-Closed-loop feedback changes accumulated error, but a proportional policy without wind compensation cannot eliminate every offset. The demo shows predicted and actual next positions together.
+简化位置模型x新=x+u，当前位置2，动作序列1、−0.5。
 
 ### 理解练习
 
-With zero wind, what happens after the feedback policy reaches 5?
+预测准确一小步就保证长期规划准确吗？
 
 <details><summary>答案与解释</summary>
 
-Its action becomes 0 and position remains 5. The fixed-action policy keeps moving by 1 each step.
+不保证，小误差可能沿多步累积。
 
 </details>
 
@@ -27,7 +26,48 @@ Its action becomes 0 and position remains 5. The fixed-action policy keeps movin
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
 
+### 从条件一步步推导
+
+1. 模型可预测观察或潜在状态，并结合奖励模型估算行动价值。
+2. 滚动模型得到想象轨迹，策略可能偏向模型乐观误差，因此要回真实环境校验。
+
+### 具体输入与计算步骤
+
+简化位置模型x新=x+u，当前位置2，动作序列1、−0.5。
+
+1. 第一步位置2+1=3。
+2. 第二步3−0.5=2.5，模型给出两步轨迹[3,2.5]。
+
+计算结果：第二步3−0.5=2.5，模型给出两步轨迹[3,2.5]。
+
+### 换到实际问题中应用
+
+移动机器人比较候选短路径。
+
+1. 用历史状态动作拟合动力学，在模型中检查路径与障碍风险。
+2. 只执行首段后重新观察规划，减轻长期模型漂移。
+
+应用结论：只执行首段后重新观察规划，减轻长期模型漂移。
+
+### 举一反三：改变条件后的完整解答
+
+若每一步都低估位移0.1，两步误差多少？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 实际两步比预测各多0.1。
+2. 在此加法模型中累计误差0.2，预测2.5而实际2.7。
+
+在此加法模型中累计误差0.2，预测2.5而实际2.7。
+
+</details>
+
+### 原有解释与进一步例题
+
+
 ### 原理与推演
+
+A world model learns a model of the environment: its current state and how that state may change after actions. It need not generate high-resolution images or be a natural language model. It can predict future scenes at pixel level, or predict compressed internal states or representations.
 
 Imagine a football agent observing player positions, ball velocity and defensive formations. A policy directly chooses whether to pass or shoot. A system with a world model can also predict how the defense might change over the next two seconds after a pass to a teammate on the left. It can compare predicted outcomes before choosing an action.
 
@@ -60,8 +100,8 @@ One-dimensional position x starts at 0 and targets 5. The real system follows x_
 
 参考答案：Its action becomes 0 and position remains 5. The fixed-action policy keeps moving by 1 each step.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](http://incompleteideas.net/book/the-book-2nd.html)
 
 [返回分层目录](00-learning-index.md)

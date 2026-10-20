@@ -6,21 +6,19 @@
 
 ### 它是什么
 
-Binary search relies on a monotonic true/false condition, rather than merely a sorted array. To find an insertion position, search for the first value greater than or equal to the target. With a half-open interval [left,right), initialize right to the array length. If the midpoint satisfies the condition, keep the left part including that midpoint; otherwise move left just past it. The search ends when left equals right, giving the boundary.
+下界查找找第一个不小于目标的位置，上界查找找第一个大于目标的位置。
 
 ### 先看一个例子
 
-If the midpoint satisfies the condition, keep the left part including that midpoint; otherwise move left just past it. The search ends when left equals right, giving the boundary.
+有序数组[1,2,2,4]，目标2。
 
 ### 理解练习
 
-用自己的话解释：上面的情景为什么是“Lower Bound / Upper Bound”的例子？请指出定义中的关键条件在情景里如何体现，而不是只复述最后的数值。
+两个边界都指向第一个2吗？
 
 <details><summary>答案与解释</summary>
 
-对照定义：Binary search relies on a monotonic true/false condition, rather than merely a sorted array. To find an insertion position, search for the first value greater than or equal to the target. With a half-open interval [left,right), initialize right to the array length. If the midpoint satisfies the condition, keep the left part including that midpoint; otherwise move left just past it. The search ends when left equals right, giving the boundary.
-
-情景依据：If the midpoint satisfies the condition, keep the left part including that midpoint; otherwise move left just past it. The search ends when left equals right, giving the boundary.
+不是，下界为下标1，上界为下标3。
 
 </details>
 
@@ -28,7 +26,48 @@ If the midpoint satisfies the condition, keep the left part including that midpo
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
 
+### 从条件一步步推导
+
+1. 对单调谓词a[i]≥t找第一次为真即可得下界。
+2. 上界把谓词换成a[i]>t，重复元素数量等于上界减下界。
+
+### 具体输入与计算步骤
+
+有序数组[1,2,2,4]，目标2。
+
+1. 下界排除1，遇到第一个2在下标1。
+2. 上界跳过两个2到下标3，出现次数3−1=2。
+
+计算结果：上界跳过两个2到下标3，出现次数3−1=2。
+
+### 换到实际问题中应用
+
+统计某一天的已排序时间戳。
+
+1. 用下界查日初，再查次日日初，使用半开时间区间。
+2. 两个位置相减得到记录数，不必逐条扫描该日。
+
+应用结论：两个位置相减得到记录数，不必逐条扫描该日。
+
+### 举一反三：改变条件后的完整解答
+
+目标改为3，边界是多少？
+
+<details><summary>变式的推演与答案</summary>
+
+1. 第一个≥3和第一个>3都是4所在下标3。
+2. 两界差0，说明3没有出现；插入位置仍明确为3。
+
+两界差0，说明3没有出现；插入位置仍明确为3。
+
+</details>
+
+### 原有解释与进一步例题
+
+
 ### 原理与推演
+
+Binary search relies on a monotonic true/false condition, rather than merely a sorted array. To find an insertion position, search for the first value greater than or equal to the target. With a half-open interval [left,right), initialize right to the array length. If the midpoint satisfies the condition, keep the left part including that midpoint; otherwise move left just past it. The search ends when left equals right, giving the boundary.
 
 The invariant must preserve the desired boundary, which may equal the array length. Keep the termination and update rules consistent with either a half-open or a closed search interval. For fixed-width integers, computing the midpoint as left plus half of right-left can avoid the overflow of left+right.
 
@@ -69,8 +108,8 @@ For [3,1,2,2,5,4], find the longest strictly increasing subsequence length.
 
 参考答案：Update the first entry strictly greater than the value, allowing equality to extend the sequence. This input’s nondecreasing length is 4.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://algs4.cs.princeton.edu/home/)
 
 [返回分层目录](00-learning-index.md)

@@ -6,20 +6,19 @@
 
 ### 它是什么
 
-For Course Schedule, encode prerequisites as directed edges. Enqueue every zero-in-degree vertex, process it, and decrement its successors’ in-degrees. Enqueue a successor when its in-degree reaches zero. All courses are feasible exactly when all vertices are processed; otherwise the remaining graph contains a directed cycle. Include isolated courses in the total.
+拓扑排序给有向无环图排顺序，让每条依赖边的起点先于终点。
 
 ### 先看一个例子
 
-Dependencies are A→C, B→C, C→D and D→E; F has none. An edge means its source must finish before its destination.
-Without the cycle, one topological order contains all 6 nodes. With it, only 3 nodes are processed, proving no topological order covers the whole graph. Time O(V+E).
+边A→C、B→C，A与B互不依赖。
 
 ### 理解练习
 
-Is checking only the subgraph reachable from one starting node enough?
+拓扑顺序必须唯一吗？
 
 <details><summary>答案与解释</summary>
 
-No. Another component may contain a cycle. Count processed nodes across all V nodes.
+不必，A,B,C与B,A,C都合法。
 
 </details>
 
@@ -27,7 +26,48 @@ No. Another component may contain a cycle. Count processed nodes across all V no
 
 围绕推导、计算、应用与推广阅读；下面保留原有推演顺序。
 
+### 从条件一步步推导
+
+1. 入度为0的点没有未完成前置，可加入队列。
+2. 删除它的出边并更新入度；若未能输出全部节点，剩余依赖含环。
+
+### 具体输入与计算步骤
+
+边A→C、B→C，A与B互不依赖。
+
+1. 初始入度A=0、B=0、C=2。
+2. 输出A、B后C入度降0，再输出C，总3点。
+
+计算结果：输出A、B后C入度降0，再输出C，总3点。
+
+### 换到实际问题中应用
+
+编译有依赖关系的模块。
+
+1. 把依赖先后关系建成有向边，以入度0模块启动任务。
+2. 任务完成才释放下游依赖，同时限制可并行运行的任务数。
+
+应用结论：任务完成才释放下游依赖，同时限制可并行运行的任务数。
+
+### 举一反三：改变条件后的完整解答
+
+若再加C→A呢？
+
+<details><summary>变式的推演与答案</summary>
+
+1. A与C形成环，初始只有B入度0。
+2. 输出B后A、C仍互等，输出数1<3，检测到不可完成依赖。
+
+输出B后A、C仍互等，输出数1<3，检测到不可完成依赖。
+
+</details>
+
+### 原有解释与进一步例题
+
+
 ### 原理与推演
+
+For Course Schedule, encode prerequisites as directed edges. Enqueue every zero-in-degree vertex, process it, and decrement its successors’ in-degrees. Enqueue a successor when its in-degree reaches zero. All courses are feasible exactly when all vertices are processed; otherwise the remaining graph contains a directed cycle. Include isolated courses in the total.
 
 A DFS alternative uses visitation colors. Encountering a vertex that is still on the active recursion path reveals a directed cycle; encountering a fully processed vertex does not. A topological order exists only for a DAG. Ordinary BFS without dependency bookkeeping does not provide this test.
 
@@ -52,8 +92,8 @@ Dependencies are A→C, B→C, C→D and D→E; F has none. An edge means its so
 
 参考答案：No. Another component may contain a cycle. Count processed nodes across all V nodes.
 
-### 举一反三
+### 推导与方法参考
 
-改变第一层例子中的一个关键条件，先预测，再验证。列出假设；检查方法是否仍适用；重新计算或执行；用反例或极端情况核验。说明差异来自哪项条件。
+- [一手资料](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/resources/mit6_006f11_lec14/)
 
 [返回分层目录](00-learning-index.md)
