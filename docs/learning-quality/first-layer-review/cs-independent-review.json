@@ -1,0 +1,2499 @@
+{
+  "scope": 144,
+  "concepts": [
+    {
+      "id": "concept:0-1-knapsack-unbounded-knapsack",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对容量5价值7、容量4完全背包值6和分数反例13/3，未混用可用次数。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "次数限制",
+        "装满要求",
+        "分数物品"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/3484e876d81aba07911a1109f5b5e81e_MIT6_006F11_lec21.pdf"
+      ],
+      "introSha256": "a73c42c3f3b47c197717431a95507425ba6b6d72bfb36b5ee6466059b569f16e"
+    },
+    {
+      "id": "concept:activation-checkpointing",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对重算边界、激活峰值及随机状态，省存储未当作省运算。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "节省哪一部分",
+        "额外计算",
+        "随机计算"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/checkpoint.html"
+      ],
+      "introSha256": "ff8df29e90d014555878d72decd0d8d7e582048d26deb9d93841f2e8d0617851"
+    },
+    {
+      "id": "concept:adagrad-rmsprop",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对平方累计4/8及步长1/0.707，区别累计与指数记忆。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "不同参数",
+        "长期记录",
+        "下降方向"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/generated/torch.optim.Adagrad.html",
+        "https://docs.pytorch.org/docs/stable/generated/torch.optim.RMSprop.html"
+      ],
+      "introSha256": "b66522c167602af11660f8b787c385d141c1e473dbc6d43f28cd78c42b2e5866"
+    },
+    {
+      "id": "concept:adam-adamw",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对AdamW10到9.8及负权向零，正则与自适应统计区别。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "两种平均",
+        "衰减贡献",
+        "等价性"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/generated/torch.optim.Adam.html",
+        "https://docs.pytorch.org/docs/stable/generated/torch.optim.AdamW.html"
+      ],
+      "introSha256": "71aa3e8417f0592ea73e4e97481045e9e66cfbf494221dab85f91604656a8b25"
+    },
+    {
+      "id": "concept:agent",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "观察行动工具反馈定义清楚，计划与真实调用及授权三题互补。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "行动与完成",
+        "反馈循环",
+        "权限界限"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://www.anthropic.com/research/building-effective-agents"
+      ],
+      "introSha256": "92f0ced330a09d6d2dff80c98b8553e038ebda1fe49770d14ea4e1392f9d5457"
+    },
+    {
+      "id": "concept:api",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对本地函数/远端接口、单位语义兼容及未知结果重试。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "接口与实现",
+        "错误含义",
+        "重试修改"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://www.rfc-editor.org/rfc/rfc9110"
+      ],
+      "introSha256": "1c925329858644e0135adffe741fb111ce5edf3aa678327a90680180be1b8090"
+    },
+    {
+      "id": "concept:attention-transformer",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对权重0.75/0.25与值向量输出(3,2)，键值职责和因果遮罩。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "键与值",
+        "生成条件",
+        "权重解释"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://arxiv.org/abs/1706.03762"
+      ],
+      "introSha256": "b8bc0ee6b6aedaf6b318cf1802384481165e22386f182ee1675b070f6a17b99c"
+    },
+    {
+      "id": "concept:backtracking-pruning",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对正数子集剪枝依赖，负数反例使超过目标剪枝失效。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "撤销什么",
+        "剪枝条件",
+        "任务范围"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "b7aed5e035845ff8c06a98c2654876119d09db50678affbca40b553a074e4f9b"
+    },
+    {
+      "id": "concept:batch-size",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对100样本批20更新5次、批40更新3次与丢末批80样本。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "批次数",
+        "平均与求和",
+        "有效批次"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/optim.html"
+      ],
+      "introSha256": "7c6246ec4aac127104ffde3b6c864fdcfae7303a50a6422a1700263b2897b860"
+    },
+    {
+      "id": "concept:batchnorm-layernorm-rmsnorm",
+      "file": "cs",
+      "status": "corrected-and-independently-reviewed",
+      "findings": "核对LN[−1,1]与RMS[0.849,1.131]，独立复核补通道与空间位置解释。",
+      "corrections": [
+        "首次引入通道与空间位置时给出必要解释，避免依赖未说明领域术语。"
+      ],
+      "exerciseCoverage": [
+        "是否居中",
+        "同批影响",
+        "训练与推理"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/generated/torch.nn.BatchNorm1d.html",
+        "https://docs.pytorch.org/docs/stable/generated/torch.nn.LayerNorm.html",
+        "https://arxiv.org/abs/1910.07467"
+      ],
+      "introSha256": "e94731041bac660000509261ac8d3ce76f3d50bd05aee40b93bc42e934898e40"
+    },
+    {
+      "id": "concept:bce",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对BCE自然对数0.223/1.609及0.51/0.99损失差，概率输入条件。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "标签对称",
+        "概率与分类",
+        "原始分数"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/generated/torch.nn.BCELoss.html"
+      ],
+      "introSha256": "8e509d8102e8eed6e123d080debe8723f0a00e574f2fe7f7d7780e0c54e69314"
+    },
+    {
+      "id": "concept:bcewithlogitsloss",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对logit0损失ln2、100错类损失100，禁止重复sigmoid。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "输入类型",
+        "零分数",
+        "稳定与正确"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html"
+      ],
+      "introSha256": "bc7c974aefe9393b2299e5e40216554bb594595949a81a8220a7ed4a7c3c5a34"
+    },
+    {
+      "id": "concept:bfs-dfs",
+      "file": "cs",
+      "status": "corrected-and-independently-reviewed",
+      "findings": "发现D到S题干误向，作者修为S到D；BFS2边、DFS3边及环访问检查正确。",
+      "corrections": [
+        "作者已按本次独立复核发现修正D到S题干为S到D，英文及旧检查字段同步。"
+      ],
+      "exerciseCoverage": [
+        "距离含义",
+        "避免循环",
+        "权重条件"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/1208e162775f6f5cedfbb9f2b694ede0_MIT6_006F11_lec13.pdf",
+        "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/resources/mit6_006f11_lec14/"
+      ],
+      "introSha256": "26e816c53f422d71f253b4d4bc46ca9e3ae83578aa15cb4eb473ff96c521b309"
+    },
+    {
+      "id": "concept:binary-multiclass-multilabel",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对互斥与多标签语义、总概率1.6合法以及输出格式不证明独立。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "目标定义",
+        "概率约束",
+        "模型形式与事实"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/multiclass.html"
+      ],
+      "introSha256": "e28cadcb9d38cc635b659032f98388fab00b00f29cc810734765078d2224ed95"
+    },
+    {
+      "id": "concept:bm25-hnsw",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对BM25词项与HNSW索引分工，近似检索与表示错误分别讨论。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "职责区别",
+        "近似含义",
+        "混合动机"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://nlp.stanford.edu/IR-book/html/htmledition/okapi-bm25-a-non-binary-model-1.html",
+        "https://arxiv.org/abs/1603.09320"
+      ],
+      "introSha256": "9552d4ca32cd0722650701b28e20942df32f7b26e2f2e4499cf40ac3323e60ea"
+    },
+    {
+      "id": "concept:boosting",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对残差[−2,0,2]加入半份后[4,5,6]，成员组合而非只取末树。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "顺序依赖",
+        "组合输出",
+        "更多轮数"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/ensemble.html"
+      ],
+      "introSha256": "9a17ef90db9e0b53289968d0f6803030651f56ecd0e1efff42f7d063db887bb0"
+    },
+    {
+      "id": "concept:bootstrap-oob",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对有放回AA/CD中B袋外资格，按树排除训练成员及病人分组。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "放回抽样",
+        "袋外资格",
+        "依赖数据"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/ensemble.html"
+      ],
+      "introSha256": "5f1ad6ebfc8ed260c80b1bfd81d18107dabfd5269dcd0811364e24f51f8cd97e"
+    },
+    {
+      "id": "concept:broadcasting",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对右轴广播(2,3)+(3)与(2,1)，(3,1)减(3)静默变矩阵。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "兼容规则",
+        "外形正确性",
+        "复制与结果"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://numpy.org/doc/stable/user/basics.broadcasting.html"
+      ],
+      "introSha256": "0aa00898269db4e7a96e64533e7d632e36f45ff7dd9e11d14719c227bcdee121"
+    },
+    {
+      "id": "concept:calibration",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对整体/子群校准、排序不变但概率可变，恒报基准率无区分能力。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "单次结果",
+        "排序与概率",
+        "整体与子群"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/calibration.html"
+      ],
+      "introSha256": "30f645143e171b6c6cd6b7cddb0e8f4406a33aab7bfac6a9d62cef3af5166244"
+    },
+    {
+      "id": "concept:canonical-key",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对规范键保重复次数与大小写任务约定，区别一般哈希碰撞。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "重复信息",
+        "任务约定",
+        "哈希碰撞"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/d3e4d64266d481c74c9e7c15e09999fe_MIT6_006F11_lec08.pdf"
+      ],
+      "introSha256": "8e1846a951123eff4e907c3c374bbccd1baceeb448df44e3d560727690ce4088"
+    },
+    {
+      "id": "concept:checkpoint-resume-seed",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对参数、优化器、调度、随机进度的恢复对象，不将种子当当前位置。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "推理与恢复",
+        "种子与位置",
+        "恢复核验"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/tutorials/beginner/saving_loading_models.html"
+      ],
+      "introSha256": "2547fb4bfa8dd947c1e171d519e313bc7f0749531f57bd2a8f0edbafab89f498"
+    },
+    {
+      "id": "concept:concurrency-parallelism",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对并发与硬件并行、计数5同时写6丢更新，非纯算力倍增。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "同时进行的含义",
+        "共享更新",
+        "性能判断"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://pages.cs.wisc.edu/~remzi/OSTEP/"
+      ],
+      "introSha256": "42467dcb56b0f005dc6378b1e4fc56e20bfc7179a421a7a94a262c99a3facc22"
+    },
+    {
+      "id": "concept:contrastive-loss",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对正负对定义由业务决定，假负例、颜色增强丢信息与易负例边界。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "谁定义相似",
+        "假负例",
+        "相对比较"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://arxiv.org/abs/2002.05709"
+      ],
+      "introSha256": "c69a923f7bd1ca488b0f63a284a064d93786cd2eb01e1b08b681c0247b66818a"
+    },
+    {
+      "id": "concept:cpu-gpu",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "完整读CPU/GPU基础链、4术语段、像素限幅例及6题；125/200吞吐与15毫秒总延迟核对。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "两者的职责与共同点",
+        "有条件判断，还能用 GPU 吗？",
+        "读到相邻数据，是否就必须串行？",
+        "延迟与吞吐量分别回答什么问题？",
+        "计算部分更快，整个任务就更快吗？",
+        "把这些判断用于选择设备"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.nvidia.com/cuda/cuda-c-programming-guide/",
+        "https://docs.nvidia.com/cuda/cuda-programming-guide/01-introduction/introduction.html",
+        "https://docs.nvidia.com/cuda/cuda-programming-guide/01-introduction/programming-model.html",
+        "https://ocw.mit.edu/courses/6-172-performance-engineering-of-software-systems-fall-2018/5655e50541f85421cc47b7c85d8e5de3_MIT6_172F18_lec8.pdf",
+        "https://www2.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-134.pdf"
+      ],
+      "introSha256": "9ef61e6ad1e25a73a9a8452fae4edc431fd1923db8e9b6f1ca1ec8557b1f400d"
+    },
+    {
+      "id": "concept:cross-entropy-nll",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对NLL概率0.7误传为−0.7、正确0.357与0.6对应0.511。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "正确输入",
+        "类别顺序",
+        "损失与准确率"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html",
+        "https://docs.pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html"
+      ],
+      "introSha256": "1d10edff81d4c050e948f87473fab02f4fcfc047e459ca4b5e1a3b026b949adf"
+    },
+    {
+      "id": "concept:cross-validation",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对三折6样本每次4训2验，所有拟合处理需在折内，选择后独立测试。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "训练次数",
+        "预处理",
+        "相关记录"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/cross_validation.html"
+      ],
+      "introSha256": "7d4110934c8f928c1834690c2ac2fb8432b31ede4f492b7935143df54a28c093"
+    },
+    {
+      "id": "concept:ctc",
+      "file": "cs",
+      "status": "corrected-and-independently-reviewed",
+      "findings": "CTC折叠次序及路径汇总正确；定义补允许足够步数的等长非重复输出。",
+      "corrections": [
+        "定义不再误限为输入必须严格长于输出，明确等长及重复符号约束。"
+      ],
+      "exerciseCoverage": [
+        "折叠顺序",
+        "多个对齐",
+        "局部与整体"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://www.cs.toronto.edu/~graves/icml_2006.pdf"
+      ],
+      "introSha256": "4e85064cc689f4e158b269fe6b614cb2b55f99498bc2945a3315a6c14f211099"
+    },
+    {
+      "id": "concept:data-leakage",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对预测时点退款字段不可用，相关性不自动泄漏，测试反馈越界。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "预测时点",
+        "合法相关性",
+        "测试反馈"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/common_pitfalls.html"
+      ],
+      "introSha256": "adfc9f35c702da2d42a3ebcc6f35b1ba2962daa2c5025075298b7e5be5cc6280"
+    },
+    {
+      "id": "concept:dice-loss",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对Dice交集6、分母18与全背景0，空集0/0约定明确。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "交集计数",
+        "背景优势",
+        "空集合"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://arxiv.org/abs/1606.04797"
+      ],
+      "introSha256": "cc8844c2163f4fee6bb58fd36817f12b17ad85e4d85d7ded257115c83547f0ff"
+    },
+    {
+      "id": "concept:dijkstra",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对Dijkstra暂定4改善3及负边使已定1变−1，非负条件有具体反例。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "暂定与确定",
+        "负边反例",
+        "不可达"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/6277a1f06100c26a7ff21031af6757b5_MIT6_006F11_lec16.pdf"
+      ],
+      "introSha256": "7de17f062711fbd1ff0ada3faefd98a6b06660f2fb8e370c37094624c6a68938"
+    },
+    {
+      "id": "concept:dpo-grpo",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对DPO固定偏好对与GRPO同题组采样、全零无区分及代理目标边界。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "数据要求",
+        "组内相同",
+        "评价可靠性"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://arxiv.org/abs/2305.18290",
+        "https://arxiv.org/abs/2402.03300"
+      ],
+      "introSha256": "16a10fdb0be75312c1240bf26909950055c62a191ef7cb6b4f8ee940f2e8f403"
+    },
+    {
+      "id": "concept:dreamer-muzero",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对Dreamer想象训练与MuZero当前搜索，决策模型非像素复现保证。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "模型用途",
+        "想象与真实",
+        "方法区别"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://arxiv.org/abs/1912.01603",
+        "https://arxiv.org/abs/1911.08265"
+      ],
+      "introSha256": "3653ddecc5e1f95b340a9cff69ba8bc86f1707059a42ba9795f0493c83774252"
+    },
+    {
+      "id": "concept:dropout",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对倒置Dropout[4,0]、[0,8]与期望，单值期望不保证非线性输出期望。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "缩放含义",
+        "永久变化",
+        "评估模式"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/generated/torch.nn.Dropout.html"
+      ],
+      "introSha256": "e86951c791bd8db1e398cbea75a8b6c4a3e3d5d8523ef0418badf4d63ba6272f"
+    },
+    {
+      "id": "concept:dtype-device",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对1000项4000/2000字节本体，设备与dtype独立、整数转回不能恢复小数。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "类型与位置",
+        "信息恢复",
+        "存储比较"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/tensor_attributes.html"
+      ],
+      "introSha256": "e7e291253941c755ba9acca12d3b225a3570cc28f0ac5f53def1ff052ff5516a"
+    },
+    {
+      "id": "concept:dummy-node",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对哑节点删除头、连续删除不前移及空表返回边界。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "返回边界",
+        "连续删除",
+        "空链表"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "e1d3a48742b15a4927b3346eec852a9193f865cf4013b55d48e89857ac39c228"
+    },
+    {
+      "id": "concept:dynamic-programming",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对台阶0项空序列1和4级5种，禁连续两级需增加状态。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "初始状态",
+        "顺序区分",
+        "状态充分"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/resources/mit6_006f11_lec19/"
+      ],
+      "introSha256": "f54a9dedbdf163f4fb106a483cda5ba3f940da56c1ccdc0a21fd22596b834dc2"
+    },
+    {
+      "id": "concept:early-stopping-patience",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对patience比较历史最优0.40而非上次，停止第4次恢复第2次。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "比较基准",
+        "次数与轮数",
+        "保存与恢复"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://keras.io/api/callbacks/early_stopping/"
+      ],
+      "introSha256": "56541575ea8eca5ab97df4499d953dfea52bb0dd5ef675191514da08aa97c8c8"
+    },
+    {
+      "id": "concept:em-viterbi",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对EM条件分布期望与Viterbi联合最优路径，参数学习不等于状态解码。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "未知量区别",
+        "期望与硬选择",
+        "模型最优"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://www.cs.ubc.ca/~murphyk/Bayes/rabiner.pdf"
+      ],
+      "introSha256": "a35674c77391b26d58df0dfaf540076f9511b893da02e3a6ad0230e52c42e9dd"
+    },
+    {
+      "id": "concept:f1",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对TP6/FP2/FN4的F1为2/3，真负不影响及成本对称限制。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "调和平均",
+        "真负例",
+        "成本权衡"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/model_evaluation.html"
+      ],
+      "introSha256": "8dba6f6d20708dc3a4014881a070d4fdada1707519ad54fe0ddfe1b01b1f8814"
+    },
+    {
+      "id": "concept:fast-and-slow-pointers",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对链A/B/C/D环长3第3轮D相遇但入口B，比较节点身份。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "相遇与入口",
+        "数值与身份",
+        "无环结束"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "ef3f99ef9a1483da464e72bb211cf243f68daf6b624b91f69267e98b75f20ef6"
+    },
+    {
+      "id": "concept:focal-loss",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对focal因子0.01/0.64、损失0.00105/1.030和负标签p_t=0.1。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "退化情形",
+        "真实类别概率",
+        "标签噪声"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://arxiv.org/abs/1708.02002"
+      ],
+      "introSha256": "34854aa468756f490ae65bba72da4112b68b4d8407463277305ca96a491ccbd0"
+    },
+    {
+      "id": "concept:forward-backward",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对wx例梯度±2、损失同0.5而更新方向不同，求导不改参数。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "求导与更新",
+        "导数方向",
+        "标签依赖"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html"
+      ],
+      "introSha256": "e0b0c5bf1fb6a3eb54b3a98374b82d6a0460825fb55bf10a37f1d6dfa8d33afa"
+    },
+    {
+      "id": "concept:gradient",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对梯度(2,4)小步值1.36、大步19，零梯度最大反例。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "符号的作用",
+        "有限步",
+        "零梯度"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html"
+      ],
+      "introSha256": "4bdf841dc2f55bd8d805d7505a2d15f409c661d06a7e8bcc39748930c24c33c5"
+    },
+    {
+      "id": "concept:gradient-clipping",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对范数5裁到2得(1.2,1.6)，逐值(2,2)，混精先反缩放。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "阈值以内",
+        "方向保持",
+        "问题来源"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/nn.html"
+      ],
+      "introSha256": "7eb45bd3844a7ff4e52a4ff8325b53037497b02bc7be3af3bc171ee4ae67def0"
+    },
+    {
+      "id": "concept:hash-table",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对7/12同桶仍须判等，键可变破索引与最坏链扫描。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "碰撞含义",
+        "性能条件",
+        "键可变性"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/d3e4d64266d481c74c9e7c15e09999fe_MIT6_006F11_lec08.pdf"
+      ],
+      "introSha256": "75841db9a60c5bced411153b4da2713dd5b11e5424bb875db5224f4301b2e68e"
+    },
+    {
+      "id": "concept:huber-loss",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对Huber0.125/2.5、边界0.5及厘米阈值100，数值/导数连续。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "正负对称",
+        "边界一致",
+        "单位变化"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/generated/torch.nn.HuberLoss.html"
+      ],
+      "introSha256": "ed2222f8b2165cd7ccc198ea88e3b88d335006cb587c7e6efddf58d8fae32e0c"
+    },
+    {
+      "id": "concept:in-place-marking",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对原地负号映射范围、绝对值恢复与修改输入的接口契约。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "索引范围",
+        "读取原值",
+        "接口约定"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "275600c8d443d5c9c061c788b6e1e72d369b8b29872dd0cb6d3bde41b7eb1e39"
+    },
+    {
+      "id": "concept:index",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对索引辅助结构、99%命中未必有利及写维护，未混同业务删除。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "辅助结构",
+        "命中比例",
+        "写入代价"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://www.postgresql.org/docs/current/indexes.html"
+      ],
+      "introSha256": "5851c10bb4c094b67ab5119cebce5de57328131e0f50d8c573b77c2ecf160df2"
+    },
+    {
+      "id": "concept:initialization-residual-connection",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对残差x+F(x)零分支保持恒等、8/4维需对齐与初始化对称性。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "恒等映射",
+        "形状条件",
+        "初始化作用"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://arxiv.org/abs/1512.03385"
+      ],
+      "introSha256": "fc834d4db47c2646037aa0fea35fe4977f52d43e8f3373cfcf3308f4f1e82ffe"
+    },
+    {
+      "id": "concept:iteration-optimizer-step-epoch",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对120样本12微批4更新，两轮8更新，预热计数区别。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "更新次数",
+        "调度单位",
+        "遍历与训练"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/optim.html"
+      ],
+      "introSha256": "832385207352f98750fdf2a19685e13cf4ab63626186485fb7384c3a8f2323d6"
+    },
+    {
+      "id": "concept:kadane",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对Kadane结尾和−2/3/2/6/1、非空全负−2，不能跳负项。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "连续约束",
+        "全负数组",
+        "状态区别"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "4081340da9f7674e26f254fbc708ca237a05564f87a15d4336265921cb0e6695"
+    },
+    {
+      "id": "concept:kl-divergence",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对KL方向0.511/0.368、支持错配无穷与单项可负。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "方向",
+        "零概率",
+        "非负性"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://www.inference.org.uk/itprnn/book.pdf"
+      ],
+      "introSha256": "c6521629d5990a79593998774576201ce7bf049de6f07b06e49a9451626d58d9"
+    },
+    {
+      "id": "concept:knn-k-means",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对KNN邻居1/0/9投甲与Kmeans中心0.5，k角色不同。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "k 的含义",
+        "监督信息",
+        "中心位置"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/neighbors.html",
+        "https://scikit-learn.org/stable/modules/clustering.html#k-means"
+      ],
+      "introSha256": "ae68ba4657cfcd94307a54979c47d774e53b1e452d6912c1b2f8387eb59b3f74"
+    },
+    {
+      "id": "concept:kv-cache-flashattention",
+      "file": "cs",
+      "status": "corrected-and-independently-reviewed",
+      "findings": "KV/Flash分工正确；补固定参数与历史不读未来条件以支持键值复用。",
+      "corrections": [
+        "补明确KV复用依赖固定参数及历史不读未来的因果自注意力条件。"
+      ],
+      "exerciseCoverage": [
+        "缓存内容",
+        "存储增长",
+        "方法可组合"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://arxiv.org/abs/2205.14135"
+      ],
+      "introSha256": "843aa6ec3995c65bc2cdc614de5382d1bdbf47f6ac3f11b96069ad0f55e42864"
+    },
+    {
+      "id": "concept:learning-rate",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对学习率0.5使损失2到0.5、3使损失8，损失尺度影响梯度。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "方向与步长",
+        "零步长",
+        "损失尺度"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/optim.html"
+      ],
+      "introSha256": "24c54be7aab25df3424d2ef216197d6f1295a375795a499f73535fa9199917a7"
+    },
+    {
+      "id": "concept:logit",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对logit0.8为ln4、负2概率0.119及多类平移不变。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "零与负值",
+        "概率转换",
+        "多类平移"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/nn.html"
+      ],
+      "introSha256": "a2a241e2dba194b75679a54022191a2dc267e60b7edd45c274dacfb2966b1eb7"
+    },
+    {
+      "id": "concept:loop-invariant",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对循环边界不变量、空前缀初始化与独立终止论证。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "边界",
+        "初始",
+        "终止"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "42c9c903a0e6b587d77db71d31570956c5ddf4f6f9ad3cc787a4a1b470fd6e4b"
+    },
+    {
+      "id": "concept:loss-objective-metric",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对数据损失/惩罚/业务指标分开，总目标下降未必数据误差下降。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "目标组成",
+        "代理",
+        "口径"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/model_evaluation.html"
+      ],
+      "introSha256": "cf87c055827147d31f5bf7848e2bb004f24169683075490ffca0e3a619929c19"
+    },
+    {
+      "id": "concept:lower-bound-upper-bound",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对[1,2,2,4]目标2界1/3、目标3界3、目标5尾后4。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "不存在",
+        "重复次数",
+        "前提"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "1f845f4eb44030ecd526ccf61def7de270e35446de1e144ed73d8e6908372019"
+    },
+    {
+      "id": "concept:macro-micro",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对宏召回0.5与微91/110，宏F1不能交换非线性聚合。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "权重",
+        "选择",
+        "先后"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/model_evaluation.html"
+      ],
+      "introSha256": "5e965b90d17e6675bdcd5c7d98ece6fbcc27d1c1552b00025940dfffdba1ac7c"
+    },
+    {
+      "id": "concept:microbatch-gradient-accumulation",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对1与3样本微批梯度2/4合并3.5，固定参数与BatchNorm非等价。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "更新",
+        "清空",
+        "等价"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/optim.html"
+      ],
+      "introSha256": "266e6f4685ae48bfcc7b6baa05850498c7a6eb7b3885a8291ed4990a3dd864bf"
+    },
+    {
+      "id": "concept:mixed-precision-loss-scaling",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对缩放1024梯度0.01024、更新前除回，Inf不可恢复。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "反缩放",
+        "溢出",
+        "格式"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/amp.html"
+      ],
+      "introSha256": "98d742a760d799c3b6686f03a5a09e7a5c898a25367f00b3a0ab1eca0c39f0ed"
+    },
+    {
+      "id": "concept:monotonic-deque",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对单调队列4/2/3/1的窗口最大4/3，候选删除与过期职责。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "支配",
+        "过期",
+        "信息"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "02905d38aca3f824ec8c7a49528b339a06c94a46b7f2730eed8fd356912581a8"
+    },
+    {
+      "id": "concept:monotonic-stack",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对下个更大按位置非数值距离，相等严格性及未解不存在标记。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "最近",
+        "严格",
+        "结束"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "8126dc195ddd83ad4ff28c8a3c8604ae335829b293527162e5437b96ca9713e8"
+    },
+    {
+      "id": "concept:mse-mae-rmse",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对MAE2米、MSE5米²、RMSE√5米，零均差不等于零误差。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "抵消",
+        "排序",
+        "异常"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/model_evaluation.html"
+      ],
+      "introSha256": "9fbc8a6e88dd848c6c0fff73417bbcf5954b36804c666d01346b8d5b8028d493"
+    },
+    {
+      "id": "concept:multi-source-bfs",
+      "file": "cs",
+      "status": "corrected-and-independently-reviewed",
+      "findings": "核对多源距离[0,1,2,1,0]；定义补源到点方向与无向反向等价条件。",
+      "corrections": [
+        "定义区分源到节点与节点到源，和有向图反边边界保持一致。"
+      ],
+      "exerciseCoverage": [
+        "最近",
+        "同步",
+        "不可达"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/1208e162775f6f5cedfbb9f2b694ede0_MIT6_006F11_lec13.pdf"
+      ],
+      "introSha256": "f8bfb7916e0af38ae9c173b4fd484c2062b0f9bac77505d0604ba06d5dedb5a3"
+    },
+    {
+      "id": "concept:nan-inf-oom",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对NaN/Inf数值与OOM分配失败，首异常追踪及缓存引用边界。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "类别",
+        "首因",
+        "修补"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/notes/numerical_accuracy.html"
+      ],
+      "introSha256": "b32767faa2dd54c9fd6628877ac6c9230de520729a676664daa7ea9e1a9e9107"
+    },
+    {
+      "id": "concept:off-policy-offline-rl",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对离策略与离线正交，经验回放新增数据仍可在线及覆盖外推。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "分类",
+        "覆盖",
+        "两种关系"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "http://incompleteideas.net/book/the-book-2nd.html"
+      ],
+      "introSha256": "51582b3fbbfc5de4de0de8568278b02839923111bf98d4f467aed0ed5ac8e326"
+    },
+    {
+      "id": "concept:parameter-hyperparameter",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对参数/超参数由流程角色决定，自动搜索不改变测试边界。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "自动调参",
+        "数据用途",
+        "角色"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/user_guide.html"
+      ],
+      "introSha256": "8cb127abeba985347af21f1dc253121b111718c3cf68ac2e89d575e58b245e5a"
+    },
+    {
+      "id": "concept:pca",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对PCA中心化、正交方向及最小平方重建，90%方差非预测信息比例。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "中心化",
+        "有用性",
+        "符号"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/decomposition.html"
+      ],
+      "introSha256": "d9af17119899272368b328227156144538fd48e06703c9a9e1a911873e4d8bfa"
+    },
+    {
+      "id": "concept:pid-mpc",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对PID历史积分微分与MPC只执行首步，约束需显式建模。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "误差历史",
+        "滚动",
+        "约束"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://www.cds.caltech.edu/~murray/books/AM08/pdf/am08-complete_22Feb09.pdf"
+      ],
+      "introSha256": "6fbf2603bb6419e02023411b14787353879bfda0c11b45eefb8a619d9b8f8994"
+    },
+    {
+      "id": "concept:postorder-dp",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对树选根5与双叶8、选/不选两状态及共享后代不可重复合并。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "状态",
+        "顺序",
+        "结构"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "b2fde4dc915d42892d4dc0eaf071ac8ac027e0e0b56ab3cd7125d22a6851d024"
+    },
+    {
+      "id": "concept:ppo-sac-td3",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对PPO裁剪非硬距离界、SAC熵与TD3较小Q非保证下界。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "动作空间",
+        "估计",
+        "比较"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://arxiv.org/abs/1707.06347",
+        "https://arxiv.org/abs/1801.01290",
+        "https://arxiv.org/abs/1802.09477"
+      ],
+      "introSha256": "c0542a5f9814b6614816579c3e1c5dfd13589b0308a4e681b08aa619dab35ce0"
+    },
+    {
+      "id": "concept:precision",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对precision18/20=90%，漏80不改该比值及零分母。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "分母",
+        "漏报",
+        "无预测"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/model_evaluation.html"
+      ],
+      "introSha256": "a9537a6c00e9a9f0593845c654f9feba66b8af2f8b087a242ae5bfa6f66f2090"
+    },
+    {
+      "id": "concept:prefix-sum",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对前缀[0,3,2,6]区间6−3=3，负值无碍但破单调。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "边界",
+        "更新",
+        "负值"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "c3196dd5feaf0fba55f734330f44623a2c92677820e172db46e8197049b7f200"
+    },
+    {
+      "id": "concept:q-learning-sarsa",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对Q目标5.5/SARSA2.8与学习率更新3.5，终止无后续。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "实际动作",
+        "终止",
+        "更新量"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "http://incompleteideas.net/book/the-book-2nd.html"
+      ],
+      "introSha256": "792f223fd683ddadd2be9ba1913769f9179e9603d2dc650c0c082a9b3fa1c4ed"
+    },
+    {
+      "id": "concept:quickselect-top-k",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对quickselect第3小5但左部未排序、重复计秩与坏pivot平方成本。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "部分排序",
+        "排名",
+        "效率"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "75d2f45561d66b05c87538d2073f69d6843fe89c2341c374db376faf2632f0bd"
+    },
+    {
+      "id": "concept:rag",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对RAG检索/生成分工、制度日期/范围和来源指令不作授权。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "更新",
+        "证据",
+        "缺失"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://arxiv.org/abs/2005.11401"
+      ],
+      "introSha256": "e324f6f71eeca1682f35fdead5dc40448046262d6fb2c8e83eedb29d988b0f73"
+    },
+    {
+      "id": "concept:random-forest",
+      "file": "cs",
+      "status": "corrected-and-independently-reviewed",
+      "findings": "核对树估价100/120/110平均110及共同十倍错，英文补万元单位。",
+      "corrections": [
+        "英文例子补回原文万元及适用面积单位，避免只写抽象units。"
+      ],
+      "exerciseCoverage": [
+        "随机性",
+        "共同偏差",
+        "结果含义"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/ensemble.html"
+      ],
+      "introSha256": "ef9b78aa0cafd92fdd2f5ced5c3283e69aab7e8f2db2de861eaab649eb07f492"
+    },
+    {
+      "id": "concept:recall",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对recall15/50=30%、precision15/20=75%，真值未知不能精确召回。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "分母",
+        "全报",
+        "真值"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/model_evaluation.html"
+      ],
+      "introSha256": "67e1a9a73a213f8d0cce2ad82ce0238be964f25f49625f3f85ec380b1816d142"
+    },
+    {
+      "id": "concept:regularization",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对正则改变目标、尺度和泛化权衡，惩罚更大不保证效果。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "目标",
+        "强度",
+        "单位"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/linear_model.html#ridge-regression-and-classification"
+      ],
+      "introSha256": "2d605b159d083142ff50667d260edc11a12017a88edf6a032799d49260282a59"
+    },
+    {
+      "id": "concept:replication-sharding",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对2分片每片3副本共6份半数据，复制与容量和热点不同。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "容量",
+        "旧读",
+        "热点"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://www.mongodb.com/docs/manual/sharding/"
+      ],
+      "introSha256": "3324d9b272714885110d280d145894460723e25306eaa3ca43c4f7a4343c56f7"
+    },
+    {
+      "id": "concept:roc-auc-pr-auc",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对100正9900负下80/99得到召回80%、FPR1%、precision44.7%。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "分母",
+        "校准",
+        "阈值"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/model_evaluation.html"
+      ],
+      "introSha256": "6d96322ae1b830084002fb576a09074e18f5454531140e07bd04e3885ed4c057"
+    },
+    {
+      "id": "concept:sample-feature-label",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对样本/独立单位、七日标签可用与失访不能作负类。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "单位",
+        "时点",
+        "缺失"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/user_guide.html"
+      ],
+      "introSha256": "326a51cb14ec07fffbf3aca8cee52568a53dae68c97905b87fbe118a4d743c86"
+    },
+    {
+      "id": "concept:scheduler",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对调度前两步0.1后两步0.05，微批推进使计划快4倍。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "计步",
+        "恢复",
+        "效果"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/optim.html"
+      ],
+      "introSha256": "77ed5cf0866d18c112e531b05be61e89f6733b37fbfd409e6941c701e7ca571f"
+    },
+    {
+      "id": "concept:sft-lora-qlora",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对100×100底座10000与秩2适配400，SFT监督与LoRA机制可组合。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "维度",
+        "分类",
+        "精度"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://arxiv.org/abs/2106.09685",
+        "https://arxiv.org/abs/2305.14314"
+      ],
+      "introSha256": "a7e8215bdbb5f97aa26a2661308502db97aabe419bb54d7b5727ee9baa08e406"
+    },
+    {
+      "id": "concept:sgd-momentum",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对动量v2/3.8与反向−0.2、当前零梯度仍有历史。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "随机",
+        "历史",
+        "约定"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/generated/torch.optim.SGD.html"
+      ],
+      "introSha256": "cb3963c0a276e03608a4d19f05f251c8b172a255817006750c59abaef0a5024d"
+    },
+    {
+      "id": "concept:sigmoid",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对sigmoid ln3为0.75及端点舍入；逐项输出不证明标签独立。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "阈值",
+        "多标签",
+        "校准"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/nn.html"
+      ],
+      "introSha256": "789cf52481f444f3e519a71839082ccf298c62c48b4f1f82e6c0bab0bb19d402"
+    },
+    {
+      "id": "concept:sliding-window",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对窗口和8到10、连续限制与最大值不可逆相减。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "连续",
+        "可维护量",
+        "负数"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "424b59f6cb8fc1c996eb9e732d47baa254f3dbe79dd8e62571f5b1b0bb570d35"
+    },
+    {
+      "id": "concept:softmax",
+      "file": "cs",
+      "status": "corrected-and-independently-reviewed",
+      "findings": "核对softmax[1/3,2/3]与公共平移；修中文“不不同”为不变。",
+      "corrections": [
+        "修正“不不同”笔误，明确平移不变。"
+      ],
+      "exerciseCoverage": [
+        "平移",
+        "独立",
+        "未知类"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/nn.html"
+      ],
+      "introSha256": "689dc1271651642d325788fbbda8043590a64549272b27140a20a53e9a409059"
+    },
+    {
+      "id": "concept:tensor-shape-axis",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对轴0[5,7,9]、轴1[6,15]、保维(2,1)，reshape非转置。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "轴",
+        "形状",
+        "保维"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://numpy.org/doc/stable/user/absolute_beginners.html"
+      ],
+      "introSha256": "319e79ca5fdee5fa5663d2cdffb13f8ad8a3ef03e04fe30a143a74389f423c3e"
+    },
+    {
+      "id": "concept:threshold",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对阈值等号、分数不变行动变及测试选阈值乐观。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "等号",
+        "预测",
+        "选择"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/user_guide.html"
+      ],
+      "introSha256": "112cc9a7341efb3f737e0b4fadddb0856be3843f39305120b69c4fc6ea2d9b75"
+    },
+    {
+      "id": "concept:token-embedding",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对token编号非语义度量、查表形状(2,3)与跨词表不兼容。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "编号",
+        "形状",
+        "兼容"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://arxiv.org/abs/1706.03762"
+      ],
+      "introSha256": "32b0243c9983b665b37aeeb82832e0073c14ff14944e9f8d6cd741902f1b9f81"
+    },
+    {
+      "id": "concept:topological-sort",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对拓扑A/B先于C、加C→A成环，合法序非资源最优。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "非唯一",
+        "环",
+        "调度"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/resources/mit6_006f11_lec14/"
+      ],
+      "introSha256": "84dde2bfdf9eabf9d57566659cff6925e79aaf04755a29f5c7c53b8772608e50"
+    },
+    {
+      "id": "concept:train-eval-no-grad",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对eval层行为与no_grad反向记录控制互不替代，恢复模式。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "求导",
+        "随机",
+        "恢复"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/notes/autograd.html"
+      ],
+      "introSha256": "3766ddc9def5f94c9e954aeb48a27a97314bab504ca18af61d2c61c381613a5d"
+    },
+    {
+      "id": "concept:transaction-acid",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对转账ACID四性质、隔离级别与外部副作用不能自动回滚。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "原子",
+        "规则",
+        "外部"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://www.postgresql.org/docs/current/tutorial-transactions.html"
+      ],
+      "introSha256": "7eb2708dd1bbdee71a727ad950341560a9beff88b6b1d7bc211080e015b7ca43"
+    },
+    {
+      "id": "concept:two-pointers",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对有序双指针排除理由和排序成本，未声称无序仍合法。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "移动",
+        "前提",
+        "成本"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "a7c615d706d482fc6e39488c79d40402e513ef2c832655fabae11ccfdfe42ac2"
+    },
+    {
+      "id": "concept:vae-gan-diffusion",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对VAE分布/先验、GAN判别训练和扩散迭代，无生成质量保证。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "判别器",
+        "潜变量",
+        "去噪"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://arxiv.org/abs/1312.6114",
+        "https://arxiv.org/abs/1406.2661",
+        "https://arxiv.org/abs/2006.11239"
+      ],
+      "introSha256": "1ca0b82f33496035111e81121883be3d4bef7054892a11d5d540951e506e8c77"
+    },
+    {
+      "id": "concept:vla",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对VLA动作语义、坐标单位及物理执行，语言计划非完成。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "输出",
+        "坐标",
+        "遮挡"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://arxiv.org/abs/2406.09246"
+      ],
+      "introSha256": "24cda1aee9398750b165b895425af6f8e8db2bfbc181185def4d1980f3e1016f"
+    },
+    {
+      "id": "concept:warmup-warm-start",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对预热四步与热启动起点可组合，中断恢复不能归零调度。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "区分",
+        "组合",
+        "恢复"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/optim.html"
+      ],
+      "introSha256": "cb724264cb6255aaffdb7eee598c70971a7acf6806c9a2a3eda51eb0c4911e44"
+    },
+    {
+      "id": "concept:weight-decay",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对比例衰减±5到±4.9及完整步5.2，AdamL2不等AdamW。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "向零",
+        "整体",
+        "等价"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/optim.html"
+      ],
+      "introSha256": "e8ef1e5b02613530af75ddee86328d0fb2a359fce5b28996fa59e7a9de8869c6"
+    },
+    {
+      "id": "concept:world-model",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对世界模型行动条件、奖励与长滚动误差，真实交互验证。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "作用",
+        "误差",
+        "迁移"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "http://incompleteideas.net/book/the-book-2nd.html"
+      ],
+      "introSha256": "8bc5817620a7fda78cfccfd30840fce34feb6516c7404b802248e94a0f09b18d"
+    },
+    {
+      "id": "concept:zero-grad-detach",
+      "file": "cs",
+      "status": "corrected-and-independently-reviewed",
+      "findings": "核对zero_grad与detach路径区别；“视图”改对象避免共享存储混同view。",
+      "corrections": [
+        "共享底层存储不直接称张量view，保留停止梯度与清缓冲的区别。"
+      ],
+      "exerciseCoverage": [
+        "清空",
+        "截断",
+        "复制"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/docs/stable/notes/autograd.html"
+      ],
+      "introSha256": "2508aff3f4d3668b6c3c3e1f4060567d9a2a035dd77e7e8b6aeefd8ab71bea98"
+    },
+    {
+      "id": "concept:stack",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对LIFO、peek不删和括号([)]反例，空pop须约定。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "次序",
+        "查看",
+        "括号"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "1bb1c9315024dd7e4acfbabd56f8417ece04d7b5d743bd44765bf0a10bb4a8dd"
+    },
+    {
+      "id": "concept:greedy",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对会议C短却只1与AB2，交换论证保场数非保收益。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "反例",
+        "交换",
+        "目标"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "8e6d98ea44857d884891eaf59449d7a860f583fb17079e3c9fab7405babbb8de"
+    },
+    {
+      "id": "concept:complexity",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对增长O/Θ、最坏/平均/摊还，n1000组合499500及宽松上界。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "常数",
+        "口径",
+        "规模"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "9329ec459404292e77cfd0e0342939f8b60b72f46aca1a261ade1d0b201e53e8"
+    },
+    {
+      "id": "concept:recursion",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对阶乘0!起点与非负递减终止，参数改变不等于良序进展。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "基本情况",
+        "终止",
+        "成本"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "dfdc15cd887c2f94a9c6e4d2a35d9cfb8201d3f5841d7c6085bc24bdca63acd4"
+    },
+    {
+      "id": "concept:data-structures",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对抽象数据类型与实现、查询/更新工作负载和多表示一致性。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "抽象",
+        "工作负载",
+        "多索引"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "3e0e44e1cf112fff35bed17bbf1549b5f12195dd20982b8499970281d95fc21c"
+    },
+    {
+      "id": "concept:heap",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对堆父子局部序不等排序或稳定同优先级，任意查找不自动对数。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "局部",
+        "排序",
+        "平级"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/resources/mit6_006f11_lec04/"
+      ],
+      "introSha256": "421cba35fc39d6ef4faf3e05537deb6f9eef4640e4b92b8c93d3031c7c545b08"
+    },
+    {
+      "id": "concept:trie",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对trie前缀ca不是完整词、carpet保car结束及共享节点删除。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "词与前缀",
+        "删除",
+        "编码"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "3290a7b04dad9bd707a7892fe4131a9c0b0cde2fa648163ef8c92523c22c7b26"
+    },
+    {
+      "id": "concept:graph-algorithms",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对图方向与边数/总代价目标，A经B5与直达10。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "方向",
+        "目标",
+        "建模"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://algs4.cs.princeton.edu/home/"
+      ],
+      "introSha256": "be7e01c9d13154b8457045eca61a133bb4dc2a2d670baa37adf0b2e9767e3ad5"
+    },
+    {
+      "id": "concept:operating-system",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对进程运行与文件、单核并发及OS保护不阻止授权误操作。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "文件与运行",
+        "并发",
+        "保护"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://pages.cs.wisc.edu/~remzi/OSTEP/"
+      ],
+      "introSha256": "e47fa74e9d57d9e755d7f4732c5e9248f4b0fa86d110ea7ec72cd6385051bb5f"
+    },
+    {
+      "id": "concept:network",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对10MB下载1.2秒提带宽后0.7秒、MB/Mb与业务重试。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "单位",
+        "固定开销",
+        "超时"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://www.rfc-editor.org/rfc/rfc9293"
+      ],
+      "introSha256": "280a0572a5925b17fe33ca388200f4fec702c9d46073af9dcd38db2eb8417691"
+    },
+    {
+      "id": "concept:consensus",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对共识安全/活性、多数交集非完整协议与崩溃/恶意故障范围。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "安全与活性",
+        "分割",
+        "故障模型"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://raft.github.io/raft.pdf"
+      ],
+      "introSha256": "aa8490e1ca5a462f3f899d88f6e2497aed1c6ec7196f9ded438e8eeaca1ce2f4"
+    },
+    {
+      "id": "concept:cache",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对缓存键币种与版本、TTL非即时新鲜，淘汰与失效区别。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "键",
+        "过期",
+        "淘汰"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://www.rfc-editor.org/rfc/rfc9111"
+      ],
+      "introSha256": "bf472639082d30f0ca7d9fd5a5338a38071d9ddd63de33de2a12bdd5d0b63b91"
+    },
+    {
+      "id": "concept:feature-engineering",
+      "file": "cs",
+      "status": "independently-reviewed",
+      "findings": "核对过去7完整日特征、缺日语义、训练/服务单位一致。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "可用性",
+        "拟合",
+        "一致"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/common_pitfalls.html"
+      ],
+      "introSha256": "e2ed5d6d22472fefe03bc65fd34a2fa0dfccdca41024735ddb41d4592356002a"
+    },
+    {
+      "id": "concept:linear-models",
+      "file": "cs",
+      "status": "corrected-and-independently-reviewed",
+      "findings": "核对线性关于参数可含x²、80平米预测210万元，英文补原单位。",
+      "corrections": [
+        "英文例子补回原文万元及适用面积单位，避免只写抽象units。"
+      ],
+      "exerciseCoverage": [
+        "线性",
+        "因果",
+        "外推"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/linear_model.html"
+      ],
+      "introSha256": "fae6d3689266a327653ba3ab0efa385199a5679a74bef614eaf1213f851b0a51"
+    },
+    {
+      "id": "concept:decision-tree",
+      "file": "cs",
+      "status": "corrected-and-independently-reviewed",
+      "findings": "核对树叶跳变和单路径、零训练误差非最优；英文补房价/面积单位。",
+      "corrections": [
+        "英文例子补回原文万元及适用面积单位，避免只写抽象units。"
+      ],
+      "exerciseCoverage": [
+        "路径",
+        "跳变",
+        "训练拟合"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/tree.html"
+      ],
+      "introSha256": "1646d6f6a751f2d758dd8f506d035605eb641522e913b15dd12bae8a47aec071"
+    },
+    {
+      "id": "concept:clustering",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对Kmeans1/10初值到1.5/9.5、分组选择与尺度，并非天然类别。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "没有标签是否就没有假设？",
+        "尺度改变",
+        "组数与拟合"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html"
+      ],
+      "introSha256": "7014b475458ad9e8becb663ddb9ed71b902637f98480035b8913ecc94d5ffafb"
+    },
+    {
+      "id": "concept:anomaly-detection",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对异常50报警不等于攻击、25随阈值变决策及周末基线。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "报警含义",
+        "改变阈值",
+        "参照条件"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/outlier_detection.html"
+      ],
+      "introSha256": "f8aa1c4699bd848621570aaa272345f09e7ea62ad8756aad5ba405a6d88e53cc"
+    },
+    {
+      "id": "concept:time-series",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对两日均值11.5、缺日期两天变化与实时验证不能随机偷看。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "信息时点",
+        "缺失日期",
+        "验证顺序"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.TimeSeriesSplit.html"
+      ],
+      "introSha256": "782d6308528cc1918ecb2a65bf101ce3602c3926c7e5166b757a8a5ac36b86cf"
+    },
+    {
+      "id": "concept:causality",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对病情混杂、干预与关联以及随机试验有限样本不必平衡。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "关联与干预",
+        "混杂来源",
+        "随机分配的边界"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://miguelhernan.org/whatifbook"
+      ],
+      "introSha256": "f08ee2bf6de0c9a8651cf1070b79b632ab754faad6e4da2d1d3d8ef099caaa94"
+    },
+    {
+      "id": "concept:neural-network",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对max(x,0)+max(−x,0)绝对值、仿射层合并6x+1与表达/学习。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "参数与规则",
+        "只有线性组合",
+        "表达与学习"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/tutorials/recipes/recipes/defining_a_neural_network.html"
+      ],
+      "introSha256": "9367f0aeabe7ec70a852db4a865a1b6d1fdf3c1dcb869cc6bca5058b46d76d30"
+    },
+    {
+      "id": "concept:cnn",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对卷积互相关权重[1,−1]输出[−2,1,−3]及平移边界。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "共享了什么",
+        "输出范围",
+        "适用结构"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html"
+      ],
+      "introSha256": "3acb9bb3fdf118032e354be07e81f8be01b1a968f9a87ebe6837d85fe0a901c7"
+    },
+    {
+      "id": "concept:rnn",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对RNN倍旧加新[1,2]得4与[2,1]得5，状态非完整副本。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "状态的作用",
+        "参数与长度",
+        "实时可用性"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.pytorch.org/tutorials/beginner/nlp/sequence_models_tutorial.html"
+      ],
+      "introSha256": "957ec7409f9938d70ac4b4f051d104345ea3f1d43d6f08753bc37e94739cbc3d"
+    },
+    {
+      "id": "concept:mlops",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对MLOps平方英尺/米单位问题的入口验证、版本回退与标签延迟。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "可复现对象",
+        "评估与服务",
+        "监控解释"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://mlflow.org/docs/latest/ml/model-registry/workflow/"
+      ],
+      "introSha256": "32e6788dbc12f7091c56936eed0e25227f499ad4f98db260ff9a5f532793b43d"
+    },
+    {
+      "id": "concept:multimodal-representation",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对模态编码同维不等对齐、检索相似非细节证明与拼接可用。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "形状与语义",
+        "相似度含义",
+        "设计选择"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://arxiv.org/abs/2103.00020"
+      ],
+      "introSha256": "39d35dbd88e7338c9fabc64180a864286089d2189be7d35dcde07496508f1572"
+    },
+    {
+      "id": "concept:bellman",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对Bellman11与随机后继价值4，固定策略不强行取最大。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "结束状态",
+        "随机后继",
+        "评价谁的策略"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://www.incompleteideas.net/book/bookdraft2018mar21.pdf"
+      ],
+      "introSha256": "2cf22aabdbb4183f4cc5e625546e78290e147054da30cf6ef48deed42c23e611"
+    },
+    {
+      "id": "concept:policy-gradient",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对PG概率0.3/0.4期望0.6/0.8，单次成功非保证改善。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "目标量",
+        "幸运与价值",
+        "方法边界"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://www.incompleteideas.net/book/bookdraft2018mar21.pdf"
+      ],
+      "introSha256": "0a43849feb915fcdf6bb51b90b5e5c0e31e2359318f394b0e65d5ad520288b8b"
+    },
+    {
+      "id": "concept:imitation-learning",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对行为克隆监督行动不必奖励，状态分布偏移及隐藏警报信息。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "训练目标",
+        "低误差与可靠执行",
+        "信息不足"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://proceedings.mlr.press/v15/ross11a/ross11a.pdf"
+      ],
+      "introSha256": "9847bd934c97056583e17ba521436cc8962b3c6728ee9ba7f67e9dcd95eb2ac7"
+    },
+    {
+      "id": "concept:motion-planning",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对圆机器人直径0.6不可过0.5，0.7走廊每侧0.05与动力学限制。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "点与实体",
+        "路径与时间",
+        "目标定义"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://underactuated.mit.edu/"
+      ],
+      "introSha256": "cf9f6a00c5aa30126f59068aad8191188238b82cb291a2ebed5657eb2b2f4084"
+    },
+    {
+      "id": "concept:disjoint-set-union",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对并查集合并整组、重复组数不变和不保原图路径/删除。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "传递关系",
+        "重复合并",
+        "删除边界"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://atcoder.github.io/ac-library/production/document_en/dsu.html"
+      ],
+      "introSha256": "13081379e752b91ddeb0fece4475520bbc1e50373b5c888299526b56aa18698f"
+    },
+    {
+      "id": "concept:zero-one-bfs",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对01BFS直接代价1经B代价0，首次访问不固定及5权失效。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "目标区别",
+        "何时更新",
+        "权重范围"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://cp-algorithms.com/graph/01_bfs.html"
+      ],
+      "introSha256": "4cf388e7e4e838d6cc589e7f56c58998d41363ee1afb7bff971f9feb6c9f9ee3"
+    },
+    {
+      "id": "concept:bellman-ford",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对BF经B费用2、A↔B环−2及可达负环影响范围。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "负边与负环",
+        "环的影响范围",
+        "再次改善的含义"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/resources/lecture-12-bellman-ford/"
+      ],
+      "introSha256": "82f541225cb488754d128286c0c73bc878a140a38a83fe12ff79428d8611c9d8"
+    },
+    {
+      "id": "concept:fenwick-tree",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对Fenwick四块2/3/3/10、更新2增5变8/15、前三和11。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "前缀组合",
+        "更新范围",
+        "赋值与增量"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://atcoder.github.io/ac-library/production/document_en/fenwicktree.html"
+      ],
+      "introSha256": "8e2c9792b0f24b988a7ca65b84ccdf459ea3dfeb8a96a3494cbf7706c392069c"
+    },
+    {
+      "id": "concept:segment-tree",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对线段树更新第四9后右最小7根2、均值合并16/4而非6。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "更新传播",
+        "正确汇总",
+        "与静态表比较"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://atcoder.github.io/ac-library/production/document_en/segtree.html"
+      ],
+      "introSha256": "b6704ae1d5aa1b2ae2dfb31e4e35a42a75b3dc3f7826b062db3bc63731e68e51"
+    },
+    {
+      "id": "concept:difference-array",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对差分[2,5,0,−5]还原[2,7,7,2]和赋值不能同端点加法。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "还原含义",
+        "端点位置",
+        "更新类型"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://usaco.guide/silver/prefix-sums"
+      ],
+      "introSha256": "a788264e4e3513351df90abe2b15086ecbd1fe0430e96e4919a696c0aa88ee0a"
+    },
+    {
+      "id": "concept:kmp-prefix-function",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对KMP ABABA失配保ABA再匹B，真前缀排全串及语义非匹配。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "真前缀",
+        "保留的依据",
+        "匹配范围"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://xlinux.nist.gov/dads/HTML/knuthMorrisPratt.html"
+      ],
+      "introSha256": "60e217a2c19cf74f66d3f57be1eed5576f92bf20fc966fa978055ebb21fd7cf2"
+    },
+    {
+      "id": "concept:aho-corasick",
+      "file": "cs-extra",
+      "status": "corrected-and-independently-reviewed",
+      "findings": "核对AC she/he及hers重叠输出；失败链接补最长真后缀排自指。",
+      "corrections": [
+        "失败链接须指向最长真后缀，排除整个串以避免误解为自指。"
+      ],
+      "exerciseCoverage": [
+        "多个输出",
+        "失败链接含义",
+        "输出成本"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://doi.org/10.1145/360825.360855"
+      ],
+      "introSha256": "1c9f65036f3c579c9d4d51ec87ef5734bdf8109ce03c208e46f653c94d70a8af"
+    },
+    {
+      "id": "concept:lis-tails",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对LIS tails[1,3]不必原子序列，[2,2,2]严格长度1。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "子序列与子数组",
+        "重复值",
+        "记录与答案"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://escholarship.org/uc/item/09j2v8d0"
+      ],
+      "introSha256": "b5f5e5090385ea9e1dae7581d496eb911cab93f5c7e17094227a617a28e9d91a"
+    },
+    {
+      "id": "concept:weighted-interval-dp",
+      "file": "cs-extra",
+      "status": "corrected-and-independently-reviewed",
+      "findings": "核对加权区间AB6与C10，补同结束时B先C排序供步骤解释。",
+      "corrections": [
+        "同结束时间任务的逐步比较例子明确B先于C的排序约定。"
+      ],
+      "exerciseCoverage": [
+        "目标差别",
+        "边界衔接",
+        "两个分支"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://www.cs.princeton.edu/courses/archive/spring13/cos423/lectures/06DynamicProgrammingI.pdf"
+      ],
+      "introSha256": "8caa977184c8bada6d9a074520d71b7fa0499e1dc16f31ab6715931341e64419"
+    },
+    {
+      "id": "concept:interval-dp",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对相邻石堆2/3/4费用14或16、单堆0和固定费两次2。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "初始子问题",
+        "分割范围",
+        "费用定义"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/665523227a175e9e9ce26ea8d3e5b51c_MIT6_006S20_lec17.pdf"
+      ],
+      "introSha256": "b031c43e62d8baeea9df0969096e12dbd9f6a912351418d91eae117c677e4611"
+    },
+    {
+      "id": "concept:bitmask-dp",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对位101=A/C、010=B及2^10到2^20放1024倍，集合需带终点。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "位的含义",
+        "足够状态",
+        "规模增长"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/pages/lecture-notes/"
+      ],
+      "introSha256": "dd50b342f19a5eaa415c52348aae8e59738a6d78cc109ef872686910a3c649c4"
+    },
+    {
+      "id": "concept:binary-search-answer",
+      "file": "cs-extra",
+      "status": "independently-reviewed",
+      "findings": "核对答案二分阈5两段可行、4需三段不可，单调与判定分开。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "单调方向",
+        "初始范围",
+        "判定与求解"
+      ],
+      "englishReview": "逐篇对照阅读中文与英文定义、例子、边界和全部题答；CPU/GPU另核对背景和术语段；已修发现的单位遗漏。",
+      "sourceUrls": [
+        "https://docs.python.org/3/library/bisect.html"
+      ],
+      "introSha256": "74f9ca0ebc23bf91d6bfbed58b69eea74178833d0f20bb2b2c1abc62d339d086"
+    }
+  ]
+}

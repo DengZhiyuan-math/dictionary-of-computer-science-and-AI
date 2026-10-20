@@ -1,0 +1,407 @@
+{
+  "scope": 25,
+  "concepts": [
+    {
+      "id": "concept:reservoir-sampling",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对单槽替换概率与三者各1/3；记录位置而非类别为抽样单位。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "均匀不等于每种内容各半",
+        "固定替换概率的后果",
+        "一次结果与概率保证"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://dl.acm.org/doi/10.1145/3147.3165"
+      ]
+    },
+    {
+      "id": "concept:bloom-filter",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对三键共享位的误报及删除破坏B的反例，区分哈希确定性。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "误报的含义",
+        "删除与共享标记",
+        "何时可以省掉数据库查询"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://dl.acm.org/doi/10.1145/362686.362692"
+      ]
+    },
+    {
+      "id": "concept:amortized-analysis",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对四次追加成本7、单次最高3，摊还保证不依赖随机值。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "摊还是否需要随机输入",
+        "从总成本能推出什么",
+        "更换扩容规则"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/resources/mit6_006f11_lec09/"
+      ]
+    },
+    {
+      "id": "concept:exact-decimal-arithmetic",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对小数尺度、0.05网格、无损降尺度与除法限制。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "整数必须带单位",
+        "减少小数位数",
+        "表示精确不等于业务有效"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://docs.stripe.com/currencies"
+      ]
+    },
+    {
+      "id": "concept:cryptographic-hash",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对三种安全目标、32字节/64十六进制和增量哈希拼接区别。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "碰撞存在与安全目标",
+        "读取分段是否改变输入",
+        "完整性与来源"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://www.dropbox.com/developers/reference/content-hash"
+      ]
+    },
+    {
+      "id": "concept:unicode-graphemes",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对e加组合音符的3字节/1簇、完整字符串4字节/2簇及规范化边界。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "长度必须声明单位",
+        "编码完整仍可能拆开阅读单位",
+        "规范化改变什么"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters/"
+      ]
+    },
+    {
+      "id": "concept:backpressure",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对额度、丢弃型源和中间无限缓冲，三题未把背压等同持久化。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "增大队列是否解决持续超载",
+        "暂停交付不等于补发",
+        "整条链路的容量"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://developer.apple.com/documentation/combine/processing-published-elements-with-subscribers"
+      ]
+    },
+    {
+      "id": "concept:max-min-fairness",
+      "file": "cs-final",
+      "status": "corrected-and-independently-reviewed",
+      "editorialFindings": "定义本身准确；补改第三题为从(2,4,6)出发的严格反证，避免只解释原分配保护。",
+      "corrections": [
+        "第3题改为直接从新分配构造违反定义的可行改进，并同步对应英文。"
+      ],
+      "exerciseCoverage": [
+        "平均分不一定可行",
+        "容量超过需求",
+        "把更多给已经较大者"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://www.uber.com/us/en/blog/resource-scheduler-cluster-management-peloton/"
+      ]
+    },
+    {
+      "id": "concept:adaptive-concurrency",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对并发与吞吐区别、10降8不必撤在途，以及反馈振荡边界。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "并发与每秒速率",
+        "降低上限的即时含义",
+        "为什么不能只看延迟"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://github.com/Netflix/concurrency-limits/blob/78a74b9878d38c4c048b0304ce12a162ab7b7222/concurrency-limits-core/src/main/java/com/netflix/concurrency/limits/limit/VegasLimit.java"
+      ]
+    },
+    {
+      "id": "concept:sql-aggregation",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对左连接B的COUNT(*)=1和COUNT(id)=0，明细重复金额60与真实30。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "数行还是数订单",
+        "再次连接带来的重复",
+        "按什么键分组"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://www.postgresql.org/docs/current/functions-aggregate.html"
+      ]
+    },
+    {
+      "id": "concept:mapreduce-combiners",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对sum/count合并16/3、错误局部均值6.5和组合器可不运行。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "为何不能直接平均局部均值",
+        "没有组合器仍须正确",
+        "已经合并过的摘要还能再合并吗"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/"
+      ]
+    },
+    {
+      "id": "concept:mergeable-variance",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对总体方差5、样本方差20/3以及两常数分片方差16。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "两片内部都不波动",
+        "统计口径改变",
+        "为何需要样本数"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://github.com/airbnb/chronon/blob/5bbc4d176a205e32b4172b8f0ecd360072cdb0fe/aggregator/src/main/scala/ai/chronon/aggregator/base/SimpleAggregators.scala"
+      ]
+    },
+    {
+      "id": "concept:external-consistency",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对严格可串行化的真实时间先后及历史快照例外，未误要求物理同步。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "串行顺序是否足够",
+        "重叠不自动定序",
+        "历史读取不是当前读取"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://docs.cloud.google.com/spanner/docs/true-time-external-consistency"
+      ]
+    },
+    {
+      "id": "concept:slo-error-budget",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对百万请求预算1000、400消耗40%和1200失败成功率99.88%。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "请求比例与停机分钟",
+        "超出预算",
+        "降低分母的风险"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://sre.google/workbook/implementing-slos/"
+      ]
+    },
+    {
+      "id": "concept:token-bucket",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对容量5、余额1、速率2经1.5秒到4，突发与并发及多副本区别。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "平均速率不禁止短突发",
+        "额度与并发不同",
+        "多个副本的总限额"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/azure/architecture/patterns/throttling"
+      ]
+    },
+    {
+      "id": "concept:circuit-breaker",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对关闭/打开命名、半开有限探测，超时不等于原操作未执行。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "打开不是修复",
+        "为什么只允许少量探测",
+        "失败与结果未知"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker"
+      ]
+    },
+    {
+      "id": "concept:optimistic-concurrency",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对版本7到8及库存5减4，冲突重试必须重算且验证写入原子。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "检查与写入必须连在一起",
+        "冲突之后怎样重试",
+        "乐观不等于没有协调"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/azure/cosmos-db/database-transactions-optimistic-concurrency"
+      ]
+    },
+    {
+      "id": "concept:idempotency",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对原子扣减与幂等意图区别、参数冲突及审计副作用范围。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "原子性与重复效果",
+        "哪些参数属于同一意图",
+        "相同效果的范围"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/"
+      ]
+    },
+    {
+      "id": "concept:message-ordering",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对两订单偏序的合法交错、交付与完成顺序及重复消息相容性。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "哪些交错合法",
+        "交付与完成不同",
+        "有序不等于只处理一次"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues-understanding-logic.html"
+      ]
+    },
+    {
+      "id": "concept:consistent-hashing",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对环位置20/60/90、95绕回、加40只转移相应键；虚拟节点不当副本。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "绕回规则",
+        "虚拟位置不是独立副本",
+        "负载与键数量"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://docs.aws.amazon.com/wellarchitected/latest/reducing-scope-of-impact-with-cell-based-architecture/consistent-hashing.html"
+      ]
+    },
+    {
+      "id": "concept:gpu-parallel-algorithms",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对归约10与排他扫描0/2/3/6，访存与同步条件各有独立题。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "归约与扫描",
+        "相同计算量与访存效率",
+        "为什么不能只增加线程"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/"
+      ]
+    },
+    {
+      "id": "concept:cache-coherence",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "明确应用缓存而非CPU协议；核对旧读迟到回填及许可验证原子边界。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "删除为什么不够",
+        "校验与接收要原子进行",
+        "缓存一致性的范围"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final170_update.pdf"
+      ]
+    },
+    {
+      "id": "concept:floyd-warshall",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对中转B得到7、C到B为−5产生负环，方向与查询需求题互补。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "方向不能省略",
+        "负边与负环不同",
+        "何时值得计算所有点对"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://dl.acm.org/doi/10.1145/367766.368168"
+      ]
+    },
+    {
+      "id": "concept:graph-core-peeling",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对2核保三角、3核空，当前度数及非团/非连通边界准确。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "初始度数为什么不足",
+        "最低度数与全连接",
+        "删除顺序与结果"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://arxiv.org/abs/cs/0310049"
+      ]
+    },
+    {
+      "id": "concept:squared-distance-moments",
+      "file": "cs-final",
+      "status": "independently-reviewed",
+      "editorialFindings": "核对矩摘要公式与例子4、普通距离2√2，均值不足及数据更新。",
+      "corrections": [],
+      "exerciseCoverage": [
+        "平方距离不能冒充距离",
+        "查询变化与数据变化",
+        "保留均值是否足够"
+      ],
+      "englishReview": "已对照中文逐项阅读背景、定义、术语、边界、例子及全部题答，条件、方向和数量一致；发现的问题已修正。",
+      "sourceUrls": [
+        "https://huggingface.co/datasets/hackercupai/hackercup/blob/209283d622e6ee41daa4a889d48f3cd67ebdab01/2022/round1/watering_well_ch1.md"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,527 @@
+[
+  {
+    "id": "concept:reservoir-sampling",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧定义未说明抽样单位与均匀性，单题未区分位置抽样、类别比例和单次结果。"
+    ],
+    "changes": [
+      "数据流与抽样单位",
+      "替换机会为什么随到达位置变化",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "均匀不等于每种内容各半",
+      "固定替换概率的后果",
+      "一次结果与概率保证"
+    ],
+    "example": "从依次到来的 A、B、C 中抽一项：先留 A；B 到来时以二分之一概率换入，C 到来时以三分之一概率换入。A 最终留下的概率为二分之一乘三分之二，即三分之一；B 也为三分之一，C 直接以三分之一换入。因此三者机会相等，虽然它们到达的时间不同。",
+    "sourceUrls": [
+      "https://dl.acm.org/doi/10.1145/3147.3165"
+    ]
+  },
+  {
+    "id": "concept:bloom-filter",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧摘要缺少位、碰撞与成员查询的基础，未交代无漏报前提。"
+    ],
+    "changes": [
+      "成员查询与哈希位置",
+      "为什么两种查询结果不对称",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "误报的含义",
+      "删除与共享标记",
+      "何时可以省掉数据库查询"
+    ],
+    "example": "有八个位，初始全为 0。约定 A 使用位置 1、3，B 使用 2、3，C 使用 1、2。只插入 A、B 后，位置 1、2、3 都是 1。查询 C 会得到“可能存在”，但我们知道 C 没有插入；这就是一次误报。",
+    "sourceUrls": [
+      "https://dl.acm.org/doi/10.1145/362686.362692"
+    ]
+  },
+  {
+    "id": "concept:amortized-analysis",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧定义未区分序列保证与随机平均，例子未交代计价模型及初始状态。"
+    ],
+    "changes": [
+      "单次成本与一串操作的成本",
+      "偶尔扩容为何不等于每次都复制",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "摊还是否需要随机输入",
+      "从总成本能推出什么",
+      "更换扩容规则"
+    ],
+    "example": "从容量为一的空数组开始，连续追加四项，容量满时翻倍。四次新项写入共花四个单位；加入第二项时复制一项，加入第三项时复制两项，总成本为七。第四次追加并不复制任何旧项，尽管第三次比较昂贵。这里只计算元素写入和复制，没有把内存申请的真实耗时当成常数实测值。",
+    "sourceUrls": [
+      "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/resources/mit6_006f11_lec09/"
+    ]
+  },
+  {
+    "id": "concept:exact-decimal-arithmetic",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧介绍把通用数值表示直接引到特定币种接口，未先区分数值精度、单位和业务步长。"
+    ],
+    "changes": [
+      "数值表示与允许的金额步长",
+      "对齐单位再计算",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "整数必须带单位",
+      "减少小数位数",
+      "表示精确不等于业务有效"
+    ],
+    "example": "把金额字符串 12.30 与 0.45 相加：按两位小数读成 1230 与 45，整数相加得到 1275，解释回金额为 12.75。若某个教学接口只允许 0.05 的步长，那么 12.75 合法，12.73 虽能精确表示，却不在允许网格上。这里的步长是示例约定，不对应任何具体支付产品。",
+    "sourceUrls": [
+      "https://docs.stripe.com/currencies"
+    ]
+  },
+  {
+    "id": "concept:cryptographic-hash",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧第一层直接进入Dropbox特有分块协议，未先定义摘要、编码和密码哈希的安全目标。"
+    ],
+    "changes": [
+      "字节内容与摘要",
+      "相同摘要能说明什么",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "碰撞存在与安全目标",
+      "读取分段是否改变输入",
+      "完整性与来源"
+    ],
+    "example": "两个工具对同一个文件计算 SHA-256。摘要实际为 32 字节，常显示成 64 个十六进制字符。若一个工具把文件按小段读取、另一个一次读完，只要向同一增量哈希依次提供完全相同的字节，最终摘要应一致。另行规定的“先分块各算摘要、再组合”是另一种算法，不能与普通文件 SHA-256 混淆。",
+    "sourceUrls": [
+      "https://www.dropbox.com/developers/reference/content-hash"
+    ]
+  },
+  {
+    "id": "concept:unicode-graphemes",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧定义混合字符、标量和字节但未解释其单位，未区分编码有效性与字素完整性。"
+    ],
+    "changes": [
+      "字符不是唯一的计数单位",
+      "同一个显示结果可能有不同表示",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "长度必须声明单位",
+      "编码完整仍可能拆开阅读单位",
+      "规范化改变什么"
+    ],
+    "example": "字符串由 e、组合尖音符和 A 依次组成，显示为 éA。它包含三个标量值、通常两个扩展字素簇，UTF-8 编码共四字节。若要求最多三字节又不能拆开字素簇，可保留整个 é；若预算仅两字节，则不能保留这个三字节的首字素簇。",
+    "sourceUrls": [
+      "https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters/"
+    ]
+  },
+  {
+    "id": "concept:backpressure",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧第一层直接使用Combine回调名，未建立生产消费、需求额度与丢弃策略的关系。"
+    ],
+    "changes": [
+      "生产速度与处理能力",
+      "需求额度与缓冲策略分开",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "增大队列是否解决持续超载",
+      "暂停交付不等于补发",
+      "整条链路的容量"
+    ],
+    "example": "消费者只允许两项在处理，先请求两项。A、B 交付后额度用尽；完成 A 后再申请一项，才允许下一次交付。若源头仍产生 C，系统必须明确它应在哪里等待或是否被丢弃。某些发布器会丢弃零需求时的值，不能把“后来又请求”当作一定补发。",
+    "sourceUrls": [
+      "https://developer.apple.com/documentation/combine/processing-published-elements-with-subscribers"
+    ]
+  },
+  {
+    "id": "concept:max-min-fairness",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧定义未精确定义公平的比较对象和可行集合，例子条件未解释需求上限。"
+    ],
+    "changes": [
+      "资源、需求与可行分配",
+      "注水法怎样实现这种分配",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "平均分不一定可行",
+      "容量超过需求",
+      "把更多给已经较大者"
+    ],
+    "example": "容量为十二，三人需求上限为二、八、八。若先试每人四，第一人实际只需要二。固定他的二，把剩余十平均分给另外两人，得到二、五、五。若从拿五的人手中取一份给另一个拿五的人，就会伤害原份额不大于受益者的人，不能无代价提高较大份额。",
+    "sourceUrls": [
+      "https://www.uber.com/us/en/blog/resource-scheduler-cluster-management-peloton/"
+    ]
+  },
+  {
+    "id": "concept:adaptive-concurrency",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧例子直接引入Vegas公式和未定义基线，未先区分速率、并发与反馈信号。"
+    ],
+    "changes": [
+      "请求速率与在途数量",
+      "延迟为何是信号而不是诊断结论",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "并发与每秒速率",
+      "降低上限的即时含义",
+      "为什么不能只看延迟"
+    ],
+    "example": "设当前上限十个请求，已有十个在途。教学策略规定：最近一段时间明显变慢，就把后续上限降到八。此时已有十个请求不会凭空消失；系统暂不接纳新请求，等已有请求结束，使在途数量回到新上限以内。是否变快仍要由后续观测判断。",
+    "sourceUrls": [
+      "https://github.com/Netflix/concurrency-limits/blob/78a74b9878d38c4c048b0304ce12a162ab7b7222/concurrency-limits-core/src/main/java/com/netflix/concurrency/limits/limit/VegasLimit.java"
+    ]
+  },
+  {
+    "id": "concept:sql-aggregation",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧例子直接使用COUNT与连接术语，未解释行粒度及NULL，未覆盖分组键和重复金额。"
+    ],
+    "changes": [
+      "行、分组和缺失值",
+      "连接会改变计数的单位",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "数行还是数订单",
+      "再次连接带来的重复",
+      "按什么键分组"
+    ],
+    "example": "客户 A 有金额十与二十的两笔订单，客户 B 没有订单。客户左连接订单后共三行：A 两行、B 一行。按客户分组后，COUNT(*) 分别为二和一，COUNT(订单编号) 分别为二和零。B 那一行的存在是保留客户信息，不是一笔零元订单。",
+    "sourceUrls": [
+      "https://www.postgresql.org/docs/current/functions-aggregate.html"
+    ]
+  },
+  {
+    "id": "concept:mapreduce-combiners",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧简介没有解释键、分片与摘要的意义，练习仅计算均值而未检验组合器可选及重复合并的语义。"
+    ],
+    "changes": [
+      "按键汇总与中间结果",
+      "摘要必须足以继续合并",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "为何不能直接平均局部均值",
+      "没有组合器仍须正确",
+      "已经合并过的摘要还能再合并吗"
+    ],
+    "example": "分片 A 的温度是二和四，分片 B 只有十。A 输出总和六、数量二，B 输出总和十、数量一；合并后总和十六、数量三，均值为十六除以三。若直接平均局部均值三与十，得到六点五，就把仅一条记录的 B 当成与两条记录的 A 同样重。",
+    "sourceUrls": [
+      "https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/"
+    ]
+  },
+  {
+    "id": "concept:mergeable-variance",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧定义把三元摘要直接列出却未说明片间均值差为何重要，缺少统计口径与数量的理解检查。"
+    ],
+    "changes": [
+      "总体方差与分片统计",
+      "片内波动与片间差异",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "两片内部都不波动",
+      "统计口径改变",
+      "为何需要样本数"
+    ],
+    "example": "A 有数值一、三，B 有五、七。两片均值分别为二、六，总体方差都为一。合并后均值四，四个偏离为负三、负一、一、三，平方和二十，总体方差为五。直接平均两个一只得到一，遗漏了两片均值的分离。",
+    "sourceUrls": [
+      "https://github.com/airbnb/chronon/blob/5bbc4d176a205e32b4172b8f0ecd360072cdb0fe/aggregator/src/main/scala/ai/chronon/aggregator/base/SimpleAggregators.scala"
+    ]
+  },
+  {
+    "id": "concept:external-consistency",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧介绍未先解释事务与可串行化，例子中的强读和历史快照缺少区分。"
+    ],
+    "changes": [
+      "事务与真实时间顺序",
+      "重叠事务与已完成事务不同",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "串行顺序是否足够",
+      "重叠不自动定序",
+      "历史读取不是当前读取"
+    ],
+    "example": "初始两个配置字段都是零。事务一把第一个改为一并完成；收到成功后，客户端才发起事务二，把第二个改为一。二也完成后再发起当前强读，且没有其他写入时，应看到两个一。只见第二个一而遗漏第一个已完成更新，不符合这条先后约束。",
+    "sourceUrls": [
+      "https://docs.cloud.google.com/spanner/docs/true-time-external-consistency"
+    ]
+  },
+  {
+    "id": "concept:slo-error-budget",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧介绍把服务目标压缩为成功率，未解释指标口径、窗口和预算政策。"
+    ],
+    "changes": [
+      "服务指标与统计窗口",
+      "预算必须和目标使用同一分母",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "请求比例与停机分钟",
+      "超出预算",
+      "降低分母的风险"
+    ],
+    "example": "某个完整窗口内有一百万个有效请求，目标成功率 99.9%。允许坏请求一千个。若实际四百个失败，消耗预算 40%，实际成功率 99.96%。这些数字只评价这个窗口和已约定的成功定义，并没有给出每分钟服务状态。",
+    "sourceUrls": [
+      "https://sre.google/workbook/implementing-slos/"
+    ]
+  },
+  {
+    "id": "concept:token-bucket",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧第一层未区分长期速率、突发额度和并发限制，遗漏多副本语义。"
+    ],
+    "changes": [
+      "速率限制与突发额度",
+      "先补充再扣减",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "平均速率不禁止短突发",
+      "额度与并发不同",
+      "多个副本的总限额"
+    ],
+    "example": "容量五，当前余额一，每秒补充两个。经过一点五秒后，余额变成四；立即来三个各消耗一个额度的请求，都可获准，剩一。若此后空闲很久，余额最多仍为五，不会积累成无限信用。",
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/architecture/patterns/throttling"
+    ]
+  },
+  {
+    "id": "concept:circuit-breaker",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧摘要未说明三种状态名称与超时未知结果的区别，容易把本地保护误认为修复或回滚。"
+    ],
+    "changes": [
+      "远程依赖与失败反馈",
+      "关闭、打开与半开",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "打开不是修复",
+      "为什么只允许少量探测",
+      "失败与结果未知"
+    ],
+    "example": "教学规则规定连续三次失败就打开，十秒后只允许一个探测调用。前三次实际失败后，第四次在本地被拒绝，不再打到依赖。十秒后探测成功才按规则恢复；探测失败则继续保护。十秒是等待安排，不是断言故障十秒必定修好。",
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker"
+    ]
+  },
+  {
+    "id": "concept:optimistic-concurrency",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧定义没有解释旧读和冲突，单题不足以识别检查写入分离与盲目修改版本的错误。"
+    ],
+    "changes": [
+      "旧读结果与并发修改",
+      "版本号怎样防止无声覆盖",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "检查与写入必须连在一起",
+      "冲突之后怎样重试",
+      "乐观不等于没有协调"
+    ],
+    "example": "库存五、版本七。甲乙都读取这个状态，各要买四件。甲原子检查版本七且库存足够，扣后库存一、版本八。乙仍提交版本七，必须失败；重新读后也只能看到一件，不能继续照旧购买四件。这样保留了并发操作对旧读结果的依赖。",
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/cosmos-db/database-transactions-optimistic-concurrency"
+    ]
+  },
+  {
+    "id": "concept:idempotency",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧第一层把幂等近似成只执行一次，缺少效果范围、原子性差异和键冲突条件。"
+    ],
+    "changes": [
+      "重试与同一业务意图",
+      "识别重复与完成操作要协调",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "原子性与重复效果",
+      "哪些参数属于同一意图",
+      "相同效果的范围"
+    ],
+    "example": "库存十，订单意图 K 要扣三件。首次成功后库存七，系统保存 K 的结果；回复丢失后，同 K、同参数重试返回原业务结果，不再扣三件。若改用新键，服务端可能合理地认为这是另一笔购买，库存便再次减少。",
+    "sourceUrls": [
+      "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/"
+    ]
+  },
+  {
+    "id": "concept:message-ordering",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧摘要未区分发送、交付与副作用完成顺序，练习缺少跨组交错与重试语义。"
+    ],
+    "changes": [
+      "消息的不同顺序",
+      "顺序保证与重复处理分开",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "哪些交错合法",
+      "交付与完成不同",
+      "有序不等于只处理一次"
+    ],
+    "example": "A 订单有 A1 创建、A2 取消，B 订单有 B1 创建、B2 取消。仅要求各订单创建先于取消，则 A1、B1、A2、B2 与 B1、B2、A1、A2 都允许。A2 先于 A1 不允许。这个例子没有额外要求 A 与 B 之间的因果关系。",
+    "sourceUrls": [
+      "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues-understanding-logic.html"
+    ]
+  },
+  {
+    "id": "concept:consistent-hashing",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧入口直接从圆环算例开始，未说明迁移目的、虚拟节点与容错副本的区别。"
+    ],
+    "changes": [
+      "键的归属与节点变化",
+      "圆环只是路由规则",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "绕回规则",
+      "虚拟位置不是独立副本",
+      "负载与键数量"
+    ],
+    "example": "教学圆环只有零至九十九的位置，节点在二十、六十、九十；键在十、三十、七十、九十五。按递增方向选首个节点，四键分别归二十、六十、九十、二十。增加四十后，三十改归四十，其他三键保持；并非所有键因节点数变化而重新分配。",
+    "sourceUrls": [
+      "https://docs.aws.amazon.com/wellarchitected/latest/reducing-scope-of-impact-with-cell-based-architecture/consistent-hashing.html"
+    ]
+  },
+  {
+    "id": "concept:gpu-parallel-algorithms",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧入口直接引入线程数和32字节段模型，未先定义归约、扫描与访存是三种不同问题。"
+    ],
+    "changes": [
+      "任务划分与数据访问",
+      "相同数学任务可以有不同执行安排",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "归约与扫描",
+      "相同计算量与访存效率",
+      "为什么不能只增加线程"
+    ],
+    "example": "输入二、一、三、四。求和归约只输出十；排他前缀和在每个位置输出此前输入的总和，得到零、二、三、六，首位置用加法单位元零。两者都能用并行协作求解，但输出含义与后续使用方式不同。这个例子采用精确整数运算，并假定不溢出。",
+    "sourceUrls": [
+      "https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/"
+    ]
+  },
+  {
+    "id": "concept:cache-coherence",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧题没有解释缓存回源及权限，标题还容易与CPU硬件缓存一致性混淆。"
+    ],
+    "changes": [
+      "权威数据与缓存副本",
+      "删除缓存之后仍可能回填旧值",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "删除为什么不够",
+      "校验与接收要原子进行",
+      "缓存一致性的范围"
+    ],
+    "example": "读者取得旧值一后暂停；写者把数据库改成二并删除缓存；旧读者恢复，把一填回去。之后读者又会命中旧一。若旧读者同时持有许可七，而更新使七作废，那么它的迟到填充会被拒绝，后续合法读取才能重新填入新值。",
+    "sourceUrls": [
+      "https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final170_update.pdf"
+    ]
+  },
+  {
+    "id": "concept:floyd-warshall",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧定义未说明所有点对、方向和不可达，单题难以辨析负边与可达负环。"
+    ],
+    "changes": [
+      "路径费用与所有点对",
+      "中转点是阶段条件",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "方向不能省略",
+      "负边与负环不同",
+      "何时值得计算所有点对"
+    ],
+    "example": "A 到 B 费用三，B 到 C 费用四，A 到 C 直接费用十。允许 B 中转后，A 经 B 到 C 只需七，因此更新为七。若 C 到 A 完全不可达，不能为了填满矩阵把它写成零，否则就虚构了一条免费路径。",
+    "sourceUrls": [
+      "https://dl.acm.org/doi/10.1145/367766.368168"
+    ]
+  },
+  {
+    "id": "concept:graph-core-peeling",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧例子没有先定义当前度数、诱导子图及核与社群/完全图的差别。"
+    ],
+    "changes": [
+      "当前子图中的邻居数",
+      "删除会触发连锁变化",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "初始度数为什么不足",
+      "最低度数与全连接",
+      "删除顺序与结果"
+    ],
+    "example": "A、B、C 构成三角形，另外 B 与 D 相连。求二核时，D 只有一个邻居而被删；B 的度数从三降为二，三角形三个点仍各有两个邻居，全部保留。若要求三核，A、C、D 先不足，B 随后也失去足够邻居，结果为空。",
+    "sourceUrls": [
+      "https://arxiv.org/abs/cs/0310049"
+    ]
+  },
+  {
+    "id": "concept:squared-distance-moments",
+    "status": "rewritten-and-editorially-reviewed",
+    "issues": [
+      "旧简介只说保存统计量，没有解释目标函数与摘要对象，练习未覆盖普通距离、数据更新和均值不足。"
+    ],
+    "changes": [
+      "平方距离与重复查询",
+      "保存的摘要为什么有用",
+      "重写完整例子与适用边界"
+    ],
+    "exerciseCoverage": [
+      "平方距离不能冒充距离",
+      "查询变化与数据变化",
+      "保留均值是否足够"
+    ],
+    "example": "固定点为 (0,0)、(2,0)，查询为 (1,1)。两段平方距离各为二，总和四。摘要是数量二、横坐标和二、纵坐标和零、平方总和四；代入公式得到四减四加四，仍为四。换一个查询时不必重新读取两个原始点。",
+    "sourceUrls": [
+      "https://huggingface.co/datasets/hackercupai/hackercup/blob/209283d622e6ee41daa4a889d48f3cd67ebdab01/2022/round1/watering_well_ch1.md"
+    ]
+  }
+]
